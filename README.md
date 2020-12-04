@@ -1,2 +1,5 @@
-# convoworks-editor
-Service editor GUI for the Convoworks framework
+# Convoworks Editor #
+
+Convoworks Editor is a AngularJs web app for thw Conwoworks PHP framework.
+
+
