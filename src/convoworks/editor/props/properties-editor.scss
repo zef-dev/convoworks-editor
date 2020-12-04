@@ -1,0 +1,228 @@
+.convoworks {
+
+    .properties-editor-wrapper
+    {
+        position: absolute;
+        top: 0px;
+        margin-left: 0px;
+        z-index: 101;
+        transition: margin-left ease-out 0.1s;
+    
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+    
+        background-color: white;
+    }
+    
+    .properties-editor-wrapper.closed
+    {
+        margin-left: 400px;
+    }
+    
+    
+    .properties-editor {
+        /*padding: 12px 10px 30px 25px;*/
+        box-shadow: inset 15px 15px 10px -5px rgba(0,0,0,0.03);
+        height: 100%;
+    }
+    
+    .properties-editor header {
+        max-height: 151px;
+        width: 100%;
+    
+        padding: 10px 24px;
+    
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .properties-editor .nav.nav-tabs {
+        height: 40px;
+        color: #fff;
+    }
+    .properties-editor .nav.nav-tabs li {
+        margin: 0;
+        padding: 0;
+    
+        height: 100%;
+    
+        border: none;
+        border-radius: 0;
+    
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 18px;
+        text-align: center;
+    }
+    
+    .properties-editor .nav.nav-tabs li.active {
+        border: none;
+    }
+    
+    .properties-editor .nav.nav-tabs li:hover,
+    .properties-editor .nav.nav-tabs li a,
+    .properties-editor .nav.nav-tabs li a:hover,
+    .properties-editor .nav.nav-tabs li.active a {
+        color: #fff;
+        border: none;
+    }
+    
+    .properties-editor .nav.nav-tabs li.active a {
+        height: 100%;
+        width: 100%;
+    
+        margin: 0;
+        border-radius: 0;
+        border: none;
+    }
+    
+    .properties-editor.read header {
+        background-color: #268126;
+    }
+    .properties-editor.read .nav.nav-tabs {
+        background-color: #478d37;
+    }
+    .properties-editor.read .nav.nav-tabs li.active a {
+        background-color: #58984b;
+    }
+    
+    .properties-editor.process header {
+        background-color: #78327b;
+    }
+    .properties-editor.process .nav.nav-tabs {
+        background-color: #854688;
+    }
+    .properties-editor.process .nav.nav-tabs li.active a {
+        background-color: #915894;
+    }
+    
+    .properties-editor.datasource header {
+        background-color: #df8300;
+    }
+    .properties-editor.datasource .nav.nav-tabs {
+        background-color: #e18f00;
+    }
+    .properties-editor.datasource .nav.nav-tabs li.active a {
+        background-color: #e39a20;
+    }
+    
+    .properties-editor.filter header {
+        background-color: #4290c9;
+    }
+    .properties-editor.filter .nav.nav-tabs {
+        background-color: #529bce;
+    }
+    .properties-editor.filter .nav.nav-tabs li.active a {
+        background-color: #62a5d3;
+    }
+    
+    .properties-editor header .editor-title {
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 26px;
+    
+        display: flex;
+        flex-flow: row nowrap;
+    
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .properties-editor header .editor-title a {
+        color: white;
+    }
+    
+    .properties-editor header .editor-component-description {
+        color: rgba(255,255,255,0.7);
+        font-size: 12px;
+        font-style: italic;
+        line-height: 16px;
+    
+        max-height: 80px;
+        overflow-y: auto;
+    }
+    
+    .properties-editor .properties-editor-form {
+        padding: 10px 15px 30px;
+    }
+    
+    .properties-editor .button-container {
+        width: 100%;
+        padding: 0;
+        text-align: center;
+    }
+    
+    .properties-editor .delete-component-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .variables-editor-inline {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .variables-editor-inline .pair {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        align-items: center;
+        justify-content: space-between;
+    
+        margin-bottom: 10px;
+    }
+    
+    .variables-editor-inline .pair > .colon {
+        font-size: 18px;
+        font-weight: bold;
+    
+        margin: 0 6px;
+    }
+    
+    .variables-editor-inline .pair > .remove {
+        width: 20px;
+        height: 20px;
+    
+        border-radius: 50%;
+        font-size: 9px;
+    
+        background-color: #bababa;
+        color: white;
+    
+        margin-left: 9px;
+    }
+    
+    .variables-editor-inline .add-param-pair {
+        color: #2F74EA;
+    
+        border: none;
+        background-color: transparent;
+        text-align: left;
+    
+        display: inline-block;
+    }
+    
+    .variables-editor-inline .add-param-pair i {
+        height: 18px;
+        width: 18px;
+    
+        font-size: 12px;
+    
+        background-color: rgba(47,116,234,0.2);
+    
+        color: #2F74EA;
+    
+        border-radius: 50%;
+        text-align: center;
+        line-height: 17px;
+    }
+    
+    .properties-editor .help {
+        word-break: break-word;
+        padding: 10px 15px 30px;
+    }
+}

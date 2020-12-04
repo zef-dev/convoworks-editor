@@ -1,0 +1,33 @@
+<div ng-if="ready" class="selectable-component {{definition.component_properties._workflow}}" 
+	ng-mouseover="over=true; $event.stopPropagation()" 
+	ng-mouseout="over=false; $event.stopPropagation()"
+	ng-class="{ 'over' : over, 'selected' : isSelected(), 'clipboard-cut' : isCut() }"
+    context-menu="getContextOptions()"
+    >
+
+	<h3 ng-if="showComponentTitle()" title="{{ ::definition.description}}" class="component-title">{{ getComponentTitle() }}
+    
+    </h3>
+    <div title="{{ ::definition.description}}" class="preview"></div>
+	
+	<div ng-repeat="(name, prop_definition) in definition.component_properties track by name">
+	
+		<convoworks-components-container
+		 ng-if="prop_definition.editor_type == 'service_components'"
+		 component="component"
+		 property-name="name"
+		 property-definition="prop_definition"
+		 ></convoworks-components-container>
+	</div>
+
+	<div ng-repeat="(name, prop_definition) in definition.component_properties.ok_specific track by name">
+
+		<convoworks-components-container
+				ng-if="prop_definition.editor_type == 'service_components'"
+				component="component"
+				property-name="'ok_specific.' + name"
+				property-definition="prop_definition"
+		></convoworks-components-container>
+	</div>
+    	
+</div>

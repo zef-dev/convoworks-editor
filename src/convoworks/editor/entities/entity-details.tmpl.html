@@ -1,0 +1,23 @@
+<div class="group wide-panel" ng-class="{'error':error}">
+    <div class="card-pane">
+        <h3>
+            Update entity - {{ current_entity.name }}
+        </h3>
+
+        <form ng-submit="submitEntity()">
+            <entity-editor entity="current_entity" on-update="onUpdate"></entity-editor>
+
+            <div class="group">
+                <button type="submit" title="Save changes"
+                        ng-disabled="!isEntityChanged()"
+                        class="btn btn-md btn-primary">
+                    Save
+                </button>
+                <a ui-sref="^.intent-model"
+                   title="Cancel changes"
+                   class="cancel">Cancel</a>
+
+            </div>
+        </form>
+    </div>
+</div>

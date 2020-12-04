@@ -1,0 +1,16 @@
+<div class="collapse-expand-buttons-container">
+
+    <button type="button" class="btn btn-muted btn-no-bg btn-borderless preview-toggle" ng-click="togglePreview(); $event.stopPropagation()" title="{{ getPreviewDescription() }}">
+        <i aria-hidden="true" ng-class="{ 'glyphicon glyphicon-eye-open': !previewing, 'glyphicon glyphicon-eye-close': previewing }"></i>
+    </button>
+    <button type="button" class="btn btn-muted btn-borderless btn-no-bg" ng-click="toggleTitles(); $event.stopPropagation()" title="{{getTitlesDescription()}}" ng-class="{'active':areTitlesOn()}">
+        <i class="glyphicon glyphicon-text-size" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="btn btn-muted btn-borderless btn-no-bg" ng-click="collapseAll(); $event.stopPropagation()" title="Collapse all">
+        <i class="glyphicon glyphicon-resize-small" aria-hidden="true"></i>
+    </button>
+    <button type="button" class="btn btn-muted btn-borderless btn-no-bg" ng-click="expandAll(); $event.stopPropagation()" title="Expand all">
+        <i class="glyphicon glyphicon-resize-full" aria-hidden="true"></i>
+    </button>
+
+</div>

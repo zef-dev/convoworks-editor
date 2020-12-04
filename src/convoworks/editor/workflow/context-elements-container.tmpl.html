@@ -1,0 +1,17 @@
+<div class="context-container prop-container \Convo\Core\Workflow\IServiceContext root-prop-container"
+    ng-class="{ 'empty' : service.contexts.length === 0}">
+    <h3 class="prop-title"
+        title="Service contexts">
+        Contexts
+    </h3>
+    
+    <div class="components-placeholder" ng-hide="!isOpen()">
+        Add contexts with the dropdown on right
+    </div>
+    
+    <div class="real-container">
+        <context-element
+                ng-repeat="context in service.contexts track by context.properties._component_id" context-element="context">
+        </context-element>
+    </div>
+</div>

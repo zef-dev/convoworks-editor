@@ -1,0 +1,82 @@
+form {
+    input.editor-input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.875rem;
+
+        &::placeholder {
+            opacity: 1;
+            color: $color-gray--light;
+        }
+    }
+
+    input.input--item-name {
+        border: $input-border;
+        border-radius: $input-radius;
+        border: $input-border;
+        padding: 0.875rem 0.75rem;
+        font-size: 0.875rem;
+        height: $input-height;
+        width: 100%;
+	}
+	
+	input[hidden] {
+		display: none;
+    }
+    
+    input.input--add-field {
+        height: $input-height;
+        margin-bottom: 1.25rem;
+        border: $border--gray-lighter;
+        border-radius: $input-radius;
+        //overflow: hidden;
+        transition: $transition-time;
+        font-size: 0.875rem;
+        color: rgba($black, 0.85);
+        background: transparent;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+
+    
+        &:hover, &:focus, &:active {
+            border-color: $color-primary;
+        }
+    }
+}
+
+
+.select {
+    position: relative;
+    padding: 0;
+    border: none;
+}
+
+.select__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    transform: translateY(0.625rem);
+    background: $white--true;
+    text-align: left;
+    border: $input-border;
+    z-index: 10;
+    width: 18.75rem;
+    height: 30vh;
+    border-radius: $input-radius;
+    overflow: hidden;
+    box-shadow: 0.25rem 0.25rem 0.625rem 0 rgba(0, 0, 0, 0.14);
+    font-size: 0.875rem;
+
+    li {
+        padding: 0.625rem;
+        cursor: pointer;
+        transition: $transition-time;
+
+        &:hover {
+            background: $color-gray--lighter;
+        }
+    }
+}
+

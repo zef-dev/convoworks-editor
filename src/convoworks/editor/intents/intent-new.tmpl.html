@@ -1,0 +1,22 @@
+<div class="group wide-panel">
+    <div class="card-pane">
+        <h3>
+            Add new Intent - {{ intent.name }}
+        </h3>
+
+        <form ng-submit="submitIntent()">
+            <intent-editor intent="intent" entities="entities" system-entities="system_entities" on-update="onUpdate"></intent-editor>
+
+            <div class="group">
+                <button type="submit" title="Save changes"
+                        ng-disabled="!isIntentChanged()"
+                        class="btn btn-md btn-primary">
+                    Add
+                </button>
+                <a ui-sref="^.intent-model"
+                   title="Cancel changes"
+                   class="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

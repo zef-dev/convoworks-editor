@@ -1,0 +1,97 @@
+.convoworks {
+
+    .releases {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .releases .card-pane {
+        margin: 10px 0;
+    }
+    
+    .releases .data {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .releases .data .title {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        height: 20px;
+        line-height: 10px;
+    
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 20px 0;
+    }
+    
+    .releases .data .title .heading {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .indicator {
+        width: 10px;
+        height: 10px;
+    
+        display: inline-block;
+    
+        margin: 0;
+        padding: 0;
+        border-radius: 50%;
+    }
+    
+    .releases .data .title .heading .indicator {
+        margin-right: 10px;
+    }
+    
+    .indicator.production {
+        background-color: #16A316;
+    }
+    
+    .indicator.test {
+        background-color: #F49A03;
+    }
+    
+    .indicator.development {
+        background-color: #2F74EA;
+    }
+    
+    .releases .data .title .heading h4 {
+        margin: 0;
+    }
+    
+    .releases .data table {
+        border-collapse: collapse;
+        width: 100%;
+        height: 0;
+        display: none;
+    }
+    
+    .releases .data table.expanded {
+        height: auto;
+        display: table;
+    }
+    
+    .releases .data table thead {
+        font-size: 17px;
+        color: rgba(0,0,0,0.36);
+        font-weight: 500;
+    
+        font-variant-caps: all-petite-caps;
+    }
+    
+    .releases .data table tbody {}
+    
+    .releases .data table tbody tr {
+        height: 40px;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    
+        background-color: transparent;
+    }
+}

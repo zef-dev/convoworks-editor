@@ -1,0 +1,39 @@
+.convoworks {
+    
+    .collapse-expand-buttons-container
+    {
+        position: absolute;
+        left: -20px;
+        top: 30px;
+    }
+    
+    .collapse-expand-buttons-container a
+    {
+        color: rgba( 0,0,0,0.5);
+    
+        padding: 6px;
+        display: inline-block;
+    
+        width: 24px;
+        height: 24px;
+    
+        text-decoration: none;
+        text-align: center;
+    }
+    
+    .collapse-expand-buttons-container
+    {
+        float: left;
+    }
+    
+    .collapse-expand-buttons-container a:hover
+    {
+        color: rgba(0,0,0,0.8);
+        /*background-color: rgba( 0,0,0,0.08);*/
+    }
+    
+    .collapse-expand-buttons-container button.btn.btn-muted.active
+    {
+        color: black;
+    }
+}

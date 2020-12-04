@@ -1,0 +1,62 @@
+<div class="card-pane import-export">
+    <h3>Import &amp; Export</h3>
+    <!-- DUMMY INPUT -->
+    <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+
+    <div class="import">
+        <h4>Import</h4>
+            <form>
+                <div class="convo-form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="uploadOptions.keep_vars"> Keep local variables
+                        </label>
+                    </div>
+                </div>
+                <div class="convo-form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="uploadOptions.keep_configs"> Keep local publish configurations
+                        </label>
+                    </div>
+                </div>
+                <div class="convo-form-group">
+                    <label class="convo-form-label">Update service definition</label>
+                    <div class="convo-form-input file"
+                         ngf-drop="uploadSubmitted($file)"
+                         ngf-select="uploadSubmitted($file)"
+                         ngf-multiple="false"
+                         ng-model="newPhoto">
+                        Click to select service definition file or drop a <span class="monospace">.json</span> file here
+                    </div>
+                </div>
+            </form>
+    </div>
+    <div class="export">
+        <h4>Export</h4>
+        <form>
+            <div class="convo-form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="downloadOptions.include_configurations"> Include local configurations
+                    </label>
+                </div>
+            </div>
+            <div class="convo-form-group">
+                <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="download()">
+                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Convoworks model download
+                </button>
+            </div>
+            <div class="convo-form-group">
+                <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('dialogflow')">
+                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Dialogflow export download
+                </button>
+            </div>
+            <div class="convo-form-group">
+                <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('amazon')">
+                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Amazon Alexa export download
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,573 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+
+.convoworks {
+    font-family: "DM Sans", sans-serif;
+}
+
+.convoworks {
+
+    a[ng-click]
+    {
+        cursor: pointer;
+    }
+    
+    
+    @media (max-width: 767px) {
+    	.navbar-collapse {
+    		max-height: none !important;
+    	}
+    
+    	.navbar-collapse ul + ul {
+    		float: none !important;
+    	}
+    }
+    
+    .nopadding {
+       padding: 0 !important;
+       margin: 0 !important;
+    }
+    
+    .monospace {
+        font-family: "Source Code Pro", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    
+    
+    .notify-container
+    {
+    	width: 300px;
+    }
+    
+    .sk-cube-grid {
+      width: 60px;
+      height: 60px;
+      margin: 20px 20px;
+      right: 5px;
+      bottom: 5px;
+      position: absolute;
+      z-index: 300;
+    }
+    
+    .sk-cube-grid .sk-cube {
+      width: 33%;
+      height: 33%;
+      background-color: #59d;
+      float: left;
+      -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+              animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+    }
+    .sk-cube-grid .sk-cube1 {
+      -webkit-animation-delay: 0.2s;
+              animation-delay: 0.2s; }
+    .sk-cube-grid .sk-cube2 {
+      -webkit-animation-delay: 0.3s;
+              animation-delay: 0.3s; }
+    .sk-cube-grid .sk-cube3 {
+      -webkit-animation-delay: 0.4s;
+              animation-delay: 0.4s; }
+    .sk-cube-grid .sk-cube4 {
+      -webkit-animation-delay: 0.1s;
+              animation-delay: 0.1s; }
+    .sk-cube-grid .sk-cube5 {
+      -webkit-animation-delay: 0.2s;
+              animation-delay: 0.2s; }
+    .sk-cube-grid .sk-cube6 {
+      -webkit-animation-delay: 0.3s;
+              animation-delay: 0.3s; }
+    .sk-cube-grid .sk-cube7 {
+      -webkit-animation-delay: 0s;
+              animation-delay: 0s; }
+    .sk-cube-grid .sk-cube8 {
+      -webkit-animation-delay: 0.1s;
+              animation-delay: 0.1s; }
+    .sk-cube-grid .sk-cube9 {
+      -webkit-animation-delay: 0.2s;
+              animation-delay: 0.2s; }
+    
+    @-webkit-keyframes sk-cubeGridScaleDelay {
+      0%, 70%, 100% {
+        -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+      } 35% {
+        -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+      }
+    }
+    
+    @keyframes sk-cubeGridScaleDelay {
+      0%, 70%, 100% {
+        -webkit-transform: scale3D(1, 1, 1);
+                transform: scale3D(1, 1, 1);
+      } 35% {
+        -webkit-transform: scale3D(0, 0, 1);
+                transform: scale3D(0, 0, 1);
+      }
+    }
+    
+    
+    
+    .glyphicon.spinning {
+        animation: spin 1s infinite linear;
+        -webkit-animation: spin2 1s infinite linear;
+    }
+    
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg); }
+        to { transform: scale(1) rotate(360deg); }
+    }
+    
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(360deg); }
+    }
+    
+    
+    .ui-select-multiple.ui-select-bootstrap input.ui-select-search
+    {
+    	height: 26px
+    }
+    
+    
+    /* LAYOUT */
+    
+    .service {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        min-width: 60%;
+    }
+    
+    .service a {
+        position: relative;
+        min-width: 30%;
+        display: block;
+        border: 2px solid #337ab7;
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+    
+        padding: 4px 6px;
+        margin: 6px 0;
+    
+        text-align: left;
+        transition: all 125ms ease-out;
+    
+        text-decoration: none;
+    }
+    
+    .service a:hover {
+    	background-color: #337ab7;
+    	color: white;
+    }
+    
+    .service a .name {
+    	font-size: 1.3em;
+    	margin: 0 0 6px 0;
+    }
+    
+    .service button {
+        border-radius: 0 5px 5px 0;
+        border: 2px solid #d9534f;
+    }
+    
+    .service a, .service button {
+        height: 64px;
+        margin: 6px 0;
+    }
+    
+    
+    .form-group.changed label
+    {
+    	color: #1b809e;
+    }
+    
+    .form-group.changed input,
+    .form-group.changed textarea,
+    .form-group.changed .btn
+    {
+    	border-color: #1b809e;
+    	color: #1b809e;
+    }
+    
+    
+    .nav li.linked > a {
+    	background-color: rgb(59, 122, 59);
+    	color: #f6f6f6;
+    }
+    
+    
+    /**
+        ADD SERVICE
+     */
+    
+    input#service_name ~ span.help
+    {
+        font-size: 13px;
+        float: right;
+        font-style: italic;
+        color: rgba(0,0,0,0.36);
+    }
+    
+    input#service_name ~ span.help.error
+    {
+        color: rgba(232, 10, 10, 0.67);
+    }
+    
+    .template-rectangle
+    {
+        height: 250px;
+        width: 240px;
+        border: 2px solid rgba(0,0,0,0.08);
+        border-radius: 8px;
+        padding: 24px;
+    
+        font-family: "DM Sans", sans-serif;
+    
+        transition: background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+    }
+    
+    .template-rectangle:hover
+    {
+        cursor: pointer;
+    }
+    
+    .template-rectangle .template-title
+    {
+        font-size: 16px;
+        line-height: 1.5em;
+        transition: border-color 150ms ease-in-out, color 150ms ease-in-out;
+    
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .template-rectangle .template-title small
+    {
+        color: #8d8d8d;
+        font-weight: lighter;
+    }
+    
+    .template-rectangle .description
+    {
+        display: inline-block;
+    
+        max-width: 100%;
+        max-height: 100px;
+    
+        overflow: hidden;
+        text-overflow: ellipsis;
+    
+        font-weight: lighter;
+    }
+    
+    .template-rectangle.selected
+    {
+        border: 2px solid #2F74EA;
+        background-color: rgba(240, 243, 247, 0.58);
+    }
+    
+    .template-rectangle.selected .template-title
+    {
+        color: #2F74EA;
+    }
+    
+    .template-rectangle.selected .template-title small
+    {
+        color: #779fe5;
+    }
+    /**
+        ADD SERVICE END
+     */
+    
+    /***************************************
+     **** CONVOWORKS EDITOR ****************
+     ***************************************/
+    
+    .blocks-section-header
+    {
+    	text-align: left;
+    	margin-bottom: 10px;
+    	padding: 0 8px 0 8px;
+    }
+    .blocks-section-header .icon-button
+    {
+    	float: right;
+    /* 	font-size: 16px; */
+    }
+    
+    .back-link-text
+    {
+        font-size: 14px;
+        font-style: italic;
+    /*     display: block; */
+    /*     margin-top: -10px; */
+    }
+    
+    .service-container {
+        max-width: 50%;
+    }
+    
+    hr.convoworks-separator {
+    	width: 80%;
+    	margin: .25em auto;
+    /* 	border: 1px ridge #bbb; */
+    }
+    
+    .variables-editor {
+    	padding: 0 0.5em;
+    }
+    
+    .preview-variables-editor {
+    	padding: 0 0.5em;
+    }
+    
+    
+    .group {
+    	position: relative;
+    	margin: 25px 0 15px;
+    }
+    
+    .group textarea {
+    	resize: none;
+    }
+    
+    .group .variable,
+    .group .utterance,
+    .group .param-pair {
+    	position: relative;
+    }
+    
+    .group .variable input {
+        font-family: monospace;
+    }
+    
+    .group .variable input,
+    .group .param-pair input {
+    	width: 40% !important;
+    	display: inline-block !important;
+    }
+    
+    .group input:not([type=checkbox]),
+    .group textarea,
+    .group select {
+    	background: none;
+    	color: #353535;
+    	font-size: 14px;
+    	padding: 8px 5px 3px 1px;
+    	display: block;
+    	width: 100%;
+    	border: none;
+    	border-radius: 0;
+    	border-bottom: 1px solid #5f5f5f;
+    }
+    
+    .group input.editor-input {
+    	background: unset;
+    	color: unset;
+    	font-size: unset;
+    	padding: unset;
+    	display: unset;
+    	width: unset;
+    	border: unset;
+    	border-radius: unset;
+    	border-bottom: unset;
+    }
+    
+    .group .helper {
+    	font-size: 12px;
+    	font-style: italic;
+    	color: #676767;
+    	/*font-variant: all-petite-caps;*/
+    }
+    
+    .group.error .helper {
+    	color: #c00;
+    	/*font-variant: all-petite-caps;*/
+    }
+    
+    .group input:not([type=checkbox]):focus,
+    .group textarea:focus,
+    .group select:focus{
+    	outline: none;
+    }
+    
+    .group input:focus ~ label,
+    .group textarea:focus ~ label,
+    .group select ~ label,
+    .group .param-pair ~ label,
+    .group input:valid ~ label,
+    .group textarea:valid ~ label {
+    	top: -14px;
+    	font-size: 12px;
+    	color: #0a6aa1;
+    	font-variant: all-petite-caps;
+    }
+    
+    .group input:focus ~ .bar:before,
+    .group textarea:focus ~ .bar:before,
+    .group select:focus ~ .bar:before {
+    	width: 100%;
+    }
+    
+    .group label {
+    	color: #4f4f4f;
+    	font-size: 14px;
+    	font-weight: normal;
+    	position: absolute;
+    	pointer-events: none;
+    	left: 1px;
+    	top: 10px;
+    	transition: 100ms ease all;
+    }
+    
+    .group input[type=checkbox] ~ label {
+    	pointer-events: all !important;
+    }
+    
+    .group .variable .bar,
+    .group .param-pair .bar {
+    	width: 85% !important;
+    }
+    
+    .group .bar {
+    	position: relative;
+    	display: block;
+    	width: 100%;
+    }
+    
+    .group .utterance input {
+    	max-width: 80%;
+    }
+    
+    .group .utterance .bar {
+    	width: 80% !important;
+    }
+    
+    .group .variable .remove-variable,
+    .group .utterance .remove-utterance,
+    .group .param-pair .remove-param-pair {
+    	position: absolute;
+    	top: 8px;
+    	right: 13px;
+    	padding: 0;
+    	line-height: 25px;
+    	width: 25px;
+    	height: 25px;
+    	border: 2px solid #b90007;
+    	background-color: white;
+    	text-align: center;
+    	transition: background-color 150ms ease;
+    }
+    
+    .group .variable .remove-variable i,
+    .group .utterance .remove-utterance i,
+    .group .param-pair .remove-param-pair i {
+    	color: #b90007;
+    }
+    
+    .group .variable .remove-variable:hover,
+    .group .utterance .remove-utterance:hover,
+    .group .param-pair .remove-param-pair:hover {
+    	background-color: #b90007;
+    }
+    
+    .group .variable .remove-variable:hover i,
+    .group .utterance .remove-utterance:hover i,
+    .group .param-pair .remove-param-pair:hover i {
+    	color: white;
+    }
+    
+    .group .add-variable,
+    .group .add-utterance,
+    .group .add-param-pair {
+    	position: absolute;
+    	top: -18px;
+    	right: 13px;
+    	padding: 0;
+    	line-height: 25px;
+    	width: 25px;
+    	height: 25px;
+    	border: 2px solid #0ea213;
+    	background-color: white;
+    	text-align: center;
+    	transition: background-color 150ms ease;
+    }
+    
+    .group .add-variable i,
+    .group .add-utterance i,
+    .group .add-param-pair i {
+    	color: #0ea213;
+    }
+    
+    .group .add-variable:hover,
+    .group .add-utterance:hover,
+    .group .add-param-pair:hover {
+    	background-color: #0ea213;
+    }
+    
+    .group .add-variable:hover i,
+    .group .add-utterance:hover i,
+    .group .add-param-pair:hover i {
+    	color: white;
+    }
+    
+    .group input[type=text] + .dropdown-menu {
+    	width: 100% !important;
+    	border-radius: 0 !important;
+    	z-index: 2147483647 !important;
+    }
+    
+    .group .bar:before {
+    	content: '';
+    	height: 2px;
+    	width: 0;
+    	bottom: 0;
+    	position: absolute;
+    	background: #0a6aa1;
+    	transition: 100ms ease all;
+    	left: 0;
+    }
+    
+    .clearfix
+    {
+    	clear: both;
+    }
+    
+    .card-pane
+    {
+        border-radius: 8px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    
+    .card-pane.no-padding
+    {
+        padding: 0;
+    }
+    
+    tr.inactive td, tr.inactive th
+    {
+    	color: #999;
+    }
+    
+    .wide-panel
+    {
+        max-width: 1100px;
+        padding: 30px;
+        margin: 0;
+    /*     background-color: rgba(0,0,0,0.03); */
+    }
+    
+    .wide-panel.full
+    {
+        max-width: none;
+        width: 100%;
+    }
+    
+    @media (max-width: 975px) {
+    	.service a {
+    		max-width: 100%;
+    	}
+    }
+}

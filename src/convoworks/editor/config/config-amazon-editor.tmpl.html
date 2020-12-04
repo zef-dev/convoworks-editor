@@ -1,0 +1,130 @@
+<div class="wide-panel">
+    <div class="card-pane">
+        <fieldset>
+            <legend>
+                <a ui-sref="convoworks-editor-service.configuration" class="back">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </a>&nbsp;Amazon Alexa
+            </legend>
+            <form name="amazonPlatformConfigForm" class="form-horizontal" ng-submit="updateConfig(amazonPlatformConfigForm.$valid)">
+                <div class="convo-form-group">
+                    <div class="button-group">
+                        <button ng-click="gotoConfigUrl()" ng-if="config.app_id && config.app_id !== ''" title="Alexa developer console - Distribution" class="btn btn-sm btn-primary submit">
+                            Alexa developer console - ({{service_language}}) Store Preview <i class="glyphicon glyphicon-new-window"></i>
+                        </button>
+                        <button disabled ng-if="!config.app_id || config.app_id === ''" title="Alexa developer console - Distribution" class="btn btn-sm btn-primary submit">
+                            Alexa developer console - Distribution <i class="glyphicon glyphicon-new-window"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- DUMMY INPUT -->
+                <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+
+                <div class="convo-form-group" ng-class="{ 'has-error' : !isModeValid()}">
+                    <label class="convo-form-label inline">Mode: </label>
+
+                    <div class="radio-group">
+                        <input type="radio" ng-model="config.mode" id="config-mode-auto" value="auto">
+                        <label class="convo-form-label inline" for="config-mode-auto">Auto</label>
+                    </div>
+
+                    <div class="radio-group">
+                        <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
+                        <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
+                    </div>
+
+                    <span class="help-block" ng-if="!isModeValid()"><strong>You have to link account to enable AUTO mode</strong></span>
+                    <span class="help-block" ng-if="config.mode === 'auto'">
+                    Automatically propagates changes to Amazon. Requires account to be linked with Amazon</span>
+                    <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Amazon side</span>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label for="invocation" class="convo-form-label">Invocation</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
+                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="app_id" class="convo-form-label">Skill ID</label>
+                    <input ng-if="isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                    <input ng-if="!isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                    <span class="help-block" ng-if="config.mode === 'auto' && isNew()">
+                        If you already created the skill, please enter Skill-ID.
+                        If you leave it blank, it will autamatically create the new skill on Amazon side</span>
+                    <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
+                    <b ng-show="amazonPlatformConfigForm.app_id.$invalid && !amazonPlatformConfigForm.app_id.$pristine" class="text-danger">Skill ID is required.</b>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label class="convo-form-label" for="config-interaction-model-sensitivity">Interaction Model Sensitivity</label>
+                    <select ng-model="config.interaction_model_sensitivity" class="convo-form-input" id="config-interaction-model-sensitivity">
+                        <option ng-repeat="(index, sensitivity)  in sensitivities track by index"
+                                value="{{ sensitivity.value }}"> {{ sensitivity.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label class="convo-form-label" for="config-endpoint-ssl-certificate-type">Endpoint SSL Certificate Type</label>
+                    <select ng-model="config.endpoint_ssl_certificate_type" class="convo-form-input" id="config-endpoint-ssl-certificate-type">
+                        <option ng-repeat="(index, endpointCertificateType)  in endpointCertificateTypes track by index"
+                                value="{{ endpointCertificateType.value }}"> {{ endpointCertificateType.description }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
+                    <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
+                    <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
+                           ngf-drop="onFileUpload($file)" ng-model="config.self_signed_certificate"
+                           ngf-select="onFileUpload($file)" ngf-multiple="false">
+                    <p ng-if="getSelfSignedSslCertificate('self_signed_certificate') !== ''">Uploaded SSL Certificate Media ID: <b>{{ getSelfSignedSslCertificate('self_signed_certificate') }} </b> </p>
+                </div>
+
+                <div class="convo-form-group">
+                    <label class="convo-form-label" for="config-auto-display">Auto Display</label>
+                    <div class="checkbox">
+                        <label for="config-auto-display">
+                            <input type="checkbox" ng-model="config.auto_display" id="config-auto-display"/>
+                            Automatically displays the text in an card view on devices with display
+                        </label>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-model="config.interfaces" ng-if="config.mode === 'auto'">
+                    <label class="convo-form-label">Alexa Interfaces</label>
+                    <div ng-repeat="itf in getAlexaInterfaces()">
+                        <label>
+                            <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked">
+                            {{itf.name}}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-if="!isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || amazonPlatformConfigForm.$invalid" class="btn btn-primary btn-sm submit">
+                            Save Configuration
+                        </button>
+                        <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
+                            Revert
+                        </a>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-if="isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Create Amazon configuration" class="btn btn-primary btn-sm submit" ng-disabled="!isModeValid() || amazonPlatformConfigForm.$invalid">
+                            Create
+                        </button>
+                        <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>

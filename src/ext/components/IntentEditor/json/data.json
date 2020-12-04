@@ -1,0 +1,1116 @@
+{
+	"JSON": {
+		"properties": [],
+		"configurations": [],
+		"context_factories": [],
+		"contexts": [],
+		"variables": [],
+		"blocks": [{
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"properties": {
+				"block_id": "__sessionStart",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Welcome to random number game",
+						"_component_id": "umedh56hut3sptoeoitv3"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+					"namespace": "convo-core",
+					"properties": {
+						"value": "Game_Menu",
+						"next": false,
+						"_component_id": "yoor2p0c2ewm6shwpafu"
+					}
+				}],
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\ProcessProcessorSubroutine",
+					"namespace": "convo-core",
+					"properties": {
+						"subroutine_id": "Process_game_menu",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">PROCESS</span> <span class=\"block-id\">{{ getSubroutineName( component.properties.subroutine_id)}}</span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "mkygsuyj-7afw-hd2n-lukp-3igkftiqqgk4"
+					}
+				}],
+				"_component_id": "tj7bditczzfno78dr120x",
+				"default": []
+			},
+			"namespace": "convo-core"
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"properties": {
+				"block_id": "__serviceProcessors",
+				"elements": [],
+				"processors": [],
+				"_component_id": "1ibtwgw9ktnxwt3r7kcw6",
+				"default": []
+			},
+			"namespace": "convo-core"
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"properties": {
+				"block_id": "__sessionEnd",
+				"elements": [],
+				"processors": [],
+				"_component_id": "56vx5h758wt977pnt5ts2a",
+				"default": []
+			},
+			"namespace": "convo-core"
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"namespace": "convo-core",
+			"properties": {
+				"block_id": "Game_Menu",
+				"name": "Game menu",
+				"description": "",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Would you like to guess or to pick the number?",
+						"_component_id": "1p8mqquufm475o154r4h8d"
+					}
+				}],
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\ProcessProcessorSubroutine",
+					"namespace": "convo-core",
+					"properties": {
+						"subroutine_id": "Process_game_menu",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">PROCESS</span> <span class=\"block-id\">{{ getSubroutineName( component.properties.subroutine_id)}}</span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "0qgsk2ca-zvd7-ikvg-ck3f-lamapkt8icr6"
+					}
+				}],
+				"_component_id": "adpzbb9e73sa8prm1xz2f7",
+				"default": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Please say, would you like to guess or to pick the number?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "osdgq4js-mpbj-lxo8-iboo-szjfn13wspft"
+					}
+				}]
+			}
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"namespace": "convo-core",
+			"properties": {
+				"block_id": "Pick_game_prepare",
+				"name": "Pick game prepare",
+				"description": "",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "OK. You should pick one number between ${MIN} and ${MAX}, and remember it.",
+						"_component_id": "rx9qge7zjz77thzpllsvp"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Have you picked the number? Are you ready for the game?",
+						"_component_id": "g7hply9zhascha4pin87uo"
+					}
+				}],
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\SimpleProcessor",
+					"namespace": "convo-core",
+					"properties": {
+						"ok": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+							"namespace": "convo-core",
+							"properties": {
+								"value": "pick_game",
+								"next": false,
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}</span> <span class=\"block-id\">{{ component.properties.value}}</span></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "fu5ay7ei-mekr-uagv-onzi-bhjokipsthgm"
+							}
+						}],
+						"request_filters": [{
+							"class": "\\Convo\\Pckg\\Core\\CrossIntentRequestFilter",
+							"namespace": "convo-core",
+							"properties": {
+								"readers": [{
+									"class": "\\Convo\\Pckg\\Core\\CrossIntentReader",
+									"namespace": "convo-core",
+									"properties": {
+										"intent": "convo.YesIntent",
+										"values": [],
+										"rename": [],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\">Catch intent <b>{{ component.properties.intent}}</b><span ng-repeat=\"(key,val) in component.properties.values track by key\">, use predefined value <b>result.{{ key }} = '{{ val }}'</b></span><span ng-repeat=\"(key,val) in component.properties.rename track by key\">, rename slot <b>{{ key }} => result.{{ val }}</b></span></div>"
+										},
+										"_workflow": "filter",
+										"_descend": true,
+										"_component_id": "vkmew32h-h09s-bw1d-vlpt-txh35ik8pyzb"
+									}
+								}],
+								"_interface": "\\Convo\\Core\\Workflow\\IRequestFilter",
+								"_workflow": "filter",
+								"_component_id": "dgjtjrm3-1mix-tkdh-seei-quaizkofml1s"
+							}
+						}],
+						"name": "New block",
+						"utterances": [],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"user-say\" ng-if=\"component.properties.utterances.length\">User says: <span ng-repeat=\"utterance in component.properties.utterances\" ng-if=\"$index<5\"><b>\"{{utterance}}\"</b>, </span> ...</div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "kyrbywvi-pday-cbes-2ptz-nxuzvlmmvppn"
+					}
+				}],
+				"_component_id": "4ynvzfsoa144cx1v2wh629",
+				"default": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Please say, did you picked the number? Are you ready?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "czp4sfdo-knpo-d8us-fu5x-ntsvnpvcbjit"
+					}
+				}]
+			}
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"namespace": "convo-core",
+			"properties": {
+				"block_id": "pick_game",
+				"name": "Pick game",
+				"description": "",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+					"namespace": "convo-core",
+					"properties": {
+						"scope_type": "session",
+						"properties": {
+							"guess_min": "${MIN}",
+							"guess_max": "${MAX}",
+							"guess_count": "0"
+						},
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "0zkxb1n8-dlpw-wjhm-h3sa-fdtcsg6tocnv"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\ReadElementsSubroutine",
+					"namespace": "convo-core",
+					"properties": {
+						"subroutine_id": "Pick_the_number",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">EXECUTE</span> <span class=\"block-id\">{{ component.properties.subroutine_id}}</span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "bgfg9qtd-2z4s-zfm1-zsdw-5vpzeel6qxtz"
+					}
+				}],
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\SimpleProcessor",
+					"namespace": "convo-core",
+					"properties": {
+						"ok": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleIfElement",
+							"namespace": "convo-core",
+							"properties": {
+								"test": "${result.missType === 'lower'}",
+								"then": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+									"namespace": "convo-core",
+									"properties": {
+										"scope_type": "session",
+										"properties": {
+											"guess_max": "${guess - 1}"
+										},
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "tld8dibh-tloz-smul-k5fz-x2q83lylad3c"
+									}
+								}],
+								"else": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+									"namespace": "convo-core",
+									"properties": {
+										"scope_type": "session",
+										"properties": {
+											"guess_min": "${guess + 1}"
+										},
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "gell4hn1-zbp1-hpzl-mnkb-whri1ao1nzhn"
+									}
+								}],
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">IF</span> <b>{{ component.properties.test }}</b></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "skojgmse-smnn-mjg9-2uz4-yla70y7vgnxr",
+								"else_if": []
+							}
+						}, {
+							"class": "\\Convo\\Pckg\\Core\\Elements\\ReadElementsSubroutine",
+							"namespace": "convo-core",
+							"properties": {
+								"subroutine_id": "Pick_the_number",
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">EXECUTE</span> <span class=\"block-id\">{{ component.properties.subroutine_id}}</span></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "ateligga-ghdd-8mqj-swuy-50wqlgne05tk"
+							}
+						}],
+						"request_filters": [{
+							"class": "\\Convo\\Pckg\\Core\\CrossIntentRequestFilter",
+							"namespace": "convo-core",
+							"properties": {
+								"readers": [{
+									"class": "\\Convo\\Pckg\\Core\\ConvoIntentReader",
+									"namespace": "convo-core",
+									"properties": {
+										"intent": "NumberIsMissResponse",
+										"values": [],
+										"rename": [],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\">Catch Convo intent <b>{{ component.properties.intent}}</b><span ng-repeat=\"(key,val) in component.properties.values track by key\">, use predefined value <b>result.{{ key }} = '{{ val }}'</b></span><span ng-repeat=\"(key,val) in component.properties.rename track by key\">, rename slot <b>{{ key }} => result.{{ val }}</b></span></div>"
+										},
+										"_workflow": "filter",
+										"_descend": true,
+										"_factory": [],
+										"_component_id": "aob93vic-dvfk-cqgg-seif-pi5rip9bytm1"
+									}
+								}],
+								"_interface": "\\Convo\\Core\\Workflow\\IRequestFilter",
+								"_workflow": "filter",
+								"_component_id": "bge64kd4-5q0f-kcwz-txhq-c4vab2sj30yu"
+							}
+						}],
+						"name": "New block",
+						"utterances": [],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"user-say\" ng-if=\"component.properties.utterances.length\">User says: <span ng-repeat=\"utterance in component.properties.utterances\" ng-if=\"$index<5\"><b>\"{{utterance}}\"</b>, </span> ...</div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "xxyqvvlk-pzkj-p3pg-ho7a-thx3tfqqgoce"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Processors\\SimpleProcessor",
+					"namespace": "convo-core",
+					"properties": {
+						"ok": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+							"namespace": "convo-core",
+							"properties": {
+								"type": "default",
+								"text": "Great! It took me ${guess_count} attempts",
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "p9g43cs0-aijh-vth4-rl9m-xwoqq9jufv0h"
+							}
+						}, {
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+							"namespace": "convo-core",
+							"properties": {
+								"value": "Game_Menu",
+								"next": false,
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}</span> <span class=\"block-id\">{{ component.properties.value}}</span></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "mccp6zep-bffg-sx3c-k6sz-b0ycnqsbwwav"
+							}
+						}],
+						"request_filters": [{
+							"class": "\\Convo\\Pckg\\Core\\CrossIntentRequestFilter",
+							"namespace": "convo-core",
+							"properties": {
+								"readers": [{
+									"class": "\\Convo\\Pckg\\Core\\ConvoIntentReader",
+									"namespace": "convo-core",
+									"properties": {
+										"intent": "NumberIsCorrectResponse",
+										"values": [],
+										"rename": [],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\">Catch Convo intent <b>{{ component.properties.intent}}</b><span ng-repeat=\"(key,val) in component.properties.values track by key\">, use predefined value <b>result.{{ key }} = '{{ val }}'</b></span><span ng-repeat=\"(key,val) in component.properties.rename track by key\">, rename slot <b>{{ key }} => result.{{ val }}</b></span></div>"
+										},
+										"_workflow": "filter",
+										"_descend": true,
+										"_factory": [],
+										"_component_id": "w6zccjra-aspe-opj0-hv1p-0glgx2kec28p"
+									}
+								}],
+								"_interface": "\\Convo\\Core\\Workflow\\IRequestFilter",
+								"_workflow": "filter",
+								"_component_id": "w8nzahnx-eqqo-kxzu-l25n-x3lttf1ylwy8"
+							}
+						}],
+						"name": "New block",
+						"utterances": [],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"user-say\" ng-if=\"component.properties.utterances.length\">User says: <span ng-repeat=\"utterance in component.properties.utterances\" ng-if=\"$index<5\"><b>\"{{utterance}}\"</b>, </span> ...</div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "tsyfh25j-ioe4-27iq-f2ek-caooba6gkbry"
+					}
+				}],
+				"_component_id": "vghzl080ikqo0ysnqjdjm",
+				"default": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "I didn't understand that. Is your number less or greater than ${guess} or is the ${guess} correct answer?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "zx2o6uqc-bkah-lfqk-cqbl-9qygfxytus0a"
+					}
+				}]
+			}
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"namespace": "convo-core",
+			"properties": {
+				"block_id": "guess_game",
+				"name": "Guess game",
+				"description": "",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+					"namespace": "convo-core",
+					"properties": {
+						"scope_type": "session",
+						"properties": {
+							"picked_number": "${rand( MIN, MAX)}",
+							"guess_count": "1"
+						},
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "fvms9sfm-oqz5-sdgl-fwdi-qr8vxdxopx8t"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "I got my number. What is your guess?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "ahbvwfrl-tvdz-b2zm-cnr6-yj45upbto56v"
+					}
+				}],
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\SimpleProcessor",
+					"namespace": "convo-core",
+					"properties": {
+						"ok": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleIfElement",
+							"namespace": "convo-core",
+							"properties": {
+								"test": "${result.guess > picked_number}",
+								"then": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+									"namespace": "convo-core",
+									"properties": {
+										"scope_type": "session",
+										"properties": {
+											"guess_count": "${guess_count + 1}"
+										},
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "vwgbrkya-pvgw-hihx-edut-qitxp40cq0uv"
+									}
+								}, {
+									"class": "\\Convo\\Pckg\\Core\\Elements\\ElementRandomizer",
+									"namespace": "convo-core",
+									"properties": {
+										"mode": "0",
+										"elements": [{
+											"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+											"namespace": "convo-core",
+											"properties": {
+												"type": "default",
+												"text": "My number is lower than ${result.guess}",
+												"_preview_angular": {
+													"type": "html",
+													"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+												},
+												"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+												"_workflow": "read",
+												"_component_id": "w0ogiwy1-crq0-4zk8-ip1g-6o2icghpsy6k"
+											}
+										}, {
+											"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+											"namespace": "convo-core",
+											"properties": {
+												"type": "default",
+												"text": "No, my number is lower",
+												"_preview_angular": {
+													"type": "html",
+													"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+												},
+												"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+												"_workflow": "read",
+												"_component_id": "6fbw1yz9-5jsk-q57o-mw2o-qaaibu5dy9jz"
+											}
+										}],
+										"namespace": null,
+										"scope_type": "installation",
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "nq7nyehm-jkaz-rz9c-d9qp-uciegwtxw0px"
+									}
+								}],
+								"else_if": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\ElseIfElement",
+									"namespace": "convo-core",
+									"properties": {
+										"test": "${result.guess < picked_number}",
+										"then": [{
+											"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+											"namespace": "convo-core",
+											"properties": {
+												"scope_type": "session",
+												"properties": {
+													"guess_count": "${guess_count + 1}"
+												},
+												"_preview_angular": {
+													"type": "html",
+													"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+												},
+												"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+												"_workflow": "read",
+												"_component_id": "eiuzicnd-vsnt-d1xp-aiyj-u2wwa3rxk02b"
+											}
+										}, {
+											"class": "\\Convo\\Pckg\\Core\\Elements\\ElementRandomizer",
+											"namespace": "convo-core",
+											"properties": {
+												"mode": "0",
+												"elements": [{
+													"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+													"namespace": "convo-core",
+													"properties": {
+														"type": "default",
+														"text": "My number is greater than ${result.guess}",
+														"_preview_angular": {
+															"type": "html",
+															"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+														},
+														"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+														"_workflow": "read",
+														"_component_id": "r7vhutlb-yjzo-k8wi-jp08-3fryqwsosrps"
+													}
+												}, {
+													"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+													"namespace": "convo-core",
+													"properties": {
+														"type": "default",
+														"text": "No, my number is greater",
+														"_preview_angular": {
+															"type": "html",
+															"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+														},
+														"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+														"_workflow": "read",
+														"_component_id": "7urtltdw-4v0d-irnb-lrjd-v2psa7pjjzxz"
+													}
+												}],
+												"namespace": null,
+												"scope_type": "installation",
+												"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+												"_workflow": "read",
+												"_component_id": "czaqvnbg-44tv-lrpb-jtnu-blqlvuwvuxva"
+											}
+										}],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">IF</span> <b>{{ component.properties.test }}</b></div>"
+										},
+										"_interface": "\\Convo\\Pckg\\Core\\Elements\\ElseIfElement",
+										"_workflow": "read",
+										"_descend": true,
+										"_component_id": "ibci970d-ydes-up0o-q7z6-unsgabeuvgg1"
+									}
+								}],
+								"else": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+									"namespace": "convo-core",
+									"properties": {
+										"type": "default",
+										"text": "Bravo! It took you ${guess_count} attempts.",
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "m5k5ywh2-p9si-2vrj-ncma-f3r0o3y8i0vy"
+									}
+								}, {
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+									"namespace": "convo-core",
+									"properties": {
+										"value": "Game_Menu",
+										"next": false,
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}</span> <span class=\"block-id\">{{ getBlockName( component.properties.value)}}</span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "ta4omzho-bbjh-jf0f-x5xh-9yjvkjhjnj5x"
+									}
+								}],
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">IF</span> <b>{{ component.properties.test }}</b></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "qkwjnpi1-edlw-7eku-xieq-w3sukbsnosdy"
+							}
+						}],
+						"request_filters": [{
+							"class": "\\Convo\\Pckg\\Core\\CrossIntentRequestFilter",
+							"namespace": "convo-core",
+							"properties": {
+								"readers": [{
+									"class": "\\Convo\\Pckg\\Core\\ConvoIntentReader",
+									"namespace": "convo-core",
+									"properties": {
+										"intent": "GuessedValueResponse",
+										"values": [],
+										"rename": [],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\">Catch Convo intent <b>{{ component.properties.intent}}</b><span ng-repeat=\"(key,val) in component.properties.values track by key\">, use predefined value <b>result.{{ key }} = '{{ val }}'</b></span><span ng-repeat=\"(key,val) in component.properties.rename track by key\">, rename slot <b>{{ key }} => result.{{ val }}</b></span></div>"
+										},
+										"_workflow": "filter",
+										"_descend": true,
+										"_factory": [],
+										"_component_id": "3gudmgfb-0gba-n3ve-l3gs-veouwlfn0nea"
+									}
+								}],
+								"_interface": "\\Convo\\Core\\Workflow\\IRequestFilter",
+								"_workflow": "filter",
+								"_component_id": "3sbjjjod-goy4-3ak8-75kc-mrn6igjvw5ck"
+							}
+						}],
+						"utterances": [],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"user-say\" ng-if=\"component.properties.utterances.length\">User says: <span ng-repeat=\"utterance in component.properties.utterances\" ng-if=\"$index<5\"><b>\"{{utterance}}\"</b>, </span> ...</div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "cdch8dhi-7zyu-iizh-jhdv-eel2jplx4nld"
+					}
+				}],
+				"_component_id": "iyvd5fxn0qul1yti72iqh",
+				"default": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "default",
+						"text": "Please say, what is your guess?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "sgp4xc4r-hfzt-xp6f-4avz-qm0guk11wd8d"
+					}
+				}]
+			}
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ConversationBlock",
+			"properties": {
+				"block_id": "__mediaControls",
+				"elements": [],
+				"processors": [],
+				"default": [],
+				"_component_id": "c245989a-1155-ed0e-1475-c073a3ddc785"
+			}
+		}],
+		"name": "Random Game V2",
+		"service_id": "random-game-v2",
+		"convo_service_version": 8,
+		"subroutines": [{
+			"class": "\\Convo\\Pckg\\Core\\Elements\\ElementsSubroutine",
+			"namespace": "convo-core",
+			"properties": {
+				"subroutine_id": "Pick_the_number",
+				"elements": [{
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SetParamElement",
+					"namespace": "convo-core",
+					"properties": {
+						"scope_type": "session",
+						"properties": {
+							"guess": "${rand(guess_min + 1, guess_max - 1)}",
+							"guess_count": "${guess_count + 1}"
+						},
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">LET</span> <span ng-repeat=\"(key, val) in component.properties.properties track by key\"> <b>{{ key}}</b> = <b>{{ val}};</b><br></span></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "cgodjgvt-tbga-up5c-fz6h-aavcxiyzkjpw"
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleIfElement",
+					"namespace": "convo-core",
+					"properties": {
+						"test": "${guess_count === 1}",
+						"then": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+							"namespace": "convo-core",
+							"properties": {
+								"type": "default",
+								"text": "Is your number ${guess}?",
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "oix50vfq-3hgs-o8ou-hbjh-x9f5fklaz6v2"
+							}
+						}],
+						"else": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\ElementRandomizer",
+							"namespace": "convo-core",
+							"properties": {
+								"mode": "0",
+								"elements": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+									"namespace": "convo-core",
+									"properties": {
+										"type": "default",
+										"text": "Is it ${guess}?",
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "yp40lscg-quhd-iluo-yypf-2m8xdm2kb0yg"
+									}
+								}, {
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+									"namespace": "convo-core",
+									"properties": {
+										"type": "default",
+										"text": "Maybe ${guess}?",
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "7qffugmi-1hur-7tb2-vxu2-zqhz7pd1ufwg"
+									}
+								}, {
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+									"namespace": "convo-core",
+									"properties": {
+										"type": "default",
+										"text": "How about ${guess}?",
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "u2bt6qxx-x7jf-gkgo-p7w0-ldc6g6tzahzo"
+									}
+								}],
+								"namespace": null,
+								"scope_type": "installation",
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "ob1wiujk-npsh-fnq9-mlp6-ijo2usefrfua"
+							}
+						}],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"code\"><span class=\"statement\">IF</span> <b>{{ component.properties.test }}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "gnafy5hj-hjki-oacw-jvhf-1u5od82chzis",
+						"else_if": []
+					}
+				}, {
+					"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleTextResponse",
+					"namespace": "convo-core",
+					"properties": {
+						"type": "reprompt",
+						"text": "Please tell me, is the <emphasis level=\"moderate\">${guess} </emphasis> correct answer?",
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"we-say\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}</b></div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+						"_workflow": "read",
+						"_component_id": "gsr5conh-jgfd-xfue-fo8w-u2gwkw4rtx7g"
+					}
+				}],
+				"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+				"_workflow": "read",
+				"_system": true,
+				"_component_id": "e1isikgb-vjy3-ji4t-zstd-nv1htsry37l3",
+				"name": "Pick the number"
+			}
+		}, {
+			"class": "\\Convo\\Pckg\\Core\\Processors\\ProcessorSubroutine",
+			"namespace": "convo-core",
+			"properties": {
+				"subroutine_id": "Process_game_menu",
+				"name": "Process game menu",
+				"processors": [{
+					"class": "\\Convo\\Pckg\\Core\\Processors\\SimpleProcessor",
+					"namespace": "convo-core",
+					"properties": {
+						"ok": [{
+							"class": "\\Convo\\Pckg\\Core\\Elements\\SimpleIfElement",
+							"namespace": "convo-core",
+							"properties": {
+								"test": "${result.selectedGameType === 'pick'}",
+								"then": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+									"namespace": "convo-core",
+									"properties": {
+										"value": "Pick_game_prepare",
+										"next": false,
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}</span> <span class=\"block-id\">{{ getBlockName( component.properties.value)}}</span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "9an3qjka-xgdy-elwf-jjcw-pzn5xsgpb0t2"
+									}
+								}],
+								"else": [{
+									"class": "\\Convo\\Pckg\\Core\\Elements\\SetStateElement",
+									"namespace": "convo-core",
+									"properties": {
+										"value": "guess_game",
+										"next": false,
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\"><span class=\"statement\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}</span> <span class=\"block-id\">{{ getBlockName( component.properties.value)}}</span></div>"
+										},
+										"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+										"_workflow": "read",
+										"_component_id": "oz7csm6i-v76d-peli-hv6v-kynwhybxpvex"
+									}
+								}],
+								"_preview_angular": {
+									"type": "html",
+									"template": "<div class=\"code\"><span class=\"statement\">IF</span> <b>{{ component.properties.test }}</b></div>"
+								},
+								"_interface": "\\Convo\\Core\\Workflow\\IConversationElement",
+								"_workflow": "read",
+								"_component_id": "5ivllhd5-st7x-yn1r-ylmt-5vaojqrnk3pi",
+								"else_if": []
+							}
+						}],
+						"request_filters": [{
+							"class": "\\Convo\\Pckg\\Core\\CrossIntentRequestFilter",
+							"namespace": "convo-core",
+							"properties": {
+								"readers": [{
+									"class": "\\Convo\\Pckg\\Core\\ConvoIntentReader",
+									"namespace": "convo-core",
+									"properties": {
+										"intent": "SelectGameTypeIntent",
+										"values": [],
+										"rename": [],
+										"_preview_angular": {
+											"type": "html",
+											"template": "<div class=\"code\">Catch Convo intent <b>{{ component.properties.intent}}</b><span ng-repeat=\"(key,val) in component.properties.values track by key\">, use predefined value <b>result.{{ key }} = '{{ val }}'</b></span><span ng-repeat=\"(key,val) in component.properties.rename track by key\">, rename slot <b>{{ key }} => result.{{ val }}</b></span></div>"
+										},
+										"_workflow": "filter",
+										"_descend": true,
+										"_factory": [],
+										"_component_id": "tildqlrh-lyvp-mngv-ht5g-w8mggz7ezmkv"
+									}
+								}],
+								"_interface": "\\Convo\\Core\\Workflow\\IRequestFilter",
+								"_workflow": "filter",
+								"_component_id": "bhsf35bz-newq-prjm-kaiu-divvj4t7lr17"
+							}
+						}],
+						"utterances": [],
+						"_preview_angular": {
+							"type": "html",
+							"template": "<div class=\"user-say\" ng-if=\"component.properties.utterances.length\">User says: <span ng-repeat=\"utterance in component.properties.utterances\" ng-if=\"$index<5\"><b>\"{{utterance}}\"</b>, </span> ...</div>"
+						},
+						"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+						"_workflow": "process",
+						"_component_id": "dm3kdlfb-syfp-gtkn-wxr2-qynf5xmowdbr"
+					}
+				}],
+				"_interface": "\\Convo\\Core\\Workflow\\IConversationProcessor",
+				"_workflow": "process",
+				"_system": true,
+				"_component_id": "nb5d2htu-wkc3-ipwb-h3er-5puxnbebph0k"
+			}
+		}],
+		"packages": ["convo-core"],
+		"intents": [{
+			"name": "GuessedValueResponse",
+			"type": "custom",
+			"utterances": [{
+				"raw": "Is it 22",
+				"model": [{
+					"text": "Is it"
+				}, {
+					"text": "22",
+					"type": "@convo.number",
+					"slot_value": "guess"
+				}]
+			}, {
+				"raw": "How about 22",
+				"model": [{
+					"text": "How about"
+				}, {
+					"text": "22",
+					"type": "@convo.number",
+					"slot_value": "guess"
+				}]
+			}, {
+				"raw": "Maybe 22",
+				"model": [{
+					"text": "Maybe"
+				}, {
+					"text": "22",
+					"type": "@convo.number",
+					"slot_value": "guess"
+				}]
+			}, {
+				"raw": "22",
+				"model": [{
+					"text": "22",
+					"type": "@convo.number",
+					"slot_value": "guess"
+				}]
+			}]
+		}, {
+			"name": "NumberIsCorrectResponse",
+			"type": "custom",
+			"utterances": [{
+				"raw": "Your guess is correct",
+				"model": [{
+					"text": "Your guess is correct"
+				}]
+			}, {
+				"raw": "You guessed right",
+				"model": [{
+					"text": "You guessed right"
+				}]
+			}]
+		}, {
+			"name": "NumberIsMissResponse",
+			"type": "custom",
+			"utterances": [{
+				"raw": "Lower",
+				"model": [{
+					"text": "lower",
+					"type": "@GuessedValueResponse",
+					"slot_value": "missType"
+				}]
+			}, {
+				"raw": "My number is",
+				"model": [{
+					"text": "My number is"
+				}, {
+					"text": "lower",
+					"type": "@GuessedValueResponse",
+					"slot_value": "missType"
+				}]
+			}, {
+				"raw": "No, it is lower than 34",
+				"model": [{
+					"text": "No, it is"
+				}, {
+					"text": "lower",
+					"type": "@GuessedValueResponse",
+					"slot_value": "missType"
+				}, {
+					"text": "than"
+				}, {
+					"text": "34",
+					"type": "@convo.number",
+					"slot_value": "userGuess"
+				}]
+			}]
+		}, {
+			"name": "SelectGameTypeIntent",
+			"type": "custom",
+			"utterances": [{
+				"raw": "Guess the number",
+				"model": [{
+					"text": "Guess",
+					"type": "@GameType",
+					"slot_value": "selectedGameType"
+				}, {
+					"text": "the number"
+				}]
+			}, {
+				"raw": "I'll play guess the number",
+				"model": [{
+					"text": "I'll play"
+				}, {
+					"text": "guess",
+					"type": "@GameType",
+					"slot_value": "selectedGameType"
+				}, {
+					"text": "the number"
+				}]
+			}, {
+				"raw": "I wanna pick",
+				"model": [{
+					"text": "I wanna"
+				}, {
+					"text": "pick",
+					"type": "@GameType",
+					"slot_value": "selectedGameType"
+				}, {
+					"text": "please"
+				}]
+			}, {
+				"raw": "I wish to pick",
+				"model": [{
+					"text": "I wish to"
+				}, {
+					"text": "pick",
+					"type": "@GameType",
+					"slot_value": "selectedGameType"
+				}]
+			}]
+		}],
+		"entities": [{
+			"name": "GameType",
+			"values": [{
+				"value": "pick",
+				"synonyms": ["pick"]
+			}, {
+				"value": "guess",
+				"synonyms": ["guess"]
+			}]
+		}, {
+			"name": "GuessedValueResponse",
+			"values": [{
+				"value": "lower",
+				"synonyms": ["lower", "less", "below"]
+			}, {
+				"value": "greater",
+				"synonyms": ["greater", "above", "higher"]
+			}]
+		}]
+	},
+	"Preview": {
+		"HTML_PREVIEW": {
+			"responseContent": {
+				"content": {
+					"mimeType": "text/html; charset=UTF-8",
+					"text": "{\"properties\":[],\"configurations\":[],\"context_factories\":[],\"contexts\":[],\"variables\":[],\"blocks\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__sessionStart\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Welcome to random number game\",\"_component_id\":\"umedh56hut3sptoeoitv3\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_component_id\":\"yoor2p0c2ewm6shwpafu\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">PROCESS<\\/span> <span class=\\\"block-id\\\">{{ getSubroutineName( component.properties.subroutine_id)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"mkygsuyj-7afw-hd2n-lukp-3igkftiqqgk4\"}}],\"_component_id\":\"tj7bditczzfno78dr120x\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__serviceProcessors\",\"elements\":[],\"processors\":[],\"_component_id\":\"1ibtwgw9ktnxwt3r7kcw6\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__sessionEnd\",\"elements\":[],\"processors\":[],\"_component_id\":\"56vx5h758wt977pnt5ts2a\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"Game_Menu\",\"name\":\"Game menu\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Would you like to guess or to pick the number?\",\"_component_id\":\"1p8mqquufm475o154r4h8d\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">PROCESS<\\/span> <span class=\\\"block-id\\\">{{ getSubroutineName( component.properties.subroutine_id)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"0qgsk2ca-zvd7-ikvg-ck3f-lamapkt8icr6\"}}],\"_component_id\":\"adpzbb9e73sa8prm1xz2f7\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, would you like to guess or to pick the number?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"osdgq4js-mpbj-lxo8-iboo-szjfn13wspft\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"Pick_game_prepare\",\"name\":\"Pick game prepare\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"OK. You should pick one number between ${MIN} and ${MAX}, and remember it.\",\"_component_id\":\"rx9qge7zjz77thzpllsvp\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Have you picked the number? Are you ready for the game?\",\"_component_id\":\"g7hply9zhascha4pin87uo\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"pick_game\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ component.properties.value}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"fu5ay7ei-mekr-uagv-onzi-bhjokipsthgm\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"convo.YesIntent\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_component_id\":\"vkmew32h-h09s-bw1d-vlpt-txh35ik8pyzb\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"dgjtjrm3-1mix-tkdh-seei-quaizkofml1s\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"kyrbywvi-pday-cbes-2ptz-nxuzvlmmvppn\"}}],\"_component_id\":\"4ynvzfsoa144cx1v2wh629\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, did you picked the number? Are you ready?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"czp4sfdo-knpo-d8us-fu5x-ntsvnpvcbjit\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"pick_game\",\"name\":\"Pick game\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_min\":\"${MIN}\",\"guess_max\":\"${MAX}\",\"guess_count\":\"0\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"0zkxb1n8-dlpw-wjhm-h3sa-fdtcsg6tocnv\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ReadElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">EXECUTE<\\/span> <span class=\\\"block-id\\\">{{ component.properties.subroutine_id}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"bgfg9qtd-2z4s-zfm1-zsdw-5vpzeel6qxtz\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.missType === 'lower'}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_max\":\"${guess - 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"tld8dibh-tloz-smul-k5fz-x2q83lylad3c\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_min\":\"${guess + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gell4hn1-zbp1-hpzl-mnkb-whri1ao1nzhn\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"skojgmse-smnn-mjg9-2uz4-yla70y7vgnxr\",\"else_if\":[]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ReadElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">EXECUTE<\\/span> <span class=\\\"block-id\\\">{{ component.properties.subroutine_id}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ateligga-ghdd-8mqj-swuy-50wqlgne05tk\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"NumberIsMissResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"aob93vic-dvfk-cqgg-seif-pi5rip9bytm1\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"bge64kd4-5q0f-kcwz-txhq-c4vab2sj30yu\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"xxyqvvlk-pzkj-p3pg-ho7a-thx3tfqqgoce\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Great! It took me ${guess_count} attempts\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"p9g43cs0-aijh-vth4-rl9m-xwoqq9jufv0h\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ component.properties.value}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"mccp6zep-bffg-sx3c-k6sz-b0ycnqsbwwav\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"NumberIsCorrectResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"w6zccjra-aspe-opj0-hv1p-0glgx2kec28p\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"w8nzahnx-eqqo-kxzu-l25n-x3lttf1ylwy8\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"tsyfh25j-ioe4-27iq-f2ek-caooba6gkbry\"}}],\"_component_id\":\"vghzl080ikqo0ysnqjdjm\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"I didn't understand that. Is your number less or greater than ${guess} or is the ${guess} correct answer?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"zx2o6uqc-bkah-lfqk-cqbl-9qygfxytus0a\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"guess_game\",\"name\":\"Guess game\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"picked_number\":\"${rand( MIN, MAX)}\",\"guess_count\":\"1\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"fvms9sfm-oqz5-sdgl-fwdi-qr8vxdxopx8t\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"I got my number. What is your guess?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ahbvwfrl-tvdz-b2zm-cnr6-yj45upbto56v\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.guess > picked_number}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"vwgbrkya-pvgw-hihx-edut-qitxp40cq0uv\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"My number is lower than ${result.guess}\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"w0ogiwy1-crq0-4zk8-ip1g-6o2icghpsy6k\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"No, my number is lower\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"6fbw1yz9-5jsk-q57o-mw2o-qaaibu5dy9jz\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"nq7nyehm-jkaz-rz9c-d9qp-uciegwtxw0px\"}}],\"else_if\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElseIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.guess < picked_number}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"eiuzicnd-vsnt-d1xp-aiyj-u2wwa3rxk02b\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"My number is greater than ${result.guess}\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"r7vhutlb-yjzo-k8wi-jp08-3fryqwsosrps\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"No, my number is greater\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"7urtltdw-4v0d-irnb-lrjd-v2psa7pjjzxz\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"czaqvnbg-44tv-lrpb-jtnu-blqlvuwvuxva\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElseIfElement\",\"_workflow\":\"read\",\"_descend\":true,\"_component_id\":\"ibci970d-ydes-up0o-q7z6-unsgabeuvgg1\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Bravo! It took you ${guess_count} attempts.\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"m5k5ywh2-p9si-2vrj-ncma-f3r0o3y8i0vy\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ta4omzho-bbjh-jf0f-x5xh-9yjvkjhjnj5x\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"qkwjnpi1-edlw-7eku-xieq-w3sukbsnosdy\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"GuessedValueResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"3gudmgfb-0gba-n3ve-l3gs-veouwlfn0nea\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"3sbjjjod-goy4-3ak8-75kc-mrn6igjvw5ck\"}}],\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"cdch8dhi-7zyu-iizh-jhdv-eel2jplx4nld\"}}],\"_component_id\":\"iyvd5fxn0qul1yti72iqh\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, what is your guess?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"sgp4xc4r-hfzt-xp6f-4avz-qm0guk11wd8d\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__mediaControls\",\"elements\":[],\"processors\":[],\"default\":[],\"_component_id\":\"c245989a-1155-ed0e-1475-c073a3ddc785\"}}],\"name\":\"Random Game V2\",\"service_id\":\"random-game-v2\",\"convo_service_version\":8,\"subroutines\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess\":\"${rand(guess_min + 1, guess_max - 1)}\",\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"cgodjgvt-tbga-up5c-fz6h-aavcxiyzkjpw\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${guess_count === 1}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Is your number ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"oix50vfq-3hgs-o8ou-hbjh-x9f5fklaz6v2\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Is it ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"yp40lscg-quhd-iluo-yypf-2m8xdm2kb0yg\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Maybe ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"7qffugmi-1hur-7tb2-vxu2-zqhz7pd1ufwg\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"How about ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"u2bt6qxx-x7jf-gkgo-p7w0-ldc6g6tzahzo\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ob1wiujk-npsh-fnq9-mlp6-ijo2usefrfua\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gnafy5hj-hjki-oacw-jvhf-1u5od82chzis\",\"else_if\":[]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"reprompt\",\"text\":\"Please tell me, is the <emphasis level=\\\"moderate\\\">${guess} <\\/emphasis> correct answer?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gsr5conh-jgfd-xfue-fo8w-u2gwkw4rtx7g\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_system\":true,\"_component_id\":\"e1isikgb-vjy3-ji4t-zstd-nv1htsry37l3\",\"name\":\"Pick the number\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"name\":\"Process game menu\",\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.selectedGameType === 'pick'}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Pick_game_prepare\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"9an3qjka-xgdy-elwf-jjcw-pzn5xsgpb0t2\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"guess_game\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"oz7csm6i-v76d-peli-hv6v-kynwhybxpvex\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"5ivllhd5-st7x-yn1r-ylmt-5vaojqrnk3pi\",\"else_if\":[]}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"SelectGameTypeIntent\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"tildqlrh-lyvp-mngv-ht5g-w8mggz7ezmkv\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"bhsf35bz-newq-prjm-kaiu-divvj4t7lr17\"}}],\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"dm3kdlfb-syfp-gtkn-wxr2-qynf5xmowdbr\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_system\":true,\"_component_id\":\"nb5d2htu-wkc3-ipwb-h3er-5puxnbebph0k\"}}],\"packages\":[\"convo-core\"],\"intents\":[{\"name\":\"GuessedValueResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Is it 22\",\"model\":[{\"text\":\"Is it\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"How about 22\",\"model\":[{\"text\":\"How about\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"Maybe 22\",\"model\":[{\"text\":\"Maybe\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"22\",\"model\":[{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]}]},{\"name\":\"NumberIsCorrectResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Your guess is correct\",\"model\":[{\"text\":\"Your guess is correct\"}]},{\"raw\":\"You guessed right\",\"model\":[{\"text\":\"You guessed right\"}]}]},{\"name\":\"NumberIsMissResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Lower\",\"model\":[{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"}]},{\"raw\":\"My number is\",\"model\":[{\"text\":\"My number is\"},{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"}]},{\"raw\":\"No, it is lower than 34\",\"model\":[{\"text\":\"No, it is\"},{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"},{\"text\":\"than\"},{\"text\":\"34\",\"type\":\"@convo.number\",\"slot_value\":\"userGuess\"}]}]},{\"name\":\"SelectGameTypeIntent\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Guess the number\",\"model\":[{\"text\":\"Guess\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"the number\"}]},{\"raw\":\"I'll play guess the number\",\"model\":[{\"text\":\"I'll play\"},{\"text\":\"guess\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"the number\"}]},{\"raw\":\"I wanna pick\",\"model\":[{\"text\":\"I wanna\"},{\"text\":\"pick\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"please\"}]},{\"raw\":\"I wish to pick\",\"model\":[{\"text\":\"I wish to\"},{\"text\":\"pick\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"}]}]}],\"entities\":[{\"name\":\"GameType\",\"values\":[{\"value\":\"pick\",\"synonyms\":[\"pick\"]},{\"value\":\"guess\",\"synonyms\":[\"guess\"]}]},{\"name\":\"GuessedValueResponse\",\"values\":[{\"value\":\"lower\",\"synonyms\":[\"lower\",\"less\",\"below\"]},{\"value\":\"greater\",\"synonyms\":[\"greater\",\"above\",\"higher\"]}]}]}",
+					"size": 32502,
+					"transferredSize": 4804
+				},
+				"contentDiscarded": false,
+				"from": "server0.conn0.netEvent2960"
+			}
+		}
+	},
+	"Response Payload": {
+		"EDITOR_CONFIG": {
+			"text": "{\"properties\":[],\"configurations\":[],\"context_factories\":[],\"contexts\":[],\"variables\":[],\"blocks\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__sessionStart\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Welcome to random number game\",\"_component_id\":\"umedh56hut3sptoeoitv3\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_component_id\":\"yoor2p0c2ewm6shwpafu\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">PROCESS<\\/span> <span class=\\\"block-id\\\">{{ getSubroutineName( component.properties.subroutine_id)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"mkygsuyj-7afw-hd2n-lukp-3igkftiqqgk4\"}}],\"_component_id\":\"tj7bditczzfno78dr120x\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__serviceProcessors\",\"elements\":[],\"processors\":[],\"_component_id\":\"1ibtwgw9ktnxwt3r7kcw6\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__sessionEnd\",\"elements\":[],\"processors\":[],\"_component_id\":\"56vx5h758wt977pnt5ts2a\",\"default\":[]},\"namespace\":\"convo-core\"},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"Game_Menu\",\"name\":\"Game menu\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Would you like to guess or to pick the number?\",\"_component_id\":\"1p8mqquufm475o154r4h8d\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">PROCESS<\\/span> <span class=\\\"block-id\\\">{{ getSubroutineName( component.properties.subroutine_id)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"0qgsk2ca-zvd7-ikvg-ck3f-lamapkt8icr6\"}}],\"_component_id\":\"adpzbb9e73sa8prm1xz2f7\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, would you like to guess or to pick the number?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"osdgq4js-mpbj-lxo8-iboo-szjfn13wspft\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"Pick_game_prepare\",\"name\":\"Pick game prepare\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"OK. You should pick one number between ${MIN} and ${MAX}, and remember it.\",\"_component_id\":\"rx9qge7zjz77thzpllsvp\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Have you picked the number? Are you ready for the game?\",\"_component_id\":\"g7hply9zhascha4pin87uo\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"pick_game\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ component.properties.value}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"fu5ay7ei-mekr-uagv-onzi-bhjokipsthgm\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"convo.YesIntent\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_component_id\":\"vkmew32h-h09s-bw1d-vlpt-txh35ik8pyzb\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"dgjtjrm3-1mix-tkdh-seei-quaizkofml1s\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"kyrbywvi-pday-cbes-2ptz-nxuzvlmmvppn\"}}],\"_component_id\":\"4ynvzfsoa144cx1v2wh629\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, did you picked the number? Are you ready?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"czp4sfdo-knpo-d8us-fu5x-ntsvnpvcbjit\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"pick_game\",\"name\":\"Pick game\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_min\":\"${MIN}\",\"guess_max\":\"${MAX}\",\"guess_count\":\"0\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"0zkxb1n8-dlpw-wjhm-h3sa-fdtcsg6tocnv\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ReadElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">EXECUTE<\\/span> <span class=\\\"block-id\\\">{{ component.properties.subroutine_id}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"bgfg9qtd-2z4s-zfm1-zsdw-5vpzeel6qxtz\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.missType === 'lower'}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_max\":\"${guess - 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"tld8dibh-tloz-smul-k5fz-x2q83lylad3c\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_min\":\"${guess + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gell4hn1-zbp1-hpzl-mnkb-whri1ao1nzhn\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"skojgmse-smnn-mjg9-2uz4-yla70y7vgnxr\",\"else_if\":[]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ReadElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">EXECUTE<\\/span> <span class=\\\"block-id\\\">{{ component.properties.subroutine_id}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ateligga-ghdd-8mqj-swuy-50wqlgne05tk\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"NumberIsMissResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"aob93vic-dvfk-cqgg-seif-pi5rip9bytm1\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"bge64kd4-5q0f-kcwz-txhq-c4vab2sj30yu\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"xxyqvvlk-pzkj-p3pg-ho7a-thx3tfqqgoce\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Great! It took me ${guess_count} attempts\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"p9g43cs0-aijh-vth4-rl9m-xwoqq9jufv0h\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ component.properties.value}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"mccp6zep-bffg-sx3c-k6sz-b0ycnqsbwwav\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"NumberIsCorrectResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"w6zccjra-aspe-opj0-hv1p-0glgx2kec28p\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"w8nzahnx-eqqo-kxzu-l25n-x3lttf1ylwy8\"}}],\"name\":\"New block\",\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"tsyfh25j-ioe4-27iq-f2ek-caooba6gkbry\"}}],\"_component_id\":\"vghzl080ikqo0ysnqjdjm\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"I didn't understand that. Is your number less or greater than ${guess} or is the ${guess} correct answer?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"zx2o6uqc-bkah-lfqk-cqbl-9qygfxytus0a\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"namespace\":\"convo-core\",\"properties\":{\"block_id\":\"guess_game\",\"name\":\"Guess game\",\"description\":\"\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"picked_number\":\"${rand( MIN, MAX)}\",\"guess_count\":\"1\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"fvms9sfm-oqz5-sdgl-fwdi-qr8vxdxopx8t\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"I got my number. What is your guess?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ahbvwfrl-tvdz-b2zm-cnr6-yj45upbto56v\"}}],\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.guess > picked_number}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"vwgbrkya-pvgw-hihx-edut-qitxp40cq0uv\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"My number is lower than ${result.guess}\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"w0ogiwy1-crq0-4zk8-ip1g-6o2icghpsy6k\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"No, my number is lower\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"6fbw1yz9-5jsk-q57o-mw2o-qaaibu5dy9jz\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"nq7nyehm-jkaz-rz9c-d9qp-uciegwtxw0px\"}}],\"else_if\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElseIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.guess < picked_number}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"eiuzicnd-vsnt-d1xp-aiyj-u2wwa3rxk02b\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"My number is greater than ${result.guess}\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"r7vhutlb-yjzo-k8wi-jp08-3fryqwsosrps\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"No, my number is greater\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"7urtltdw-4v0d-irnb-lrjd-v2psa7pjjzxz\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"czaqvnbg-44tv-lrpb-jtnu-blqlvuwvuxva\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElseIfElement\",\"_workflow\":\"read\",\"_descend\":true,\"_component_id\":\"ibci970d-ydes-up0o-q7z6-unsgabeuvgg1\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Bravo! It took you ${guess_count} attempts.\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"m5k5ywh2-p9si-2vrj-ncma-f3r0o3y8i0vy\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Game_Menu\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ta4omzho-bbjh-jf0f-x5xh-9yjvkjhjnj5x\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"qkwjnpi1-edlw-7eku-xieq-w3sukbsnosdy\"}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"GuessedValueResponse\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"3gudmgfb-0gba-n3ve-l3gs-veouwlfn0nea\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"3sbjjjod-goy4-3ak8-75kc-mrn6igjvw5ck\"}}],\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"cdch8dhi-7zyu-iizh-jhdv-eel2jplx4nld\"}}],\"_component_id\":\"iyvd5fxn0qul1yti72iqh\",\"default\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Please say, what is your guess?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"sgp4xc4r-hfzt-xp6f-4avz-qm0guk11wd8d\"}}]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ConversationBlock\",\"properties\":{\"block_id\":\"__mediaControls\",\"elements\":[],\"processors\":[],\"default\":[],\"_component_id\":\"c245989a-1155-ed0e-1475-c073a3ddc785\"}}],\"name\":\"Random Game V2\",\"service_id\":\"random-game-v2\",\"convo_service_version\":8,\"subroutines\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementsSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Pick_the_number\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetParamElement\",\"namespace\":\"convo-core\",\"properties\":{\"scope_type\":\"session\",\"properties\":{\"guess\":\"${rand(guess_min + 1, guess_max - 1)}\",\"guess_count\":\"${guess_count + 1}\"},\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">LET<\\/span> <span ng-repeat=\\\"(key, val) in component.properties.properties track by key\\\"> <b>{{ key}}<\\/b> = <b>{{ val}};<\\/b><br><\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"cgodjgvt-tbga-up5c-fz6h-aavcxiyzkjpw\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${guess_count === 1}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Is your number ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"oix50vfq-3hgs-o8ou-hbjh-x9f5fklaz6v2\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\ElementRandomizer\",\"namespace\":\"convo-core\",\"properties\":{\"mode\":\"0\",\"elements\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Is it ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"yp40lscg-quhd-iluo-yypf-2m8xdm2kb0yg\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"Maybe ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"7qffugmi-1hur-7tb2-vxu2-zqhz7pd1ufwg\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"default\",\"text\":\"How about ${guess}?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"u2bt6qxx-x7jf-gkgo-p7w0-ldc6g6tzahzo\"}}],\"namespace\":null,\"scope_type\":\"installation\",\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"ob1wiujk-npsh-fnq9-mlp6-ijo2usefrfua\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gnafy5hj-hjki-oacw-jvhf-1u5od82chzis\",\"else_if\":[]}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleTextResponse\",\"namespace\":\"convo-core\",\"properties\":{\"type\":\"reprompt\",\"text\":\"Please tell me, is the <emphasis level=\\\"moderate\\\">${guess} <\\/emphasis> correct answer?\",\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"we-say\\\">{{ component.properties.type == 'default' ? 'Say:' : 'Repeat:' }} <b>{{component.properties.text}}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"gsr5conh-jgfd-xfue-fo8w-u2gwkw4rtx7g\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_system\":true,\"_component_id\":\"e1isikgb-vjy3-ji4t-zstd-nv1htsry37l3\",\"name\":\"Pick the number\"}},{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\ProcessorSubroutine\",\"namespace\":\"convo-core\",\"properties\":{\"subroutine_id\":\"Process_game_menu\",\"name\":\"Process game menu\",\"processors\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Processors\\\\SimpleProcessor\",\"namespace\":\"convo-core\",\"properties\":{\"ok\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SimpleIfElement\",\"namespace\":\"convo-core\",\"properties\":{\"test\":\"${result.selectedGameType === 'pick'}\",\"then\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"Pick_game_prepare\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"9an3qjka-xgdy-elwf-jjcw-pzn5xsgpb0t2\"}}],\"else\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\Elements\\\\SetStateElement\",\"namespace\":\"convo-core\",\"properties\":{\"value\":\"guess_game\",\"next\":false,\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">{{ component.properties.value == 'next' ? 'NEXT' : 'GOTO' }}<\\/span> <span class=\\\"block-id\\\">{{ getBlockName( component.properties.value)}}<\\/span><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"oz7csm6i-v76d-peli-hv6v-kynwhybxpvex\"}}],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\"><span class=\\\"statement\\\">IF<\\/span> <b>{{ component.properties.test }}<\\/b><\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationElement\",\"_workflow\":\"read\",\"_component_id\":\"5ivllhd5-st7x-yn1r-ylmt-5vaojqrnk3pi\",\"else_if\":[]}}],\"request_filters\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\CrossIntentRequestFilter\",\"namespace\":\"convo-core\",\"properties\":{\"readers\":[{\"class\":\"\\\\Convo\\\\Pckg\\\\Core\\\\ConvoIntentReader\",\"namespace\":\"convo-core\",\"properties\":{\"intent\":\"SelectGameTypeIntent\",\"values\":[],\"rename\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"code\\\">Catch Convo intent <b>{{ component.properties.intent}}<\\/b><span ng-repeat=\\\"(key,val) in component.properties.values track by key\\\">, use predefined value <b>result.{{ key }} = '{{ val }}'<\\/b><\\/span><span ng-repeat=\\\"(key,val) in component.properties.rename track by key\\\">, rename slot <b>{{ key }} => result.{{ val }}<\\/b><\\/span><\\/div>\"},\"_workflow\":\"filter\",\"_descend\":true,\"_factory\":[],\"_component_id\":\"tildqlrh-lyvp-mngv-ht5g-w8mggz7ezmkv\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IRequestFilter\",\"_workflow\":\"filter\",\"_component_id\":\"bhsf35bz-newq-prjm-kaiu-divvj4t7lr17\"}}],\"utterances\":[],\"_preview_angular\":{\"type\":\"html\",\"template\":\"<div class=\\\"user-say\\\" ng-if=\\\"component.properties.utterances.length\\\">User says: <span ng-repeat=\\\"utterance in component.properties.utterances\\\" ng-if=\\\"$index<5\\\"><b>\\\"{{utterance}}\\\"<\\/b>, <\\/span> ...<\\/div>\"},\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_component_id\":\"dm3kdlfb-syfp-gtkn-wxr2-qynf5xmowdbr\"}}],\"_interface\":\"\\\\Convo\\\\Core\\\\Workflow\\\\IConversationProcessor\",\"_workflow\":\"process\",\"_system\":true,\"_component_id\":\"nb5d2htu-wkc3-ipwb-h3er-5puxnbebph0k\"}}],\"packages\":[\"convo-core\"],\"intents\":[{\"name\":\"GuessedValueResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Is it 22\",\"model\":[{\"text\":\"Is it\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"How about 22\",\"model\":[{\"text\":\"How about\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"Maybe 22\",\"model\":[{\"text\":\"Maybe\"},{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]},{\"raw\":\"22\",\"model\":[{\"text\":\"22\",\"type\":\"@convo.number\",\"slot_value\":\"guess\"}]}]},{\"name\":\"NumberIsCorrectResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Your guess is correct\",\"model\":[{\"text\":\"Your guess is correct\"}]},{\"raw\":\"You guessed right\",\"model\":[{\"text\":\"You guessed right\"}]}]},{\"name\":\"NumberIsMissResponse\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Lower\",\"model\":[{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"}]},{\"raw\":\"My number is\",\"model\":[{\"text\":\"My number is\"},{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"}]},{\"raw\":\"No, it is lower than 34\",\"model\":[{\"text\":\"No, it is\"},{\"text\":\"lower\",\"type\":\"@GuessedValueResponse\",\"slot_value\":\"missType\"},{\"text\":\"than\"},{\"text\":\"34\",\"type\":\"@convo.number\",\"slot_value\":\"userGuess\"}]}]},{\"name\":\"SelectGameTypeIntent\",\"type\":\"custom\",\"utterances\":[{\"raw\":\"Guess the number\",\"model\":[{\"text\":\"Guess\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"the number\"}]},{\"raw\":\"I'll play guess the number\",\"model\":[{\"text\":\"I'll play\"},{\"text\":\"guess\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"the number\"}]},{\"raw\":\"I wanna pick\",\"model\":[{\"text\":\"I wanna\"},{\"text\":\"pick\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"},{\"text\":\"please\"}]},{\"raw\":\"I wish to pick\",\"model\":[{\"text\":\"I wish to\"},{\"text\":\"pick\",\"type\":\"@GameType\",\"slot_value\":\"selectedGameType\"}]}]}],\"entities\":[{\"name\":\"GameType\",\"values\":[{\"value\":\"pick\",\"synonyms\":[\"pick\"]},{\"value\":\"guess\",\"synonyms\":[\"guess\"]}]},{\"name\":\"GuessedValueResponse\",\"values\":[{\"value\":\"lower\",\"synonyms\":[\"lower\",\"less\",\"below\"]},{\"value\":\"greater\",\"synonyms\":[\"greater\",\"above\",\"higher\"]}]}]}",
+			"mode": "application/json"
+		}
+	}
+}

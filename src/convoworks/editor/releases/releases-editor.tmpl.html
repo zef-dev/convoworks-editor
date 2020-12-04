@@ -1,0 +1,190 @@
+<div class="releases">
+    <div class="card-pane">
+        <div class="data">
+            <div class="title">
+                <div class="heading">
+                    <div class="indicator production">&nbsp;</div>
+                    <h4>Production</h4>
+                </div>
+                <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('production')">
+                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('production'), 'glyphicon-chevron-up': isOpen('production') }"></i>
+                </button>
+            </div>
+            <table ng-class="{ 'expanded': isOpen('production') }">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Stage</th>
+                    <th>Platform</th>
+                    <th>Alias</th>
+                    <th>Version</th>
+                    <th>Updated</th>
+                    <th>Link</th>
+                    <th width="50"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in getProduction()">
+                    <td>{{row.release_id}}</td>
+                    <td ng-class="{ 'warning' : row.stage === 'review'}">{{row.stage}}</td>
+                    <td>{{row.platform_id}}</td>
+                    <td>{{row.alias}}</td>
+                    <td>{{row.version_id}}</td>
+                    <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
+                            <i class="glyphicon glyphicon-copy"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
+                                <i class="glyphicon glyphicon-option-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"
+                                    ng-repeat="option in getPromoteOptions( row)"
+                                    ng-click="promoteRelease( row, option.type, option.stage)">
+                                    <a href="javascript:void(0);"> {{option.title}} </a>
+                                </li>
+                                <li class="divider" ng-if="getPromoteOptions( row).length"></li>
+                                <li role="menuitem" ng-click="importToDevelop( row)">
+                                    <a href="javascript:void(0);">Import to develop</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!getProduction().length"><td colspan="7">No releases so far</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-pane">
+        <div class="data">
+            <div class="title">
+                <div class="heading">
+                    <div class="indicator test"></div>
+                    <h4>Test</h4>
+                </div>
+                <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('test')">
+                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('test'), 'glyphicon-chevron-up': isOpen('test') }"></i>
+                </button>
+            </div>
+            <table ng-class="{'expanded': isOpen('test')}">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Stage</th>
+                    <th>Platform</th>
+                    <th>Alias</th>
+                    <th>Version</th>
+                    <th>Updated</th>
+                    <th>Link</th>
+                    <th width="50"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in getTest()">
+                    <td>{{row.release_id}}</td>
+                    <td>{{row.stage}}</td>
+                    <td>{{row.platform_id}}</td>
+                    <td>{{row.alias}}</td>
+                    <td>{{row.version_id}}</td>
+                    <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
+                            <i class="glyphicon glyphicon-copy"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
+                                <i class="glyphicon glyphicon-option-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"
+                                    ng-repeat="option in getPromoteOptions( row)"
+                                    ng-click="promoteRelease( row, option.type, option.stage)"
+                                ><a href="javascript:void(0);">{{option.title}}</a></li>
+                                <li role="menuitem"
+                                    ng-repeat="option in getImportWorkflow( row)"
+                                    ng-click="importWorkflowRelease( row, option.release_id)"
+                                ><a href="javascript:void(0);">{{option.title}}</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="importToDevelop( row)">
+                                    <a href="javascript:void(0);">Import to develop</a>
+                                </li>
+                                <li role="menuitem" ng-click="tagAsSimpleVersion( row)">
+                                    <a href="javascript:void(0);">Tag as simple version</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!getTest().length"><td colspan="7">No releases so far</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-pane">
+        <div class="data">
+            <div class="title">
+                <div class="heading">
+                    <div class="indicator development"></div>
+                    <h4>Development</h4>
+                </div>
+                <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('development')">
+                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('development'), 'glyphicon-chevron-up': isOpen('development') }"></i>
+                </button>
+            </div>
+            <table ng-class="{'expanded': isOpen('development')}">
+                <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Alias</th>
+                    <th>Updated</th>
+                    <th>Link</th>
+                    <th width="50"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in getDevelopment()">
+                    <td>{{row.platform_id}}</td>
+                    <td>{{row.alias}}</td>
+                    <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
+                            <i class="glyphicon glyphicon-copy"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button type="button" class="btn btn-muted btn-xs border-radius-8" uib-dropdown-toggle>
+                                <i class="glyphicon glyphicon-option-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem"
+                                    ng-repeat="option in getSubmitOptions( row)"
+                                    ng-click="submitRelease( row, option.type, option.stage)"
+                                ><a href="javascript:void(0);">{{option.title}}</a></li>
+                                <li role="menuitem"
+                                    ng-repeat="option in getImportWorkflow( row)"
+                                    ng-click="importWorkflowRelease( row, option.release_id)"
+                                ><a href="javascript:void(0);">{{option.title}}</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="tagAsSimpleVersion( row)">
+                                    <a href="javascript:void(0);">Tag as simple version</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                </tr>
+                <tr ng-if="!getDevelopment().length"><td colspan="4">No releases so far</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

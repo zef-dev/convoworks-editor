@@ -1,0 +1,198 @@
+<div class="properties-editor {{ definition['component_properties']['_workflow'] }}">
+    <header>
+        <h4 class="editor-title">{{ getComponentName() }}
+            &nbsp;
+            <a ng-click="closeEditor()" style="float:right;" title="Click to close properties view">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </h4>
+        <!--     <p class="editor-component-description" ng-if="getBlockId()">ID:{{ getBlockId() }}</p> -->
+        <p class="editor-component-description">
+            {{ getComponentDescription() }}
+        </p>
+    </header>
+
+    <uib-tabset>
+        <uib-tab heading="Properties">
+            <form class="properties-editor-form">
+                <div ng-repeat="(key, val) in definition.component_properties track by key"
+                     ng-switch="definition.component_properties[key].editor_type">
+
+                    <convo-intent-editor
+                            ng-switch-when="convo_intent"
+                            key="key"
+                            service="service"
+                            property-definition="definition.component_properties[key]"
+                            component="component"
+                    ></convo-intent-editor>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="ssml">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <textarea class="convo-form-input" required ng-model="component.properties[key]"></textarea>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="desc">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <textarea class="convo-form-input" required ng-model="component.properties[key]"></textarea>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="text"
+                         ng-if="!!definition.component_properties[key].editor_properties.multiple">
+
+                        <div ng-if="isObject( component.properties[key])" ng-repeat="( name, val) in component.properties[key] track by name">
+                            <label class="convo-form-label">{{ name }}</label> &mdash; <input class="convo-form-input" type="text" ng-model="component.properties[key][name]">
+                        </div>
+
+                        <span class="help-block" ng-if="isObject( component.properties[key])">
+                            {{ definition.component_properties[key].description }}
+                        </span>
+
+                        <div ng-if="!isObject( component.properties[key])">
+                            <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                            <input class="convo-form-input" type="text" ng-model="component.properties[key]">
+                            <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="text"
+                         ng-if="!definition.component_properties[key].editor_properties.multiple">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <input type="text" class="convo-form-input" required ng-model="component.properties[key]">
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="password"
+                         ng-if="!definition.component_properties[key].editor_properties.multiple">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <input class="convo-form-input" type="password" ng-model="component.properties[key]">
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="slot_name"
+                         ng-if="!definition.component_properties[key].editor_properties.multiple">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <input class="convo-form-input" type="text" ng-model="component.properties[key]">
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="boolean">
+
+                        <div class="checkbox">
+                            <label class="convo-form-label">
+                                <input type="checkbox" ng-model="component.properties[key]">
+                                &nbsp;{{ definition.component_properties[key].name }}
+                            </label>
+                        </div>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="select"
+                         ng-if="!!definition.component_properties[key].editor_properties.multiple">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select class="convo-form-input" required multiple ng-model="component.properties[key]">
+                            <option ng-repeat="(name, value) in definition.component_properties[key].editor_properties.options track by name"
+                                    value="{{ value }}">
+                                {{ value }}
+                            </option>
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="select"
+                         ng-if="!definition.component_properties[key].editor_properties.multiple">
+
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select required
+                                class="convo-form-input"
+                                ng-model="component.properties[key]"
+                                ng-options="maybeInt(name) as value; for (name, value) in definition.component_properties[key].editor_properties.options">
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <params-editor
+                            ng-switch-when="params"
+                            key="key"
+                            service="service"
+                            property-definition="definition.component_properties[key]"
+                            component="component"
+                    ></params-editor>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="read_fragment">
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select class="convo-form-input" ng-model="component.properties[key]">
+                            <option ng-repeat="subroutine in readSubroutines track by subroutine.id"
+                                    value="{{ subroutine.id }}">
+                                {{ subroutine.name }}
+                            </option>
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="process_fragment">
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select class="convo-form-input" ng-model="component.properties[key]">
+                            <option ng-repeat="subroutine in processSubroutines track by subroutine.id"
+                                    value="{{ subroutine.id }}">
+                                {{ subroutine.name }}
+                            </option>
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="select_block">
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select class="convo-form-input" ng-model="component.properties[key]">
+                            <option ng-repeat="block in userBlocks track by block.id"
+                                    value="{{ block.id }}">
+                                {{ block.name }}
+                            </option>
+                            <option value="state">Current state (Read again)</option>
+                            <option value="state_previous">Previous state</option>
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                    </div>
+
+                </div>
+            </form>
+        </uib-tab>
+        <uib-tab heading="Help" ng-if="checkComponentHelp()">
+            <div class="help" ng-bind-html="help"></div>
+        </uib-tab>
+    </uib-tabset>
+    <button class="btn btn-md btn-danger border-radius-8 delete-component-button"
+            ng-click="removeComponent()"
+            title="Delete this component">
+        <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Delete component
+    </button>
+</div>

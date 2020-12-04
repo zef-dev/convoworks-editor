@@ -1,0 +1,26 @@
+<div class="selectable-component block {{block.properties.role}}" ng-mouseover="over=true; $event.stopPropagation()"
+	ng-mouseout="over=false; $event.stopPropagation()"
+	ng-class="{ 'system' : isSysBlock, 'over' : over, 'selected' : isSelected(), 'error' : isError()}"
+	style="max-width: 100%">
+    <div class="block-role">{{ block.properties.role }}</div>
+	<h3 class="block-title" title="{{ ::definition.description}}">
+        <selectable-component-buttons ng-if="!isError()" toggle-fn="togglePreviewing()"></selectable-component-buttons>
+		{{ getComponentTitle() }}
+	</h3>
+
+    <div ng-if="ready && !previewing">
+        <div class="selected-block-container" ng-repeat="(name, propDefinition) in definition.component_properties track by name"
+            ng-if="propDefinition.editor_type == 'service_components' && isRoleAllowed( propDefinition)">
+            <convoworks-components-container
+                component="block"
+                property-name="name"
+                property-definition="propDefinition"
+                root="true"
+            ></convoworks-components-container>
+        </div>
+    </div>
+
+    <div ng-if="ready && previewing">
+        <preview-panel service="getService()" block-id="block.properties.block_id"></preview-panel>
+    </div>
+</div>

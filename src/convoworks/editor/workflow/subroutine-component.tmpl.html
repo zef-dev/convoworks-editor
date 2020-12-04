@@ -1,0 +1,21 @@
+<div class="selectable-component block"
+	ng-mouseover="over=true; $event.stopPropagation()"
+	ng-mouseout="over=false; $event.stopPropagation()"
+	ng-class="{ 'over' : over, 'selected' : isSelected()}"
+	style="max-width: 100%">
+    <h3 title="{{ ::definition.description}}" class="block-title">
+        <selectable-component-buttons toggle-fn="togglePreviewing()"></selectable-component-buttons>
+	    {{ getComponentTitle() }}
+    </h3>
+
+    <convoworks-components-container
+         ng-if="ready && !previewing"
+	   	 component="block"
+		 property-name="propertyName"
+		 property-definition="propertyDefinition"
+         root="true"
+		 ></convoworks-components-container>
+
+    <preview-panel ng-if="ready && previewing" service="getService()" block-id="block.properties.fragment_id"></preview-panel>
+
+</div>

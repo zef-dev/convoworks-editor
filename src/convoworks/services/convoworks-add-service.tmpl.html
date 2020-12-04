@@ -1,0 +1,102 @@
+<div class="layout convoworks">
+    <div class="header">
+        <div class="logo expanded" ui-sref="convoworks-editor">
+            <div class="image"></div>
+            <div class="text">&nbsp; Convoworks</div>
+        </div>
+        <div class="contents blue">
+        </div>
+    </div>
+    <div class="view">
+        <div class="tabs collapsed"></div>
+        <div class="contents">
+            <div class="wide-panel">
+                <form ng-submit="create()">
+                    <div class="header">
+                        <h1 class="text-muted">Add new service</h1>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="convo-form-group">
+                                <label class="convo-form-label" for="service_name">Skill name</label>
+                                <input type="text" class="convo-form-input" id="service_name" placeholder="Enter skill name"
+                                       ng-model="new_service.name" required>
+                                <span class="help" ng-class="{'error': new_service.name.length > 50}">
+                    {{(new_service.name && new_service.name.length) ? new_service.name.length : 0}}/50 characters
+                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="convo-form-group">
+                                <label class="convo-form-label" for="default_language">Default Language</label>
+                                <select ng-model="new_service.default_language" class="convo-form-input" id="default_language">
+                                    <option ng-repeat="(index, language)  in languages track by index"
+                                            value="{{ language.code }}"> {{ language.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="convo-form-label" for="is_private">Is Private?</label>
+                            <div class="checkbox">
+                                <label for="is_private">
+                                    <input type="checkbox" class="convo-form-input" id="is_private" ng-model="new_service.is_private" />
+                                    Don't share service with the entire Service Admin User Group?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Choose a template</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="template in templates">
+                            <label class="template-rectangle"
+                                   ng-class="{ 'selected': isTemplateSelected(template.template_id)}"
+                                   for="{{ ::template.template_id }}">
+
+                                <span class="template-title">
+                                    <span>{{ ::template.name }}</span>
+                                    <small>{{ getTemplateNamespace(template.template_id) }}</small>
+                                </span>
+                                <hr/>
+                                <span class="description">{{ ::template.description }}</span>
+
+                                <input type="radio"
+                                       style="visibility: hidden;"
+                                       ng-model="new_service.template_id"
+                                       name="{{ ::template.template_id }}"
+                                       id="{{ ::template.template_id }}"
+                                       value="{{ ::template.template_id }}">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="convo-form-group">
+                                <div class="button-group">
+                                    <button type="submit" ng-disabled="submitDisabled()" class="btn btn-md btn-primary submit" title="Create new service">Submit</button>
+                                    <a class="cancel" ui-sref="convoworks-editor" title="Cancel creating">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

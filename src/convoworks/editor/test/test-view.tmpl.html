@@ -1,0 +1,58 @@
+<div class="wide-panel full test">
+    <div class="chat card-pane">
+        <div class="convo-form-group">
+            <label for="delegateNlp" class="convo-form-label">
+                NLP Delegate
+                <select
+                    ng-init="initDelegateOptions()"
+                    class="convo-form-input"
+                    name="delegateNlp"
+                    id="delegateNlp"
+                    ng-model="delegateNlp">
+                    <option ng-repeat="nlp in getDelegateOptions()" value="{{nlp.value}}">{{nlp.label}}</option>
+                </select>
+            </label>
+        </div>
+        <div class="chatbox">
+            <convo-chatbox name="'Test'" device-id="getDeviceId()" service-id="serviceId" collapsed="false" mode="'admin'"
+                           toggle-debug="toggleDebug" delegate-nlp="delegateNlp" variables="variables" exception="exception"></convo-chatbox>
+        </div>
+        <div class="buttons">
+            <convo-externaltest device-id="getDeviceId()" service-id="serviceId"></convo-externaltest>
+        </div>
+    </div>
+    <div class="debug">
+        <div class="toggle card-pane">
+            <h3>Debug</h3>
+            <div class="toggled-indicator" ng-class="{ 'active': toggleDebug, 'inactive': !toggleDebug }" ng-click="toggleDebug = !toggleDebug"></div>
+        </div>
+        <div class="panel-debug card-pane" ng-if="toggleDebug">
+            <div class="panel-debug-variables monospace">
+                <h4>Variables</h4>
+                <div style="overflow: auto" class="panel-debug-variables-in-request">
+                    <p>Vars in request: </p>
+                    <pre>{{ variables.vars_in_request }}</pre>
+                </div>
+                <div style="overflow: auto" class="panel-debug-variables-in-session">
+                    <span>Vars in session: </span>
+                    <pre>{{ variables.vars_in_session }}</pre>
+                </div>
+                <div style="overflow: auto" class="panel-debug-variables-in-installation">
+                    <span>Vars in installation: </span>
+                    <pre>{{ variables.vars_in_installation }}</pre>
+                </div>
+            </div>
+            <div style="word-break: break-word" ng-if="exception.exceptionMessage" class="monospace panel-debug-exception">
+                <h4>Exception</h4>
+                <p>Exception message: <b>{{ exception.exceptionMessage }}</b></p>
+                <span>Stack trace:</span>
+                <ul class="list-unstyled">
+                    <li ng-repeat="message in exception.exceptionStackTrace">
+                        <p><b>#{{ message }}</b></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

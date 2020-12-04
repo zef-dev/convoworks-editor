@@ -1,0 +1,35 @@
+<div class="prop-container {{ ::propertyDefinition.editor_properties.allow_interfaces[0] }}"
+    ng-class="{'default-hidden':shouldHide(), 'root-prop-container' : isRoot(), 
+    'empty' : !getContainer().length, 'closed-non-empty':!isOpen() && getContainer().length,
+    'closed':!isOpen()}"
+    context-menu="getContextOptions()">
+    
+
+    <h3 class="prop-title" 
+        ng-class="{ 'empty' : !getContainer() || propertyDefinition.editor_properties.multiple && getContainer().length == 0}" 
+        ng-click="toggleOpen(); $event.stopPropagation()" 
+        title="{{ ::propertyDefinition.description }}">
+            {{ ::propertyDefinition.name }} ({{ getContainer().length }})
+            <span ng-if="propertyDefinition.editor_properties.multiple">{{ isOpen() ? '&blacktriangledown;' : '&blacktriangleright;' }}</span>
+            
+    </h3>
+    
+    <div class="components-placeholder" ng-hide="!isOpen()">
+        Drop components here
+    </div>
+
+    <div ng-if="getContainer()" class="real-container" ng-hide="!isOpen()">
+    
+        <div ng-if="propertyDefinition.editor_properties.multiple">
+            <selectable-component
+                ng-repeat="data in getContainer() track by data.properties._component_id" 
+                component="data"></selectable-component>
+        </div>
+        <selectable-component
+            ng-if="!propertyDefinition.editor_properties.multiple"
+            component="getContainer()"></selectable-component>
+    </div>
+    
+</div>
+
+

@@ -1,0 +1,55 @@
+.convoworks {
+
+    .test {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    
+    .test .chat {
+        display: flex;
+        flex-flow: column nowrap;
+    
+        margin-right: 10px;
+    
+        flex-basis: 750px;
+        flex-shrink: 0;
+        max-height: 469px;
+    }
+    
+    .test .chat .chatbox {
+        margin: 20px 0 10px 0;
+    }
+    
+    .test .debug {
+        display: flex;
+        flex-flow: column nowrap;
+    
+        margin-left: 10px;
+    
+        flex-basis: 60%;
+    }
+    
+    .test .debug .toggle {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        margin-bottom: 20px;
+        align-items: center;
+    }
+    
+    .test .debug .toggle h3 {
+        margin: 0 10px 0 0;
+    }
+    
+    .test .debug .toggle > .toggled-indicator {
+        float: none;
+    }
+    .test .debug .toggle > .toggled-indicator:hover {
+        cursor: pointer;
+    }
+    
+    .test .debug .panel-debug {
+        max-height: calc(100vh - 300px);
+        overflow-y: auto;
+    }
+}

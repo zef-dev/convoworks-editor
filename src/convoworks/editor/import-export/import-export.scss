@@ -1,0 +1,37 @@
+.convoworks {
+
+    .import-export h4 {
+        margin: 0;
+    }
+    
+    .import-export .import, .import-export .export {
+        margin-top: 40px;
+    }
+    
+    .import-export h3 {
+        margin: 0 0 26px 0;
+    }
+    
+    .import-export button.btn-primary.inverted {
+        font-weight: 600;
+        line-height: 12px;
+    }
+    
+    .import-export button.btn-primary.inverted > svg {
+        fill: #2F74EA;
+        display: inline;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .import-export button.btn-primary.inverted:hover > svg {
+        fill: white;
+    }
+    
+    .import-export .convo-form-input.file {
+        border: 2px dashed rgba(186, 186, 186, 0.62);
+    }
+    .import-export .convo-form-input.file:hover {
+        cursor: pointer;
+    }
+}

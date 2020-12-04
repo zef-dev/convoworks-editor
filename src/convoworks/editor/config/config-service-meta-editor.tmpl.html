@@ -1,0 +1,65 @@
+<div class="card-pane">
+	<fieldset>
+		<legend>Service Meta</legend>
+
+		<form class="form-horizontal" ng-submit="updateConfig()">
+
+			<!-- DUMMY INPUT -->
+			<input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+
+            <div class="convo-form-group">
+                <label for="service-meta-name" class="convo-form-label">Service Name <i class="glyphicon glyphicon-question-sign" uib-tooltip="Internal name for this service"></i></label>
+                <input type="text" class="convo-form-input" ng-model="config.name" id="service-meta-name">
+            </div>
+
+			<div class="convo-form-group">
+				<label for="service-meta-description" class="convo-form-label">Service Description <i class="glyphicon glyphicon-question-sign" uib-tooltip="Service description"></i></label>
+                <textarea class="convo-form-input"
+                          ng-model="config.description"
+                          rows="3" cols="80"
+                          id="service-meta-description"></textarea>
+			</div>
+
+            <div class="convo-form-group">
+                <label for="default_language" class="convo-form-label">Default Language <i class="glyphicon glyphicon-question-sign" uib-tooltip="Default Language"></i></label>
+                <select ng-model="config.default_language" class="convo-form-input" id="default_language">
+                    <option ng-repeat="(index, language)  in languages track by index"
+                            value="{{ language.code }}"> {{ language.name }}
+                    </option>
+                </select>
+            </div>
+
+
+			<div class="convo-form-group">
+				<label for="service-meta-owner" class="convo-form-label">Service Owner <i class="glyphicon glyphicon-question-sign" uib-tooltip="Owner of this service"></i></label>
+                <input ng-disabled="config.owner !== getAuthUserEmail()" type="email" class="convo-form-input" ng-model="config.owner" id="service-meta-owner">
+			</div>
+
+            <div class="convo-form-group">
+                <label class="convo-form-label" for="is_private">Is Private?</label>
+                <div class="checkbox">
+                    <label for="is_private">
+                        <input type="checkbox" ng-model="config.is_private" id="is_private"/>
+                        Don't share service with the entire Service Admin User Group?
+                    </label>
+                </div>
+            </div>
+
+			<div class="convo-form-group">
+				<label for="service-meta-admins" class="convo-form-label">Service Admins <i class="glyphicon glyphicon-question-sign" uib-tooltip="Users with administrative privileges for this service. Separate list items with a comma (,)"></i></label>
+                <input type="text" class="convo-form-input" ng-model="config.admins" text-array id="service-meta-admins">
+			</div>
+
+			<div class="convo-form-group">
+                <div class="button-group">
+                    <button type="submit" title="Save changes" ng-disabled="!isConfigChanged()" class="btn btn-sm btn-primary submit">
+                        Save
+                    </button>
+                    <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
+                        Revert
+                    </a>
+                </div>
+			</div>
+		</form>
+	</fieldset>
+</div>

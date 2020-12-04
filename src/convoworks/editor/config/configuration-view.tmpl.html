@@ -1,0 +1,52 @@
+<div>
+    <div class="wide-panel meta">
+        <config-service-meta-editor service="service"></config-service-meta-editor>
+    </div>
+    <div class="wide-panel full configs">
+        <div class="config-square card-pane">
+            <div style="background-image: url('./assets/img/amazon_alexa.png')" class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Amazon Alexa</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('amazon'), 'inactive': !configEnabled('amazon')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-amazon" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+        <div class="config-square card-pane">
+            <div style="background-image: url('./assets/img/dialogflow.png')" class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Dialogflow</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('dialogflow'), 'inactive': !configEnabled('dialogflow')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-dialogflow" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+        <div class="config-square card-pane">
+            <div style="background-image: url('./assets/img/messenger.png')" class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Facebook Messenger</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('facebook_messenger'), 'inactive': !configEnabled('facebook_messenger')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-messenger" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+        <div class="config-square card-pane">
+            <div style="background-image: url('./assets/img/viber.png')" class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Viber</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('viber'), 'inactive': !configEnabled('viber')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-viber" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+        <div class="config-square card-pane">
+            <div style="background-image: url('./assets/img/convo_chat.png')" class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Convo Chat</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('convo_chat'), 'inactive': !configEnabled('convo_chat')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-convo-chat" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+    </div>
+</div>

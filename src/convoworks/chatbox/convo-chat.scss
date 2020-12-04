@@ -1,0 +1,152 @@
+.convo-chat
+{
+    
+    input[type=text]
+    {
+        font-size: 12px;
+        padding: 5px 10px;
+        height: 2.5em;
+    }
+    
+    .chat
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .chat li
+    {
+        padding: 2px 2px;
+        font-family: Arial, Helvetica, sans-serif;
+        position: relative;
+        font-weight: 500;
+        /*border-bottom: 1px dotted #B3A9A9;*/
+    }
+    
+    .right { float: right; }
+    .left { float: left; }
+    
+    .chat li .chat-body
+    {
+        max-width: 75%;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+    
+    .chat li .chat-body.system-message
+    {
+        border-top-left-radius: 0;
+        background-color: #ececec;
+        text-align: left;
+        border: 1px solid #ececec;
+        color: black !important;
+    }
+    
+    .chat li .chat-body.user-message
+    {
+        border-top-right-radius: 0;
+        text-align: right;
+        border: 1px solid #5595dd;
+        background-color: #5595dd;
+        color: white !important;
+    }
+    
+    
+    .chat li .chat-body p
+    {
+        margin: 0;
+        color: #777777;
+    }
+    
+    .chat .chat-img img
+    {
+        margin: 2px 6px 0 0;
+        width: 40px;
+    }
+    
+    .panel .slidedown .glyphicon, .chat .glyphicon
+    {
+        margin-right: 5px;
+    }
+    
+    .panel-body
+    {
+        overflow-y: scroll;
+        height: 200px;
+    }
+    
+    .panel-footer {
+        padding: 5px 15px;
+    }
+    
+    .convo-form-group {
+        font-family: "DM Sans", sans-serif;
+    
+        margin-bottom: 20px;
+    }
+    
+    .convo-form-group.inline input,
+    .convo-form-group.inline button
+    {
+        display: inline;
+    }
+    .convo-form-group .convo-form-input {
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 8px;
+        width: 100%;
+        padding: 6px 11px;
+        transition: border-color 100ms ease-in-out;
+    }
+    
+    .convo-form-group .convo-form-input:focus {
+        border: 1px solid #2F74EA;
+    }
+    
+    .convo-form-group input.convo-form-input {
+        height: 40px;
+    }
+    
+    button.btn, a.btn {
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 50ms ease-in, border-color 50ms ease-in;
+    }
+       
+    
+    #chat
+    {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        justify-content: center;
+        align-items: center;
+    
+        margin-bottom: 0;
+    }
+    
+    #chat-panel-body
+    {
+        padding: 10px;
+    }
+    
+     
+    #message, #send {
+        margin: 0;
+        display: inline-block;
+    }
+    
+    #chat #message {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    
+    #send {
+        height: 40px;
+        width: 55px;
+        border-radius: 0 8px 8px 0;
+    }
+}
+

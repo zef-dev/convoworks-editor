@@ -1,0 +1,235 @@
+
+
+<div class="editor">
+    <div class="col-left">
+        <div class="toolbox-container">
+            <convoworks-toolbox
+                definitions="getDefinitions()"
+                available-packages="getAvailablePackages()"
+                service="getSelection().service"></convoworks-toolbox>
+        </div>
+    </div>
+
+    <div class="col-mid">
+
+        <div style="position: relative;">
+            <div style="position: absolute; right: 20px; top:20px; z-index: 100;">
+                <form ng-submit="saveChanges()"
+                    style="float:right">
+                    <div class="convo-button-group">
+                        <button type="submit" title="Save changes"
+                                ng-disabled="!isServiceChanged()"
+                                class="btn btn-md btn-primary">
+                            Save
+                        </button>
+                        <a ng-click="revertClicked()"
+                           title="Revert changes" ng-disabled="!isServiceChanged()"
+                           class="cancel">Revert</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<div class="components-container">
+    <div ng-show="componentMode === 'steps'">
+        <block-component
+                ng-if="hasBlocks()"
+                block="getSelectedBlock()">
+        </block-component>
+    </div>
+
+    <div ng-show="componentMode === 'fragments'">
+        <subroutine-component
+                ng-if="hasFragments()"
+                block="getSelectedFragment()">
+        </subroutine-component>
+    </div>
+
+    <div ng-show="componentMode === 'contexts'">
+        <context-elements-container service="getSelection().service"></context-elements-container>
+    </div>
+</div>
+
+
+    </div>
+
+    <div class="col-right">
+      <div class="properties-container">
+        <uib-tabset active="componentMode" justified="true">
+            <uib-tab index="'steps'" select="setComponentMode('steps', $event)">
+                <uib-tab-heading>
+                    Steps
+                </uib-tab-heading>
+                <div class="blocks-container">
+                    <div class="btn-group icon-button add-block-select" uib-dropdown>
+                        <button type="button" class="btn btn-default btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add new block
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs border-radius-8 btn-borderless dropdown-toggle dropdown-toggle-split" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <li role="menuitem" class="session_start"
+                                ng-if="isRoleAvailable( 'session_start')">
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_start', 'Session start')"
+                                   class="dropdown-item"
+                                   title="Add session start block"
+                                   href="javascript:void(0);">
+                                    Session start
+                                    <span>convo-core</span>
+                                </a>
+                            </li>
+                            <li role="menuitem" class="service_processors"
+                                ng-if="isRoleAvailable( 'session_ended')">
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_ended', 'Session ended')"
+                                   class="dropdown-item"
+                                   title="Add session end block"
+                                   href="javascript:void(0);">
+                                    Session ended
+                                    <span>convo-core</span>
+                                </a>
+                            </li>
+                            <li role="menuitem" class="service_processors"
+                                ng-if="isRoleAvailable( 'service_processors')">
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
+                                   class="dropdown-item"
+                                   title="Add service processors block. This processors will be considered in every process request."
+                                   href="javascript:void(0);">
+                                    Service processors
+                                    <span>convo-core</span>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li ng-repeat="option in availableBlockTypes track by $index" role="menuitem" class="{{option.role}}"
+                                ng-if="isRoleAvailable( option.role)">
+                                <a ng-click="openAddNewBlock(option.class)"
+                                   class="dropdown-item"
+                                   title="{{option.description}}"
+                                   href="javascript:void(0);">
+                                    {{ option.name }}
+                                    <span>{{ option.namespace }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="blocks-container" ui-sortable="sortableOptions" ng-model="getSelectedService().blocks">
+                    <div
+                            class="selectable-block-item {{block.properties.role}}"
+                            ng-repeat="block in getSelectedService().blocks track by block.properties._component_id"
+                            ng-class="{'selected':isBlockSelected( block.properties.block_id)}"
+                            ng-click="selectBlock( block.properties.block_id); $event.stopPropagation()">
+                            {{block.properties.name ? block.properties.name : block.properties.block_id}}
+                            {{block.properties.role && block.properties.role !== 'conversation_block' ? '['+block.properties.role+']' : ''}}
+<!--        <span style="float: right;">&nbsp; -->
+<!--            <i class="glyphicon glyphicon-chevron-up" ng-if="canBlockMoveUp(block.properties.block_id)" ng-click="moveBlockUp( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
+<!--                 title="Move block up"></i> -->
+<!--            <i class="glyphicon glyphicon-chevron-down" ng-if="canBlockMoveDown(block.properties.block_id)" ng-click="moveBlockDown( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
+<!--                 title="Move block down"></i> -->
+<!--        </span> -->
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="'fragments'" select="setComponentMode('fragments', $event)">
+                <uib-tab-heading>
+                    Fragments
+                </uib-tab-heading>
+                <div class="blocks-container">
+<!--                         <button type="button" class="btn btn-default btn-xs icon-button" -->
+<!--                                 ng-click="openNewProcessSubroutine()" title="Add new process workflow fragment"> -->
+<!--                             <span class="glyphicon glyphicon-flash"></span> -->
+<!--                         </button> -->
+
+<!--                         <button type="button" class="btn btn-default btn-xs icon-button" -->
+<!--                                 ng-click="openNewReadSubroutine()" title="Add new read workflow fragment"> -->
+<!--                             <span class="glyphicon glyphicon-tasks"></span> -->
+<!--                         </button> -->
+
+                        <div class="btn-group icon-button add-block-select" uib-dropdown>
+                        <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="openNewReadSubroutine()">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add new Read fragment
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <li role="menuitem">
+                                <a ng-click="openNewReadSubroutine()"
+                                   class="dropdown-item"
+                                   href="javascript:void(0);">
+                                    Read fragment
+                                    <span>convo-core</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a ng-click="openNewProcessSubroutine()"
+                                   class="dropdown-item"
+                                   href="javascript:void(0);">
+                                    Process fragment
+                                    <span>convo-core</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div ui-sortable="sortableOptions" ng-model="getSelectedService().fragments" class="blocks-container">
+                    <div
+                            class="selectable-block-item {{getBlockWorkflow( block)}}"
+                            ng-repeat="block in getSelectedService().fragments track by block.properties._component_id"
+                            ng-class="{'selected':isFragmentSelected( block.properties.fragment_id)}"
+                            ng-click="selectFragment( block.properties.fragment_id); $event.stopPropagation()">
+                            {{block.properties.name}}
+<!--        <span style="float: right;">&nbsp; -->
+<!--            <i class="glyphicon glyphicon-chevron-up" ng-if="canFragmentMoveUp(block.properties.fragment_id)" ng-click="moveFragmentUp( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
+<!--                 title="Move fragment up"></i> -->
+<!--            <i class="glyphicon glyphicon-chevron-down" ng-if="canFragmentMoveDown(block.properties.fragment_id)" ng-click="moveFragmentDown( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
+<!--                 title="Move fragment down"></i> -->
+<!--        </span> -->
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="'contexts'" select="setComponentMode('contexts', $event)">
+                <uib-tab-heading>
+                    Contexts
+                </uib-tab-heading>
+                    <div class="blocks-container">
+                        <div class="btn-group icon-button add-block-select" uib-dropdown>
+                        <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8">
+                            Open to select Context
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <li role="menuitem" ng-repeat="context in availableContexts track by $index">
+                                <a ng-click="addNewContext(context)"
+                                   class="dropdown-item"
+                                   href="javascript:void(0);">
+                                    {{ context.name }}
+                                    <span>{{ context.namespace }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+        <div class="properties-editor-wrapper" ng-class="{'closed':!getSelection().component}">
+            <properties-editor
+                    ng-if="getSelection().component"
+                    component="getSelection().component"
+                    definition="getSelection().definition"
+                    service="getSelection().service"></properties-editor>
+        </div>
+        </div>
+    </div>
+</div>

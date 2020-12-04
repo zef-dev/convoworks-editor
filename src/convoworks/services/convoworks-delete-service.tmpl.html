@@ -1,0 +1,29 @@
+<form ng-submit="delete()">
+    <div class="convoworks">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-muted">Delete service</h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="convo-form-group col-md-12">
+                        <div class="checkbox">
+                            <label class="convo-form-label" for="local-only">
+                                <input type="checkbox" name="local-only" id="local-only" ng-model="localOnly.selected">
+                                &nbsp;Delete only local files
+                            </label>
+                        </div>
+                        <span class="help-block">Select this if you wish to delete only the Convoworks service model and all its accompanying configurations. This will keep remotely published skills on vendors such as Amazon, Dialogflow, etc.</span>
+                    </div>
+
+                    <div class="convo-form-group col-md-12">
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-danger delete" title="Delete service">Delete</button>
+                            <a class="cancel" ng-click="cancel()" title="Cancel deletion">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

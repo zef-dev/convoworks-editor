@@ -1,0 +1,50 @@
+.convoworks {
+    .variables-editor {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .variables-editor > .title {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        margin-bottom: 20px;
+    }
+    
+    .variables-editor > .title > h4 {
+        margin-right: 10px;
+    }
+    
+    .variables-editor > .variables {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .variables-editor > .variables > .pair {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .variables-editor > .variables > .pair > .colon {
+        font-size: 18px;
+        font-weight: bold;
+    
+        margin: 0 6px;
+    }
+    
+    .variables-editor > .variables > .pair > .remove {
+        width: 20px;
+        height: 20px;
+    
+        border-radius: 50%;
+        font-size: 9px;
+    
+        background-color: #bababa;
+        color: white;
+    
+        margin-left: 9px;
+    }
+}

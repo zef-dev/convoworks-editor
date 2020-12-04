@@ -1,0 +1,22 @@
+<form ng-submit="createBlock()">
+	<div class="modal-listing-source">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	            <h4 class="modal-title">{{title}}</h4>
+	            {{description}}
+	        </div>
+	        <div class="modal-body">
+				
+				  <div class="form-group">
+				    <label for="block_name">Name:</label>
+				    <input type="text" class="form-control" id="block_name" 
+				    	ng-model="block.name" required>
+				  </div>
+	        </div>
+	        <div class="modal-footer">
+	        	<button type="submit" class="btn btn-primary" title="Add new step to workflow">Submit</button>
+	            <button type="button" class="btn btn-default" ng-click="cancel()" title="Cancel changes and dismiss dialog">Close</button>
+	        </div>
+	    </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</form>

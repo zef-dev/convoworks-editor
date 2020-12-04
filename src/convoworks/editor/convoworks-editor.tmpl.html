@@ -1,0 +1,172 @@
+<div class="layout convoworks" properties-context service-id="serviceId">
+    <div class="header">
+        <div class="logo" ng-class="{ 'expanded': tabsExpanded }" ui-sref="convoworks-editor">
+            <div class="image"></div>
+            <div class="text">&nbsp; Convoworks</div>
+        </div>
+        <div class="contents">
+            <a class="back" ui-sref="convoworks-editor">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </a>
+            <h3>{{ ::getSelection().service.name }}</h3>
+            <div class="divider"></div>
+            <div class="publish">
+                <div class="btn-group icon-button publish-group" uib-dropdown>
+                    <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="propagatePlatformChanges('all')">
+                        <span class="glyphicon glyphicon-play"></span>
+                        Propagate to all
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                        <li role="menuitem"
+                            ng-if="isPlatformPropagateAllowed('amazon') && isPlatformPropagateAvailable('amazon')">
+                            <a ng-click="propagatePlatformChanges('amazon')"
+                               class="dropdown-item"
+                               title="Add session start block"
+                               href="javascript:void(0);">
+                                Propagate to Amazon
+                            </a>
+                        </li>
+                        <li role="menuitem"
+                            ng-if="isPlatformPropagateAllowed('dialogflow') && isPlatformPropagateAvailable('dialogflow')">
+                            <a ng-click="propagatePlatformChanges('dialogflow')"
+                               class="dropdown-item"
+                               title="Add session start block"
+                               href="javascript:void(0);">
+                                Propagate to Dialogflow
+                            </a>
+                        </li>
+                        <li role="menuitem"
+                            ng-if="isPlatformPropagateAllowed('facebook_messenger') && isPlatformPropagateAvailable('facebook_messenger')">
+                            <a ng-click="propagatePlatformChanges('facebook_messenger')"
+                               class="dropdown-item"
+                               title="Add session start block"
+                               href="javascript:void(0);">
+                                Propagate to Messenger
+                            </a>
+                        </li>
+                        <li role="menuitem"
+                            ng-if="isPlatformPropagateAllowed('viber') && isPlatformPropagateAvailable('viber')">
+                            <a ng-click="propagatePlatformChanges('viber')"
+                               class="dropdown-item"
+                               title="Add session start block"
+                               href="javascript:void(0);">
+                                Propagate to Viber
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="view">
+        <div class="tabs" ng-class="{ 'expanded': tabsExpanded }">
+            <ul>
+                <li ng-class="{ 'active': isServiceTabActive('editor') }" title="Editor">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/editor'}}">
+                        <div class="icon editor">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M20.094,15.658 C21.047,15.729 21.827,16.501 21.898,17.462 C21.918,18.255 22.021,19.086 21.818,19.753 C21.592,20.496 20.892,21.039 20.094,21.098 C14.727,21.231 9.357,21.1 3.989,21.1 C3.011,21.076 2.175,20.284 2.102,19.294 C2.082,18.501 1.979,17.67 2.182,17.003 C2.408,16.26 3.108,15.717 3.906,15.658 C9.3,15.524 14.7,15.524 20.094,15.658 Z M4.011,17.456 C3.68,17.464 3.704,19.278 3.995,19.3 C9.325,19.432 14.658,19.3 19.989,19.3 C20.037,19.3 20.078,19.276 20.094,19.234 C20.118,19.161 20.295,17.478 20.005,17.456 C14.675,17.324 9.342,17.456 4.011,17.456 Z M20.094,9.28 C21.047,9.351 21.827,10.123 21.898,11.084 C21.918,11.877 22.021,12.708 21.818,13.375 C21.592,14.118 20.892,14.661 20.094,14.72 C14.727,14.853 9.357,14.722 3.989,14.722 C3.011,14.698 2.175,13.906 2.102,12.916 C2.082,12.123 1.979,11.292 2.182,10.625 C2.408,9.882 3.108,9.339 3.906,9.28 C9.3,9.146 14.7,9.146 20.094,9.28 Z M4.011,11.078 C3.68,11.086 3.704,12.9 3.995,12.922 C9.325,13.054 14.658,12.922 19.989,12.922 C20.037,12.922 20.078,12.898 20.094,12.856 C20.118,12.783 20.295,11.1 20.005,11.078 C14.675,10.946 9.342,11.078 4.011,11.078 Z M20.094,2.902 C21.047,2.973 21.827,3.745 21.898,4.706 C21.918,5.499 22.021,6.33 21.818,6.997 C21.592,7.74 20.892,8.283 20.094,8.342 C14.727,8.475 9.357,8.344 3.989,8.344 C3.011,8.32 2.176,7.528 2.102,6.538 C2.082,5.745 1.979,4.914 2.182,4.247 C2.408,3.504 3.108,2.961 3.906,2.902 C9.3,2.768 14.7,2.768 20.094,2.902 Z M4.011,4.7 C3.68,4.708 3.704,6.522 3.995,6.544 C9.325,6.676 14.658,6.544 19.989,6.544 C20.037,6.544 20.078,6.52 20.094,6.478 C20.118,6.405 20.295,4.722 20.005,4.7 C14.675,4.568 9.342,4.7 4.011,4.7 Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text">Editor</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('preview') }" title="Preview">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/preview'}}">
+                        <div class="icon preview">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>
+                            </svg>
+                        </div>
+                        <span class="text">Preview</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('variables') }" title="Variables">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/variables'}}">
+                        <div class="icon variables">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M9.4,15.079 C10.686,15.079 11.778,15.919 12.157,17.079 L21.9,17.079 C22.396,17.079 22.8,17.483 22.8,17.979 C22.8,18.476 22.396,18.879 21.9,18.879 L12.157,18.879 C11.778,20.04 10.686,20.879 9.4,20.879 C8.113,20.879 7.022,20.04 6.642,18.879 L2.9,18.879 C2.403,18.879 2,18.476 2,17.979 C2,17.483 2.403,17.079 2.9,17.079 L6.642,17.079 C7.022,15.919 8.113,15.079 9.4,15.079 Z M9.4,16.879 C8.793,16.879 8.3,17.372 8.3,17.979 C8.3,18.586 8.793,19.079 9.4,19.079 C10.007,19.079 10.5,18.586 10.5,17.979 C10.5,17.372 10.007,16.879 9.4,16.879 Z M15.324,9.079 C16.611,9.079 17.703,9.919 18.082,11.079 L21.9,11.079 C22.396,11.079 22.8,11.483 22.8,11.979 C22.8,12.476 22.396,12.879 21.9,12.879 L18.082,12.879 C17.703,14.04 16.611,14.879 15.324,14.879 C14.038,14.879 12.946,14.04 12.567,12.879 L2.9,12.879 C2.403,12.879 2,12.476 2,11.979 C2,11.483 2.403,11.079 2.9,11.079 L12.567,11.079 C12.946,9.919 14.038,9.079 15.324,9.079 Z M15.324,10.879 C14.717,10.879 14.224,11.372 14.224,11.979 C14.224,12.586 14.717,13.079 15.324,13.079 C15.931,13.079 16.424,12.586 16.424,11.979 C16.424,11.372 15.931,10.879 15.324,10.879 Z M9.4,3 C10.715,3 11.828,3.878 12.182,5.079 L21.9,5.079 C22.396,5.079 22.8,5.483 22.8,5.979 C22.8,6.476 22.396,6.879 21.9,6.879 L12.13,6.879 C11.728,7.998 10.657,8.8 9.4,8.8 C8.143,8.8 7.072,7.998 6.67,6.879 L2.9,6.879 C2.403,6.879 2,6.476 2,5.979 C2,5.483 2.403,5.079 2.9,5.079 L6.618,5.079 C6.972,3.878 8.084,3 9.4,3 Z M9.4,4.8 C8.793,4.8 8.3,5.292 8.3,5.9 C8.3,6.507 8.793,7 9.4,7 C10.007,7 10.5,6.507 10.5,5.9 C10.5,5.292 10.007,4.8 9.4,4.8 Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text">Variables</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('intent-model') }" title="Intent Model">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/intent-model'}}">
+                        <div class="icon intents">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M19.3227723,3 C20.5821782,3 21.6039604,4.01605574 21.6039604,5.27949897 L21.6039604,16.517959 L21.6039604,16.517959 C21.6039604,17.772567 20.5821782,18.797458 19.3227723,18.797458 L14.1128713,18.797458 L12.5623762,21.3331797 C12.4,21.5982377 12.1118812,21.7572725 11.8019802,21.7572725 C11.4920792,21.7572725 11.2039604,21.5982377 11.0415842,21.3331797 L9.49108911,18.797458 L4.28118812,18.797458 C3.02178218,18.797458 2,17.772567 2,16.517959 L2,5.27949897 C2,4.01605574 3.02178218,3 4.28118812,3 L19.3227723,3 Z M19.3227723,4.77588873 L4.28118812,4.77588873 L4.28118812,4.77588873 C4.00594059,4.77588873 3.78217822,5.00560568 3.78217822,5.27949897 L3.78217822,16.517959 L3.78217822,16.517959 C3.78217822,16.7918523 4.00594059,17.012734 4.28118812,17.012734 L9.99108911,17.012734 C10.3009901,17.012734 10.5891089,17.1717688 10.7514851,17.4368268 L11.8019802,19.1597039 L12.8524752,17.4368268 C13.0148515,17.1717688 13.3029703,17.012734 13.6128713,17.012734 L19.3227723,17.012734 L19.3227723,17.012734 C19.5980198,17.012734 19.8217822,16.7918523 19.8217822,16.517959 L19.8217822,5.27949897 C19.8217822,5.00560568 19.5980198,4.77588873 19.3227723,4.77588873 Z M7.99477414,9.76980246 C8.74650338,9.76980246 9.35590034,10.3791994 9.35590034,11.1309287 C9.35590034,11.8826579 8.74650338,12.4920549 7.99477414,12.4920549 C7.2430449,12.4920549 6.63364794,11.8826579 6.63364794,11.1309287 C6.63364794,10.3791994 7.2430449,9.76980246 7.99477414,9.76980246 Z M11.8026949,9.76980246 C12.5544242,9.76980246 13.1638211,10.3791994 13.1638211,11.1309287 C13.1638211,11.8826579 12.5544242,12.4920549 11.8026949,12.4920549 C11.0509657,12.4920549 10.4415687,11.8826579 10.4415687,11.1309287 C10.4415687,10.3791994 11.0509657,9.76980246 11.8026949,9.76980246 Z M15.6106157,9.76980246 C16.362345,9.76980246 16.9717419,10.3791994 16.9717419,11.1309287 C16.9717419,11.8826579 16.362345,12.4920549 15.6106157,12.4920549 C14.8588865,12.4920549 14.2494895,11.8826579 14.2494895,11.1309287 C14.2494895,10.3791994 14.8588865,9.76980246 15.6106157,9.76980246 Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text">Intent Model</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('configuration') }" title="Configuration">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/configuration'}}">
+                        <div class="icon configuration">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                        </div>
+                        <span class="text">Configuration</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('releases') }" title="Releases">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/releases'}}">
+                        <div class="icon publish">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M10.5760134,13.5062324 L3.11201338,11.0532324 C2.45001338,10.8352324 2.00201338,10.2182324 2.00000667,9.5222324 C1.99801338,8.8252324 2.44301338,8.2062324 3.10401338,7.9852324 C8.17001338,6.2922324 20.8780134,2.0462324 20.8780134,2.0462324 C21.2110134,1.9352324 21.5720134,2.0292324 21.8090134,2.2732324 C22.0530134,2.5102324 22.1470134,2.8702324 22.0360134,3.2042324 C22.0360134,3.2042324 17.7900134,15.9112324 16.0970134,20.9782324 C15.8760134,21.6392324 15.2570134,22.0842324 14.5600134,22.0822391 C13.8640134,22.0802324 13.2460134,21.6322324 13.0290134,20.9702324 L10.5760134,13.5062324 Z M12.3170134,13.0382324 L14.5660134,19.8812324 L19.1210134,6.2472324 L12.3170134,13.0382324 Z M4.20101338,9.5162324 L11.0440134,11.7652324 L17.8350134,4.9612324 L4.20101338,9.5162324 Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text">Releases</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('import-export') }" title="Import/Export">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/import-export'}}">
+                        <div class="icon import-export">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.01 14H2v2h7.01v3L13 15l-3.99-4v3zm5.98-1v-3H22V8h-7.01V5L11 9l3.99 4z"/></svg>
+                        </div>
+                        <span class="text">Import/Export</span>
+                    </a>
+                </li>
+                <li ng-class="{ 'active': isServiceTabActive('test') }" title="Test">
+                    <a ng-href="{{'#!/convoworks-editor/' + serviceId + '/test'}}">
+                        <div class="icon context">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                <path d="M10.951,7.658 C9.79,7.279 8.951,6.187 8.951,4.9 C8.951,3.3 10.251,2 11.851,2 C13.452,2 14.751,3.3 14.751,4.9 C14.751,6.187 13.912,7.279 12.751,7.658 L12.751,10.247 L17.803,10.247 C18.3,10.247 18.703,10.65 18.703,11.147 L18.703,16.461 C19.863,16.84 20.703,17.932 20.703,19.219 C20.703,20.819 19.403,22.119 17.803,22.119 C16.202,22.119 14.903,20.819 14.903,19.219 C14.903,17.932 15.742,16.84 16.903,16.461 L16.903,12.047 L6.8,12.047 L6.8,16.461 C7.96,16.84 8.8,17.932 8.8,19.219 C8.8,20.819 7.5,22.119 5.9,22.119 C4.299,22.119 3,20.819 3,19.219 C3,17.932 3.839,16.84 5,16.461 L5,11.147 C5,10.65 5.402,10.247 5.9,10.247 L10.951,10.247 L10.951,7.658 Z M5.851,18.12 C5.267,18.145 4.8,18.627 4.8,19.219 C4.8,19.826 5.292,20.319 5.9,20.319 C6.507,20.319 7,19.826 7,19.219 C7,18.627 6.532,18.145 5.948,18.12 C5.932,18.12 5.916,18.121 5.9,18.121 C5.883,18.121 5.867,18.12 5.851,18.12 Z M16.703,19.219 C16.703,18.611 17.196,18.119 17.803,18.119 C18.41,18.119 18.903,18.611 18.903,19.219 C18.903,19.826 18.41,20.319 17.803,20.319 C17.196,20.319 16.703,19.826 16.703,19.219 Z M10.751,4.9 C10.751,4.293 11.244,3.8 11.851,3.8 C12.458,3.8 12.951,4.293 12.951,4.9 C12.951,5.507 12.458,6 11.851,6 C11.244,6 10.751,5.507 10.751,4.9 Z"></path>
+                            </svg>
+                        </div>
+                        <span class="text">Test</span>
+                    </a>
+                </li>
+                <li class="shop">
+                    <a href="javascript:alert('Not implemented');">
+                        <div class="icon shop">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 20 20" width="20"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        </div>
+                        <div class="text">Visit Store</div>
+                    </a>
+                </li>
+                <li class="toggle" ng-click="toggleExpanded()" title="{{tabsExpanded ? 'Colapse' : 'Expand'}}">
+                    <a href="">
+                        <div class="icon toggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                        </div>
+                        <!--                        <div class="text"></div>-->
+                    </a>
+                </li>
+    </ul>
+        </div>
+        <div class="contents">
+            <div class="service-tab-content" ui-view name="serviceTabView" ng-if="isReady()"></div>
+        </div>
+    </div>
+</div>

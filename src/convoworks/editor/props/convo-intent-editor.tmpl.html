@@ -1,0 +1,26 @@
+  <div class="convo-form-group" ng-class="{'error':error}">
+      <label class="convo-form-label">{{ propertyDefinition.name }}</label>
+      <select class="convo-form-input" ng-model="component.properties[key]">
+          <option ng-repeat="intent in intents track by intent.name"
+                  value="{{ intent.name }}">
+              {{ intent.name }}
+          </option>
+      </select>
+     <span class="help-block">{{propertyDefinition.description}}</span>
+	 <div ng-if="(slotPreviews | keys).length !== 0">
+		 <table class="table table-striped table-sm">
+			 <thead class="thead-dark">
+				 <tr>
+					 <th>Slot name</th>
+					 <th>Slot type</th>
+				 </tr>
+			 </thead>
+			 <tbody>
+			    <tr ng-repeat="(slotName, slotType) in slotPreviews track by $index">
+				    <td style="font-family: monospace">{{ slotName }}</td>
+				    <td style="font-family: monospace">{{ slotType }}</td>
+			    </tr>
+			 </tbody>
+		 </table>
+	 </div>
+ </div>

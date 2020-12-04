@@ -1,0 +1,138 @@
+.convoworks {
+
+    .preview .title {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        justify-content: space-between;
+        align-items: center;
+    
+        margin: 0 20px;
+    }
+    
+    .preview .title > h3 {
+        margin: 0;
+    }
+    
+    .preview .title > .convo-form-input {
+        font-family: "DM Sans", "Glyphicons Halflings", sans-serif;
+        max-width: 500px;
+    }
+    
+    .preview .preview-block  {
+        margin: 20px;
+    
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .preview .preview-block > .header {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        padding: 19px 14px;
+    }
+    
+    .preview .preview-block > .header > .block-id {
+        height: 18px;
+        line-height: 18px;
+    
+        color: #2F74EA;
+    
+        margin-left: auto;
+    
+        font-size: 14px;
+        text-align: right;
+    }
+    
+    .preview .preview-block > hr.divider-full {
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        margin: 0;
+    }
+    
+    .preview .preview-block > .body {
+        padding: 20px;
+    }
+    
+    .preview .preview-block > .body > .messages .holder {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .message {
+        padding: 11px 14px;
+        border-radius: 8px;
+        margin: 7px 0;
+        font-size: 14px;
+    
+        max-width: 70%;
+        min-width: 100px;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .message > .monospace {
+        background-color: #767676;
+        display: inline-block;
+        color: #f3f3f3;
+        padding: 2px 6px;
+        border-radius: 4px;
+    
+        font-weight: bold;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .message.bot {
+        margin-right: auto;
+        border-top-left-radius: 0;
+        background-color: rgba(0,0,0,0.08);
+        text-align: left;
+    
+        color: rgba(0,0,0,0.8);
+    
+        order: 1;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > button {
+        order: 2;
+        height: 26px;
+        width: 71px;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 8px;
+        color: rgba(0,0,0,0.5);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 16px;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .message.user {
+        margin-left: auto;
+        border-top-right-radius: 0;
+        background-color: #2F74EA;
+        text-align: right;
+    
+        color: white;
+    
+        order: 2;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .intent-source {
+        color: rgba(0,0,0,0.36);
+        font-size: 14px;
+        font-style: italic;
+        letter-spacing: 0;
+        line-height: 16px;
+    
+        order: 1;
+    }
+    
+    .preview .preview-block > .body > .messages .holder > .intent-source.custom-intent {
+        color: #5b92ec;
+        font-size: 16px;
+    }
+    .preview .preview-block > .body > .messages .holder > .intent-source.custom-intent:hover {
+        cursor: pointer;
+    }
+}

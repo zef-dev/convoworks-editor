@@ -1,0 +1,99 @@
+<div class="wide-panel">
+    <div class="card-pane">
+        <fieldset>
+            <legend>
+                <a ui-sref="convoworks-editor-service.configuration" class="back">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </a>&nbsp;Messenger
+            </legend>
+            <form name="facebookMessengerPlatformConfigForm" class="form-horizontal" ng-submit="updateConfig(facebookMessengerPlatformConfigForm.$valid)">
+                <!-- DUMMY INPUT -->
+                <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+
+                <div class="convo-form-group">
+                    <div class="button-group">
+                        <button ng-click="gotoConfigUrl()" ng-if="config.app_id && config.app_id !== ''" title="Facebook App - Messenger Settings" class="btn btn-primary btn-sm submit">
+                            Facebook App - Messenger Settings <i class="glyphicon glyphicon-new-window"></i>
+                        </button>
+                        <button disabled ng-if="!config.app_id || config.app_id === ''" title="Facebook App - Messenger Settings" class="btn btn-primary btn-sm submit">
+                            Facebook App - Messenger Settings <i class="glyphicon glyphicon-new-window"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="convo_chat-config-delegateNlp" class="convo-form-label">Intent NLP</label>
+                    <select class="convo-form-input" ng-model="config.delegateNlp" id="convo_chat-config-delegateNlp">
+                        <option ng-repeat="nlp in getIntentNlps()" value="{{nlp.value}}">{{nlp.label}}</option>
+                    </select>
+                    <span class="help-block">Will be used to parse input text into intent based result</span>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="app_id" class="convo-form-label">App ID</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                    <b ng-show="facebookMessengerPlatformConfigForm.app_id.$invalid && !facebookMessengerPlatformConfigForm.app_id.$pristine" class="text-danger">App ID is required.</b>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="app_secret" class="convo-form-label">App Secret</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="app_secret" name="app_secret" placeholder="" ng-model="config.app_secret">
+                    <b ng-show="facebookMessengerPlatformConfigForm.app_secret.$invalid && !facebookMessengerPlatformConfigForm.app_secret.$pristine" class="text-danger">App Secret is required.</b>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="page_id" class="convo-form-label">Facebook Page ID</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="page_id" name="page_access_token" placeholder="" ng-model="config.page_id">
+                    <span class="help-block">Required to display the "Test on Messenger" button in Test tab</span>
+                    <b ng-show="facebookMessengerPlatformConfigForm.page_id.$invalid && !facebookMessengerPlatformConfigForm.page_id.$pristine" class="text-danger">Page ID is required.</b>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="page_access_token" class="convo-form-label">Facebook Page Access Token</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="page_access_token" name="page_access_token" placeholder="" ng-model="config.page_access_token">
+                    <b ng-show="facebookMessengerPlatformConfigForm.page_access_token.$invalid && !facebookMessengerPlatformConfigForm.page_access_token.$pristine" class="text-danger">Page ID is required.</b>
+                </div>
+
+                <div class="convo-form-group">
+                    <label for="webhook_verify_token" class="convo-form-label">Webhook Verify Token</label>
+                    <input ng-required="true" type="text" class="convo-form-input" id="webhook_verify_token" name="webhook_verify_token" placeholder="" ng-model="config.webhook_verify_token">
+                    <b ng-show="facebookMessengerPlatformConfigForm.webhook_verify_token.$invalid && !facebookMessengerPlatformConfigForm.webhook_verify_token.$pristine" class="text-danger">Page ID is required.</b>
+                </div>
+
+                <div class="convo-form-group" ng-model="config.webhook_events">
+                    <label class="convo-form-label">Webhook Events</label>
+                    <label class="convo-form-label" ng-repeat="event in getWebhookEvents()">
+                    <span ng-if="event.mandatory === true">
+                        <input ng-required="true" type="checkbox" name="{{event.name}}" id="{{event.name}}" ng-click="registerChange(this)" ng-model="event.checked"> {{event.name}}
+                    </span>
+                        <span ng-if="event.mandatory === false">
+                        <input type="checkbox" ng-click="registerChange(this)" ng-model="event.checked"> {{event.name}}
+                    </span>
+                    </label>
+                </div>
+
+                <div class="convo-form-group" ng-if="!isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || facebookMessengerPlatformConfigForm.$invalid" class="btn btn-primary btn-sm submit">
+                            Save Configuration
+                        </button>
+                        <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
+                            Revert
+                        </a>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-if="isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Create Messenger configuration" class="btn btn-primary btn-sm submit" ng-disabled="facebookMessengerPlatformConfigForm.$invalid">
+                            Create
+                        </button>
+                        <a type="button" ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>

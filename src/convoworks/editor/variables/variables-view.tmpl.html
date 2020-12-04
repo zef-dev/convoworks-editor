@@ -1,0 +1,49 @@
+<div class="wide-panel full">
+<div class="row">
+    <div class="col-md-6">
+        <variables-editor service="getSelection().service"></variables-editor>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <form ng-submit="saveChanges()"
+                    style="float:right">
+                    <div class="convo-button-group">
+                        <button type="submit" title="Save changes"
+                                ng-disabled="!isServiceChanged()"
+                                class="btn btn-md btn-primary">
+                            <i ng-class="{'spinning':loading}"
+                               class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;&nbsp; Save
+                        </button>
+                        <a ng-click="revertClicked()"
+                           title="Revert changes" ng-disabled="!isServiceChanged()"
+                           class="cancel">Revert</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <preview-variables-editor service="getSelection().service"></preview-variables-editor>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <form ng-submit="saveChanges()"
+                    style="float:right">
+                    <div class="convo-button-group">
+                        <button type="submit" title="Save changes"
+                                ng-disabled="!isServiceChanged()"
+                                class="btn btn-md btn-primary">
+                            <i ng-class="{'spinning':loading}"
+                               class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;&nbsp; Save
+                        </button>
+                        <a ng-click="revertClicked()"
+                           title="Revert changes" ng-disabled="!isServiceChanged()"
+                           class="cancel">Revert</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+

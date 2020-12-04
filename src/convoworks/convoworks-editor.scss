@@ -1,0 +1,354 @@
+.convoworks {
+
+    
+    .layout {
+        display: flex;
+        flex-flow: column nowrap;
+    
+        min-height: 100vh;
+    
+        background-color: white;
+    }
+    
+    .header {
+        height: 90px;
+    
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    
+    .header>.logo {
+        height: 100%;
+        width: 89px;
+    
+        background-color: #2F74EA;
+    
+        transition: width 50ms ease-out;
+    
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    
+        flex-shrink: 0;
+    }
+    .header>.logo.expanded {
+        width: 210px;
+    }
+    .header>.logo:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .header>.logo>.image {
+        background-image: url("images/Convoworks_Logo_White.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        width: 35px;
+        height: 22px;
+    }
+    
+    .header>.logo>.text {
+        color: white;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px;
+        font-weight: bold;
+    
+        padding: 0 2px;
+    
+        width: 0;
+        opacity: 0;
+        pointer-events: none;
+    
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .header>.logo.expanded>.text {
+        width: 111px;
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    .header>.contents {
+        flex-grow: 1;
+        height: 100%;
+        padding: 35px 24px;
+    
+        display: flex;
+        flex-flow: row nowrap;
+    
+        align-items: center;
+    
+        background-color: white;
+    }
+    
+    .header>.contents.blue {
+        background-color: #2F74EA;
+    }
+    
+    .header>.contents>a {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .header>.contents>a svg {
+        fill: #2F74EA;
+    }
+    
+    .header>.contents>h3 {
+        display: inline-block;
+    
+        margin: 0;
+        padding-left: 20px;
+    
+        font-size: 18px;
+        color: black;
+    }
+    
+    .header>.contents>.divider {
+        height: 90px;
+    
+        margin: 0 24px 0 auto;
+    
+        border-left: 1px solid rgba(0,0,0,0.08);
+    }
+    
+     .header > .contents > .publish {
+        width: 192px;
+        border-radius: 7px;
+        background-color: #FFFFFF;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+    }
+    
+     .header > .contents > .publish > .publish-group {
+        width: 100%;
+    }
+    
+     .header > .contents > .publish button {
+        height: 40px;
+        color: #2F74EA;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 18px;
+    }
+    
+     .header > .contents > .publish .dropdown-default {
+        width: 85%;
+    }
+    
+     .header > .contents > .publish .dropdown-toggle {
+        width: 15%;
+        background-color: rgba(47, 116, 234, 0.2);
+    }
+    
+     .header > .contents > .publish .dropdown-menu {
+        width: 100%;
+        padding: 0;
+    }
+    
+     .header > .contents > .publish .dropdown-menu > li {
+        height: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    
+     .header > .contents > .publish .dropdown-menu > li > a.dropdown-item {
+        color: rgba(0, 0, 0, 0.8);
+        line-height: 30px;
+        height: 100%;
+    }
+    
+    .view {
+        display: flex;
+        flex-flow: row nowrap;
+        min-height: inherit;
+    }
+    
+    .view>.tabs {
+        display: flex;
+        flex-flow: column nowrap;
+    
+        flex-shrink: 0;
+    
+        background-color: white;
+    
+        width: 89px;
+    
+        padding-top: 25px;
+    
+        transition: width 50ms ease-out;
+    }
+    
+    .view>.tabs.expanded {
+        width: 210px;
+    }
+    
+    .view>.tabs.collapsed {
+        width: 0;
+    }
+    
+    .view>.tabs>ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    
+        height: 100%;
+    
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    
+    .view>.tabs>ul>li {
+        height: 48px;
+        font-size: 14px;
+    }
+    
+    .view>.tabs>ul>li>a {
+        padding: 12px 32px;
+    
+        color: rgba(0, 0, 0, 0.5);
+    
+        display: flex;
+        flex-flow: row nowrap;
+    
+        text-decoration: none;
+        margin: 0;
+    }
+    
+    .view>.tabs>ul>li>a>.icon {
+        width: 24px;
+        height: 24px;
+    
+        order: -1;
+    }
+    
+    .view>.tabs>ul>li>a>.icon>svg {
+        fill: rgba(0, 0, 0, 0.36);
+    }
+    
+    .view>.tabs>ul>li>a>.text {
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+    
+        white-space: nowrap;
+    
+        width: 0;
+        height: 0;
+    }
+    
+    .view>.tabs.expanded>ul>li>a>.text {
+        opacity: 1;
+        pointer-events: all;
+    
+        width: auto;
+        height: auto;
+    
+        line-height: 24px;
+        padding-left: 20px;
+    }
+    .view>.tabs>ul>li.active>a {
+        background-color: rgba(47, 116, 234, 0.1);
+        color: #2F74EA;
+    }
+    
+    .view>.tabs>ul>li.active>a>.icon>svg {
+        fill: #2F74EA;
+    }
+    
+    .view>.tabs>ul>li.shop {
+        border-radius: 8px;
+        background-color: #2F74EA;
+        color: white;
+    
+        width: 40px;
+        height: 40px;
+    
+        margin: auto auto 0;
+    }
+    
+    .view>.tabs>ul>li.shop>a {
+        padding: 9px;
+    
+        color: white;
+    }
+    
+    .view>.tabs.expanded>ul>li.shop {
+        width: 161px;
+    }
+    .view>.tabs.expanded>ul>li.shop>a {
+        padding: 9px 30px;
+    }
+    
+    .view>.tabs.expanded>ul>li.shop>a>.text {
+        padding-left: 3px;
+        line-height: 22px;
+    }
+    
+    .view>.tabs>ul>li.toggle {
+        order: 1;
+    
+        width: 32px;
+        height: 32px;
+    
+        margin-right: 28px;
+        margin-left: auto;
+    
+        padding: 0;
+    }
+    
+    .view>.tabs>ul>li.toggle>a {
+        padding: 0;
+    }
+    
+    .view>.tabs>ul>li.toggle>a>.icon {
+        margin: auto;
+    }
+    
+    .view>.tabs>ul>li:hover {
+        cursor: pointer;
+        color: rgba(0, 0, 0, 1);
+    
+        background-color: rgba(47, 116, 234, 0.1);
+    }
+    
+    .view>.tabs>ul>li.shop:hover {
+        color: white;
+        background-color: #2F74EA;
+    }
+    
+    .view>.tabs>ul>li:hover svg {
+        fill: black;
+    }
+    
+    .view>.contents {
+        min-height: inherit;
+        flex-grow: 1;
+        box-shadow: inset 15px 15px 10px -5px rgba(0, 0, 0, 0.03);
+        background-color: rgba(0, 0, 0, 0.01);
+    }
+    
+    .view>.contents>.service-tab-content {
+        width: 100%;
+        min-height: inherit;
+    }
+    
+    /* ICON SOURCES */
+    .shop svg {
+        fill: white !important;
+    }
+    
+    .icon.toggle svg {
+        margin: auto;
+        transform: rotate(0);
+        transition: transform 100ms ease-out;
+    }
+    
+    .tabs.expanded .icon.toggle svg {
+        transform: rotate(-180deg);
+    }
+}

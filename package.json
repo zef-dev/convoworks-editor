@@ -7,13 +7,12 @@
   "repository": "zef-dev/convoworks-editor",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "source": "src/convoworks/index.js",
   "engines": {
     "node": ">=10"
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.28",
-    "@zef-dev/convoworks-webchat": "^1.1.2",
     "angular": "^1.8.0",
     "angular-animate": "1.8.*",
     "angular-bootstrap-contextmenu": "^1.2.1",

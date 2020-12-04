@@ -1,0 +1,58 @@
+<div class="releases">
+    <div class="card-pane">
+        <div class="data">
+            <div class="title">
+                <div class="heading">
+                    <h4>All versions</h4>
+                </div>
+                <button class="btn btn-muted btn-xs border-radius-8" ng-click="expanded = !expanded;">
+                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !expanded, 'glyphicon-chevron-up': expanded }"></i>
+                </button>
+            </div>
+            <table ng-class="{ 'expanded': expanded }">
+                <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Tag</th>
+                    <th>Platform</th>
+                    <th>Alias</th>
+                    <th>Type</th>
+                    <th>Stage</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in versions"  ng-class="{ 'inactive' : !row.active}">
+                    <th>{{row.version_id}}</th>
+                    <td>{{row.version_tag}}</td>
+                    <td>{{row.platform_id}}</td>
+                    <td>{{row.alias}}</td>
+                    <td>
+                        <div ng-if="row.type === 'production' && row.stage === 'release' && row.active" class="indicator production"></div>
+                        {{ row.type.charAt(0).toUpperCase() + row.type.slice(1, row.type.length) }}
+                    </td>
+                    <td>
+                        <div ng-if="row.type === 'production' && row.stage === 'review' && row.active" class="indicator test"></div>
+                        {{ row.stage.charAt(0).toUpperCase() + row.stage.slice(1, row.stage.length) }}
+                    </td>
+                    <td>{{ row.time_created | admDate : 'yyyy-MM-dd h:mm a'}}</td>
+                    <td class="release-actions">
+                        <div class="btn-group" uib-dropdown is-open="status.isopen">
+                            <button id="single-button" type="button" class="btn btn-muted btn-xs border-radius-8" uib-dropdown-toggle>
+                                <i class="glyphicon glyphicon-option-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem" ng-click="importToDevelop( row)">
+                                    <a href="javascript:void(0);">Import to develop</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!versions.length"><td colspan="6">No versions so far</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+.convoworks {
+    a.back {
+        width: 50px;
+        height: 50px;
+        color: #2F74EA;
+        text-decoration: none;
+    }
+    
+    a.back:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .configs {
+        display: flex;
+        flex-flow: row wrap;
+    
+        /*justify-content: space-between;*/
+    
+        max-width: 100%;
+    
+        margin-top: -10px;
+    }
+    
+    .configs .config-square {
+        height: 320px;
+        width: 300px;
+        border: 1px solid rgba(0,0,0,0.08);
+        margin: 10px 10px 0 0;
+    }
+    
+    /*.config-square:first-child*/
+    /*{*/
+    /*    margin-left: 0;*/
+    /*}*/
+    
+    /*.config-square:last-child*/
+    /*{*/
+    /*    margin-right: 0;*/
+    /*}*/
+    
+    .config-square div.logo {
+        width: 170px;
+        height: 74px;
+    
+        margin: 0 auto 30px;
+    
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    
+        content: "&nbsp;";
+    }
+    
+    .config-square .name-indicator {
+    
+    }
+    
+    .config-square .name-indicator span.platform-name {
+        height: 24px;
+        color: rgba(0,0,0,0.8);
+        font-size: 18px;
+        letter-spacing: 0;
+        line-height: 24px;
+        float: left;
+    }
+    
+    .config-square a.configure {
+        height: 38px;
+        width: 252px;
+        border-radius: 8px;
+        background-color: #2F74EA;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 18px;
+        text-align: center;
+    
+        margin-top: 65px;
+    }
+}

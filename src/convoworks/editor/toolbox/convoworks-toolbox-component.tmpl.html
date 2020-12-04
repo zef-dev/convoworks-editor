@@ -1,0 +1,10 @@
+
+<div class="toolbox-component {{componentDefinition.component_properties._workflow}}"
+	 ng-class="{ 'descend' : componentDefinition.component_properties._descend, 'deprecated' : isDeprecated()}"
+	 ng-show="!componentDefinition.component_properties._system && !isDeprecated()"
+	 title="{{componentDefinition.description}}"
+	>
+	{{componentDefinition.name}}
+</div>
+
+
