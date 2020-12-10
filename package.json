@@ -1,19 +1,23 @@
 {
   "name": "@zef-dev/convoworks-editor",
-  "version": "0.18",
+  "version": "0.18.0",
   "description": "Editor GUI for the Convoworks framework",
   "author": "zef-dev",
   "license": "MIT",
   "repository": "zef-dev/convoworks-editor",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.js",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
   "source": "src/convoworks/index.js",
   "engines": {
     "node": ">=10"
   },
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/karma/bin/karma start",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --mode development"
+  },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.28",
-    "@zef-dev/convoworks-webchat": "^1.1.4",
     "angular": "^1.8.0",
     "angular-animate": "1.8.*",
     "angular-bootstrap-contextmenu": "^1.2.1",
@@ -36,6 +40,7 @@
     "react-svg": "^11.0.21"
   },
   "devDependencies": {
+    "ng-annotate-loader": "^0.7.0",
     "@babel/core": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
@@ -60,6 +65,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.14.1",
     "prettier": "^1.11.1",
     "rangy": "^1.3.0",
