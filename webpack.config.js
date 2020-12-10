@@ -2,9 +2,21 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const getPath = (pathToFile) => path.resolve(__dirname, pathToFile);
 module.exports = {    
     devtool: 'source-map', // for debug purposes on production
-    mode : 'production',
+    entry: path.resolve('src', 'index.js'),
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'convoworks.js',
+        library: '[name]',
+//        libraryTarget: 'umd',
+        chunkFilename: '[name].js',
+          libraryExport: 'default',
+          libraryTarget: 'umd', // you can use libraries everywhere, e.g requirejs, node 
+          umdNamedDefine: true,
+      },
     optimization : {
         splitChunks: {
         cacheGroups: {
@@ -51,6 +63,7 @@ module.exports = {
 //            template: 'src/index.html',
 //            filename: './index.html'
 //        }),
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'
