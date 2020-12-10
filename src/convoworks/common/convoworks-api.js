@@ -338,7 +338,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             return $http({
                 method: "post",
                 url: CONVO_ADMIN_API_BASE_URL + '/service-test/' + serviceId,
-                data : { device_id : deviceId, text : text, lunch : isLaunch, platform_id: delegateNlp }
+                data : { device_id : deviceId, text : text, launch : isLaunch, platform_id: delegateNlp }
             }).then( function ( response) {
                 $log.log('ConvoworksApi sendMessage response.data', response.data);
                 return response.data;

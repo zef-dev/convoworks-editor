@@ -12,7 +12,7 @@ export default function ConvoChatApi( $log, $http, $q, CONVO_PUBLIC_API_BASE_URL
         return $http({
             method: "post",
             url: CONVO_PUBLIC_API_BASE_URL + '/service-run/convo_chat/' + variant + '/' + serviceId,
-            data : { device_id : deviceId, text : text, lunch : isLaunch}
+            data : { device_id : deviceId, text : text, launch : isLaunch}
         }).then( function ( response) {
             $log.log('ConvoChatApi sendMessage response.data', response.data);
             return response.data;

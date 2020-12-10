@@ -328,7 +328,7 @@ export default function propertiesEditor( $log, $document, $transitions, Convowo
                                 .join('-').toLowerCase(); // join with - and lowercase -> LoopElement = loop-element
 
                             ConvoworksApi.getPackageComponentHelp( $scope.component.namespace, name).then(function (data) {
-                                $scope.help = data;
+                                $scope.help = data.html_content;
                             }, function (reason) {
                                 $log.debug('propertiesEditor getComponentHelp() reason', reason);
                             });
