@@ -4,9 +4,16 @@ const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const getPath = (pathToFile) => path.resolve(__dirname, pathToFile);
+const nodeExternals = require('webpack-node-externals');
+
 module.exports = {    
     devtool: 'source-map', // for debug purposes on production
-    entry: path.resolve('src', 'index.js'),
+//    entry: path.resolve('src', 'index.js'),
+  externals: [nodeExternals()],
+  entry: [
+    'babel-polyfill',
+    path.resolve('src', 'index.js')
+  ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'convoworks.js',
