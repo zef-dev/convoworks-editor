@@ -4,7 +4,10 @@
   "description": "Editor GUI for the Convoworks framework",
   "author": "zef-dev",
   "license": "MIT",
-  "repository": "zef-dev/convoworks-editor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zef-dev/convoworks-editor.git"
+  },
   "main": "dist/convoworks.js",
   "source": "src/index.js",
   "engines": {
@@ -64,5 +67,12 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^2.5.2",
     "webpack-zip-files-plugin": "^1.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/zef-dev/convoworks-editor/issues"
+  },
+  "homepage": "https://github.com/zef-dev/convoworks-editor#readme",
+  "keywords": [
+    "convoworks"
+  ]
 }
