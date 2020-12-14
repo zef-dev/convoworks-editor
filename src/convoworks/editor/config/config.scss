@@ -52,8 +52,20 @@
         content: "&nbsp;";
     }
     
-    .config-square .name-indicator {
-    
+    .config-square div.logo.amazon {
+        background-image: url('./images/amazon_alexa.png');   
+    }
+    .config-square div.logo.dialogflow {
+        background-image: url('./images/dialogflow.png');   
+    }
+    .config-square div.logo.facebook_messenger {
+        background-image: url('./images/messenger.png');   
+    }
+    .config-square div.logo.viber {
+        background-image: url('./images/viber.png');   
+    }
+    .config-square div.logo.convo_chat {
+        background-image: url('./images/convo_chat.png');   
     }
     
     .config-square .name-indicator span.platform-name {
