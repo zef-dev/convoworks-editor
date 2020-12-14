@@ -52,7 +52,7 @@ module.exports = {
             },
             {
                 test: /\.(ttf|eot|svg|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader',
+                loader: 'url-loader',
             },
             {
                 test: /\.scss$/,
