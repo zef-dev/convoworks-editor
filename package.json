@@ -1,6 +1,6 @@
 {
   "name": "@zef-dev/convoworks-editor",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "Editor GUI for the Convoworks framework",
   "author": "zef-dev",
   "license": "MIT",
@@ -59,7 +59,6 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "install-peers-cli": "^2.2.0",
-    "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.14.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^9.0.1",

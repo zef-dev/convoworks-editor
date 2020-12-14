@@ -1,9 +1,7 @@
 //const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const getPath = (pathToFile) => path.resolve(__dirname, pathToFile);
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -21,17 +19,6 @@ module.exports = {
         libraryTarget: 'umd', // you can use libraries everywhere, e.g requirejs, node 
         umdNamedDefine: true,
     },
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                vendor: {
-                    test: /node_modules/,
-                    chunks: 'initial',
-                    name: 'vendor'
-                },
-            }
-        }
-    },
     module: {
         rules: [
             {
@@ -43,37 +30,25 @@ module.exports = {
             },
             { test: /\.html$/, exclude: /node_modules/, loader: 'html-loader' },
             {
-                test: /\.css$/,
+                test: /\.css$/, exclude: /node_modules/,
                 loader: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&minetype=application/font-woff',
-            },
-            {
-                test: /\.(ttf|eot|svg|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                test: /\.(ttf|eot|svg|png)(\?v=[0-9]\.[0-9]\.[0-9])?$/, exclude: /node_modules/,
                 loader: 'url-loader',
             },
             {
-                test: /\.scss$/,
+                test: /\.scss$/, exclude: /node_modules/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
-                test: /\.svg$/,
+                test: /\.svg$/, exclude: /node_modules/,
                 use: ['svg-inline-loader'],
             }
         ]
     },
     plugins: [
-        //        new HtmlWebPackPlugin({
-        //            template: 'src/index.html',
-        //            filename: './index.html'
-        //        }),
         new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css'
-        }),
         new webpack.DefinePlugin({
             ON_TEST: process.env.NODE_ENV === 'test'
         })
