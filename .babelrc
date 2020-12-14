@@ -9,7 +9,8 @@
       }
     ]
   ],
-  "plugins": [["angularjs-annotate", {
-      "explicitOnly": true
-  }], ['@babel/plugin-transform-runtime', { corejs: 2 }]]
+  "plugins": [
+    [ "angularjs-annotate", { "explicitOnly": true }], 
+    ['@babel/plugin-transform-runtime', { corejs: 2 }]
+   ]
 }

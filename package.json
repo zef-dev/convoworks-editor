@@ -8,6 +8,13 @@
     "type": "git",
     "url": "git+https://github.com/zef-dev/convoworks-editor.git"
   },
+  "bugs": {
+    "url": "https://github.com/zef-dev/convoworks-editor/issues"
+  },
+  "homepage": "https://github.com/zef-dev/convoworks-editor#readme",
+  "keywords": [
+    "convoworks"
+  ],
   "main": "dist/convoworks.js",
   "source": "src/index.js",
   "engines": {
@@ -52,10 +59,8 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.3.0",
     "install-peers-cli": "^2.2.0",
-    "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.14.1",
-    "prettier": "^1.11.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^9.0.1",
     "style-loader": "^0.20.2",
@@ -64,14 +69,6 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "webpack-node-externals": "^2.5.2",
-    "webpack-zip-files-plugin": "^1.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/zef-dev/convoworks-editor/issues"
-  },
-  "homepage": "https://github.com/zef-dev/convoworks-editor#readme",
-  "keywords": [
-    "convoworks"
-  ]
+    "webpack-node-externals": "^2.5.2"
+  }
 }
