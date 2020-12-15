@@ -1,7 +1,8 @@
-//import ReactDOM from 'react-dom';
-//import React from 'react';
+import ReactDOM from 'react-dom';
+import React from 'react';
 //
 //import IntentDetails from "../../../ext/components/IntentComponent/intent_details.jsx";
+import IntentDetails from 'convoworks-intent-model-editor'
 
 /* @ngInject */
 export default function intentEditor( $log)
@@ -25,13 +26,13 @@ export default function intentEditor( $log)
 
             function unmountReactElement() {
                 $log.debug( 'intentEditor unmountReactElement');
-//                ReactDOM.unmountComponentAtNode( $element[0] );
+                ReactDOM.unmountComponentAtNode( $element[0] );
             }
 
             function _render( intent)
             {
                 $log.debug( 'intentEditor _render()', intent);
-//                ReactDOM.render( <IntentDetails intent={intent} entities={$scope.entities} systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate}/>, $element[0]);
+                ReactDOM.render( <IntentDetails intent={intent} entities={$scope.entities} systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate}/>, $element[0]);
             }
 
             $scope.$watch( 'intent', function ( intent) {
