@@ -5,7 +5,7 @@ import intentDetails from './intent-details.directive';
 import intentNew from './intent-new.directive';
 import intentEditor from './intent-editor.directive';
 
-import 'convoworks-intent-model-editor/dist/index.css'
+import '@zef-dev/convoworks-intent-model-editor/dist/index.css'
 
 /* @ngInject */
 export default angular

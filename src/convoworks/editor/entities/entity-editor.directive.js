@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 //import EntityDetails from "../../../ext/components/EntityComponent/entity_details.jsx";
-import EntityDetails from 'convoworks-intent-model-editor'
-
+import {
+  EntityEditor
+} from '@zef-dev/convoworks-intent-model-editor'
 
 /* @ngInject */
 export default function entityEditor( $log)
@@ -30,7 +31,7 @@ export default function entityEditor( $log)
             function _render( entity)
             {
                 $log.debug( 'entityEditor _render()', entity);
-                ReactDOM.render( <EntityDetails entity={entity} onUpdate={$scope.onUpdate}/>, $element[0]);
+                ReactDOM.render( <EntityEditor entity={entity} onUpdate={$scope.onUpdate}/>, $element[0]);
             }
 
             $scope.$watch( 'entity', function ( entity) {
