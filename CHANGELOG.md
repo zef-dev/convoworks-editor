@@ -5,6 +5,12 @@
 
 ## [Releases]
 
+### v0.18.3 ###
+
+**2020-12-15**
+
+* corrcted usage and import for `@zef-dev/convoworks-intent-model-editor`
+
 ### v0.18.2 ###
 
 **2020-12-15**
