@@ -19,8 +19,8 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <div class="convo-form-group">
-                                <label class="convo-form-label" for="service_name">Skill name</label>
-                                <input type="text" class="convo-form-input" id="service_name" placeholder="Enter skill name"
+                                <label class="convo-form-label" for="service_name">Service name</label>
+                                <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
                                        ng-model="new_service.name" required>
                                 <span class="help" ng-class="{'error': new_service.name.length > 50}">
                     {{(new_service.name && new_service.name.length) ? new_service.name.length : 0}}/50 characters
@@ -48,7 +48,7 @@
                             <div class="checkbox">
                                 <label for="is_private">
                                     <input type="checkbox" class="convo-form-input" id="is_private" ng-model="new_service.is_private" />
-                                    Don't share service with the entire Service Admin User Group?
+                                    Don't share service with the entire Service Admin User Group
                                 </label>
                             </div>
                         </div>

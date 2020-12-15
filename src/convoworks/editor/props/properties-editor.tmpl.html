@@ -113,7 +113,7 @@
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <select class="convo-form-input" required multiple ng-model="component.properties[key]">
                             <option ng-repeat="(name, value) in definition.component_properties[key].editor_properties.options track by name"
-                                    value="{{ value }}">
+                                    value="{{ name }}">
                                 {{ value }}
                             </option>
                         </select>

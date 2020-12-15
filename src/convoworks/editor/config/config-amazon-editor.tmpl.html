@@ -47,14 +47,14 @@
                 </div>
 
                 <div class="convo-form-group">
-                    <label for="app_id" class="convo-form-label">Skill ID</label>
+                    <label for="app_id" class="convo-form-label">Service ID</label>
                     <input ng-if="isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
                     <input ng-if="!isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
                     <span class="help-block" ng-if="config.mode === 'auto' && isNew()">
-                        If you already created the skill, please enter Skill-ID.
-                        If you leave it blank, it will autamatically create the new skill on Amazon side</span>
+                        If you already created the service, please enter the skill-ID found on Amazon.
+                        If you leave it blank, it will automatically create a new service on Amazon side</span>
                     <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
-                    <b ng-show="amazonPlatformConfigForm.app_id.$invalid && !amazonPlatformConfigForm.app_id.$pristine" class="text-danger">Skill ID is required.</b>
+                    <b ng-show="amazonPlatformConfigForm.app_id.$invalid && !amazonPlatformConfigForm.app_id.$pristine" class="text-danger">Service ID is required.</b>
                 </div>
 
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
