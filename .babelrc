@@ -7,7 +7,8 @@
           "browsers": ["last 2 versions", "safari >= 7"]
         }
       }
-    ]
+    ],
+    ["@babel/preset-react"]
   ],
   "plugins": [
     [ "angularjs-annotate", { "explicitOnly": true }], 
