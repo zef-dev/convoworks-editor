@@ -233,7 +233,7 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                         zIndex: 100,
                         delay : 200,
                         tolerance : 'pointer',
-                        appendTo: 'body',
+                        appendTo: '.convoworks',
                         helper: 'clone',
                         refreshPositions: true,
                         start: function( event, ui) {
