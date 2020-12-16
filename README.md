@@ -22,13 +22,15 @@ You have to implement your own `LoginService` which givess access to signed user
 
 * `LoginService.getUser()` - returns promise which will resolve to user where user is represented as 
 
-    {
-        "user_id":"123orABC",
-        "name":"Display Name",
-        "username":"someusername",
-        "email":"user@email.com",
-        "amazon_account_linked":false
-    }
+```
+{
+    "user_id":"123orABC",
+    "name":"Display Name",
+    "username":"someusername",
+    "email":"user@email.com",
+    "amazon_account_linked":false
+}
+```
 
 * `LoginService.isSignedIn()` - returns boolean
 
@@ -37,14 +39,17 @@ You have to implement your own `LoginService` which givess access to signed user
 
 You have to provide API base urls as angular constants
 
+```javascript
     var appModule   =   angular.module('my.app.module.name');
     appModule.constant( 'CONVO_PUBLIC_API_BASE_URL', 'http://localhost/myapp/rest_public/convo/v1');
     appModule.constant( 'CONVO_ADMIN_API_BASE_URL', 'http://localhost/myapp/rest_admin/convo/v1');
+```
 
 ## Bootstraping
 
 Your app bootrap might look like
 
+```javascript
     import angular from 'angular';
     import '@uirouter/angularjs';
     
@@ -57,3 +62,4 @@ Your app bootrap might look like
     ]).service('LoginService', LoginService);
     
     export default appModule;
+```
