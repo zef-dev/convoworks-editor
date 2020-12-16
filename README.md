@@ -2,6 +2,21 @@
 
 Convoworks Editor is an AngularJs web app for the [Conwoworks](https://github.com/zef-dev/convoworks-core) PHP framework.
 
+## Installation
+
+Using NPM
+
+```
+    npm i @zef-dev/convoworks-editor
+```
+
+or using Yarn
+
+```
+    yarn add @zef-dev/convoworks-editor
+```
+
+
 ## Peer dependencies
 
 In order to run it, your host application has to include thise libraries (through CDN or build process)
