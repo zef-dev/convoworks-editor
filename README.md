@@ -78,3 +78,7 @@ Your app bootrap might look like
     
     export default appModule;
 ```
+
+---
+
+For more information, please check out [convoworks.com](https://convoworks.com)
