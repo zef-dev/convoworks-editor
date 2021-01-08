@@ -2,6 +2,10 @@
 
 ## [Current development]
 
+**2021-01-08**
+
+* fix Config Messenger Editor
+* fix Config Viber Editor
 
 ## [Releases]
 
