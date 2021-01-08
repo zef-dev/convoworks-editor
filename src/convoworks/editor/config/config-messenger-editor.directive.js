@@ -6,8 +6,8 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
         restrict: 'E',
         scope: { service: '=' },
         template,
-        controller ($scope) {
-
+        controller: function ($scope) {
+            'ngInject';
         },
         link ($scope, $element, $attributes) {
 
