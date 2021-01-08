@@ -23,10 +23,6 @@ export default function entityList($log, $window, $state)
                     propertiesContext.removeConvoEntity( index);
                 }
             }
-
-            $scope.navigateToEntity = function( index) {
-                $state.go('convoworks-editor-service.entity-details', { index });
-            }
         }
     }
 }
