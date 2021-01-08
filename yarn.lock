@@ -1192,10 +1192,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zef-dev/convoworks-intent-model-editor@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@zef-dev/convoworks-intent-model-editor/-/convoworks-intent-model-editor-1.1.5.tgz#4012d30ece07bfd6d51055cc2f75217715c5249a"
-  integrity sha512-xHxz+2ywpizzQ30Jmb0rxcS/Eh/P7R9FAOow67Kr72fvswNLmyd9WfNNSVSwakBYXiZa3w9RAmiXKl7dCah8xQ==
+"@zef-dev/convoworks-intent-model-editor@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@zef-dev/convoworks-intent-model-editor/-/convoworks-intent-model-editor-1.1.7.tgz#48d128e259d6d14c225693ace5e64a3678140609"
+  integrity sha512-Nbo2qxZ48H8YRVh+UJlT6Ak5AoyMDG07+gtQeYGcNJA66FE2cgAWQdjIOY1vNoTTLaYVKRQjhv4HOo5lWXjzwA==
   dependencies:
     lodash "^4.17.20"
     node-sass "^5.0.0"
