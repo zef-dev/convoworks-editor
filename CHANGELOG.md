@@ -2,6 +2,8 @@
 
 ## [Current development]
 
+* fixed styling in intent and entities lists
+* use links for intent and entities list items
 
 ## [Releases]
 
