@@ -8,10 +8,11 @@
     </h3>
     <div class="convo-details">
         <section class="intent-model-list">
-            <div class="grid-item" ng-repeat="intent in intents track by $index" ng-click="navigateToIntent($index)">
-                <div class="grid-item-main">
+            <div class="grid-item" ng-repeat="intent in intents track by $index">
+                <a class="grid-item-main" 
+                    ui-sref="convoworks-editor-service.intent-details( { index: $index} )">
                     {{ intent.name }}
-                </div>
+                </a>
                 <div class="grid-item-buttons">
                     <button type="button" ng-click="deleteIntent($event, $index)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">

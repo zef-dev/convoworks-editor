@@ -22,10 +22,6 @@ export default function intentList( $log, $window, $state)
                     propertiesContext.removeConvoIntent( index);
                 }
             }
-
-            $scope.navigateToIntent = function(index) {
-                $state.go('convoworks-editor-service.intent-details', { index });
-            }
         }
     }
 };
