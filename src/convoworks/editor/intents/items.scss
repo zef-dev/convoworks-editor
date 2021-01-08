@@ -1,0 +1,42 @@
+
+.convoworks {
+    
+    .intent-model-list {
+        .grid-item {
+            margin-bottom: 0.625rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: 0.22s;
+            padding: 0.625rem 0.75rem;
+            vertical-align: bottom;
+            height: 2.5rem;
+        }
+        .grid-item:hover {
+            border-color: rgba(47, 116, 234, 0.5);
+        }
+        
+        .grid-item > .grid-item-main {
+            display: inline-block;
+            max-width: 90%;
+            overflow: hidden;
+        }
+        
+        .grid-item > .grid-item-buttons {
+            width: 20px;
+            float: right;
+        }
+        .grid-item > .grid-item-buttons button {
+            opacity: 0.1;
+            transition: 0.22s;
+            background: none;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+        .grid-item:hover > .grid-item-buttons button {
+            opacity: .9;
+        }
+    }
+}
+
