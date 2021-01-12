@@ -2,14 +2,18 @@
 
 ## [Current development]
 
-**2021-01-08**
 
+## [Releases]
+
+### v0.18.9 ###
+
+**2021-01-12**
+
+* new intent editor version - 1.1.8
 * fix Config Messenger Editor
 * fix Config Viber Editor
 * fixed styling in intent and entities lists
 * use links for intent and entities list items
-
-## [Releases]
 
 ### v0.18.8 ###
 
