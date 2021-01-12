@@ -1,7 +1,7 @@
 import template from './intent-details.tmpl.html';
 
 /* @ngInject */
-export default function intentDetails( $log, $state, $stateParams)
+export default function intentDetails( $log, $window, $stateParams)
 {
     return {
         restrict: 'E',
@@ -35,7 +35,12 @@ export default function intentDetails( $log, $state, $stateParams)
 
             $scope.submitIntent = function() {
                 propertiesContext.updateConvoIntent( $scope.current_intent, selected);
-                $state.go('^.intent-model');
+                $window.history.back();
+            }
+
+            $scope.cancel = function()
+            {
+                $window.history.back();
             }
 
             $scope.isIntentChanged = function() {
