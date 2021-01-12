@@ -86,6 +86,25 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                     { inherit:true, reload:false, notify:true, location:true});
                 }
 
+                $scope.isSystemIntent = function(intentName)
+                {
+                    return intentName.includes('.');
+                }
+
+                $scope.gotoIntent = function(intentName)
+                {
+                    const i = propertiesContext.getSelectedService().intents.findIndex((intent) => intent.name === intentName);
+
+                    if (i > -1) {
+                        $state.go('convoworks-editor-service.intent-details', { index: i }, {
+                            inherit: true,
+                            reload: false,
+                            notify: true,
+                            location: true
+                        });
+                    }
+                }
+
                 $scope.isCut    =   function() {
                     return propertiesContext.isCut( $scope.component);
                 }
