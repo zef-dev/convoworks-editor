@@ -23,6 +23,7 @@
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/karma/bin/karma start",
     "build": "webpack --mode production",
+    "watch": "webpack --mode production --watch --progress",
     "prepare": "install-peers",
     "start": "webpack-dev-server --open --mode development"
   },

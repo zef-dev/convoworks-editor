@@ -11,12 +11,17 @@ module.exports = {
     entry: [
         path.resolve('src', 'index.js')
     ],
+    watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000,
+        ignored: 'node_modules/**'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'convoworks.js',
         library: '[name]',
         libraryExport: 'default',
-        libraryTarget: 'umd', // you can use libraries everywhere, e.g requirejs, node 
+        libraryTarget: 'umd', // you can use libraries everywhere, e.g requirejs, node
         umdNamedDefine: true,
     },
     module: {
