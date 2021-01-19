@@ -6,3 +6,6 @@
 /env/local.json
 /.project
 *.tgz
+/dist/
+.idea
+yarn.lock
