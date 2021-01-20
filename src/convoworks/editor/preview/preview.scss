@@ -54,6 +54,22 @@
     .preview .preview-block > .body {
         padding: 20px;
     }
+
+    .preview .preview-block > .body > .messages > .section-title {
+        width: calc(100% + 40px);
+        height: 32px;
+
+        font-size: 16px;
+        line-height: 32px;
+
+        margin: 10px 0 10px -20px;
+        padding-left: 20px;
+
+        display: inline-block;
+
+        color: #f8f8f8;
+        background-color: #7a7a7a;
+    }
     
     .preview .preview-block > .body > .messages .holder {
         display: flex;
