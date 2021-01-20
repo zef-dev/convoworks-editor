@@ -21,7 +21,7 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
             $scope.search = { query: '' };
 
             $scope.generateText = function (text) {
-                const content = text.map(t => t.text).join(' ');
+                const content = text.join(' ');
                 const markup = "<speak><p>" + content + "</p></speak>";
 
                 _copyToClipboard(markup);
