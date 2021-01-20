@@ -30,28 +30,6 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
 
             _init();
 
-            $scope.getUserMessageGroups = function(messages)
-            {
-                var found = [];
-                var groups = [];
-
-                for (var i in messages)
-                {
-                    if (!found.includes(messages[i].intent))
-                    {
-                        found.push(messages[i].intent);
-                        groups.push({
-                            intent: messages[i].intent,
-                            text: messages.filter(function (msg) {
-                                return msg.intent === messages[i].intent;
-                            }).map(function (msg) { return msg.text })
-                        });
-                    }
-                }
-
-                return groups;
-            }
-
             $scope.parseText = function(text)
             {
                 return text.map(t => {
@@ -88,7 +66,7 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
                 }
 
                 promise.then(function (preview) {
-                    previewBlocks = preview.blocks.filter(b => [...b.bot_says, ...b.user_says, ...b.bot_responds].length > 0);
+                    previewBlocks = preview.blocks.filter(b => b.sections.length > 0);
 
                     $scope.filtered = angular.copy(previewBlocks);
 
@@ -113,8 +91,8 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
             }
 
             function _getFlatText(block) {
-                return [...block.bot_says, ...block.user_says, ...block.bot_responds]
-                    .map(component => component.text)
+                return block.sections
+                    .map(section => section.text)
                     .flat()
                     .reduce((prev, curr) => { return prev + ' ' + curr.text }, '');
             }
