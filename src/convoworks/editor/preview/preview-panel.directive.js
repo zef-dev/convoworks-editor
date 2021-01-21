@@ -76,6 +76,7 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
                         } else {
                             $scope.$applyAsync(() => {
                                 $scope.filtered = previewBlocks.filter(b => {
+                                    console.log('hihi', b);
                                     const lowercase_query = $scope.search.query.toLowerCase();
                                     return b.block_name.toLowerCase().includes(lowercase_query) ||
                                         _getFlatText(b).toLowerCase().includes(lowercase_query);
@@ -92,9 +93,9 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
 
             function _getFlatText(block) {
                 return block.sections
-                    .map(section => section.text)
-                    .flat()
-                    .reduce((prev, curr) => { return prev + ' ' + curr.text }, '');
+                    .flatMap(section => section.utterances)
+                    .flatMap(utterance => utterance.text)
+                    .reduce((prev, curr) => { return prev + ' ' + curr }, '');
             }
 
             function _copyToClipboard(text) {
