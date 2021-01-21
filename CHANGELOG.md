@@ -2,6 +2,8 @@
 
 ## [Current development]
 
+* navigate to custom intent from editor
+* new preview rendering to accomodate overhauled process
 
 ## [Releases]
 
