@@ -347,31 +347,31 @@
     	display: inline-block !important;
     }
     
-    .group input:not([type=checkbox]),
-    .group textarea,
-    .group select {
-    	background: none;
-    	color: #353535;
-    	font-size: 14px;
-    	padding: 8px 5px 3px 1px;
-    	display: block;
-    	width: 100%;
-    	border: none;
-    	border-radius: 0;
-    	border-bottom: 1px solid #5f5f5f;
-    }
+    // .group input:not([type=checkbox]),
+    // .group textarea,
+    // .group select {
+    // 	background: none;
+    // 	color: #353535;
+    // 	font-size: 14px;
+    // 	padding: 8px 5px 3px 1px;
+    // 	display: block;
+    // 	width: 100%;
+    // 	border: none;
+    // 	border-radius: 0;
+    // 	border-bottom: 1px solid #5f5f5f;
+    // }
     
-    .group input.editor-input {
-    	background: unset;
-    	color: unset;
-    	font-size: unset;
-    	padding: unset;
-    	display: unset;
-    	width: unset;
-    	border: unset;
-    	border-radius: unset;
-    	border-bottom: unset;
-    }
+    // .group input.editor-input {
+    // 	background: unset;
+    // 	color: unset;
+    // 	font-size: unset;
+    // 	padding: unset;
+    // 	display: unset;
+    // 	width: unset;
+    // 	border: unset;
+    // 	border-radius: unset;
+    // 	border-bottom: unset;
+    // }
     
     .group .helper {
     	font-size: 12px;
