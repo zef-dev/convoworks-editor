@@ -1,6 +1,7 @@
-<div style="position:fixed; top: 55px; right:5px; z-index:100;" class="notify-container" 
-    ng-hide="getAlerts().length == 0">
-    <div uib-alert ng-repeat="alert in getAlerts()" 
-    ng-class="'alert-' + alert.type"
-    close="closeAlert($index)">{{alert.msg}}</div>
+<div class="notify-container" ng-hide="getAlerts().length == 0">
+    <div uib-alert ng-repeat="alert in getAlerts()"
+        ng-class="'alert alert-' + alert.type"
+        close="closeAlert($index)">
+        {{ alert.msg }}
+    </div>
 </div>

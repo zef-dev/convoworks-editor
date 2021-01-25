@@ -1,6 +1,75 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
+.notify-container {
+    width: 350px;
+    
+    position: fixed;
+    bottom: 0;
+
+    left: calc(50% - 175px);
+
+    z-index: 128;
+
+    transform: scale3d(1, 1, 1);
+  
+    animation-name: appear;
+    animation-duration: 200ms;
+    animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
+
+    & .alert {
+        position: relative;
+        height: 48px;
+        border-radius: 6px;
+        
+        border: none;
+
+        color: white;
+
+        &.alert-success {
+            background-color: #16A316;
+        }
+
+        &.alert-danger {
+            background-color: #F21313;
+        }
+
+        &.alert-info {
+            background-color: #323232;
+        }
+        
+        &.alert-warning {
+            background-color: #F49A03;
+        }
+
+        & button.close {
+            display: inline;
+
+            position: absolute;
+
+            right: 15px;
+            top: 0;
+            bottom: 0;
+
+            color: white;
+            opacity: 1;
+            text-shadow: none;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
+
+@keyframes appear {
+    0% {
+      transform: scale3d(0.1, 0.1, 1);
+    }
+    50% {
+      transform: scale3d(0.1, 1, 1);
+    }
+}
 
 .convoworks {
     font-family: "DM Sans", sans-serif;
@@ -31,12 +100,6 @@
     
     .monospace {
         font-family: "Source Code Pro", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    
-    
-    .notify-container
-    {
-    	width: 300px;
     }
     
     .sk-cube-grid {
