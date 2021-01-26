@@ -12,10 +12,6 @@
     z-index: 128;
 
     transform: scale3d(1, 1, 1);
-  
-    animation-name: appear;
-    animation-duration: 200ms;
-    animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
 
     & .alert {
         position: relative;
@@ -25,6 +21,18 @@
         border: none;
 
         color: white;
+
+        &.ng-enter {
+            animation-name: appear;
+            animation-duration: 50ms;
+            animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
+        }
+
+        &.ng-leave {
+            animation-name: leave;
+            animation-duration: 50ms;
+            animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
+        }
 
         &.alert-success {
             background-color: #16A316;
@@ -68,6 +76,18 @@
     }
     50% {
       transform: scale3d(0.1, 1, 1);
+    }
+}
+
+@keyframes leave {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(0.1, 1, 1);
+    }
+    100% {
+        transform: scale3d(0.1, 0.1, 1);
     }
 }
 

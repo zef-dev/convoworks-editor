@@ -14,6 +14,34 @@ export default function alertIndicator( AlertService, $log) {
 
             $scope.getAlerts     =   AlertService.getAlerts;
             $scope.closeAlert    =   AlertService.closeAlert;
+
+            $scope.hasIcon = function(type)
+            {
+                switch (type) {
+                    case "success":
+                    case "danger":
+                    case "warning":
+                        return true;
+                    case "info":
+                    default:
+                        return false;
+                }
+            }
+
+            $scope.getAlertIconClass = function(type)
+            {
+                switch (type) {
+                    case "success":
+                        return 'glyphicon glyphicon-ok';
+                    case "danger":
+                        return 'glyphicon glyphicon-remove-circle';
+                    case "warning":
+                        return 'glyphicon glyphicon-exclamation-sign';
+                    case "info":
+                    default:
+                        return '';
+                }
+            }
         }
     };
 }
