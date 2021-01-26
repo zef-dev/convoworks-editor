@@ -24,14 +24,14 @@
 
         &.ng-enter {
             animation-name: appear;
-            animation-duration: 50ms;
-            animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
+            animation-duration: 125ms;
+            animation-timing-function: cubic-bezier(0.000, 1.135, 0.735, 0.930);
         }
 
         &.ng-leave {
             animation-name: leave;
-            animation-duration: 50ms;
-            animation-timing-function: cubic-bezier(0.000, 1.000, 1.000, 0.000);
+            animation-duration: 125ms;
+            animation-timing-function: cubic-bezier(0.000, 1.135, 0.735, 0.930);
         }
 
         &.alert-success {
