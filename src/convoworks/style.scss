@@ -7,7 +7,7 @@
     position: fixed;
     bottom: 0;
 
-    left: calc(50% - 175px);
+    left: calc(50% - 130px);
 
     z-index: 128;
 
@@ -15,7 +15,7 @@
 
     & .alert {
         position: relative;
-        height: 48px;
+        min-height: 48px;
         border-radius: 6px;
         
         border: none;
@@ -51,13 +51,10 @@
         }
 
         & button.close {
-            display: inline;
-
             position: absolute;
 
             right: 15px;
-            top: 0;
-            bottom: 0;
+            top: 15px;
 
             color: white;
             opacity: 1;
