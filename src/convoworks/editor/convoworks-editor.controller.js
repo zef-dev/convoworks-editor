@@ -1,11 +1,13 @@
 /* @ngInject */
-export default function ConvoworksEditorController( $log, $scope, $rootScope, $stateParams, $state, ConvoworksApi, AlertService, UserPreferencesService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $q, ConvoworksApi, AlertService, UserPreferencesService) {
 
         var random_slug                =   Math.floor( Math.random() * 100000);
         var device_id                  =   'admin-chat-' + random_slug;
 
         var platform_info              =   {}
         var platform_config_info       =   {}
+
+        $scope.propagating = false;
 
         $scope.tabsExpanded     =   UserPreferencesService.get( 'navi_expanded', true);
         $scope.serviceId        =   $stateParams.service_id;
@@ -76,35 +78,61 @@ export default function ConvoworksEditorController( $log, $scope, $rootScope, $s
             return platform_info[platformId]['available'];
         }
 
-        $scope.propagatePlatformChanges     =   function( platformId) {
+        $scope.propagatePlatformChanges = function(platformId) {
             $log.log( 'ConvoworksEditorController propagatePlatformChanges() platformId', platformId);
 
-            if (platformId === 'all') {
+            if (platformId === 'all')
+            {
+                $scope.propagating = true;
+
+                const promises = [];
                 const availablePlatforms = Object.keys(platform_info);
-                availablePlatforms.forEach(function(availablePlatformId) {
-                    if (platform_info[availablePlatformId].allowed && platform_info[availablePlatformId].available) {
-                        ConvoworksApi.propagateServicePlatform( $scope.serviceId, availablePlatformId).then(function (data) {
-                            $log.log( 'ConvoworksEditorController propagatePlatformChanges() propagating to ', data);
-                            platform_info[availablePlatformId] = data;
-                            AlertService.addSucess( 'Service propagation to '+availablePlatformId+' was successful.');
-                        }, function( reason) {
-                            $log.log( 'ConvoworksEditorController propagatePlatformChanges() reason', reason);
-                            throw new Error(platformId + " propagation error: " + reason.data.message + " Error details: " + reason.data.details);
-                        });
+
+                for (const availablePlatformId of availablePlatforms)
+                {
+                    if (platform_info[availablePlatformId].allowed && platform_info[availablePlatformId].available)
+                    {
+                        promises.push(
+                            ConvoworksApi.propagateServicePlatform($scope.serviceId, availablePlatformId).then(
+                                function(data) {
+                                    $log.log( 'ConvoworksEditorController propagatePlatformChanges() propagating to ', data);
+                                    platform_info[availablePlatformId] = data;
+                                    AlertService.addSucess(`Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
+                                }, function (reason) {
+                                    AlertService.addDanger(`${_fixPlatformId(availablePlatformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`)
+                                }
+                            )
+                        );
                     }
+                }
+
+                $q.all(promises).then(function(data) {
+                    $log.log('ConvoworksEditorController propagatePlatformChanges() all done', data);
+
+                    $scope.propagating = false;
                 })
-            } else {
-                ConvoworksApi.propagateServicePlatform( $scope.serviceId, platformId).then(function (data) {
+            }
+            else
+            {
+                $scope.propagating = true;
+
+                ConvoworksApi.propagateServicePlatform($scope.serviceId, platformId).then(function (data) {
                     platform_info[platformId] = data;
-                    AlertService.addSucess( 'Service propagation to '+platformId+' done');
-                }, function( reason) {
-                    $log.log( 'ConvoworksEditorController propagatePlatformChanges() reason', reason);
-                    throw new Error(platformId + " propagation error: " + reason.data.message + " Error details: " + reason.data.details);
+                    AlertService.addSucess(`Service propagation to ${_fixPlatformId(platformId)} done.`);
+                }, function(reason) {
+                    $log.log('ConvoworksEditorController propagatePlatformChanges() reason', reason);
+                    AlertService.addDanger(`${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                }, function () {
+                    $log.log('ConvoworksEditorController propagatePlatformChanges finally');
+                    $scope.propagating = false;
                 });
             }
-
         }
 
+        function _fixPlatformId(platform)
+        {
+            return platform.charAt(0).toUpperCase() + platform.slice(1);
+        }
 
         function _load()
         {

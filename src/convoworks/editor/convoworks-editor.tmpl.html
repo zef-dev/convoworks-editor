@@ -13,8 +13,8 @@
             <div class="publish">
                 <div class="btn-group icon-button publish-group" uib-dropdown>
                     <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="propagatePlatformChanges('all')">
-                        <span class="glyphicon glyphicon-play"></span>
-                        Propagate to all
+                        <span ng-class="{ 'glyphicon glyphicon-play': !propagating, 'glyphicon glyphicon-cog spinner': propagating }"></span>
+                        {{ propagating ? 'Propagating...' : 'Propagate to all' }}
                     </button>
                     <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
                         <span class="caret"></span>
