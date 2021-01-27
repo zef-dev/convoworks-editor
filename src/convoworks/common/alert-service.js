@@ -18,7 +18,7 @@ export default function AlertService( $log, $timeout)
 
     alertsService.addDanger =   function( msg)
     {
-        alertsService._addAlert( { msg : msg, type : 'danger'}, DURATION);
+        alertsService._addAlert( { msg : msg, type : 'danger'}, DURATION * 2);
     };
 
     alertsService.addInfo   =   function( msg)
@@ -28,7 +28,7 @@ export default function AlertService( $log, $timeout)
 
     alertsService.addWarning    =   function( msg)
     {
-        alertsService._addAlert( { msg : msg, type : 'warning'}, DURATION);
+        alertsService._addAlert( { msg : msg, type : 'warning'}, DURATION * 1.25);
     };
 
     alertsService._addAlert =   function( alert, timeout)
