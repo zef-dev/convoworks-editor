@@ -60,7 +60,7 @@ export default function variablesEditor($log)
             }
 
             // PRIVATE
-            function _setupVariablesBuffer()
+            function _setupPreviewVariablesBuffer()
             {
                 $scope.preview_variables_buffer =   [];
 

@@ -164,36 +164,40 @@
     .variables-editor-inline {
         display: flex;
         flex-flow: column nowrap;
-    }
-    
-    .variables-editor-inline .pair {
-        display: flex;
-        flex-flow: row nowrap;
-    
-        align-items: center;
-        justify-content: space-between;
-    
-        margin-bottom: 10px;
-    }
-    
-    .variables-editor-inline .pair > .colon {
-        font-size: 18px;
-        font-weight: bold;
-    
-        margin: 0 6px;
-    }
-    
-    .variables-editor-inline .pair > .remove {
-        width: 20px;
-        height: 20px;
-    
-        border-radius: 50%;
-        font-size: 9px;
-    
-        background-color: #bababa;
-        color: white;
-    
-        margin-left: 9px;
+
+        & .pair {
+            display: flex;
+            flex-flow: row nowrap;
+        
+            align-items: center;
+            justify-content: space-between;
+        
+            margin-bottom: 10px;
+
+            & input {
+                max-width: 44%;
+            }
+
+            & .colon {
+                font-size: 18px;
+                font-weight: bold;
+            
+                margin: 0 6px;
+            }
+
+            & .remove {
+                width: 20px;
+                height: 20px;
+            
+                border-radius: 50%;
+                font-size: 9px;
+            
+                background-color: #bababa;
+                color: white;
+            
+                margin-left: 9px;
+            }
+        }
     }
     
     .variables-editor-inline .add-param-pair {
