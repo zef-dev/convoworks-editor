@@ -1,4 +1,4 @@
-import template from './variables-editor.tmpl.html';
+import template from './preview-variables-editor.tmpl.html';
 
 /* @ngInject */
 export default function variablesEditor($log)
@@ -9,7 +9,7 @@ export default function variablesEditor($log)
         template: template,
         controller: function($scope) {
             'ngInject';
-            
+
             // QUICKFIX
             if (!$scope.service.preview_variables) {
                 $scope.service.preview_variables = {};
@@ -62,22 +62,22 @@ export default function variablesEditor($log)
             // PRIVATE
             function _setupPreviewVariablesBuffer()
             {
-                $scope.preview_variables_buffer =   [];
+                $scope.preview_variables_buffer = [];
 
-                for (var key in $scope.service.preview_variables) {
+                for (const key in $scope.service.preview_variables) {
                     $scope.preview_variables_buffer.push({
                         'key': key,
                         'value': $scope.service.preview_variables[key]
                     });
                 }
 
-                $log.log('previewVariablesEditor _setupVariablesBuffer() done, buffer', $scope.preview_variables_buffer);
+                $log.log('previewVariablesEditor _setupPreviewVariablesBuffer() done, buffer', $scope.preview_variables_buffer);
             }
 
             function _setupServiceWatch()
             {
                 $scope.$watch('service.preview_variables', function() {
-                    _setupVariablesBuffer();
+                    _setupPreviewVariablesBuffer();
                 }, true);
             }
         },
