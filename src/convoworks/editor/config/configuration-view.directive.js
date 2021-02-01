@@ -20,7 +20,7 @@ export default function configurationView($log, ConvoworksApi)
             {
                 ConvoworksApi.loadPlatformConfig($scope.service.service_id).then(function (config) {
                     $log.log('configurationView got config', config);
-                    $scope.config = config;
+                    $scope.config = config || {};
                 });
             }
         }
