@@ -90,15 +90,19 @@
 
 .convoworks {
     font-family: "DM Sans", sans-serif;
-}
 
-.convoworks {
+    li {
+        margin: inherit;
+    }
 
     a[ng-click]
     {
         cursor: pointer;
     }
     
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+    }
     
     @media (max-width: 767px) {
     	.navbar-collapse {

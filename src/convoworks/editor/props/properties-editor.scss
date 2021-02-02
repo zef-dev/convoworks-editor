@@ -68,6 +68,11 @@
         color: #fff;
         border: none;
     }
+
+    .properties-editor .nav.nav-tabs li a:focus,
+    .properties-editor .nav.nav-tabs li.active a:focus {
+        outline: none;
+    }
     
     .properties-editor .nav.nav-tabs li.active a {
         height: 100%;
