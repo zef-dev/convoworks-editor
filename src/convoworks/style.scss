@@ -1,18 +1,112 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
+.notify-container {
+    width: 350px;
+    
+    position: fixed;
+    bottom: 0;
 
-.convoworks {
-    font-family: "DM Sans", sans-serif;
+    left: calc(50% - 130px);
+
+    z-index: 128;
+
+    transform: scale3d(1, 1, 1);
+
+    & .alert {
+        position: relative;
+        min-height: 48px;
+        border-radius: 6px;
+        
+        border: none;
+
+        color: white;
+
+        &.ng-enter {
+            animation-name: appear;
+            animation-duration: 125ms;
+            animation-timing-function: cubic-bezier(0.000, 1.135, 0.735, 0.930);
+        }
+
+        &.ng-leave {
+            animation-name: leave;
+            animation-duration: 125ms;
+            animation-timing-function: cubic-bezier(0.000, 1.135, 0.735, 0.930);
+        }
+
+        &.alert-success {
+            background-color: #16A316;
+        }
+
+        &.alert-danger {
+            background-color: #F21313;
+        }
+
+        &.alert-info {
+            background-color: #323232;
+        }
+        
+        &.alert-warning {
+            background-color: #F49A03;
+        }
+
+        & button.close {
+            position: absolute;
+
+            right: 15px;
+            top: 15px;
+
+            color: white;
+            opacity: 1;
+            text-shadow: none;
+
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}
+
+@keyframes appear {
+    0% {
+      transform: scale3d(0.1, 0.1, 1);
+    }
+    50% {
+      transform: scale3d(0.1, 1, 1);
+    }
+}
+
+@keyframes leave {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(0.1, 1, 1);
+    }
+    100% {
+        transform: scale3d(0.1, 0.1, 1);
+    }
 }
 
 .convoworks {
+    font-family: "DM Sans", sans-serif;
 
-    a[ng-click]
-    {
+    li {
+        margin: inherit;
+    }
+
+    a[ng-click] {
         cursor: pointer;
     }
+
+    a:focus {
+        outline-color: transparent;
+        box-shadow: none;
+    }
     
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+    }
     
     @media (max-width: 767px) {
     	.navbar-collapse {
@@ -31,12 +125,6 @@
     
     .monospace {
         font-family: "Source Code Pro", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    
-    
-    .notify-container
-    {
-    	width: 300px;
     }
     
     .sk-cube-grid {

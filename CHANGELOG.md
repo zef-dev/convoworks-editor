@@ -3,7 +3,9 @@
 ## [Current development]
 
 * navigate to custom intent from editor
-* new preview rendering to accomodate overhauled process
+* new preview rendering to accommodate overhauled process
+* notifications have been redesigned
+* add an indicator for ongoing propagation
 
 ## [Releases]
 

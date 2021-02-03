@@ -22,10 +22,12 @@ export default function paramsEditor( $log, ConvoworksApi) {
                     key: 'my_new_param',
                     val: ''
                 });
+                $scope.backToComponent();
             }
 
-            $scope.reomveParamPair  =   function( index) {
+            $scope.removeParamPair  =   function( index) {
                 $scope.pairs.splice( index, 1);
+                $scope.backToComponent();
             }
 
             $scope.$watch( 'component.properties.' + $scope.key, function () {
@@ -40,18 +42,15 @@ export default function paramsEditor( $log, ConvoworksApi) {
                 }
             }, true)
 
-            $scope.$watch( 'pairs', function () {
-                backToComponent();
-            }, true)
-
-            function backToComponent()
+            $scope.backToComponent = function()
             {
-                var prop_data   =   {};
-                for (var i=0; i<$scope.pairs.length; i++) {
-                    var pair = $scope.pairs[i];
+                var prop_data = {};
+
+                for (const pair of $scope.pairs) {
                     prop_data[pair.key] = pair.val;
                 }
-                $log.log( 'paramsEditor backToComponent prop_data', $scope.key, prop_data);
+
+                $log.log('paramsEditor backToComponent prop_data', $scope.key, prop_data);
                 $scope.component.properties[$scope.key] = $scope.pairs.length ? prop_data : [];
             }
         }
