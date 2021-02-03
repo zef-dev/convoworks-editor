@@ -55,20 +55,32 @@
         margin: 0;
     }
     
-    .toolbox-container .toolbox-header .configure-header {
-        display: flex;
-        flex-flow: row nowrap;
-    
-        justify-content: space-between;
-    }
-    
-    .toolbox-container .toolbox-package
-    {
-        width: 100%;
-        margin-bottom: 6px;
-        border: 1px solid rgba(0,0,0,0.1);
-        padding: 3px 10px;
-        border-radius: 8px;
+    .toolbox-container {
+        & .toolbox-header {
+            & .configure-header {
+                display: flex;
+                flex-flow: row nowrap;
+            
+                justify-content: space-between;
+                align-items: flex-end;
+
+                height: 40px;
+
+                & button {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+
+        & .toolbox-package
+        {
+            width: 100%;
+            margin-bottom: 6px;
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 3px 10px;
+            border-radius: 8px;
+        }
     }
     
     .toolbox-container .toolbox-package.disabled
