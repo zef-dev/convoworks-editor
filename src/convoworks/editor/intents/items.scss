@@ -1,16 +1,14 @@
-
 .convoworks {
-    
     .intent-model-list {
         .grid-item {
-            margin-bottom: 0.625rem;
+            margin-bottom: 10px;
             border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 0.5rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.22s;
-            padding: 0.625rem 0.75rem;
+            padding: 10px 12px;
             vertical-align: bottom;
-            height: 2.5rem;
+            height: 40px;
         }
         .grid-item:hover {
             border-color: rgba(47, 116, 234, 0.5);
