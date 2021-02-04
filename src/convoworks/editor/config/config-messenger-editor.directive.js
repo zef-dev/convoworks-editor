@@ -69,7 +69,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
-                        throw new Error(`Can't create config for Convo. ${  response.data.message}`)
+                        throw new Error(`Can't create config for Convo. ${response.data.message}`)
                     });
                 } else {
                     ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'facebook_messenger', $scope.config).then(function (data) {
