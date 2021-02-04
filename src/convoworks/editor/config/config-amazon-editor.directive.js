@@ -124,7 +124,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            throw new Error("Can't create config for Amazon. " + response.data.message)
+                            throw new Error(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
                         });
                     } else {
                         ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
@@ -134,6 +134,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor update() response', response);
                             is_error    =   true;
+                            throw new Error(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
                         });
                     }
                 }).then(function (data) {
