@@ -78,8 +78,8 @@
                 <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
                     <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
                     <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
-                           ngf-drop="onFileUpload($file)" ng-model="config.self_signed_certificate"
-                           ngf-select="onFileUpload($file)" ngf-multiple="false">
+                           ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
+                           ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
                     <p ng-if="getSelfSignedSslCertificate('self_signed_certificate') !== ''">Uploaded SSL Certificate Media ID: <b>{{ getSelfSignedSslCertificate('self_signed_certificate') }} </b> </p>
                 </div>
 
