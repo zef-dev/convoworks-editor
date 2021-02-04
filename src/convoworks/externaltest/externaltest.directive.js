@@ -25,7 +25,14 @@ export default function convoExternaltest( $log, $q, $timeout, ConvoworksApi) {
                 platformTestLinks = [];
                 var language = 'en-US';
                 ConvoworksApi.getServiceMeta($scope.serviceId).then( (meta) => {
-                    language = meta['default_locale'].replace("-", "_");
+                    language = meta['default_language'];
+                    if (language === 'en') {
+                        language = "en_US";
+                    } else if (language === 'de') {
+                        language = "de_DE";
+                    } else {
+                        language = language.replace("-", "_");
+                    }
 
                     ConvoworksApi.loadPlatformConfig($scope.serviceId).then((data) => {
                         $log.log( 'convoExternaltest load ', platformConfig);

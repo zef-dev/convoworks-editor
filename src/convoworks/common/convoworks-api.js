@@ -275,12 +275,12 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             });
         }
 
-        function createService( serviceName, defaultLanguage, defaultLocale, supportedLocales, isPrivate, templateId)
+        function createService( serviceName, defaultLanguage, isPrivate, templateId)
         {
             return $http({
                 method: 'post',
                 url: CONVO_ADMIN_API_BASE_URL + '/services',
-                data: { 'service_name' : serviceName, 'default_language': defaultLanguage, 'default_locale': defaultLocale, 'supported_locales': supportedLocales, 'is_private' : isPrivate, 'template_id' : templateId }
+                data: { 'service_name' : serviceName, 'default_language': defaultLanguage, 'is_private' : isPrivate, 'template_id' : templateId }
             }).then( function ( res) {
                 return res.data;
             });
@@ -607,16 +607,15 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         }
 
 
-        function uploadMedia(serviceId, filesToUpload) {
+        function uploadMedia(serviceId, kind, file) {
             if (!serviceId) {
                 throw new Error("Missing service ID");
             }
 
+            $log.log('ConvoworksApi uploadMedia serviceId', serviceId, 'kind', kind, 'file', file);
+
             var fd = new FormData();
-            for (let [key, value] of filesToUpload) {
-                $log.log('ConvoworksApi uploadMedia serviceId', serviceId, 'kind', key, 'file', value);
-                fd.append(key, value);
-            }
+            fd.append(kind, file);
 
             return $http
             .post(

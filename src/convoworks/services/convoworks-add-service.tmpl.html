@@ -33,42 +33,11 @@
                         <div class="col-md-4 col-sm-12">
                             <div class="convo-form-group">
                                 <label class="convo-form-label" for="default_language">Default Language</label>
-                                <select ng-model="new_service.default_language" ng-change="onLanguageChange()" class="convo-form-input" id="default_language">
+                                <select ng-model="new_service.default_language" class="convo-form-input" id="default_language">
                                     <option ng-repeat="(index, language)  in languages track by index"
                                             value="{{ language.code }}"> {{ language.name }}
                                     </option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" ng-if="new_service.default_language === 'en'">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <label class="convo-form-label" for="default_locale">Default Locale</label>
-                                <select ng-model="new_service.default_locale" ng-change="onDefaultLocaleChange()" class="convo-form-input" id="default_locale">
-                                    <option ng-repeat="(index, locale) in locales track by index"
-                                            value="{{ locale.code }}"> {{ locale.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" ng-if="new_service.default_language === 'en'">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <fieldset>
-                                    <legend>Supported Locales: </legend>
-                                    <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code === new_service.default_locale">
-                                        <input value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked" disabled>
-                                        <label for="checkbox-{{index}}">{{ locale.name }}</label>
-                                    </div>
-                                    <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code !== new_service.default_locale">
-                                        <input ng-click="registerChange(this)" value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked">
-                                        <label for="checkbox-{{index}}">{{ locale.name }}</label>
-                                    </div>
-                                </fieldset>
                             </div>
                         </div>
                     </div>
