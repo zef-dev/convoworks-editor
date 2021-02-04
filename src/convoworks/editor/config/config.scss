@@ -5,69 +5,69 @@
         color: #2F74EA;
         text-decoration: none;
     }
-    
+
     a.back:hover {
         cursor: pointer;
         text-decoration: none;
     }
-    
+
     .configs {
         display: flex;
         flex-flow: row wrap;
-    
+
         /*justify-content: space-between;*/
-    
+
         max-width: 100%;
-    
+
         margin-top: -10px;
     }
-    
+
     .configs .config-square {
         height: 320px;
         width: 300px;
         border: 1px solid rgba(0,0,0,0.08);
         margin: 10px 10px 0 0;
     }
-    
+
     /*.config-square:first-child*/
     /*{*/
     /*    margin-left: 0;*/
     /*}*/
-    
+
     /*.config-square:last-child*/
     /*{*/
     /*    margin-right: 0;*/
     /*}*/
-    
+
     .config-square div.logo {
         width: 170px;
         height: 74px;
-    
+
         margin: 0 auto 30px;
-    
+
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
-    
+
         content: "&nbsp;";
     }
-    
+
     .config-square div.logo.amazon {
-        background-image: url('./images/amazon_alexa.png');   
+        background-image: url('./images/amazon_alexa.png');
     }
     .config-square div.logo.dialogflow {
-        background-image: url('./images/dialogflow.png');   
+        background-image: url('./images/dialogflow.png');
     }
     .config-square div.logo.facebook_messenger {
-        background-image: url('./images/messenger.png');   
+        background-image: url('./images/messenger.png');
     }
     .config-square div.logo.viber {
-        background-image: url('./images/viber.png');   
+        background-image: url('./images/viber.png');
     }
     .config-square div.logo.convo_chat {
-        background-image: url('./images/convo_chat.png');   
+        background-image: url('./images/convo_chat.png');
     }
-    
+
     .config-square .name-indicator span.platform-name {
         height: 24px;
         color: rgba(0,0,0,0.8);
@@ -76,7 +76,7 @@
         line-height: 24px;
         float: left;
     }
-    
+
     .config-square a.configure {
         height: 38px;
         width: 252px;
@@ -88,7 +88,13 @@
         letter-spacing: 0;
         line-height: 18px;
         text-align: center;
-    
+
         margin-top: 65px;
+    }
+
+    .panel-default > .panel-heading {
+        color: white;
+        background-color: #2F74EA;
+        border-color: #2F74EA;
     }
 }
