@@ -33,7 +33,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
 
                 _load();
 
-                var preparedUpload = null;
+                var preparedUpload = new Map();
                 var previousMediaItemId = null;
 
 
@@ -75,14 +75,16 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     var maybeUpload = preparedUpload ?
                         ConvoworksApi.uploadMedia(
                             $scope.service.service_id,
-                            'dialogflow.avatar',
-                            preparedUpload.file) :
+                            preparedUpload.entries()) :
                         null;
 
                     $q.when(maybeUpload).then(function (res) {
-                        if (res && res.mediaItemId) {
-                            $scope.config.avatar = res.mediaItemId;
-                            preparedUpload = null;
+                        if (res && res.length > 0) {
+                            for(var i = 0; i < res.length; i++) {
+                                $scope.config.avatar = res[i].mediaItemId;
+                            }
+
+                            preparedUpload.clear();
                         }
 
                         if (is_new) {
@@ -121,8 +123,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 }
 
                 $scope.revertConfig = function () {
-                    if (preparedUpload) {
-                        preparedUpload = null;
+                    if (preparedUpload.size > 0) {
+                        preparedUpload.clear();
                     }
 
                     if (previousMediaItemId) {
@@ -135,9 +137,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 $scope.onFileUpload = function (file) {
                     $log.log('ConfigurationsEditor onFileUpload file', file);
 
-                    preparedUpload = {
-                        file: file
-                    };
+                    preparedUpload.set('dialogflow.avatar', file);
 
                     previousMediaItemId = $scope.config.avatar;
                     $scope.config.avatar = 'tmp_upload_ready';
