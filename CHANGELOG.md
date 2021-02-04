@@ -6,6 +6,7 @@
 * new preview rendering to accommodate overhauled process
 * notifications have been redesigned
 * add an indicator for ongoing propagation
+* add the ability to edit the Skill Preview and Privacy Compliance of Alexa Skill Developer Console Distribution Tab  
 
 ## [Releases]
 
