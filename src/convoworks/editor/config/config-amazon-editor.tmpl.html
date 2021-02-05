@@ -43,7 +43,7 @@
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
                     <label for="invocation" class="convo-form-label">Invocation</label>
                     <input ng-required="true" type="text" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
-                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
+                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required and must contain at least 2 characters.</b>
                 </div>
 
                 <div class="convo-form-group">
