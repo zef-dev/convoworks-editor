@@ -43,7 +43,7 @@
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
                     <label for="invocation" class="convo-form-label">Invocation</label>
                     <input ng-required="true" type="text" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
-                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
+                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required and must contain at least 2 characters.</b>
                 </div>
 
                 <div class="convo-form-group">
@@ -88,7 +88,7 @@
                     <div class="checkbox">
                         <label for="config-auto-display">
                             <input type="checkbox" ng-model="config.auto_display" id="config-auto-display"/>
-                            Automatically displays the text in an card view on devices with display
+                            Automatically displays text in a card view on devices with a display
                         </label>
                     </div>
                 </div>

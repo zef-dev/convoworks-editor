@@ -64,22 +64,24 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         configBak = angular.copy( $scope.config);
                         is_new      =   false;
                         is_error    =   false;
-                        AlertService.addSucess(`Service ${$scope.service.service_id} was linked successfully with Facebook Messenger.`);
+                        AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Facebook Messenger.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
-                        throw new Error(`Can't create config for Convo. ${response.data.message}`)
+                        throw new Error(`Can't create config for Messenger. ${response.data.message}`)
                     });
                 } else {
                     ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'facebook_messenger', $scope.config).then(function (data) {
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
                         configBak = angular.copy( $scope.config);
                         is_error    =   false;
+                        AlertService.addSuccess(`Facebook Messenger config updated.`)
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
+                        throw new Error(`Can't save config for Facebook Messenger. ${response.data.message}`);
                     });
                 }
             }
