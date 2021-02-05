@@ -130,7 +130,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                             configBak = angular.copy( $scope.config);
                             is_error    =   false;
-                            AlertService.addSuccess(`Amazon config updated.`);
+                            AlertService.addSuccess('Amazon config updated.');
                             $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
                             $log.debug('configAmazonEditor update() response', response);

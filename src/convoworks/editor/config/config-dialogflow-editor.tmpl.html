@@ -43,7 +43,7 @@
                     </div>
                     <span class="help-block" ng-if="config.mode === 'auto'">
                     Automatically propagates changes to Dialogflow</span>
-                    <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Dialogflow side</span>
+                    <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Dialogflow.</span>
                 </div>
 
                 <div class="convo-form-group" ng-if="config.mode === 'manual'">
@@ -58,7 +58,7 @@
                     <textarea ng-required="true" class="convo-form-input monospace" id="serviceAccount" name="serviceAccount" ng-change="validateJSON()" placeholder="" ng-model="config.serviceAccount"></textarea>
                     <span class="help-block">Required to display the "Test on Dialogflow" button in Test tab</span>
                     <b ng-show="dialogflowPlatformConfigForm.serviceAccount.$error.required && !dialogflowPlatformConfigForm.serviceAccount.$pristine" class="text-danger">Service Account JSON is required.</b>
-                    <b ng-show="dialogflowPlatformConfigForm.serviceAccount.$invalid && !dialogflowPlatformConfigForm.serviceAccount.$pristine" class="text-danger">Service Account JSON is not valid, please provide an valid JSON format.</b>
+                    <b ng-show="dialogflowPlatformConfigForm.serviceAccount.$invalid && !dialogflowPlatformConfigForm.serviceAccount.$pristine" class="text-danger">Service Account JSON is not valid, please provide valid JSON.</b>
                 </div>
 
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">

@@ -81,6 +81,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
+                        throw new Error(`Can't save config for Facebook Messenger. ${response.data.message}`);
                     });
                 }
             }
