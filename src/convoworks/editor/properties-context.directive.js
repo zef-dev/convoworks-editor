@@ -340,7 +340,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     angular.merge( selection.service, res.data);
                     original_service    =   angular.copy( selection.service);
                     $rootScope.$broadcast('ServiceWorkflowUpdated', selection.service);
-                    AlertService.addSucess( 'Service workflow saved');
+                    AlertService.addSuccess( 'Service workflow saved');
                 }, function( reason) {
                     $log.log( 'propertiesContext controller saveChanges() reason', reason);
                     throw new Error(reason.data.message);

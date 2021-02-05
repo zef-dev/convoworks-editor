@@ -61,7 +61,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         configBak = angular.copy( $scope.config);
                         is_new      =   false;
                         is_error    =   false;
-                        AlertService.addSucess(`Service ${$scope.service.service_id} was linked successfully with Viber.`);
+                        AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Viber.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
@@ -73,10 +73,12 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
                         configBak = angular.copy( $scope.config);
                         is_error    =   false;
+                        AlertService.addSuccess('Viber config updated.');
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
+                        throw new Error(`Can't update config for Viber. ${response.data.message}`);
                     });
                 }
             }

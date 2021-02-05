@@ -1,7 +1,7 @@
 import template from './config-convo-chat-editor.tmpl.html';
 
 /* @ngInject */
-export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksApi, LoginService) {
+export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksApi, LoginService, AlertService) {
     return {
         restrict: 'E',
         scope: { service: '=' },
@@ -51,6 +51,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksAp
                         configBak = angular.copy( $scope.config);
                         is_new      =   false;
                         is_error    =   false;
+                        AlertService.addSuccess(`Convo Chat configuration for ${$scope.service.service_id} created successfully.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
@@ -62,6 +63,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksAp
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
                         configBak = angular.copy( $scope.config);
                         is_error    =   false;
+                        AlertService.addSuccess(`Convo Chat configuration for ${$scope.service.service_id} updated successfully.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
