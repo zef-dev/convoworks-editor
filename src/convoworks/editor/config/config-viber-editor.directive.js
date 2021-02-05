@@ -86,7 +86,6 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                 var isEventEnabled = !webhookEvent.event.checked;
                 var newArr = [];
 
-                $log.debug("Ceca je cuca ", webhookEvent.event);
                 if (isEventEnabled) {
                     if ($scope.config.event_types === undefined) {
                         newArr.push(eventName);
