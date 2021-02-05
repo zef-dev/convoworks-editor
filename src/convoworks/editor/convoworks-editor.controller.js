@@ -124,9 +124,11 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 ConvoworksApi.propagateServicePlatform($scope.serviceId, platformId).then(function (data) {
                     platform_info[platformId] = data;
                     AlertService.addSucess(`Service propagation to ${_fixPlatformId(platformId)} done.`);
+                    $scope.propagating = false;
                 }, function(reason) {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() reason', reason);
                     AlertService.addDanger(`${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                    $scope.propagating = false;
                 }, function () {
                     $log.log('ConvoworksEditorController propagatePlatformChanges finally');
                     $scope.propagating = false;
