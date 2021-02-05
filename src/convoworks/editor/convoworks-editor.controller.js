@@ -108,8 +108,10 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
                 $q.all(promises).then(function(data) {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() all done', data);
+                    $scope.propagating = false;
                 }, function (reason) {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() all rejected, reason', reason);
+                    $scope.propagating = false;
                 }, function() {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() all finally');
                     $scope.propagating = false;
