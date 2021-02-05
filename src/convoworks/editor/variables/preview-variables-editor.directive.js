@@ -27,13 +27,13 @@ export default function variablesEditor($log)
                 };
 
                 $scope.preview_variables_buffer.push(new_pair);
-                $scope.updateVariables();
+                $scope.updatePreviewVariables();
             }
 
             $scope.removePreviewVariablesPair = function(i)
             {
                 $scope.preview_variables_buffer.splice(i, 1);
-                $scope.updateVariables();
+                $scope.updatePreviewVariables();
             }
 
             $scope.updatePreviewVariables = function()
