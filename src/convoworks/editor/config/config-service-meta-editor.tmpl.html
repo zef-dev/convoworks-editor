@@ -2,14 +2,20 @@
 	<fieldset>
 		<legend>Service Meta</legend>
 
-		<form class="form-horizontal" ng-submit="updateConfig()">
+		<form class="form-horizontal" name="serviceMeta" ng-submit="updateConfig()" ng-cloak>
 
 			<!-- DUMMY INPUT -->
 			<input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
 
             <div class="convo-form-group">
                 <label for="service-meta-name" class="convo-form-label">Service Name <i class="glyphicon glyphicon-question-sign" uib-tooltip="Internal name for this service"></i></label>
-                <input type="text" class="convo-form-input" ng-model="config.name" id="service-meta-name">
+                <input type="text" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid}" ng-model="config.name" id="service-meta-name" name="serviceMetaName" required>
+                <ng-messages role="alert" class="error"
+                    ng-if="serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid"
+                    for="serviceMeta.serviceMetaName.$error"
+                >
+                    <span ng-message="required">This field is required.</span>
+                </ng-messages>
             </div>
 
 			<div class="convo-form-group">
@@ -32,15 +38,22 @@
 
 			<div class="convo-form-group">
 				<label for="service-meta-owner" class="convo-form-label">Service Owner <i class="glyphicon glyphicon-question-sign" uib-tooltip="Owner of this service"></i></label>
-                <input ng-disabled="config.owner !== getAuthUserEmail()" type="email" class="convo-form-input" ng-model="config.owner" id="service-meta-owner">
+                <input ng-disabled="config.owner !== getAuthUserEmail()" type="email" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid}" ng-model="config.owner" id="service-meta-owner" required name="serviceMetaOwner">
+                <ng-messages role="alert" class="error"
+                    ng-if="serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid"
+                    for="serviceMeta.serviceMetaOwner.$error"
+                >
+                    <span ng-message="required">This field is required.</span>
+                    <span ng-message="email">Please enter a valid email.</span>
+                </ng-messages>
 			</div>
 
             <div class="convo-form-group">
-                <label class="convo-form-label" for="is_private">Is Private?</label>
+                <label class="convo-form-label" for="is_private">Private</label>
                 <div class="checkbox">
                     <label for="is_private">
                         <input type="checkbox" ng-model="config.is_private" id="is_private"/>
-                        Don't share service with the entire Service Admin User Group?
+                        Don't share service with the entire Service Admin User Group
                     </label>
                 </div>
             </div>
@@ -52,7 +65,7 @@
 
 			<div class="convo-form-group">
                 <div class="button-group">
-                    <button type="submit" title="Save changes" ng-disabled="!isConfigChanged()" class="btn btn-sm btn-primary submit">
+                    <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || serviceMeta.$invalid" class="btn btn-sm btn-primary submit">
                         Save
                     </button>
                     <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
