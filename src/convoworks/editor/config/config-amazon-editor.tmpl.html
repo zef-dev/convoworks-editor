@@ -97,8 +97,9 @@
                     <label class="convo-form-label">Alexa Interfaces</label>
                     <div ng-repeat="itf in getAlexaInterfaces()">
                         <label>
-                            <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked">
+                            <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked" ng-disabled="!itf.supported">
                             {{itf.name}}
+                            <i ng-if="!itf.supported" class="glyphicon glyphicon-question-sign" uib-tooltip="Interface {{itf.name}} isn't supported yet."></i>
                         </label>
                     </div>
                 </div>
