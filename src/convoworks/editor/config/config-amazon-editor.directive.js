@@ -10,31 +10,34 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             'ngInject';
         },
         link: function ($scope, $element, $attributes) {
-            var config_options = {};
-            var user    =   null;
-            var serviceLanguage    =   'en';
-            $scope.service_language    =   'en';
+            let config_options = {};
+            let user =   null;
+            let service_language = 'en';
+            let default_invocation = null;
+            $scope.service_language = 'en';
 
             LoginService.getUser().then( function ( u) {
                 user = u;
             });
 
             ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
-                serviceLanguage = serviceMeta['default_language'];
-                $scope.service_language = serviceLanguage;
+                service_language = serviceMeta['default_language'];
+                $scope.service_language = service_language;
 
-                if (serviceLanguage === 'en') {
-                    serviceLanguage = "en_US"
-                } else if (serviceLanguage === 'de') {
-                    serviceLanguage = "de_DE"
+                default_invocation = serviceMeta['name'];
+
+                if (service_language === 'en') {
+                    service_language = "en_US"
+                } else if (service_language === 'de') {
+                    service_language = "de_DE"
                 } else {
-                    serviceLanguage = serviceLanguage.replace("-", "_")
+                    service_language = service_language.replace("-", "_")
                 }
             });
 
             $scope.config = {
                 mode: 'manual',
-                invocation: $scope.service.name,
+                invocation: default_invocation || $scope.service.name,
                 app_id: null,
                 interaction_model_sensitivity: 'LOW',
                 endpoint_ssl_certificate_type: 'Wildcard',
@@ -52,7 +55,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             _load();
 
             $scope.gotoConfigUrl = function() {
-                $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+serviceLanguage+'/skill-info', '_blank');
+                $window.open(`https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/${$scope.config.app_id}/development/${service_language}/skill-info`, '_blank');
             }
 
             $scope.isModeValid  = function () {
