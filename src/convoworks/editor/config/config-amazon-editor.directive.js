@@ -271,7 +271,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
                 for (var i = 0; i < $scope.interfaces.length; i++) {
-                    if ($scope.interfaces[i].checked) {
+                    if ($scope.interfaces[i].checked && $scope.interfaces[i].supported) {
                         var interfaceType = $scope.interfaces[i].type;
                         $scope.config.interfaces.push(interfaceType);
                     }
