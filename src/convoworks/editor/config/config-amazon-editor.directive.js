@@ -268,6 +268,15 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return $scope.interfaces;
             };
 
+            $scope.validateKeywords = function() {
+                const words = $scope.config.skill_preview_in_store.keywords.replace(/\s/g, ',').replace(/[0-9]/g, "");
+                const length = words.split(',').length;
+
+                $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = length > 30;
+                $scope.config.skill_preview_in_store.keywords = words
+                return true;
+            }
+
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
                 for (var i = 0; i < $scope.interfaces.length; i++) {
