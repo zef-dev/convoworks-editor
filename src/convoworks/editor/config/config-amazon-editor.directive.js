@@ -12,7 +12,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
         link: function ($scope, $element, $attributes) {
             var config_options = {};
             var user    =   null;
-            var serviceLanguage    =   'en';
             $scope.service_language    =   'en';
 
             LoginService.getUser().then( function ( u) {
@@ -67,7 +66,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             _load();
 
             $scope.gotoConfigUrl = function() {
-                $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+serviceLanguage+'/skill-info', '_blank');
+                $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+$scope.service_language+'/skill-info', '_blank');
             }
 
             $scope.isModeValid  = function () {
