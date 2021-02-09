@@ -2,12 +2,16 @@
 
 ## [Current development]
 
+## [Releases]
+
+### v0.19.0 ###
+
+**2021-02-09**
+
 * navigate to custom intent from editor
 * new preview rendering to accommodate overhauled process
 * notifications have been redesigned
 * add an indicator for ongoing propagation
-
-## [Releases]
 
 ### v0.18.9 ###
 
