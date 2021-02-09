@@ -13,7 +13,7 @@
             <div class="publish">
                 <div class="btn-group icon-button publish-group" uib-dropdown>
                     <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="propagatePlatformChanges('all')">
-                        <span ng-class="{ 'glyphicon glyphicon-play': !propagating, 'glyphicon glyphicon-cog spinner': propagating }"></span>
+                        <span ng-class="{ 'glyphicon glyphicon-play': !propagating, 'glyphicon glyphicon-cog spinning': propagating }"></span>
                         {{ propagating ? 'Propagating...' : 'Propagate to all' }}
                     </button>
                     <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
@@ -22,36 +22,36 @@
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu">
                         <li role="menuitem"
-                            ng-if="isPlatformPropagateAllowed('amazon') && isPlatformPropagateAvailable('amazon')">
+                            ng-if="isPlatformPropagateAllowed('amazon')">
                             <a ng-click="propagatePlatformChanges('amazon')"
-                               class="dropdown-item"
+                            ng-class="{'dropdown-item': !isPlatformPropagateAvailable('amazon'), 'dropdown-item bold': isPlatformPropagateAvailable('amazon')}"
                                title="Add session start block"
                                href="javascript:void(0);">
                                 Propagate to Amazon
                             </a>
                         </li>
                         <li role="menuitem"
-                            ng-if="isPlatformPropagateAllowed('dialogflow') && isPlatformPropagateAvailable('dialogflow')">
+                            ng-if="isPlatformPropagateAllowed('dialogflow')">
                             <a ng-click="propagatePlatformChanges('dialogflow')"
-                               class="dropdown-item"
+                               ng-class="{'dropdown-item': !isPlatformPropagateAvailable('dialogflow'), 'dropdown-item bold': isPlatformPropagateAvailable('dialogflow')}"
                                title="Add session start block"
                                href="javascript:void(0);">
                                 Propagate to Dialogflow
                             </a>
                         </li>
                         <li role="menuitem"
-                            ng-if="isPlatformPropagateAllowed('facebook_messenger') && isPlatformPropagateAvailable('facebook_messenger')">
+                            ng-if="isPlatformPropagateAllowed('facebook_messenger')">
                             <a ng-click="propagatePlatformChanges('facebook_messenger')"
-                               class="dropdown-item"
+                            ng-class="{'dropdown-item': !isPlatformPropagateAvailable('facebook_messenger'), 'dropdown-item bold': isPlatformPropagateAvailable('facebook_messenger')}"
                                title="Add session start block"
                                href="javascript:void(0);">
                                 Propagate to Messenger
                             </a>
                         </li>
                         <li role="menuitem"
-                            ng-if="isPlatformPropagateAllowed('viber') && isPlatformPropagateAvailable('viber')">
+                            ng-if="isPlatformPropagateAllowed('viber')">
                             <a ng-click="propagatePlatformChanges('viber')"
-                               class="dropdown-item"
+                            ng-class="{'dropdown-item': !isPlatformPropagateAvailable('viber'), 'dropdown-item bold': isPlatformPropagateAvailable('viber')}"
                                title="Add session start block"
                                href="javascript:void(0);">
                                 Propagate to Viber

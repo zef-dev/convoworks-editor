@@ -214,21 +214,23 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             is_new      =   false;
                             is_error    =   false;
                             $scope.config.app_id = data.app_id;
-                            AlertService.addSucess(`Service ${$scope.service.service_id} was linked successfully with Alexa.`);
+                            AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
                             $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            throw new Error("Can't create config for Amazon. " + response.data.message)
+                            throw new Error(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
                         });
                     } else {
                         return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                             configBak = angular.copy( $scope.config);
                             is_error    =   false;
+                            AlertService.addSuccess('Amazon config updated.');
                             $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
                             $log.debug('configAmazonEditor update() response', response);
                             is_error    =   true;
+                            throw new Error(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
                         });
                     }
                 }).then(function (data) {
@@ -333,7 +335,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.config.auto_display = newVal;
                         }
                     });
-
 
                     $scope.$watch('config.interaction_model_sensitivity', function(newInteractionModelSensitivity) {
                         if (newInteractionModelSensitivity !== undefined) {

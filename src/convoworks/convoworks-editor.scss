@@ -135,7 +135,7 @@
         letter-spacing: 0;
         line-height: 18px;
 
-        & span.glyphicon.glyphicon-cog.spinner {
+        & span.glyphicon.glyphicon-cog.spinning {
             animation: spin 1000ms ease-in-out;
             animation-fill-mode: forwards;
             animation-iteration-count: infinite;

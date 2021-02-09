@@ -96,13 +96,12 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                                 configBak = angular.copy( $scope.config);
                                 logline = 'configDialogflowEditor create() response';
                                 is_new = false;
-                                AlertService.addSucess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
+                                AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
                                 $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                             }, function (response) {
                                 $log.debug('configDialogflowEditor create() response', response);
                                 is_error    =   true;
-                                AlertService.addDanger(`Can't create config for Convo. ${  response.data.message}`)
-                                throw new Error(`Can't create config for Convo. ${  response.data.message}`)
+                                throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
                             });
                         }
 
@@ -115,10 +114,12 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     }).then(function (data) {
                         configBak = angular.copy($scope.config);
                         is_error = false;
+                        AlertService.addSuccess('Dialogflow config updated.');
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function (response) {
                         $log.debug(logline, response);
                         is_error = true;
+                        throw new Error(`Can't update config for Dialogflow. ${response.data.message}`);
                     });
                 }
 

@@ -11,7 +11,7 @@ export default function AlertService( $log, $timeout)
         return alertsService.alerts;
     };
 
-    alertsService.addSucess =   function( msg)
+    alertsService.addSuccess =   function( msg)
     {
         alertsService._addAlert( { msg : msg, type : 'success'}, DURATION);
     };

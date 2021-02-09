@@ -1,7 +1,7 @@
 import template from './config-convo-chat-editor.tmpl.html';
 
 /* @ngInject */
-export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksApi, LoginService) {
+export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksApi, LoginService, AlertService) {
     return {
         restrict: 'E',
         scope: { service: '=' },
@@ -51,21 +51,24 @@ export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksAp
                         configBak = angular.copy( $scope.config);
                         is_new      =   false;
                         is_error    =   false;
+                        AlertService.addSuccess(`Convo Chat configuration for ${$scope.service.service_id} created successfully.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
-                        throw new Error("Can't create config for Convo. " + response.data.message)
+                        throw new Error(`Can't create config for Convo Chat. ${response.data.message}`)
                     });
                 } else {
                     ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'convo_chat', $scope.config).then(function (data) {
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
                         configBak = angular.copy( $scope.config);
                         is_error    =   false;
+                        AlertService.addSuccess('Convo Chat config updated');
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
+                        throw new Error(`Can't update config for Convo Chat. ${response.data.message}`);
                     });
                 }
             }

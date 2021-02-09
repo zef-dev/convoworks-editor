@@ -1,7 +1,7 @@
 import template from './config-service-meta-editor.tmpl.html';
 
 /* @ngInject */
-export default function configServiceMetaEditor($log, LoginService, ConvoworksApi, $rootScope)
+export default function configServiceMetaEditor($log, $rootScope, LoginService, ConvoworksApi, AlertService)
 {
     return {
         restrict: 'E',
@@ -35,6 +35,8 @@ export default function configServiceMetaEditor($log, LoginService, ConvoworksAp
                 });
             });
 
+            $scope.originalOwner = '';
+
             _load();
 
             var configBak = angular.copy($scope.config);
@@ -54,23 +56,25 @@ export default function configServiceMetaEditor($log, LoginService, ConvoworksAp
                     $log.log('configServiceMetaEditor updateConfig() got new meta', meta);
 
                     $scope.config = {
-                        name: meta['name'] || '',
+                        name: meta['name'],
                         description: meta['description'] || '',
                         default_language: meta['default_language'] || '',
                         default_locale: meta['default_locale'] || '',
                         supported_locales: meta['supported_locales'] || '',
-                        owner: meta['owner'] || '',
+                        owner: meta['owner'],
                         admins: meta['admins'] || [''],
                         is_private: meta['is_private'] !== undefined ? meta['is_private'] : false
                     }
 
                     configBak = angular.copy($scope.config);
+                    $scope.originalOwner = meta['owner'];
                     $rootScope.$broadcast('ServiceMetaUpdated', meta);
                     is_error = false;
+                    AlertService.addSuccess('Service meta configuration updated.');
                 }, function (reason) {
                     $log.warn('configServiceMetaEditor updateConfig failed for reason', reason);
                     is_error = true;
-                    throw new Error(reason.data.message)
+                    throw new Error(`Could not update service meta config. ${reason.data.message}`);
                 });
             }
 
@@ -87,6 +91,8 @@ export default function configServiceMetaEditor($log, LoginService, ConvoworksAp
                         admins: meta['admins'] || [''],
                         is_private: meta['is_private'] !== undefined ? meta['is_private'] : false
                     }
+
+                    $scope.originalOwner = meta['owner'];
 
                     ConvoworksApi.getConfigOptions().then(function (options) {
                         $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
@@ -107,6 +113,7 @@ export default function configServiceMetaEditor($log, LoginService, ConvoworksAp
                 }, function (reason) {
                     $log.warn('configServiceMetaEditor getServiceMeta failed for reason', reason);
                     is_error = true;
+                    throw new Error('Could not load service meta configuration.');
                 });
             }
 
