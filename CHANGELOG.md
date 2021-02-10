@@ -4,6 +4,12 @@
 
 ## [Releases]
 
+### v0.19.1 ###
+
+**2021-02-10**
+
+* addSuccess js call on propagation fixed (was typo)
+
 ### v0.19.0 ###
 
 **2021-02-09**
