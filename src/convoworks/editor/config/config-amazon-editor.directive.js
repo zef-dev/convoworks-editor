@@ -13,6 +13,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             var config_options = {};
             var user    =   null;
             $scope.service_language    =   'en';
+            $scope.supported_locales    =   ['en-US'];
+            $scope.default_locale    =   'en-US';
+            $scope.owner    =   '';
 
             LoginService.getUser().then( function ( u) {
                 user = u;
@@ -20,6 +23,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
                 const serviceLanguage = serviceMeta['default_locale'];
+                $scope.supported_locales = serviceMeta['supported_locales'];
+                $scope.default_locale = serviceMeta['default_locale'];
+                $scope.owner = serviceMeta['owner'];
                 $scope.service_language = serviceLanguage.replace("-", "_");
             });
 
@@ -45,14 +51,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     terms_of_use_url: ''
                 },
                 privacy_and_compliance: {
-                    allows_purchases: "false",
-                    uses_personal_info: "false",
-                    is_child_directed: "false",
-                    contains_ads: "false",
+                    allows_purchases: false,
+                    uses_personal_info: false,
+                    is_child_directed: false,
+                    contains_ads: false,
                     is_export_compliant: true,
                     testing_instructions: "N/A",
                 }
             };
+
+            $scope.gettingSkillManifest = false;
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -170,6 +178,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     return fileBytesSmallIcon;
                 } else if (mediaItemId === 'tmp_large_skill_icon_upload_ready' && type === 'large_skill_icon') {
                     return fileBytesLargeIcon;
+                } else if (new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(mediaItemId)) {
+                    return mediaItemId;
                 } else {
                     return ConvoworksApi.downloadMedia($scope.service.service_id, mediaItemId);
                 }
@@ -272,10 +282,54 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.validateKeywords = function() {
                 const words = $scope.config.skill_preview_in_store.keywords.replace(/\s/g, ',').replace(/[0-9]/g, "");
                 const length = words.split(',').length;
-
-                $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = length > 30;
+                const invalid = length > 30;
+                $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = invalid;
+                $scope.amazonPlatformConfigForm.$invalid = invalid;
                 $scope.config.skill_preview_in_store.keywords = words
                 return true;
+            }
+
+            $scope.getSkillManifest = function () {
+                $scope.gettingSkillManifest = true;
+                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                    if (res.manifest.publishingInformation) {
+                        if (res.manifest.publishingInformation.locales) {
+                            if (res.manifest.publishingInformation.locales[$scope.default_locale] ) {
+                                $scope.config.skill_preview_in_store.public_name = res.manifest.publishingInformation.locales[$scope.default_locale].name;
+                                $scope.config.skill_preview_in_store.one_sentence_description = res.manifest.publishingInformation.locales[$scope.default_locale].summary;
+                                $scope.config.skill_preview_in_store.detailed_description = res.manifest.publishingInformation.locales[$scope.default_locale].description;
+                                $scope.config.skill_preview_in_store.whats_new = res.manifest.publishingInformation.locales[$scope.default_locale].updatesDescription ?? '';
+                                $scope.config.skill_preview_in_store.example_phrases = res.manifest.publishingInformation.locales[$scope.default_locale].examplePhrases.join(';');
+                                $scope.config.skill_preview_in_store.small_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].smallIconUri ?? '';
+                                $scope.config.skill_preview_in_store.large_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].largeIconUri ?? '';
+                                $scope.config.skill_preview_in_store.keywords = res.manifest.publishingInformation.locales[$scope.default_locale].keywords.join(',');
+
+                                if (res.manifest.privacyAndCompliance) {
+                                    $scope.config.skill_preview_in_store.terms_of_use_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].termsOfUseUrl;
+                                    $scope.config.skill_preview_in_store.privacy_policy_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].privacyPolicyUrl;
+
+                                    $scope.config.privacy_and_compliance.allows_purchases = res.manifest.privacyAndCompliance.allowsPurchases ?? false;
+                                    $scope.config.privacy_and_compliance.uses_personal_info = res.manifest.privacyAndCompliance.usesPersonalInfo ?? false;
+                                    $scope.config.privacy_and_compliance.is_child_directed = res.manifest.privacyAndCompliance.isChildDirected ?? false;
+                                    $scope.config.privacy_and_compliance.contains_ads = res.manifest.privacyAndCompliance.containsAds ?? false;
+                                    $scope.config.privacy_and_compliance.is_export_compliant = res.manifest.privacyAndCompliance.isExportCompliant ?? true;
+
+                                    $scope.config.privacy_and_compliance.testing_instructions = res.manifest.publishingInformation.testingInstructions ?? 'N/A';
+                                } else {
+                                    AlertService.addWarning("Privacy and Compliance is missing. Terms of Use URL, Privacy Policy URL, and the entire Privacy and Compliance Section won't be changed.");
+                                }
+                                AlertService.addSuccess("Fields were saved successfully.");
+                            } else {
+                                $scope.gettingSkillManifest = false;
+                                throw new Error(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
+                            }
+                        }
+                    }
+                    $scope.gettingSkillManifest = false;
+                }, function ( response) {
+                    $scope.gettingSkillManifest = false;
+                    throw new Error(`Can't get skill manifest for Alexa Skill ID ${$scope.config.app_id}`);
+                });
             }
 
             function _updateSelectedInterfaces() {

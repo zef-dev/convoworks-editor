@@ -18,252 +18,270 @@
                     </div>
                 </div>
 
-                <!-- DUMMY INPUT -->
-                <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+                <fieldset>
+                    <legend>General Configuration:</legend>
+                    <!-- DUMMY INPUT -->
+                    <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
 
-                <div class="convo-form-group" ng-class="{ 'has-error' : !isModeValid()}">
-                    <label class="convo-form-label inline">Mode: </label>
+                    <div class="convo-form-group" ng-class="{ 'has-error' : !isModeValid()}">
+                        <label class="convo-form-label inline">Mode: </label>
 
-                    <div class="radio-group">
-                        <input type="radio" ng-model="config.mode" id="config-mode-auto" value="auto">
-                        <label class="convo-form-label inline" for="config-mode-auto">Auto</label>
-                    </div>
+                        <div class="radio-group">
+                            <input type="radio" ng-model="config.mode" id="config-mode-auto" value="auto">
+                            <label class="convo-form-label inline" for="config-mode-auto">Auto</label>
+                        </div>
 
-                    <div class="radio-group">
-                        <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
-                        <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
-                    </div>
+                        <div class="radio-group">
+                            <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
+                            <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
+                        </div>
 
-                    <span class="help-block" ng-if="!isModeValid()"><strong>You have to link account to enable AUTO mode</strong></span>
-                    <span class="help-block" ng-if="config.mode === 'auto'">
+                        <span class="help-block" ng-if="!isModeValid()"><strong>You have to link account to enable AUTO mode</strong></span>
+                        <span class="help-block" ng-if="config.mode === 'auto'">
                     Automatically propagates changes to Amazon. Requires account to be linked with Amazon</span>
-                    <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Amazon side</span>
-                </div>
+                        <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Amazon side</span>
+                    </div>
 
-                <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                    <label for="invocation" class="convo-form-label">Invocation</label>
-                    <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
-                    <b ng-show="amazonPlatformConfigForm.invocation.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
-                    <b ng-show="amazonPlatformConfigForm.invocation.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
-                    <b ng-show="amazonPlatformConfigForm.invocation.$error.pattern" class="text-danger">Only letters and spaces are allowed.</b>
-                    <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
-                </div>
+                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                        <label for="invocation" class="convo-form-label">Invocation</label>
+                        <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
+                        <b ng-show="amazonPlatformConfigForm.invocation.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
+                        <b ng-show="amazonPlatformConfigForm.invocation.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
+                        <b ng-show="amazonPlatformConfigForm.invocation.$error.pattern" class="text-danger">Only letters and spaces are allowed.</b>
+                        <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
+                    </div>
 
-                <div class="convo-form-group">
-                    <label for="app_id" class="convo-form-label">Service ID</label>
-                    <input ng-if="config.mode === 'manual' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                    <input ng-if="config.mode === 'manual' && !isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                    <input ng-if="config.mode === 'auto' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                    <input ng-if="config.mode === 'auto' && !isNew()" required disabled type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                    <span class="help-block" ng-if="config.mode === 'auto' && isNew()">
+                    <div class="convo-form-group">
+                        <label for="app_id" class="convo-form-label">Service ID</label>
+                        <input ng-if="config.mode === 'manual' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                        <input ng-if="config.mode === 'manual' && !isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                        <input ng-if="config.mode === 'auto' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                        <input ng-if="config.mode === 'auto' && !isNew()" required disabled type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                        <span class="help-block" ng-if="config.mode === 'auto' && isNew()">
                         If you already created the service, please enter the skill-ID found on Amazon.
                         If you leave it blank, it will automatically create a new service on Amazon side</span>
-                    <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
-                    <b ng-show="amazonPlatformConfigForm.app_id.$invalid && !amazonPlatformConfigForm.app_id.$pristine" class="text-danger">Service ID is required.</b>
-                </div>
-
-                <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                    <label class="convo-form-label" for="config-interaction-model-sensitivity">Interaction Model Sensitivity</label>
-                    <select ng-model="config.interaction_model_sensitivity" class="convo-form-input" id="config-interaction-model-sensitivity">
-                        <option ng-repeat="(index, sensitivity)  in sensitivities track by index"
-                                value="{{ sensitivity.value }}"> {{ sensitivity.name }}
-                        </option>
-                    </select>
-                </div>
-
-                <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                    <label class="convo-form-label" for="config-endpoint-ssl-certificate-type">Endpoint SSL Certificate Type</label>
-                    <select ng-model="config.endpoint_ssl_certificate_type" class="convo-form-input" id="config-endpoint-ssl-certificate-type">
-                        <option ng-repeat="(index, endpointCertificateType)  in endpointCertificateTypes track by index"
-                                value="{{ endpointCertificateType.value }}"> {{ endpointCertificateType.description }}
-                        </option>
-                    </select>
-                </div>
-
-                <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
-                    <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
-                    <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
-                           ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
-                           ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
-                    <p ng-if="getSelfSignedSslCertificate('self_signed_certificate') !== ''">Uploaded SSL Certificate Media ID: <b>{{ getSelfSignedSslCertificate('self_signed_certificate') }} </b> </p>
-                </div>
-
-                <div class="convo-form-group">
-                    <label class="convo-form-label" for="config-auto-display">Auto Display</label>
-                    <div class="checkbox">
-                        <label for="config-auto-display">
-                            <input type="checkbox" ng-model="config.auto_display" id="config-auto-display"/>
-                            Automatically displays text in a card view on devices with a display
-                        </label>
+                        <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
+                        <b ng-show="amazonPlatformConfigForm.app_id.$invalid && !amazonPlatformConfigForm.app_id.$pristine" class="text-danger">Service ID is required.</b>
                     </div>
-                </div>
 
-                <div class="convo-form-group" ng-model="config.interfaces" ng-if="config.mode === 'auto'">
-                    <label class="convo-form-label">Alexa Interfaces</label>
-                    <div ng-repeat="itf in getAlexaInterfaces()">
-                        <label>
-                            <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked" ng-disabled="!itf.supported">
-                            {{itf.name}}
-                            <i ng-if="!itf.supported" class="glyphicon glyphicon-question-sign" uib-tooltip="Interface {{itf.name}} isn't supported yet."></i>
-                        </label>
+                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                        <label class="convo-form-label" for="config-interaction-model-sensitivity">Interaction Model Sensitivity</label>
+                        <select ng-model="config.interaction_model_sensitivity" class="convo-form-input" id="config-interaction-model-sensitivity">
+                            <option ng-repeat="(index, sensitivity)  in sensitivities track by index"
+                                    value="{{ sensitivity.value }}"> {{ sensitivity.name }}
+                            </option>
+                        </select>
                     </div>
-                </div>
-                <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
+
+                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                        <label class="convo-form-label" for="config-endpoint-ssl-certificate-type">Endpoint SSL Certificate Type</label>
+                        <select ng-model="config.endpoint_ssl_certificate_type" class="convo-form-input" id="config-endpoint-ssl-certificate-type">
+                            <option ng-repeat="(index, endpointCertificateType)  in endpointCertificateTypes track by index"
+                                    value="{{ endpointCertificateType.value }}"> {{ endpointCertificateType.description }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
+                        <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
+                        <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
+                               ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
+                               ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
+                        <p ng-if="getSelfSignedSslCertificate('self_signed_certificate') !== ''">Uploaded SSL Certificate Media ID: <b>{{ getSelfSignedSslCertificate('self_signed_certificate') }} </b> </p>
+                    </div>
+
+                    <div class="convo-form-group">
+                        <label class="convo-form-label" for="config-auto-display">Auto Display</label>
+                        <div class="checkbox">
+                            <label for="config-auto-display">
+                                <input type="checkbox" ng-model="config.auto_display" id="config-auto-display"/>
+                                Automatically displays text in a card view on devices with a display
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="convo-form-group" ng-model="config.interfaces" ng-if="config.mode === 'auto'">
+                        <label class="convo-form-label">Alexa Interfaces</label>
+                        <div ng-repeat="itf in getAlexaInterfaces()">
+                            <label>
+                                <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked" ng-disabled="!itf.supported">
+                                {{itf.name}}
+                                <i ng-if="!itf.supported" class="glyphicon glyphicon-question-sign" uib-tooltip="Interface {{itf.name}} isn't supported yet."></i>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Distribution Information: </legend>
+                    <div class="convo-form-group" ng-if="config.app_id">
+                        <div class="btn-group icon-button publish-group" uib-dropdown>
+                            <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="getSkillManifest()">
+                                <span ng-class="{ 'glyphicon glyphicon-play': !gettingSkillManifest, 'glyphicon glyphicon-cog spinning': gettingSkillManifest }"></span>
+                                {{ gettingSkillManifest ? 'Getting existing Distribution Information of existing Alexa Skill in ' + default_locale + "..."  : 'Get existing Distribution Information of existing Alexa Skill in ' + default_locale }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
                                     <span role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_skill_preview_in_store_public_name" aria-expanded="false" aria-controls="collapse_skill_preview_in_store_public_name">
-                                        Edit Skill Preview
+                                        Edit Skill Store Preview for <span ng-repeat="(index, supported_locale) in supported_locales">  {{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span> {{supported_locales.length > 1 ? "stores" : "store"}}
                                     </span>
-                                </h4>
-                            </div>
-                            <div id="collapse_skill_preview_in_store_public_name" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="glyphicon glyphicon-question-sign" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
-                                        <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="skill_preview_in_store_public_name" name="skill_preview_in_store_public_name" placeholder="" ng-model="config.skill_preview_in_store.public_name">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.pattern" class="text-danger">Only letters and spaces are allowed.</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_public_name.$pristine" class="text-danger">Public Name is required.</b>
-                                    </div>
+                                    </h4>
+                                </div>
+                                <div id="collapse_skill_preview_in_store_public_name" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="glyphicon glyphicon-question-sign" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
+                                            <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="skill_preview_in_store_public_name" name="skill_preview_in_store_public_name" placeholder="" ng-model="config.skill_preview_in_store.public_name">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.pattern" class="text-danger">Only letters and spaces are allowed.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_public_name.$pristine" class="text-danger">Public Name is required.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_one_sentence_description" class="convo-form-label">One Sentence Description * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A quick at-a-glance sentence that describes the skill or what customers can do with it. This will display in the Alexa app and may be spoken aloud by Alexa."></i></label>
-                                        <input ng-required="true" ng-minlength="1" ng-maxlength="160" type="text" class="convo-form-input" id="skill_preview_in_store_one_sentence_description" name="skill_preview_in_store_one_sentence_description" placeholder="" ng-model="config.skill_preview_in_store.one_sentence_description">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$error.minlength" class="text-danger">One Sentence Description should contain at least 1 character</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$error.maxlength" class="text-danger">One Sentence Description shouldn't contain more then 160 characters.</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$pristine" class="text-danger">One Sentence Description is required.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_one_sentence_description" class="convo-form-label">One Sentence Description * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A quick at-a-glance sentence that describes the skill or what customers can do with it. This will display in the Alexa app and may be spoken aloud by Alexa."></i></label>
+                                            <input ng-required="true" ng-minlength="1" ng-maxlength="160" type="text" class="convo-form-input" id="skill_preview_in_store_one_sentence_description" name="skill_preview_in_store_one_sentence_description" placeholder="" ng-model="config.skill_preview_in_store.one_sentence_description">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$error.minlength" class="text-danger">One Sentence Description should contain at least 1 character</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$error.maxlength" class="text-danger">One Sentence Description shouldn't contain more then 160 characters.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_one_sentence_description.$pristine" class="text-danger">One Sentence Description is required.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_detailed_description" class="convo-form-label">Detailed Description * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A more comprehensive description of this skill. Include information about any prerequisites like hardware or account requirements and detailed steps for the customer to get started. This description displays to customers on the skill detail card in the Alexa app. For Flash Briefing skills, list the feeds offered within the skill"></i></label>
-                                        <textarea ng-required="true" ng-minlength="1" ng-maxlength="4000" type="text" class="convo-form-input" id="skill_preview_in_store_detailed_description" name="skill_preview_in_store_detailed_description" placeholder="" ng-model="config.skill_preview_in_store.detailed_description"></textarea>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$error.minlength" class="text-danger">Detailed Description should contain at least 1 character</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$error.maxlength" class="text-danger">Detailed Description shouldn't contain more then 4000 characters.</b>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$pristine" class="text-danger">Detailed Description is required.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_detailed_description" class="convo-form-label">Detailed Description * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A more comprehensive description of this skill. Include information about any prerequisites like hardware or account requirements and detailed steps for the customer to get started. This description displays to customers on the skill detail card in the Alexa app. For Flash Briefing skills, list the feeds offered within the skill"></i></label>
+                                            <textarea ng-required="true" ng-minlength="1" ng-maxlength="4000" type="text" class="convo-form-input" id="skill_preview_in_store_detailed_description" name="skill_preview_in_store_detailed_description" placeholder="" ng-model="config.skill_preview_in_store.detailed_description"></textarea>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$error.minlength" class="text-danger">Detailed Description should contain at least 1 character</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$error.maxlength" class="text-danger">Detailed Description shouldn't contain more then 4000 characters.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_detailed_description.$pristine" class="text-danger">Detailed Description is required.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_whats_new" class="convo-form-label">What's New? <i class="glyphicon glyphicon-question-sign" uib-tooltip="Use this field to let customers know what new feature(s) this version introduces or what issues are resolved with this version. If this is your first version you can leave this field blank."></i></label>
-                                        <textarea class="convo-form-input" ng-maxlength="2000" id="skill_preview_in_store_whats_new" name="skill_preview_in_store_whats_new" placeholder="" ng-model="config.skill_preview_in_store.whats_new"></textarea>
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_whats_new.$error.maxlength" class="text-danger">Detailed Description shouldn't contain more then 4000 characters.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_whats_new" class="convo-form-label">What's New? <i class="glyphicon glyphicon-question-sign" uib-tooltip="Use this field to let customers know what new feature(s) this version introduces or what issues are resolved with this version. If this is your first version you can leave this field blank."></i></label>
+                                            <textarea class="convo-form-input" ng-maxlength="2000" id="skill_preview_in_store_whats_new" name="skill_preview_in_store_whats_new" placeholder="" ng-model="config.skill_preview_in_store.whats_new"></textarea>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_whats_new.$error.maxlength" class="text-danger">Detailed Description shouldn't contain more then 4000 characters.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_example_phrases" class="convo-form-label">Example Phrases * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Sample utterances that will appear on the skill detail card in the Alexa App. These phrases will help users get started and enable them to access your skill’s core functionality. Separate list items with a semicolon (;)"></i></label>
-                                        <input ng-required="true" type="text" class="convo-form-input" id="skill_preview_in_store_example_phrases" name="skill_preview_in_store_example_phrases" placeholder="" ng-model="config.skill_preview_in_store.example_phrases">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$pristine" class="text-danger">At least one Example Phrase is required.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_example_phrases" class="convo-form-label">Example Phrases * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Sample utterances that will appear on the skill detail card in the Alexa App. These phrases will help users get started and enable them to access your skill’s core functionality. Separate list items with a semicolon (;)"></i></label>
+                                            <input ng-required="true" type="text" class="convo-form-input" id="skill_preview_in_store_example_phrases" name="skill_preview_in_store_example_phrases" placeholder="" ng-model="config.skill_preview_in_store.example_phrases">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$pristine" class="text-danger">At least one Example Phrase is required.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_small_skill_icon" class="convo-form-label">Small Icon</label>
-                                        <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_small_skill_icon"
-                                               ngf-drop="onFileUpload($file, 'small_skill_icon')" ng-model="config.skill_preview_in_store.small_skill_icon"
-                                               ngf-select="onFileUpload($file, 'small_skill_icon')" ngf-multiple="false">
-                                        <img ng-if="config.skill_preview_in_store.small_skill_icon !== ''" ng-src="{{ getSkillIcon('small_skill_icon') }}" id="small_skill_icon" width="108" height="108">
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_small_skill_icon" class="convo-form-label">Small Icon</label>
+                                            <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_small_skill_icon"
+                                                   ngf-drop="onFileUpload($file, 'small_skill_icon')" ng-model="config.skill_preview_in_store.small_skill_icon"
+                                                   ngf-select="onFileUpload($file, 'small_skill_icon')" ngf-multiple="false">
+                                            <img ng-if="config.skill_preview_in_store.small_skill_icon !== ''" ng-src="{{ getSkillIcon('small_skill_icon') }}" id="small_skill_icon" width="108" height="108">
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_large_skill_icon" class="convo-form-label">Large Icon</label>
-                                        <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_large_skill_icon"
-                                               ngf-drop="onFileUpload($file, 'large_skill_icon')" ng-model="config.skill_preview_in_store.large_skill_icon"
-                                               ngf-select="onFileUpload($file, 'large_skill_icon')" ngf-multiple="false">
-                                        <img ng-if="config.skill_preview_in_store.large_skill_icon !== ''" ng-src="{{ getSkillIcon('large_skill_icon') }}" id="large_skill_icon" width="108" height="108">
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_large_skill_icon" class="convo-form-label">Large Icon</label>
+                                            <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_large_skill_icon"
+                                                   ngf-drop="onFileUpload($file, 'large_skill_icon')" ng-model="config.skill_preview_in_store.large_skill_icon"
+                                                   ngf-select="onFileUpload($file, 'large_skill_icon')" ngf-multiple="false">
+                                            <img ng-if="config.skill_preview_in_store.large_skill_icon !== ''" ng-src="{{ getSkillIcon('large_skill_icon') }}" id="large_skill_icon" width="108" height="108">
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label class="convo-form-label" for="skill_preview_in_store_category">Category <i class="glyphicon glyphicon-question-sign" uib-tooltip="The category that best describes your skill. This helps customers find your skill quickly and easily."></i></label>
-                                        <select ng-model="config.skill_preview_in_store.category" class="convo-form-input" id="skill_preview_in_store_category">
-                                            <option ng-repeat="(index, category)  in categories track by index"
-                                                    value="{{ category.value }}"> {{ category.description }}
-                                            </option>
-                                        </select>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label class="convo-form-label" for="skill_preview_in_store_category">Category <i class="glyphicon glyphicon-question-sign" uib-tooltip="The category that best describes your skill. This helps customers find your skill quickly and easily."></i></label>
+                                            <select ng-model="config.skill_preview_in_store.category" class="convo-form-input" id="skill_preview_in_store_category">
+                                                <option ng-repeat="(index, category)  in categories track by index"
+                                                        value="{{ category.value }}"> {{ category.description }}
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_keywords" class="convo-form-label">Keywords <i class="glyphicon glyphicon-question-sign" uib-tooltip="Simple search words that relate to or describe this skill. This helps customers find the skill quickly and easily. Use spaces or commas in between each search term"></i></label>
-                                        <input ng-change="validateKeywords()" type="text" class="convo-form-input" id="skill_preview_in_store_keywords" name="skill_preview_in_store_keywords" placeholder="" ng-model="config.skill_preview_in_store.keywords">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_keywords.$pristine" class="text-danger">Keywords field shouldn't contain more then 30 keywords.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_keywords" class="convo-form-label">Keywords <i class="glyphicon glyphicon-question-sign" uib-tooltip="Simple search words that relate to or describe this skill. This helps customers find the skill quickly and easily. Use spaces or commas in between each search term"></i></label>
+                                            <input ng-change="validateKeywords()" type="text" class="convo-form-input" id="skill_preview_in_store_keywords" name="skill_preview_in_store_keywords" placeholder="" ng-model="config.skill_preview_in_store.keywords">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_keywords.$pristine" class="text-danger">Keywords field shouldn't contain more then 30 keywords.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_privacy_policy_url" class="convo-form-label">Privacy Policy URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the privacy policy that applies to this skill."></i></label>
-                                        <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$pristine" class="text-danger">This must be an valid url.</b>
-                                    </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_privacy_policy_url" class="convo-form-label">Privacy Policy URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the privacy policy that applies to this skill."></i></label>
+                                            <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$pristine" class="text-danger">This must be an valid url.</b>
+                                        </div>
 
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="skill_preview_in_store_terms_of_use_url" class="convo-form-label">Terms of Use URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the terms of use document for this skill."></i></label>
-                                        <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
-                                        <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$pristine" class="text-danger">This must be an valid url.</b>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_terms_of_use_url" class="convo-form-label">Terms of Use URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the terms of use document for this skill."></i></label>
+                                            <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$pristine" class="text-danger">This must be an valid url.</b>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
                                     <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Edit Privacy and Compliance
                                     </span>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="privacy_and_compliance_allows_purchases" class="convo-form-label">Does this skill allow users to make purchases or spend real money? *</label>
-                                        <div id="privacy_and_compliance_allows_purchases">
-                                            <input type="radio" ng-model="config.privacy_and_compliance.allows_purchases" value="true">Yes
-                                            <input type="radio" ng-model="config.privacy_and_compliance.allows_purchases" value="false">No
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="privacy_and_compliance_allows_purchases" class="convo-form-label">Does this skill allow users to make purchases or spend real money? *</label>
+                                            <div id="privacy_and_compliance_allows_purchases">
+                                                <input type="radio" ng-model="config.privacy_and_compliance.allows_purchases" ng-value="true">Yes
+                                                <input type="radio" ng-model="config.privacy_and_compliance.allows_purchases" ng-value="false">No
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="privacy_and_compliance_uses_personal_info" class="convo-form-label">Does this Alexa skill collect users' personal information? * <i class="glyphicon glyphicon-question-sign" uib-tooltip="For example: anything that can identify the user such as name, email, password, phone number, birth date, etc."></i></label>
-                                        <div id="privacy_and_compliance_uses_personal_info">
-                                            <input type="radio" ng-model="config.privacy_and_compliance.uses_personal_info" value="true">Yes
-                                            <input type="radio" ng-model="config.privacy_and_compliance.uses_personal_info" value="false">No
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="privacy_and_compliance_uses_personal_info" class="convo-form-label">Does this Alexa skill collect users' personal information? * <i class="glyphicon glyphicon-question-sign" uib-tooltip="For example: anything that can identify the user such as name, email, password, phone number, birth date, etc."></i></label>
+                                            <div id="privacy_and_compliance_uses_personal_info">
+                                                <input type="radio" ng-model="config.privacy_and_compliance.uses_personal_info" ng-value="true">Yes
+                                                <input type="radio" ng-model="config.privacy_and_compliance.uses_personal_info" ng-value="false">No
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="privacy_and_compliance_is_child_directed" class="convo-form-label">Is this skill directed to or does it target children under the age of 13? * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Please indicate if this skill is directed to children under the age of 13 (for the United States, as determined under the Children's Online Privacy Protection Act (COPPA)). Not sure? Learn More
-."></i></label>
-                                        <div id="privacy_and_compliance_is_child_directed">
-                                            <input type="radio" ng-model="config.privacy_and_compliance.is_child_directed" value="true">Yes
-                                            <input type="radio" ng-model="config.privacy_and_compliance.is_child_directed" value="false">No
-                                        </div>
-                                    </div>
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="privacy_and_compliance_contains_ads" class="convo-form-label">Does this skill contain advertising? * </label>
-                                        <div id="privacy_and_compliance_contains_ads">
-                                            <input type="radio" ng-model="config.privacy_and_compliance.contains_ads" value="true">Yes
-                                            <input type="radio" ng-model="config.privacy_and_compliance.contains_ads" value="false">No
-                                        </div>
-                                    </div>
-                                    <div class="convo-form-group">
-                                        <label class="convo-form-label" for="config-auto-display">Export Compliance * </label>
-                                        <div class="checkbox">
-                                            <label for="privacy_and_compliance_contains_ads_is_export_compliant">
-                                                <input type="checkbox" ng-model="config.privacy_and_compliance.is_export_compliant" id="privacy_and_compliance_contains_ads_is_export_compliant"/>
-                                                I certify that this Alexa skill may be imported to and exported from the United States and all other countries and regions in which we operate our program or in which you've authorized sales to end users (without the need for us to obtain any license or clearance or take any other action) and is in full compliance with all applicable laws and regulations governing imports and exports, including those applicable to software that makes use of encryption technology.
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="privacy_and_compliance_is_child_directed" class="convo-form-label">
+                                                Is this skill directed to or does it target children under the age of 13? *
+                                                <i class="glyphicon glyphicon-question-sign"
+                                                   uib-tooltip="Please indicate if this skill is directed to children under the age of 13 (for the United States, as determined under the Children's Online Privacy Protection Act (COPPA)). Not sure? Learn More.">
+                                                </i>
                                             </label>
+                                            <div id="privacy_and_compliance_is_child_directed">
+                                                <input type="radio" ng-model="config.privacy_and_compliance.is_child_directed" ng-value="true">Yes
+                                                <input type="radio" ng-model="config.privacy_and_compliance.is_child_directed" ng-value="false">No
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                        <label for="privacy_and_compliance_testing_instructions" class="convo-form-label">Testing Instructions * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Please detail any special instructions our team will need in order to test your skill including account credentials (e.g., username and password) or hardware requirements. If your skill requests permissions, include ways to test these permissions requests. This information is NOT displayed to customers. If your skill makes legitimate use of trademarks, intellectual property, or brands, you must clearly indicate that you have permission to use these, and provide proof, when you submit your skill for certification. Please include external links to documentation evidencing your right to use the intellectual property (such as proof of trademark registration or a license agreement with the rights owner) and contact information, if needed. "></i></label>
-                                        <textarea ng-required="true" type="text" class="convo-form-input" id="privacy_and_compliance_testing_instructions" name="privacy_and_compliance_testing_instructions" placeholder="" ng-model="config.privacy_and_compliance.testing_instructions"></textarea>
-                                        <b ng-show="amazonPlatformConfigForm.privacy_and_compliance_testing_instructions.$invalid && !amazonPlatformConfigForm.privacy_and_compliance_testing_instructions.$pristine" class="text-danger">Detailed Description is required.</b>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="privacy_and_compliance_contains_ads" class="convo-form-label">Does this skill contain advertising? * </label>
+                                            <div id="privacy_and_compliance_contains_ads">
+                                                <input type="radio" ng-model="config.privacy_and_compliance.contains_ads" ng-value="true">Yes
+                                                <input type="radio" ng-model="config.privacy_and_compliance.contains_ads" ng-value="false">No
+                                            </div>
+                                        </div>
+                                        <div class="convo-form-group">
+                                            <label class="convo-form-label" for="config-auto-display">Export Compliance * </label>
+                                            <div class="checkbox">
+                                                <label for="privacy_and_compliance_contains_ads_is_export_compliant">
+                                                    <input type="checkbox" ng-model="config.privacy_and_compliance.is_export_compliant" id="privacy_and_compliance_contains_ads_is_export_compliant"/>
+                                                    I certify that this Alexa skill may be imported to and exported from the United States and all other countries and regions in which we operate our program or in which you've authorized sales to end users (without the need for us to obtain any license or clearance or take any other action) and is in full compliance with all applicable laws and regulations governing imports and exports, including those applicable to software that makes use of encryption technology.
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="privacy_and_compliance_testing_instructions" class="convo-form-label">Testing Instructions * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Please detail any special instructions our team will need in order to test your skill including account credentials (e.g., username and password) or hardware requirements. If your skill requests permissions, include ways to test these permissions requests. This information is NOT displayed to customers. If your skill makes legitimate use of trademarks, intellectual property, or brands, you must clearly indicate that you have permission to use these, and provide proof, when you submit your skill for certification. Please include external links to documentation evidencing your right to use the intellectual property (such as proof of trademark registration or a license agreement with the rights owner) and contact information, if needed. "></i></label>
+                                            <textarea ng-required="true" type="text" class="convo-form-input" id="privacy_and_compliance_testing_instructions" name="privacy_and_compliance_testing_instructions" placeholder="" ng-model="config.privacy_and_compliance.testing_instructions"></textarea>
+                                            <b ng-show="amazonPlatformConfigForm.privacy_and_compliance_testing_instructions.$invalid && !amazonPlatformConfigForm.privacy_and_compliance_testing_instructions.$pristine" class="text-danger">Detailed Description is required.</b>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || amazonPlatformConfigForm.$invalid" class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || amazonPlatformConfigForm.$invalid " class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
                         <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
