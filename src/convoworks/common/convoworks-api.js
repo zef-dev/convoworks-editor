@@ -77,6 +77,9 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // config-options
         this.getConfigOptions               =   getConfigOptions;
 
+        // get-existing-alexa-skill/{skillId}
+        this.getExistingAlexaSkill          =   getExistingAlexaSkill;
+
         function getPlatformConfiguration()
         {
             return $http({
@@ -652,4 +655,18 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                     return res.data;
                 })
         }
+
+    function getExistingAlexaSkill(owner, skillId)
+    {
+        $log.log('ConvoworksApi getExistingAlexaSkill()', owner, skillId);
+
+        return $http({
+            method: 'POST',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId,
+            data: { 'owner': owner }
+        }).then(function(res) {
+            $log.log('ConvoworksApi addServicePackage() then', res.data);
+            return res.data;
+        });
+    }
     }
