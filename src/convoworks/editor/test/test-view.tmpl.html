@@ -45,7 +45,8 @@
             <div class="monospace">
                 <h4>Component Params</h4>
                 <div style="overflow: auto" class="panel-debug-variables-in-request">
-                    <pre>{{ variables.component_params | json }}</pre>
+                    <!-- <pre>{{ variables.component_params | json }}</pre> -->
+                    <json-formatter data="variables.component_params"></json-formatter>
                 </div>
             </div>
             <div style="word-break: break-word" ng-if="exception.exceptionMessage" class="monospace panel-debug-exception">

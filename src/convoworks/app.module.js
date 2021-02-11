@@ -27,5 +27,5 @@ export default angular
         'LocalStorageModule',
         'ui.bootstrap', 'ui.bootstrap.contextMenu',
         'ngSanitize', 'ui.router', 'ngAnimate', 'ngCookies',
-        'ngFileUpload', 'ui.sortable'
+        'ngFileUpload', 'ui.sortable',
     ]);
