@@ -10,10 +10,10 @@ export default function jsonFormatter($log) {
                 if (!value) {
                     value = {};
                 }
-
-                $log.log('heh', value);
                 
                 const formatter = new JSONFormatter(value);
+                
+                $element.empty();
                 $element.append(formatter.render());
             }, true);
         }
