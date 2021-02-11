@@ -328,7 +328,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.gettingSkillManifest = false;
                 }).catch(function () {
                     $scope.gettingSkillManifest = false;
-                    throw new Error(`Can't get skill manifest for provided Alexa Skill ID ${$scope.config.app_id}`);
+                    throw new Error(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
                 });
             }
 
