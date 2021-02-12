@@ -159,7 +159,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
             function _parseComponentParams(componentParams)
             {
                 $log.log('convoChatbox _parseComponentParams componentParams', componentParams);
-                return componentParams.filter(param => !Array.isArray(param.component_params));
+                return componentParams; //.filter(param => !Array.isArray(param.component_params) || (param.children && param.children.length > 0));
             }
 
             function _appendSequence( msgs, immediate)
