@@ -30,25 +30,25 @@
             <div class="panel-debug-variables monospace">
                 <h4>Variables</h4>
                 <div style="overflow: auto" class="panel-debug-variables-in-request">
-                    <p>Vars in request: </p>
-                    <!-- <pre>{{ variables.vars_in_request }}</pre> -->
+                    <hr>
+                    <span>Vars in request:</span>
                     <json-formatter data="variables.vars_in_request"></json-formatter>
                 </div>
                 <div style="overflow: auto" class="panel-debug-variables-in-session">
-                    <span>Vars in session: </span>
-                    <!-- <pre>{{ variables.vars_in_session }}</pre> -->
+                    <hr>
+                    <span>Vars in session:</span>
                     <json-formatter data="variables.vars_in_session"></json-formatter>
                 </div>
                 <div style="overflow: auto" class="panel-debug-variables-in-installation">
-                    <span>Vars in installation: </span>
-                    <!-- <pre>{{ variables.vars_in_installation }}</pre> -->
+                    <hr>
+                    <span>Vars in installation:</span>
                     <json-formatter data="variables.vars_in_installation"></json-formatter>
                 </div>
             </div>
             <div class="monospace">
+                <hr>
                 <h4>Component Params</h4>
                 <div style="overflow: auto" class="panel-debug-variables-in-request">
-                    <!-- <pre>{{ variables.component_params | json }}</pre> -->
                     <json-formatter data="variables.component_params"></json-formatter>
                 </div>
             </div>
