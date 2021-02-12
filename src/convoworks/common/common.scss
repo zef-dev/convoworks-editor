@@ -1,0 +1,12 @@
+.convoworks {
+    .json {
+        display: flex;
+        flex-flow: column nowrap;
+
+        justify-content: flex-start;
+
+        .convo-form-group {
+            // padding-left: 1em;
+        }
+    }
+}

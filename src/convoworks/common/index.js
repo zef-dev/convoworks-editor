@@ -13,6 +13,8 @@ import loadingIndicator from './loading.directive';
 import textArray from './text-array.directive';
 import jsonFormatter from './json-formatter.directive';
 
+import './common.scss';
+
 /* @ngInject */
 export default angular
   .module('convo.common', ['LocalStorageModule'])
