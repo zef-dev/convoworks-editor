@@ -146,7 +146,8 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
                 _appendSequence( data.text_responses, true);
                 $scope.exception = data.exception;
                 $scope.variables = data.variables;
-                $scope.variables.component_params = { components: _parseComponentParams(data.component_params) };
+
+                // $scope.variables.component = _parseComponentParams(data.variables.component);
 
                 if ( data.text_reprompts.length) {
                     reprompt_timeout    =   $timeout( function() {
