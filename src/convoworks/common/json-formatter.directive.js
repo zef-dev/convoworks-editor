@@ -125,7 +125,7 @@ export default function jsonFormatter($log, $timeout) {
 
                 toRender = angular.copy(value);
 
-                const formatter = new JSONFormatter(toRender);
+                const formatter = new JSONFormatter(toRender, Infinity);
                 const container = $element.find("#container");
 
                 container.empty();
