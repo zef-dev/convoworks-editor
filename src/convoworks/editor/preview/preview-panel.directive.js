@@ -30,10 +30,10 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
 
             _init();
 
-            $scope.gotoBlock = function(block)
+            $scope.gotoBlock = function(blockId)
             {
                 $window.scrollTo(0,0);
-                $state.go('convoworks-editor-service.editor', { sv: 'steps', sb: block.block_id });
+                $state.go('convoworks-editor-service.editor', { sv: 'steps', sb: blockId });
             }
 
             $scope.parseText = function(text)

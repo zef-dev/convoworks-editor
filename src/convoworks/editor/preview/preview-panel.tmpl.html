@@ -9,7 +9,7 @@
         </div>
         <div class="card-pane no-padding preview-block" ng-repeat="block in filtered track by block.block_id">
             <div class="header">
-                <span class="block-id" ng-click="gotoBlock(block)">{{ ::block.block_name || block.block_id }}</span>
+                <span class="block-id" ng-click="gotoBlock(block.block_id)">{{ ::block.block_name || block.block_id }}</span>
             </div>
             <hr class="divider-full">
             <div class="body">
