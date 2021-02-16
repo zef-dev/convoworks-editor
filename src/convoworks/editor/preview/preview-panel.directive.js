@@ -76,16 +76,28 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
 
                     $scope.filtered = angular.copy(previewBlocks);
 
-                    $scope.$watch('search.query', function() {
-                        if (!$scope.search.query || $scope.search.query === '') {
+                    $scope.$watch('search.query', function(value) {
+                        if (!value || value === '') {
                             $scope.filtered = angular.copy(previewBlocks);
                         } else {
                             $scope.$applyAsync(() => {
-                                $scope.filtered = previewBlocks.filter(b => {
-                                    console.log('hihi', b);
-                                    const lowercase_query = $scope.search.query.toLowerCase();
+                                $scope.filtered = angular.copy(previewBlocks).filter(b => {
+                                    const lowercase_query = value.toLowerCase();
+
                                     return b.block_name.toLowerCase().includes(lowercase_query) ||
                                         _getFlatText(b).toLowerCase().includes(lowercase_query);
+                                }).map(block => {
+                                    let b = block;
+
+                                    b.sections = block.sections.map(section => {
+                                        let s = section;
+
+                                        s.utterances = section.utterances.filter(utterance => utterance.text.join(' ').toLowerCase().includes(value.toLowerCase()));
+
+                                        return s;
+                                    }).filter(section => section.utterances.length > 0);
+
+                                    return b;
                                 });
                             });
                         }
