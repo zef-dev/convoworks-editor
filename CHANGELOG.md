@@ -2,6 +2,10 @@
 
 ## [Current development]
 
+* A separator will be rendered after a container if it has the `_separate` property set to true
+
+* Changed simple debug view to a JSON viewer
+
 ## [Releases]
 
 ### v0.19.1 ###
