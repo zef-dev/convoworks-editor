@@ -1,7 +1,7 @@
 import template from './preview-panel.tmpl.html';
 
 /* @ngInject */
-export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertService) {
+export default function previewPanel($log, $sce, $state, $window, ConvoworksApi, AlertService) {
     return {
         restrict: 'E',
         scope: {
@@ -29,6 +29,12 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
             };
 
             _init();
+
+            $scope.gotoBlock = function(block)
+            {
+                $window.scrollTo(0,0);
+                $state.go('convoworks-editor-service.editor', { sv: 'steps', sb: block.block_id });
+            }
 
             $scope.parseText = function(text)
             {
