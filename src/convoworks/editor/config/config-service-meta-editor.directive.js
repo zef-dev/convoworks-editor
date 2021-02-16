@@ -123,10 +123,6 @@ export default function configServiceMetaEditor($log, $rootScope, LoginService, 
                         $scope.config.default_locale = 'en-US';
                         $scope.supported_locales = ['en-US'];
                         $scope.config.supported_locales = $scope.supported_locales;
-                    } else if ($scope.config.default_language === 'de') {
-                        $scope.config.default_locale = 'de-DE';
-                        $scope.supported_locales = ['de-DE'];
-                        $scope.config.supported_locales = $scope.supported_locales;
                     }
 
                     $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {

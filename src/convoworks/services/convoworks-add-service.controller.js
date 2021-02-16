@@ -57,10 +57,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
                 $scope.new_service.default_locale = 'en-US';
                 $scope.supported_locales = ['en-US'];
                 $scope.new_service.supported_locales = $scope.supported_locales;
-            } else if ($scope.new_service.default_language === 'de') {
-                $scope.new_service.default_locale = 'de-DE';
-                $scope.supported_locales = ['de-DE'];
-                $scope.new_service.supported_locales = $scope.supported_locales;
             }
 
             $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
