@@ -7,13 +7,13 @@
             <h3>Preview for {{ service.service_id }}</h3>
             <input type="text" ng-model="search.query" class="convo-form-input" placeholder="&#xe003;  Search">
         </div>
-        <div class="card-pane no-padding preview-block" ng-repeat="block in filtered track by block.block_id">
+        <div class="card-pane no-padding preview-block" ng-repeat="block in filtered track by block.data.block_id">
             <div class="header">
-                <span class="block-id" ng-click="gotoBlock(block.block_id)">{{ ::block.block_name || block.block_id }}</span>
+                <span class="block-id" ng-click="gotoBlock(block)">{{ ::block.data.block_name || block.data.block_id }}</span>
             </div>
             <hr class="divider-full">
             <div class="body">
-                <div ng-repeat="section in block.sections" class="messages">
+                <div ng-repeat="section in block.data.sections" class="messages">
                     <span class="section-title">
                         {{ ::section.name }}
                     </span>

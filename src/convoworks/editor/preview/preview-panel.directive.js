@@ -30,10 +30,10 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
 
             _init();
 
-            $scope.gotoBlock = function(blockId)
+            $scope.gotoBlock = function(block)
             {
                 $window.scrollTo(0,0);
-                $state.go('convoworks-editor-service.editor', { sv: 'steps', sb: blockId });
+                $state.go('convoworks-editor-service.editor', { sv: (block.is_fragment ? 'fragments' : 'steps'), sb: block.data.block_id });
             }
 
             $scope.parseText = function(text)
@@ -72,7 +72,7 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
                 }
 
                 promise.then(function (preview) {
-                    previewBlocks = preview.blocks.filter(b => b.sections.length > 0);
+                    previewBlocks = preview.blocks.filter(b => b.data.sections.length > 0);
 
                     $scope.filtered = angular.copy(previewBlocks);
 
@@ -80,16 +80,26 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
                         if (!value || value === '') {
                             $scope.filtered = angular.copy(previewBlocks);
                         } else {
+                            let name_matched = false;
+
                             $scope.$applyAsync(() => {
                                 $scope.filtered = angular.copy(previewBlocks).filter(b => {
                                     const lowercase_query = value.toLowerCase();
 
-                                    return b.block_name.toLowerCase().includes(lowercase_query) ||
-                                        _getFlatText(b).toLowerCase().includes(lowercase_query);
+                                    if (b.data.block_name.toLowerCase().includes(lowercase_query)) {
+                                        name_matched = true;
+                                        return true;
+                                    }
+
+                                    return _getFlatText(b).toLowerCase().includes(lowercase_query);
                                 }).map(block => {
+                                    if (name_matched) {
+                                        return block;
+                                    }
+
                                     let b = block;
 
-                                    b.sections = block.sections.map(section => {
+                                    b.data.sections = block.data.sections.map(section => {
                                         let s = section;
 
                                         s.utterances = section.utterances.filter(utterance => utterance.text.join(' ').toLowerCase().includes(value.toLowerCase()));
@@ -110,7 +120,7 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
             }
 
             function _getFlatText(block) {
-                return block.sections
+                return block.data.sections
                     .flatMap(section => section.utterances)
                     .flatMap(utterance => utterance.text)
                     .reduce((prev, curr) => { return prev + ' ' + curr }, '');
