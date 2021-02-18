@@ -196,7 +196,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.updateConfig = function (isValid) {
                 if (!isValid) {
-                    throw new Error(`Invalid form data.`)
+                    AlertService.addDanger(`Invalid form data.`)
                 }
                 $log.debug('configAmazonEditor update() $scope.config', $scope.config);
                 _updateSelectedInterfaces();
@@ -238,7 +238,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            throw new Error(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
+                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
                         });
                     } else {
                         return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
@@ -249,7 +249,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor update() response', response);
                             is_error    =   true;
-                            throw new Error(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                            AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
                         });
                     }
                 }).then(function (data) {
@@ -337,14 +337,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 AlertService.addSuccess("Fields were saved successfully.");
                             } else {
                                 $scope.gettingSkillManifest = false;
-                                throw new Error(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
+                                AlertService.addDanger(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
                             }
                         }
                     }
                     $scope.gettingSkillManifest = false;
                 }).catch(function () {
                     $scope.gettingSkillManifest = false;
-                    throw new Error(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
+                    AlertService.addDanger(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
                 });
             }
 
