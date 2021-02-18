@@ -11,6 +11,9 @@ import ConvoworksApi from './convoworks-api';
 import jsonText from './json-text.directive';
 import loadingIndicator from './loading.directive';
 import textArray from './text-array.directive';
+import jsonFormatter from './json-formatter.directive';
+
+import './common.scss';
 
 /* @ngInject */
 export default angular
@@ -25,6 +28,7 @@ export default angular
   .directive('jsonText', jsonText)
   .directive('loadingIndicator', loadingIndicator)
   .directive('textArray', textArray)
+  .directive('jsonFormatter', jsonFormatter)
   .factory('AlertService', AlertService)
   .service('DeferredsStackService', DeferredsStackService)
   .service('UserPreferencesService', UserPreferencesService)

@@ -146,12 +146,21 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
                 _appendSequence( data.text_responses, true);
                 $scope.exception = data.exception;
                 $scope.variables = data.variables;
+
+                // $scope.variables.component = _parseComponentParams(data.variables.component);
+
                 if ( data.text_reprompts.length) {
                     reprompt_timeout    =   $timeout( function() {
                         _appendBreak();
                         _appendSequence( data.text_reprompts, true);
                     }, REPROMPT_TIMEOUT);
                 }
+            }
+
+            function _parseComponentParams(componentParams)
+            {
+                $log.log('convoChatbox _parseComponentParams componentParams', componentParams);
+                return componentParams; //.filter(param => !Array.isArray(param.component_params) || (param.children && param.children.length > 0));
             }
 
             function _appendSequence( msgs, immediate)

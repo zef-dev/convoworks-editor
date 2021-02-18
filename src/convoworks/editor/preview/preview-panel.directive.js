@@ -1,7 +1,7 @@
 import template from './preview-panel.tmpl.html';
 
 /* @ngInject */
-export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertService) {
+export default function previewPanel($log, $sce, $state, $window, ConvoworksApi, AlertService) {
     return {
         restrict: 'E',
         scope: {
@@ -29,6 +29,12 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
             };
 
             _init();
+
+            $scope.gotoBlock = function(block)
+            {
+                $window.scrollTo(0,0);
+                $state.go('convoworks-editor-service.editor', { sv: (block.is_fragment ? 'fragments' : 'steps'), sb: block.data.block_id });
+            }
 
             $scope.parseText = function(text)
             {
@@ -66,20 +72,42 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
                 }
 
                 promise.then(function (preview) {
-                    previewBlocks = preview.blocks.filter(b => b.sections.length > 0);
+                    previewBlocks = preview.blocks.filter(b => b.data.sections.length > 0);
 
                     $scope.filtered = angular.copy(previewBlocks);
 
-                    $scope.$watch('search.query', function() {
-                        if (!$scope.search.query || $scope.search.query === '') {
+                    $scope.$watch('search.query', function(value) {
+                        if (!value || value === '') {
                             $scope.filtered = angular.copy(previewBlocks);
                         } else {
+                            let name_matched = false;
+
                             $scope.$applyAsync(() => {
-                                $scope.filtered = previewBlocks.filter(b => {
-                                    console.log('hihi', b);
-                                    const lowercase_query = $scope.search.query.toLowerCase();
-                                    return b.block_name.toLowerCase().includes(lowercase_query) ||
-                                        _getFlatText(b).toLowerCase().includes(lowercase_query);
+                                $scope.filtered = angular.copy(previewBlocks).filter(b => {
+                                    const lowercase_query = value.toLowerCase();
+
+                                    if (b.data.block_name.toLowerCase().includes(lowercase_query)) {
+                                        name_matched = true;
+                                        return true;
+                                    }
+
+                                    return _getFlatText(b).toLowerCase().includes(lowercase_query);
+                                }).map(block => {
+                                    if (name_matched) {
+                                        return block;
+                                    }
+
+                                    let b = block;
+
+                                    b.data.sections = block.data.sections.map(section => {
+                                        let s = section;
+
+                                        s.utterances = section.utterances.filter(utterance => utterance.text.join(' ').toLowerCase().includes(value.toLowerCase()));
+
+                                        return s;
+                                    }).filter(section => section.utterances.length > 0);
+
+                                    return b;
                                 });
                             });
                         }
@@ -92,7 +120,7 @@ export default function previewPanel($log, $sce, $state, ConvoworksApi, AlertSer
             }
 
             function _getFlatText(block) {
-                return block.sections
+                return block.data.sections
                     .flatMap(section => section.utterances)
                     .flatMap(utterance => utterance.text)
                     .reduce((prev, curr) => { return prev + ' ' + curr }, '');

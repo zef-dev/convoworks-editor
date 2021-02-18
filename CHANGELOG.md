@@ -2,13 +2,27 @@
 
 ## [Current development]
 
+* A separator will be rendered after a container if it has the `_separate` property set to true
+
+* Changed simple debug view to a JSON viewer
+
+## [Releases]
+
+### v0.19.1 ###
+
+**2021-02-10**
+
+* addSuccess js call on propagation fixed (was typo)
+
+### v0.19.0 ###
+
+**2021-02-09**
+
 * navigate to custom intent from editor
 * new preview rendering to accommodate overhauled process
 * notifications have been redesigned
 * add an indicator for ongoing propagation
 * add the ability to edit the Skill Preview and Privacy Compliance of Alexa Skill Developer Console Distribution Tab  
-
-## [Releases]
 
 ### v0.18.9 ###
 

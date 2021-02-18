@@ -16,12 +16,20 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.supported_locales    =   ['en-US'];
             $scope.default_locale    =   'en-US';
             $scope.owner    =   '';
+            let service_language = 'en';
+            let default_invocation = null;
+            $scope.service_language = 'en';
 
             LoginService.getUser().then( function ( u) {
                 user = u;
             });
 
             ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
+                service_language = serviceMeta['default_language'];
+                $scope.service_language = service_language;
+
+                default_invocation = serviceMeta['name'];
+
                 const serviceLanguage = serviceMeta['default_locale'];
                 $scope.supported_locales = serviceMeta['supported_locales'];
                 $scope.default_locale = serviceMeta['default_locale'];
@@ -31,7 +39,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.config = {
                 mode: 'manual',
-                invocation: $scope.service.name,
+                invocation: default_invocation || $scope.service.name,
                 app_id: null,
                 interaction_model_sensitivity: 'LOW',
                 endpoint_ssl_certificate_type: 'Wildcard',

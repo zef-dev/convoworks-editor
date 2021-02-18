@@ -55,7 +55,15 @@
 
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
                     <label for="serviceAccount" class="convo-form-label">Service Account JSON</label>
-                    <textarea ng-required="true" class="convo-form-input monospace" id="serviceAccount" name="serviceAccount" ng-change="validateJSON()" placeholder="" ng-model="config.serviceAccount"></textarea>
+                    <textarea ng-required="true"
+                              class="convo-form-input monospace"
+                              id="serviceAccount"
+                              name="serviceAccount"
+                              cols="80"
+                              rows="40"
+                              ng-change="validateJSON()"
+                              ng-model="config.serviceAccount">
+                    </textarea>
                     <span class="help-block">Required to display the "Test on Dialogflow" button in Test tab</span>
                     <b ng-show="dialogflowPlatformConfigForm.serviceAccount.$error.required && !dialogflowPlatformConfigForm.serviceAccount.$pristine" class="text-danger">Service Account JSON is required.</b>
                     <b ng-show="dialogflowPlatformConfigForm.serviceAccount.$invalid && !dialogflowPlatformConfigForm.serviceAccount.$pristine" class="text-danger">Service Account JSON is not valid, please provide valid JSON.</b>
@@ -80,7 +88,7 @@
                     <textarea
                         ng-required="true"
                         cols="80"
-                        cols="40"
+                        rows="40"
                         class="convo-form-input"
                         id="description"
                         name="description"

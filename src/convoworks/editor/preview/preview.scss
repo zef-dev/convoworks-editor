@@ -1,5 +1,13 @@
 .convoworks {
 
+    .block-preview {
+        .preview {
+            .card-pane.preview-block {
+                margin: 0;
+            }
+        }
+    }
+
     .preview .title {
         display: flex;
         flex-flow: row nowrap;
@@ -45,6 +53,10 @@
     
         font-size: 14px;
         text-align: right;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
     
     .preview .preview-block > hr.divider-full {
