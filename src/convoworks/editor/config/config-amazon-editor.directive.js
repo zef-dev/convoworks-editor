@@ -61,6 +61,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             };
 
             $scope.gettingSkillManifest = false;
+            $scope.keywordsLength = 0;
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -216,7 +217,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                         preparedUpload.clear();
                     }
-
+                    _setIsChildDirected();
+                    $scope.validateKeywords(false);
                     if ( is_new) {
                         return ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                             configBak = angular.copy( $scope.config);
@@ -279,14 +281,20 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return $scope.interfaces;
             };
 
-            $scope.validateKeywords = function() {
+            $scope.validateKeywords = function(validateForm = true) {
                 const words = $scope.config.skill_preview_in_store.keywords.replace(/\s/g, ',').replace(/[0-9]/g, "");
-                const length = words.split(',').length;
+                let length = words.split(',').length;
+                if (words === '') {
+                    length = 0;
+                }
                 const invalid = length > 30;
-                $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = invalid;
-                $scope.amazonPlatformConfigForm.$invalid = invalid;
-                $scope.config.skill_preview_in_store.keywords = words
-                return true;
+                $scope.keywordsLength = length;
+
+                if (validateForm) {
+                    $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = invalid;
+                    $scope.amazonPlatformConfigForm.$invalid = invalid;
+                    $scope.config.skill_preview_in_store.keywords = words;
+                }
             }
 
             $scope.getSkillManifest = function () {
@@ -331,6 +339,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     throw new Error(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
                 });
             }
+
+            $scope.onCategoryChange = function () {
+                _setIsChildDirected(true);
+            };
 
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
@@ -403,6 +415,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'amazon').then(function (data) {
                         $scope.config = data;
+                        _setIsChildDirected();
+                        $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
                         is_error    =   false;
@@ -423,6 +437,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
                     return $1.toUpperCase()
                 })
+            }
+
+            function _setIsChildDirected(notifyChange = false) {
+                if ($scope.config.skill_preview_in_store.category && $scope.config.skill_preview_in_store.category.toLowerCase().includes('child')) {
+                    $scope.config.privacy_and_compliance.is_child_directed = true;
+
+                    if (notifyChange) {
+                        AlertService.addInfo("Question related to is child directed is answered in yes. Please review the Privacy and Compliance section.");
+                    }
+                }
             }
 
         }
