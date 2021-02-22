@@ -146,6 +146,7 @@
                     <th>Platform</th>
                     <th>Alias</th>
                     <th>Updated</th>
+                    <th>Validated</th>
                     <th>Link</th>
                     <th width="50"></th>
                 </tr>
@@ -155,6 +156,7 @@
                     <td>{{row.platform_id}}</td>
                     <td>{{row.alias}}</td>
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
+                    <td><b>N/A</b></td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
                             <i class="glyphicon glyphicon-copy"></i>
@@ -174,6 +176,10 @@
                                     ng-repeat="option in getImportWorkflow( row)"
                                     ng-click="importWorkflowRelease( row, option.release_id)"
                                 ><a href="javascript:void(0);">{{option.title}}</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem" ng-click="validateDevelopmentVersion( row)">
+                                    <a href="javascript:void(0);">Validate development version before submission</a>
+                                </li>
                                 <li class="divider"></li>
                                 <li role="menuitem" ng-click="tagAsSimpleVersion( row)">
                                     <a href="javascript:void(0);">Tag as simple version</a>
