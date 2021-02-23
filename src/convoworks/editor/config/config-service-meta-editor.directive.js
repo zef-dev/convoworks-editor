@@ -1,7 +1,7 @@
 import template from './config-service-meta-editor.tmpl.html';
 
 /* @ngInject */
-export default function configServiceMetaEditor($log, $rootScope, LoginService, ConvoworksApi, AlertService)
+export default function configServiceMetaEditor($log, $rootScope, $window, LoginService, ConvoworksApi, AlertService)
 {
     return {
         restrict: 'E',
@@ -46,6 +46,18 @@ export default function configServiceMetaEditor($log, $rootScope, LoginService, 
             }
 
             $scope.updateConfig = function() {
+                if ($scope.originalOwner !== $scope.config.owner) {
+                    if ($window.confirm(`You are about to transfer service ownership to ${$scope.config.owner}. Are you sure you wish to proceed? If you do, you may have reduced permissions for configuring this service until ownership is transferred back to you.`)) {
+                        _update();
+                    }
+
+                    return;
+                }
+
+                _update();
+            }
+
+            function _update() {
                 ConvoworksApi.updateServiceMeta($scope.service.service_id, $scope.config).then(function (res) {
                     var meta = res.data;
                     $log.log('configServiceMetaEditor updateConfig() got new meta', meta);
