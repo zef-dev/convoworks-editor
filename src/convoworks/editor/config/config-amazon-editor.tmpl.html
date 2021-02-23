@@ -48,8 +48,8 @@
 
                 <div class="convo-form-group">
                     <label for="app_id" class="convo-form-label">Service ID</label>
-                    <input ng-if="isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                    <input ng-if="!isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                    <input ng-if="isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id" ng-focus="$event.target.select()">
+                    <input ng-if="!isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id" ng-focus="$event.target.select()">
                     <span class="help-block" ng-if="config.mode === 'auto' && isNew()">
                         If you already created the service, please enter the skill-ID found on Amazon.
                         If you leave it blank, it will automatically create a new service on Amazon side</span>
