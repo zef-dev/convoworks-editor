@@ -2,6 +2,8 @@
 
 ## [Current development]
 
+* Added css classes for list and card elements preview
+
 ## [Releases]
 
 ### v0.20.0 ###

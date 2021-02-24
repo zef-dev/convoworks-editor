@@ -195,7 +195,7 @@
 
     .selectable-component .preview .list-container .list-item
     {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid #eee;
         padding-bottom: 4px;
     }
 
@@ -206,6 +206,31 @@
         padding: 10px 20px;
         text-align: left;
         font-family: Arial,Helvetica,Roboto,sans-serif;
+    }
+    
+    .selectable-component .preview .image-placeholder {
+        background-color: #eee;
+        color: #5b5b5b;
+        display: flex;
+        width: 50px;
+        margin: auto;
+        height: 50px;
+    }
+    
+    .selectable-component .preview .image-placeholder.large {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .selectable-component .preview .image-placeholder > div {
+        align-self: center;
+        text-align: center;
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    .selectable-component .preview .image-placeholder.large > div {
+        font-size: 16px;
     }
 
 
