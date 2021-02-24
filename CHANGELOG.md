@@ -2,11 +2,16 @@
 
 ## [Current development]
 
+## [Releases]
+
+### v0.20.0 ###
+
 * A separator will be rendered after a container if it has the `_separate` property set to true
 
-* Changed simple debug view to a JSON viewer
+* Each preview block is now separated into sections
+    * Clicking on a block name/fragment name in preview will now navigate to it in the editor
 
-## [Releases]
+* Changed simple debug view to a JSON viewer
 
 ### v0.19.1 ###
 
