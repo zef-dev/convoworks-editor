@@ -106,14 +106,17 @@ export default function ConvoworksMainController( $log, $scope, $uibModal, Convo
         ConvoworksApi.getAllServices().then( function( services) {
             $scope.availableServices    =   services;
 
-            $scope.$watch('filter', function() {
-                if (!$scope.filter || $scope.filter === '') {
+            $scope.$watch('filter', function(value) {
+                if (!value || value === '') {
                     $scope.filtered = angular.copy($scope.availableServices);
                 }
 
                 $scope.$applyAsync(function() {
                     $scope.filtered = $scope.availableServices.filter(function (service) {
-                        return service.name.toLowerCase().includes($scope.filter.toLowerCase());
+                        const lcase_query = value.toLowerCase();
+                        return service.name.toLowerCase().includes(lcase_query) ||
+                        service.service_id.toLowerCase().includes(lcase_query) ||
+                        JSON.stringify(service.owner).toLowerCase().includes(lcase_query);
                     })
                 })
             })
