@@ -53,8 +53,8 @@
 
                     <div class="convo-form-group">
                         <label for="app_id" class="convo-form-label">Service ID</label>
-                        <input ng-if="config.mode === 'manual' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
-                        <input ng-if="config.mode === 'manual' && !isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
+                        <input ng-if="config.mode === 'manual' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id" ng-focus="$event.target.select()">
+                        <input ng-if="config.mode === 'manual' && !isNew()" required type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id" ng-focus="$event.target.select()">
                         <input ng-if="config.mode === 'auto' && isNew()" type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
                         <input ng-if="config.mode === 'auto' && !isNew()" required disabled type="text" class="convo-form-input" id="app_id" name="app_id" placeholder="" ng-model="config.app_id">
                         <span class="help-block" ng-if="config.mode === 'auto' && isNew()">

@@ -9,7 +9,7 @@
 
             <div class="convo-form-group">
                 <label for="service-meta-name" class="convo-form-label">Service Name <i class="glyphicon glyphicon-question-sign" uib-tooltip="Internal name for this service"></i></label>
-                <input type="text" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid}" ng-model="config.name" id="service-meta-name" name="serviceMetaName" required>
+                <input type="text" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid}" ng-model="config.name" ng-focus="$event.target.select()" id="service-meta-name" name="serviceMetaName" required>
                 <ng-messages role="alert" class="error"
                     ng-if="serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid"
                     for="serviceMeta.serviceMetaName.$error"
@@ -62,7 +62,7 @@
 
 			<div class="convo-form-group">
 				<label for="service-meta-owner" class="convo-form-label">Service Owner <i class="glyphicon glyphicon-question-sign" uib-tooltip="Owner of this service"></i></label>
-                <input ng-disabled="originalOwner !== getAuthUserEmail()" type="email" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid}" ng-model="config.owner" id="service-meta-owner" required name="serviceMetaOwner">
+                <input ng-disabled="originalOwner !== getAuthUserEmail()" type="email" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid}" ng-focus="$event.target.select()" ng-model="config.owner" id="service-meta-owner" required name="serviceMetaOwner">
                 <ng-messages role="alert" class="error"
                     ng-if="serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid"
                     for="serviceMeta.serviceMetaOwner.$error"

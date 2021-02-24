@@ -30,7 +30,7 @@
                          ng-switch-when="ssml">
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <textarea class="convo-form-input" required ng-model="component.properties[key]"></textarea>
+                        <textarea class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()"></textarea>
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
 
                     </div>
@@ -39,7 +39,7 @@
                          ng-switch-when="desc">
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <textarea class="convo-form-input" required ng-model="component.properties[key]"></textarea>
+                        <textarea class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()"></textarea>
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
 
                     </div>
@@ -49,7 +49,7 @@
                          ng-if="!!definition.component_properties[key].editor_properties.multiple">
 
                         <div ng-if="isObject( component.properties[key])" ng-repeat="( name, val) in component.properties[key] track by name">
-                            <label class="convo-form-label">{{ name }}</label> &mdash; <input class="convo-form-input" type="text" ng-model="component.properties[key][name]">
+                            <label class="convo-form-label">{{ name }}</label> &mdash; <input class="convo-form-input" type="text" ng-model="component.properties[key][name]" ng-focus="$event.target.select()">
                         </div>
 
                         <span class="help-block" ng-if="isObject( component.properties[key])">
@@ -58,7 +58,7 @@
 
                         <div ng-if="!isObject( component.properties[key])">
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                            <input class="convo-form-input" type="text" ng-model="component.properties[key]">
+                            <input class="convo-form-input" type="text" ng-model="component.properties[key]" ng-focus="$event.target.select()">
                             <span class="help-block">{{ definition.component_properties[key].description }}</span>
                         </div>
 
@@ -69,7 +69,7 @@
                          ng-if="!definition.component_properties[key].editor_properties.multiple">
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <input type="text" class="convo-form-input" required ng-model="component.properties[key]">
+                        <input type="text" class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()">
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
                     </div>
 
@@ -78,7 +78,7 @@
                          ng-if="!definition.component_properties[key].editor_properties.multiple">
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <input class="convo-form-input" type="password" ng-model="component.properties[key]">
+                        <input class="convo-form-input" type="password" ng-model="component.properties[key]" ng-focus="$event.target.select()">
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
 
                     </div>
@@ -88,7 +88,7 @@
                          ng-if="!definition.component_properties[key].editor_properties.multiple">
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <input class="convo-form-input" type="text" ng-model="component.properties[key]">
+                        <input class="convo-form-input" type="text" ng-model="component.properties[key]" ng-focus="$event.target.select()">
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
 
                     </div>

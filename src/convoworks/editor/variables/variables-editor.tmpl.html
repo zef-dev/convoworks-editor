@@ -10,9 +10,9 @@
         <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
 
         <div class="pair convo-form-group" ng-repeat="(index, pair) in variables_buffer track by index">
-            <input class="convo-form-input monospace" type="text" ng-model="pair.key" ng-blur="updateVariables()">
+            <input class="convo-form-input monospace" type="text" ng-model="pair.key" ng-blur="updateVariables()" ng-focus="$event.target.select()">
             <span class="colon">:</span>
-            <input class="convo-form-input monospace" type="text" ng-model="pair.value" ng-change="updateVariables()">
+            <input class="convo-form-input monospace" type="text" ng-model="pair.value" ng-change="updateVariables()" ng-focus="$event.target.select()">
             <button class="btn btn-xs remove" ng-click="removeVariablesPair(index)">
                 <i class="glyphicon glyphicon-minus"></i>
             </button>

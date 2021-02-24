@@ -48,7 +48,7 @@
 
                 <div class="convo-form-group" ng-if="config.mode === 'manual'">
                     <label for="dialogflow-config-project-id" class="convo-form-label">Project ID</label>
-                    <input type="text" class="convo-form-input" id="dialogflow-config-project-id" placeholder="" ng-model="config.projectId">
+                    <input type="text" class="convo-form-input" id="dialogflow-config-project-id" placeholder="" ng-model="config.projectId" ng-focus="$event.target.select()">
                     <span class="help-block">Required for accessing Actions on Google Directory Information</span>
                     <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
                 </div>
@@ -60,7 +60,8 @@
                               id="serviceAccount"
                               name="serviceAccount"
                               cols="80"
-                              rows="40"
+                              rows="20"
+                              ng-focus="$event.target.select()"
                               ng-change="validateJSON()"
                               ng-model="config.serviceAccount">
                     </textarea>
@@ -88,7 +89,7 @@
                     <textarea
                         ng-required="true"
                         cols="80"
-                        rows="40"
+                        rows="5"
                         class="convo-form-input"
                         id="description"
                         name="description"
