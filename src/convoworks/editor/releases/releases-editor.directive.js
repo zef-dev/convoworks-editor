@@ -76,16 +76,6 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 });
             }
 
-            $scope.validateDevelopmentVersion = function ( row)
-            {
-                AlertService.addInfo('Going to validate ' + row.service_id + " in " + row.type + " stage " + " for " + row.platform_id);
-            }
-
-            $scope.goToValidationReport = function ( row)
-            {
-                AlertService.addInfo('Taking you to validation report of ' + row.service_id + " in " + row.type + " stage " + " for " + row.platform_id);
-            }
-
             $scope.getSubmitOptions =   function ( release) {
                 return SUBMIT_OPTIONS[ _getReleaseKey( release)];
             };
