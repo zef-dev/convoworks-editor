@@ -36,7 +36,7 @@
             </div>
 
             <div class="convo-form-group" ng-if="config.default_language === 'en'">
-                <label class="convo-form-label" for="default_locale">Default Locale <i class="glyphicon glyphicon-question-sign" uib-tooltip="Default Locale"></i></label>
+                <label class="convo-form-label" for="default_locale">Default Locale for Publishing Preview <i class="glyphicon glyphicon-question-sign" uib-tooltip="Default Locale"></i></label>
                 <select ng-model="config.default_locale" ng-change="onDefaultLocaleChange()" class="convo-form-input" id="default_locale">
                     <option ng-repeat="(index, locale) in locales track by index"
                             value="{{ locale.code }}"> {{ locale.name }}
@@ -46,7 +46,7 @@
 
             <div class="convo-form-group" ng-if="config.default_language === 'en'">
                 <fieldset>
-                    <legend>Supported Locales: </legend>
+                    <legend>Supported Locales for Publishing Preview: </legend>
                     <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code === config.default_locale">
                         <input value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked" disabled>
                         <label for="checkbox-{{index}}">{{ locale.name }}</label>
