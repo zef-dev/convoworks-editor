@@ -318,6 +318,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $scope.config.skill_preview_in_store.example_phrases = res.manifest.publishingInformation.locales[$scope.default_locale].examplePhrases.join(';');
                                 $scope.config.skill_preview_in_store.small_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].smallIconUri ?? '';
                                 $scope.config.skill_preview_in_store.large_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].largeIconUri ?? '';
+                                $scope.config.skill_preview_in_store.category = res.manifest.publishingInformation.category;
                                 $scope.config.skill_preview_in_store.keywords = res.manifest.publishingInformation.locales[$scope.default_locale].keywords.join(',');
 
                                 if (res.manifest.privacyAndCompliance) {
