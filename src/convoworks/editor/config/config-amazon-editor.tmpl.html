@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset>
+                <fieldset ng-if="config.mode === 'auto'">
                     <legend>Distribution Information: </legend>
                     <div class="convo-form-group" ng-if="config.app_id">
                         <div class="btn-group icon-button publish-group" uib-dropdown>
