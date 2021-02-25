@@ -94,6 +94,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return is_new;
             }
 
+            $scope.hasChangedToAutoMode    = function () {
+                return !is_new && configBak.mode === 'auto';
+            }
+
             $scope.onFileUpload = function (file, type) {
                 $log.log('ConfigurationsEditor onFileUpload file', file);
                 previousMediaItemId.set('certificate', $scope.config.self_signed_certificate);
@@ -241,21 +245,47 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
                         });
                     } else {
-                        return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
-                            configBak = angular.copy( $scope.config);
-                            is_error    =   false;
-                            AlertService.addSuccess('Amazon config updated.');
-                            $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
-                        }, function ( response) {
-                            $log.debug('configAmazonEditor update() response', response);
-                            is_error    =   true;
-                            AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
-                        });
+                        if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
+                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                                if (res.manifest) {
+                                    return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                        configBak = angular.copy( $scope.config);
+                                        is_error    =   false;
+                                        AlertService.addSuccess('Amazon config updated.');
+                                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                                    }, function ( response) {
+                                        $log.debug('configAmazonEditor update() response', response);
+                                        is_error    =   true;
+                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                    });
+                                } else {
+                                    is_error = true;
+                                    AlertService.addDanger(`Provided Service ID could not find a valid Alexa Skill Manifest. Please change your Service ID in manual mode then try again later.`);
+                                }
+                            }).catch(function () {
+                                is_error = true;
+                                AlertService.addDanger(`Your Service ID ${$scope.app_id} is not valid, please change it in manual mode then try later again.`);
+                            });
+                        } else {
+                            return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                configBak = angular.copy( $scope.config);
+                                is_error    =   false;
+                                AlertService.addSuccess('Amazon config updated.');
+                                $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                            }, function ( response) {
+                                $log.debug('configAmazonEditor update() response', response);
+                                is_error    =   true;
+                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                            });
+                        }
+
                     }
                 }).then(function (data) {
-                    configBak = angular.copy($scope.config);
-                    is_error = false;
-                    $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                    if (!is_error) {
+                        configBak = angular.copy($scope.config);
+                        is_error = false;
+                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                    }
                 }, function (response) {
                     $log.debug(logline, response);
                     is_error = true;

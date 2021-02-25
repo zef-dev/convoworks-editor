@@ -32,14 +32,16 @@
                         </div>
 
                         <div class="radio-group">
-                            <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
+                            <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual" ng-disabled="hasChangedToAutoMode()">
                             <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
+                            <i ng-if="hasChangedToAutoMode()" class="glyphicon glyphicon-question-sign" uib-tooltip="Since you changed from manual to auto mode, you alre no longer able to change it back."></i>
                         </div>
 
                         <span class="help-block" ng-if="!isModeValid()"><strong>You have to link account to enable AUTO mode</strong></span>
                         <span class="help-block" ng-if="config.mode === 'auto'">
                     Automatically propagates changes to Amazon. Requires account to be linked with Amazon</span>
                         <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Amazon side</span>
+                        <span class="text-danger" ng-if="!hasChangedToAutoMode() && config.mode === 'auto'">You wont be able to change the mode back to manual when creating configuration in auto mode.</span>
                     </div>
 
                     <div class="convo-form-group" ng-if="config.mode === 'auto'">
