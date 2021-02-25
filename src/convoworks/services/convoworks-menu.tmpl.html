@@ -27,27 +27,27 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody ng-if=" filtered.length > 0">
+                    <tbody ng-if="filtered.length > 0">
                         <tr ng-repeat-start="service in filtered" class="card-pane service-data">
                             <td>
                                 <a ui-sref="convoworks-editor-service.editor( { service_id: service.service_id} )">{{ service.name }}</a>
                             </td>
                             <td>
-                                {{ service.owner || 'No owner' }}
+                                {{ service.owner.email || 'No owner' }}
                             </td>
                             <td>
                                 {{ service.time_updated | admDate : 'dd MMM yyyy' }}
                             </td>
                             <td>
-                                <button ng-if="!service.owner || service.owner === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
+                                <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
                                     <i class="glyphicon glyphicon-trash"></i> Delete Service
                                 </button>
-                                <div ng-if="service.owner && service.owner !== getAuthUserEmail()">N/A</div>
+                                <div ng-if="service.owner && service.owner.email !== getAuthUserEmail()">N/A</div>
                             </td>
                         </tr>
                         <tr ng-repeat-end class="divider"></tr>
                     </tbody>
-                    <tbody ng-if=" filtered.length === 0">
+                    <tbody ng-if="filtered.length === 0">
                         <tr class="card-pane service-data">
                             <td>No results</td>
                             <td></td>

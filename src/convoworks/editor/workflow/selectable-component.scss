@@ -71,6 +71,8 @@
         border-color: #F5B059 !important;
         box-shadow: 1px 1px 6px #F5B059 !important;
         cursor: move;
+        max-width: 500px;
+        min-width: 400px;
     }
     
     
@@ -182,6 +184,99 @@
         color: #c52ec5;
         font-weight: bold;
     }
+    
+
+    .selectable-component .preview .list-container
+    {
+        background-color: #5b5b5b;
+        color: white;
+        padding: 6px 12px;
+        text-align: left;
+        font-family: Arial,Helvetica,Roboto,sans-serif;
+    }
+
+    .selectable-component .preview .list-container .list-item
+    {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 4px;
+    }
+
+    .selectable-component .preview .card-container
+    {
+        background-color: #5b5b5b;
+        color: white;
+        padding: 10px 20px;
+        text-align: left;
+        font-family: Arial,Helvetica,Roboto,sans-serif;
+    }
+    
+    .selectable-component .preview .image-placeholder {
+        background-color: #eee;
+        color: #5b5b5b;
+        display: flex;
+        width: 50px;
+        margin: auto;
+        height: 50px;
+    }
+    
+    .selectable-component .preview .image-placeholder.large {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .selectable-component .preview .image-placeholder > div {
+        align-self: center;
+        text-align: center;
+        width: 100%;
+        font-size: 12px;
+    }
+    
+    .selectable-component .preview .image-placeholder.large > div {
+        font-size: 16px;
+    }
+
+
+
+    .selectable-component .preview .list-container .title,
+    .selectable-component .preview .card-container .title
+    {
+        font-size: 20px;
+        margin:0;
+        padding:0;
+        color: white;
+        display: inline;
+    }
+
+
+    .selectable-component .preview .list-container .title-main,
+    .selectable-component .preview .card-container .title-main
+    {
+        font-size: 24px;
+        margin:0;
+        padding:0;
+        color: white;
+        display: inline;
+    }
+
+
+    .selectable-component .preview .list-container .subtitle,
+    .selectable-component .preview .card-container .subtitle
+    {
+        font-size: 16px;
+        margin:0;
+        padding:0;
+        color: white;
+        display: inline;
+    }
+
+
+    .selectable-component .preview .list-container .thumb,
+    .selectable-component .preview .card-container .thumb
+    {
+        max-width:90%;
+        max-height:90%;
+    }
+    
     
     .selectable-component.ui-droppable-hover {
         border: 1px solid #F5B059;
