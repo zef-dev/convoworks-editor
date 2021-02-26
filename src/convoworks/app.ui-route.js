@@ -102,7 +102,7 @@ export default function ($stateProvider, $urlRouterProvider) {
                 'serviceTabView': {
                     // template: require('./editor/config/config-amazon-editor.tmpl.html'),
                     // controller: configAmazonEditor
-                    template: '<config-amazon-editor service="getSelection().service"></config-amazon-editor>'
+                    template: '<config-amazon-editor service="getSelection().service" meta="getSelection().meta"></config-amazon-editor>'
                 }
             }
         }).state('convoworks-editor-service.configuration-dialogflow', {
