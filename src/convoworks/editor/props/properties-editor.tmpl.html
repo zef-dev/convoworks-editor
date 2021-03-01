@@ -183,6 +183,18 @@
                         <span class="help-block">{{ definition.component_properties[key].description }}</span>
                     </div>
 
+                    <div class="convo-form-group"
+                         ng-switch-when="select_context">
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <select class="convo-form-input" ng-model="component.properties[key]">
+                            <option ng-repeat="context in availableContexts track by $index"
+                                    value="{{ context.id }}">
+                                {{ context.name }}    
+                            </option>
+                        </select>
+                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                    </div>
+
                 </div>
             </form>
         </uib-tab>
