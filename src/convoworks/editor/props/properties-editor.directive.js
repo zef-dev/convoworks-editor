@@ -246,6 +246,13 @@ export default function propertiesEditor( $log, $document, $transitions, Convowo
                 }).map( function( block) {
                     return { id : block.properties.block_id, name : _fixName( block.properties.block_id, block.properties.name)};
                 });
+
+                $scope.availableContexts = $scope.service.contexts.map(context => {
+                    return {
+                        id: context.properties._component_id,
+                        name: _fixName(context.properties._component_id, null)
+                    }
+                });
             }
 
             function _fixName( id, name) {
