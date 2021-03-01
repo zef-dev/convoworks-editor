@@ -187,7 +187,7 @@
                          ng-switch-when="select_context">
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <select class="convo-form-input" ng-model="component.properties[key]">
-                            <option ng-repeat="context in availableContexts track by $index"
+                            <option ng-repeat="context in availableContexts track by context.id"
                                     value="{{ context.id }}">
                                 {{ context.name }}    
                             </option>
