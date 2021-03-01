@@ -48,7 +48,7 @@
                                ng-click="toggleEnabled(pckg.namespace)"
                                ng-checked="isEnabled(pckg.namespace)">
                         {{ ::pckg.namespace }}
-                        <i ng-class="{ 'glyphicon glyphicon-exclamation-sign': pckg.stability === 'experimental', 'glyphicon glyphicon-ok-sign' : pckg.stability === 'stable' }"
+                        <i ng-class="{ 'glyphicon glyphicon-exclamation-sign text-warning': pckg.stability === 'experimental', 'glyphicon glyphicon-ok-sign text-primary' : pckg.stability === 'stable' }"
                            uib-tooltip="{{ pckg.stability === 'stable' ? 'This is a stable package.' : 'This package is considered experimental. Use at your own risk.' }}">
                         </i>
                     </label>
