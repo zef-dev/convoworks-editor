@@ -65,6 +65,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 component : null,
                 definition : null,
                 service : null,
+                meta: null,
                 containerController : null
             };
 
@@ -92,7 +93,13 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                             $log.log( 'propertiesContext controller got service', service);
                             selection.service   =   service;
                             original_service    =   angular.copy( selection.service);
-                            ready               =   true;
+
+                            ConvoworksApi.getServiceMeta(service_id).then(function (meta) {
+                                $log.log('propertiesContext got service meta', meta);
+                                selection.meta = meta;
+
+                                ready = true;
+                            });
                         }, function( reason) {
                             $log.error( 'propertiesContext controller service got reason', reason);
                             throw new Error(reason.data.message);

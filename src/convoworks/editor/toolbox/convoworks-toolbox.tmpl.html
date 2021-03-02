@@ -42,12 +42,15 @@
         <div class="configure-packages" ng-hide="!configuring">
             <div ng-repeat="pckg in availablePackages" class="available-package">
                 <div class="selector-title">
-                    <label class="title">
+                    <label class="title {{::pckg.stability}}">
                         <input type="checkbox"
                                title="Enable or disable package for the service"
                                ng-click="toggleEnabled(pckg.namespace)"
                                ng-checked="isEnabled(pckg.namespace)">
                         {{ ::pckg.namespace }}
+                        <i ng-if="pckg.stability === 'experimental'" class="glyphicon glyphicon-exclamation-sign text-danger"
+                           uib-tooltip="This package is considered experimental. Use at your own risk.">
+                        </i>
                     </label>
                 </div>
                 <div class="description">

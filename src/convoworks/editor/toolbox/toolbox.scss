@@ -207,6 +207,15 @@
         border-radius: 8px;
     
         padding: 12px 14px;
+
+        .selector-title {
+            .title.experimental {
+                text-decoration: underline;
+                text-decoration-skip: edges;
+                text-decoration-style: wavy;
+                text-decoration-color: #F49A03;
+            }
+        }
     }
     
     .toolbox-container .available-package .description

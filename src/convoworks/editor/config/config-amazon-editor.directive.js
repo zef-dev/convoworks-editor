@@ -4,7 +4,7 @@ import template from './config-amazon-editor.tmpl.html';
 export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService) {
     return {
         restrict: 'E',
-        scope: { service: '=' },
+        scope: { service: '=', meta: '=' },
         template: template,
         controller: function ($scope) {
             'ngInject';
@@ -39,7 +39,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.config = {
                 mode: 'manual',
-                invocation: default_invocation || $scope.service.name,
+                invocation: default_invocation || $scope.meta.name,
                 app_id: null,
                 interaction_model_sensitivity: 'LOW',
                 endpoint_ssl_certificate_type: 'Wildcard',
