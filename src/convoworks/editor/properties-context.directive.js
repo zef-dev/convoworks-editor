@@ -606,6 +606,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                            return {
                                class: block['type'],
                                name: block['name'],
+                               defaultName: block['component_properties']['name'] ? block['component_properties']['name']['defaultValue'] : block['name'],
                                role: block['component_properties']['role']['defaultValue'],
                                namespace: block['namespace'],
                                description: block['description'],
