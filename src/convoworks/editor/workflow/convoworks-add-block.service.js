@@ -39,8 +39,34 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
     }
 
 
-    function showSubroutineModal( service, propertiesContext, subroutineType, defaultName)
+    function showSubroutineModal( service, propertiesContext, subroutineType)
     {
+        const definitions = propertiesContext.getComponentDefinitions();
+
+        const core = definitions.find((pckg) => pckg.namespace === 'convo-core');
+        let className = null;
+
+        switch (subroutineType)
+        {
+            case 'read':
+                className = '\\Convo\\Pckg\\Core\\Elements\\ElementsFragment';
+                break;
+            case 'process':
+                className = '\\Convo\\Pckg\\Core\\Processors\\ProcessorFragment';
+                break;
+            default:
+                throw new Error(`Unexpected subroutine type: [${subroutineType}]`);
+        }
+
+        const definition = core.components.find((cmpt) => {
+            return cmpt.type === className;
+        });
+
+
+        const defaultName = (definition && definition.component_properties.name) ?
+            definition.component_properties.name.defaultValue :
+            null;
+
         return $uibModal.open({
             template: template,
             controller: ModalInstanceCtrl,
