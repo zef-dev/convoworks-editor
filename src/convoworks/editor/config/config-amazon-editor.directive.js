@@ -79,6 +79,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             };
 
             $scope.gettingSkillManifest = false;
+            $scope.gettingSkillAccountLinkingInformation = false;
             $scope.keywordsLength = 0;
 
             var configBak   =   angular.copy( $scope.config);
@@ -385,7 +386,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 } else {
                                     AlertService.addWarning("Privacy and Compliance is missing. Terms of Use URL, Privacy Policy URL, and the entire Privacy and Compliance Section won't be changed.");
                                 }
-                                AlertService.addSuccess("Fields were saved successfully.");
+                                AlertService.addSuccess("Fields were filled successfully.");
                             } else {
                                 $scope.gettingSkillManifest = false;
                                 AlertService.addDanger(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
@@ -396,6 +397,30 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }).catch(function () {
                     $scope.gettingSkillManifest = false;
                     AlertService.addDanger(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
+                });
+            }
+
+            $scope.getSkillAccountLinkingInformation = function () {
+                $scope.gettingSkillAccountLinkingInformation = true;
+                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.config.app_id).then(function (res) {
+                    if (res) {
+                        $scope.config.enable_account_linking = true;
+                        $scope.config.account_linking_config.skip_on_enablement = res.skipOnEnablement;
+                        $scope.config.account_linking_config.authorization_url = res.authorizationUrl;
+                        $scope.config.account_linking_config.access_token_url = res.accessTokenUrl;
+                        $scope.config.account_linking_config.client_id = res.clientId;
+                        $scope.config.account_linking_config.scopes = res.scopes.join(";");
+                        $scope.config.account_linking_config.domains = res.domains.join(";");
+                        AlertService.addSuccess("Fields were filled successfully.");
+                    } else {
+                        $scope.config.enable_account_linking = false;
+                        AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
+                    }
+                    $scope.gettingSkillAccountLinkingInformation = false;
+                }).catch(function () {
+                    $scope.gettingSkillAccountLinkingInformation = false;
+                    $scope.config.enable_account_linking = false;
+                    AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
                 });
             }
 

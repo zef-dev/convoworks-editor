@@ -115,6 +115,14 @@
                 </fieldset>
                 <fieldset ng-if="config.mode === 'auto'">
                     <legend>Amazon Alexa Skill Account Linking: </legend>
+                    <div class="convo-form-group" ng-if="config.app_id && !isNew()">
+                        <div class="btn-group icon-button publish-group" uib-dropdown>
+                            <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="getSkillAccountLinkingInformation()">
+                                <span ng-class="{ 'glyphicon glyphicon-play': !gettingSkillAccountLinkingInformation, 'glyphicon glyphicon-cog spinning': gettingSkillAccountLinkingInformation }"></span>
+                                {{ gettingSkillAccountLinkingInformation ? 'Getting existing Account Linking Information of existing Alexa Skill...'  : 'Get existing Account Linking Information of existing Alexa Skill' }}
+                            </button>
+                        </div>
+                    </div>
                     <div class="convo-form-group">
                         <label class="convo-form-label" for="config-enable-account-linking">Enable Account Linking</label>
                         <div class="checkbox">
