@@ -77,8 +77,10 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // config-options
         this.getConfigOptions               =   getConfigOptions;
 
-        // get-existing-alexa-skill/{skillId}
+        // get-existing-alexa-skill/{skillId}/manifest
         this.getExistingAlexaSkill          =   getExistingAlexaSkill;
+        // get-existing-alexa-skill/{skillId}/account-linking-information
+        this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
 
         function getPlatformConfiguration()
         {
@@ -662,10 +664,23 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
 
         return $http({
             method: 'POST',
-            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId,
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/manifest',
             data: { 'owner': owner }
         }).then(function(res) {
-            $log.log('ConvoworksApi addServicePackage() then', res.data);
+            $log.log('ConvoworksApi getExistingAlexaSkill() then', res.data);
+            return res.data;
+        });
+    }
+    function getExistingAlexaSkillAccountLinkingInformation(owner, skillId)
+    {
+        $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation()', owner, skillId);
+
+        return $http({
+            method: 'POST',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/account-linking-information',
+            data: { 'owner': owner }
+        }).then(function(res) {
+            $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
             return res.data;
         });
     }
