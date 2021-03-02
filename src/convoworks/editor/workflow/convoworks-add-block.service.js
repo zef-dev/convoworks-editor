@@ -39,7 +39,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
     }
 
 
-    function showSubroutineModal( service, propertiesContext, subroutineType)
+    function showSubroutineModal( service, propertiesContext, subroutineType, defaultName)
     {
         return $uibModal.open({
             template: template,
@@ -65,7 +65,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
                     return null;
                 },
                 defaultName: function () {
-                    return null;
+                    return defaultName;
                 },
             }
         }).result;
@@ -85,7 +85,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
         {
             $scope.title            =   'Add new step' + ( role ? ' ['+role+']' : '');
             $scope.description      =   'Create a new step in the conversation workflow.';
-            $scope.block.name       =   defaultName ? defaultName : 'My new conversation step';
+            $scope.block.name       =   defaultName || 'My new conversation step';
 
             $scope.createBlock          =   function () {
                 $log.log( 'ConvoworksAddBlockService ModalInstanceCtrl createBlock() $scope.block', $scope.block);
@@ -102,7 +102,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
             {
                 $scope.title            =   'Add new read fragment';
                 $scope.description      =   'Create new fragment which can be invoked from conversation elemets';
-                $scope.block.name       =   'My new read fragment';
+                $scope.block.name       =   defaultName || 'My new read fragment';
 
                 $scope.createBlock          =   function () {
                     $log.warn( 'ConvoworksAddBlockService ModalInstanceCtrl createBlock() $scope.block', $scope.block);
@@ -117,7 +117,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
             {
                 $scope.title            =   'Add new process fragment';
                 $scope.description      =   'Create new fragment which can be invoked from conversation processors';
-                $scope.block.name       =   'My new process fragment';
+                $scope.block.name       =   defaultName || 'My new process fragment';
 
                 $scope.createBlock          =   function () {
                     $log.warn( 'ConvoworksAddBlockService ModalInstanceCtrl createBlock() $scope.block', $scope.block);
