@@ -45,6 +45,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 endpoint_ssl_certificate_type: 'Wildcard',
                 self_signed_certificate: null,
                 auto_display: false,
+                enable_account_linking: false,
+                account_linking_config: {
+                    skip_on_enablement: false,
+                    authorization_url: "",
+                    access_token_url: "",
+                    client_id: "",
+                    client_secret: "",
+                    scopes: "",
+                    domains: "",
+                },
                 skill_preview_in_store: {
                     public_name: _invocationToName($scope.service.name),
                     one_sentence_description: _invocationToName($scope.service.name),
@@ -237,6 +247,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             is_new      =   false;
                             is_error    =   false;
                             $scope.config.app_id = data.app_id;
+                            $scope.config.enable_account_linking = data.enable_account_linking || false;
+                            if ($scope.config.enable_account_linking) {
+                                $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement || false;
+                                $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url || '';
+                                $scope.config.account_linking_config.access_token_url = data.account_linking_config.access_token_url || '';
+                                $scope.config.account_linking_config.client_id = data.account_linking_config.client_id || '';
+                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes.join(';') || '';
+                                $scope.config.account_linking_config.domains = data.account_linking_config.domains.join(';') || '';
+                            }
+
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
                             $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
