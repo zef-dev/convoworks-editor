@@ -45,6 +45,7 @@
                     <label class="title {{::pckg.stability}}">
                         <input type="checkbox"
                                title="Enable or disable package for the service"
+                               ng-disabled="pckg.namespace === 'convo-core'"
                                ng-click="toggleEnabled(pckg.namespace)"
                                ng-checked="isEnabled(pckg.namespace)">
                         {{ ::pckg.namespace }}
