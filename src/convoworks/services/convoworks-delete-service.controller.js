@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksDeleteServiceController($scope, $log, $uibModalInstance, ConvoworksApi, serviceId)
+export default function ConvoworksDeleteServiceController($scope, $log, $uibModalInstance, AlertService, ConvoworksApi, serviceId)
 {
     $scope.localOnly = {
         selected: true
@@ -9,6 +9,10 @@ export default function ConvoworksDeleteServiceController($scope, $log, $uibModa
     {
         ConvoworksApi.deleteService(serviceId, $scope.localOnly.selected).then(function(report) {
             $uibModalInstance.close(report);
+            AlertService.addSuccess('Service successfully deleted.');
+        }, function (reason) {
+            $log.error(reason);
+            AlertService.addDanger('Failed to delete service.');
         });
     };
 
