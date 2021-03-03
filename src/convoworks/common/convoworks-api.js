@@ -77,6 +77,11 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // config-options
         this.getConfigOptions               =   getConfigOptions;
 
+        // get-existing-alexa-skill/{skillId}/manifest
+        this.getExistingAlexaSkill          =   getExistingAlexaSkill;
+        // get-existing-alexa-skill/{skillId}/account-linking-information
+        this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
+
         function getPlatformConfiguration()
         {
             return $http({
@@ -275,12 +280,12 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             });
         }
 
-        function createService( serviceName, defaultLanguage, isPrivate, templateId)
+        function createService( serviceName, defaultLanguage, defaultLocale, supportedLocales, isPrivate, templateId)
         {
             return $http({
                 method: 'post',
                 url: CONVO_ADMIN_API_BASE_URL + '/services',
-                data: { 'service_name' : serviceName, 'default_language': defaultLanguage, 'is_private' : isPrivate, 'template_id' : templateId }
+                data: { 'service_name' : serviceName, 'default_language': defaultLanguage, 'default_locale': defaultLocale, 'supported_locales': supportedLocales, 'is_private' : isPrivate, 'template_id' : templateId }
             }).then( function ( res) {
                 return res.data;
             });
@@ -607,15 +612,16 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         }
 
 
-        function uploadMedia(serviceId, kind, file) {
+        function uploadMedia(serviceId, filesToUpload) {
             if (!serviceId) {
                 throw new Error("Missing service ID");
             }
 
-            $log.log('ConvoworksApi uploadMedia serviceId', serviceId, 'kind', kind, 'file', file);
-
             var fd = new FormData();
-            fd.append(kind, file);
+            for (let [key, value] of filesToUpload) {
+                $log.log('ConvoworksApi uploadMedia serviceId', serviceId, 'kind', key, 'file', value);
+                fd.append(key, value);
+            }
 
             return $http
             .post(
@@ -651,4 +657,31 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                     return res.data;
                 })
         }
+
+    function getExistingAlexaSkill(owner, skillId)
+    {
+        $log.log('ConvoworksApi getExistingAlexaSkill()', owner, skillId);
+
+        return $http({
+            method: 'POST',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/manifest',
+            data: { 'owner': owner }
+        }).then(function(res) {
+            $log.log('ConvoworksApi getExistingAlexaSkill() then', res.data);
+            return res.data;
+        });
+    }
+    function getExistingAlexaSkillAccountLinkingInformation(owner, skillId)
+    {
+        $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation()', owner, skillId);
+
+        return $http({
+            method: 'POST',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/account-linking-information',
+            data: { 'owner': owner }
+        }).then(function(res) {
+            $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
+            return res.data;
+        });
+    }
     }

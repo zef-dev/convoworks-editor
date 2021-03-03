@@ -10,8 +10,12 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             'ngInject';
         },
         link: function ($scope, $element, $attributes) {
-            let config_options = {};
-            let user =   null;
+            var config_options = {};
+            var user    =   null;
+            $scope.service_language    =   'en';
+            $scope.supported_locales    =   ['en-US'];
+            $scope.default_locale    =   'en-US';
+            $scope.owner    =   '';
             let service_language = 'en';
             let default_invocation = null;
             $scope.service_language = 'en';
@@ -26,13 +30,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                 default_invocation = serviceMeta['name'];
 
-                if (service_language === 'en') {
-                    service_language = "en_US"
-                } else if (service_language === 'de') {
-                    service_language = "de_DE"
-                } else {
-                    service_language = service_language.replace("-", "_")
-                }
+                const serviceLanguage = serviceMeta['default_locale'];
+                $scope.supported_locales = serviceMeta['supported_locales'];
+                $scope.default_locale = serviceMeta['default_locale'];
+                $scope.owner = serviceMeta['owner'];
+                $scope.service_language = serviceLanguage.replace("-", "_");
             });
 
             $scope.config = {
@@ -42,20 +44,57 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 interaction_model_sensitivity: 'LOW',
                 endpoint_ssl_certificate_type: 'Wildcard',
                 self_signed_certificate: null,
-                auto_display: false
+                auto_display: false,
+                enable_account_linking: false,
+                account_linking_config: {
+                    skip_on_enablement: false,
+                    authorization_url: "",
+                    access_token_url: "",
+                    client_id: "",
+                    client_secret: "",
+                    scopes: "",
+                    domains: "",
+                },
+                skill_preview_in_store: {
+                    public_name: _invocationToName($scope.service.name),
+                    one_sentence_description: _invocationToName($scope.service.name),
+                    detailed_description: _invocationToName($scope.service.name),
+                    whats_new: '',
+                    example_phrases: "Alexa, open " + $scope.service.name,
+                    small_skill_icon: '',
+                    large_skill_icon: '',
+                    category: "ALARMS_AND_CLOCKS",
+                    keywords: '',
+                    privacy_policy_url: '',
+                    terms_of_use_url: ''
+                },
+                privacy_and_compliance: {
+                    allows_purchases: false,
+                    uses_personal_info: false,
+                    is_child_directed: false,
+                    contains_ads: false,
+                    is_export_compliant: true,
+                    testing_instructions: "N/A",
+                }
             };
+
+            $scope.gettingSkillManifest = false;
+            $scope.gettingSkillAccountLinkingInformation = false;
+            $scope.keywordsLength = 0;
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
             var is_error    =   false;
-            var preparedUpload = null;
-            var previousMediaItemId = null;
+            var preparedUpload = new Map();
+            var previousMediaItemId = new Map();
+            var fileBytesSmallIcon = '';
+            var fileBytesLargeIcon = '';
             var logline     =   '';
 
             _load();
 
             $scope.gotoConfigUrl = function() {
-                $window.open(`https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/${$scope.config.app_id}/development/${service_language}/skill-info`, '_blank');
+                $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+$scope.service_language+'/skill-info', '_blank');
             }
 
             $scope.isModeValid  = function () {
@@ -66,19 +105,68 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return is_new;
             }
 
-            $scope.onFileUpload = function (file) {
+            $scope.hasChangedToAutoMode    = function () {
+                return !is_new && configBak.mode === 'auto';
+            }
+
+            $scope.onFileUpload = function (file, type) {
                 $log.log('ConfigurationsEditor onFileUpload file', file);
+                previousMediaItemId.set('certificate', $scope.config.self_signed_certificate);
+                previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
+                previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
 
                 if (file) {
-                    preparedUpload = {
-                        file: file
-                    };
-                    if (!file.name.includes('.pem')) {
-                        throw new Error(`Invalid file extension in ${file.name}.`)
+                    var image = new Image();
+                    if (type === 'certificate') {
+                        if (!file.name.includes('.pem')) {
+                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
+                        }
+                        preparedUpload.set('amazon.self_signed_certificate', file);
+                        $scope.config.self_signed_certificate = 'tmp_certificate_upload_ready';
+                    } else if (type === 'small_skill_icon') {
+                        if (!file.name.includes('.png')) {
+                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        }
+                        preparedUpload.set('amazon.small_skill_icon', file);
+                        $scope.config.skill_preview_in_store.small_skill_icon = 'tmp_small_skill_icon_upload_ready';
+
+                        fileBytesSmallIcon = URL.createObjectURL(file);
+                        image.src = fileBytesSmallIcon;
+                    } else if (type === 'large_skill_icon') {
+                        if (!file.name.includes('.png')) {
+                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        }
+                        preparedUpload.set('amazon.large_skill_icon', file);
+                        $scope.config.skill_preview_in_store.large_skill_icon = 'tmp_large_skill_icon_upload_ready';
+
+                        fileBytesLargeIcon = URL.createObjectURL(file);
+                        image.src = fileBytesLargeIcon;
                     }
 
-                    previousMediaItemId = $scope.config.self_signed_certificate;
-                    $scope.config.self_signed_certificate = 'tmp_upload_ready';
+                    if (image.src !== '') {
+                        image.onload = () => {
+                            let errorReport = "";
+                            if (type === 'small_skill_icon') {
+                                if (image.height !== 108 && image.width !== 108) {
+                                    preparedUpload.delete('amazon.small_skill_icon');
+                                    errorReport = `Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 108 X 108.`;
+                                    $scope.config.skill_preview_in_store.small_skill_icon = '';
+                                    $scope.$apply();
+                                }
+                            } else if (type === 'large_skill_icon') {
+                                if (image.height !== 512 && image.width !== 512) {
+                                    preparedUpload.delete('amazon.large_skill_icon');
+                                    errorReport = `Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 512 X 512.`;
+                                    $scope.config.skill_preview_in_store.large_skill_icon = '';
+                                    $scope.$apply();
+                                }
+                            }
+                            if (errorReport !== '') {
+                                AlertService.addDanger(`Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 512 X 512.`);
+                            }
+                            URL.revokeObjectURL(file);
+                        }
+                    }
                 }
             }
 
@@ -90,61 +178,135 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
 
                 if (mediaItemId === 'tmp_upload_ready') {
-                    mediaItemId = previousMediaItemId;
+                    mediaItemId = previousMediaItemId.get("certificate");
                 }
-
-//                  $log.log('ConfigurationsEditor getMedia(', type, ') mediaItemId', mediaItemId);
 
                 return mediaItemId;
             }
 
+            $scope.getSkillIcon = function(type) {
+                var mediaItemId = $scope.config.skill_preview_in_store[type];
+
+
+                if (!mediaItemId) {
+                    return '';
+                }
+
+                if (mediaItemId === previousMediaItemId.get('small_skill_icon') && type === 'small_skill_icon') {
+                    mediaItemId = previousMediaItemId.get('small_skill_icon');
+                } else if (mediaItemId === previousMediaItemId.get('large_skill_icon') && type === 'large_skill_icon') {
+                    mediaItemId = previousMediaItemId.get('large_skill_icon');
+                }
+
+                if (mediaItemId === 'tmp_small_skill_icon_upload_ready' && type === 'small_skill_icon') {
+                    return fileBytesSmallIcon;
+                } else if (mediaItemId === 'tmp_large_skill_icon_upload_ready' && type === 'large_skill_icon') {
+                    return fileBytesLargeIcon;
+                } else if (new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?").test(mediaItemId)) {
+                    return mediaItemId;
+                } else {
+                    return ConvoworksApi.downloadMedia($scope.service.service_id, mediaItemId);
+                }
+            }
+
             $scope.updateConfig = function (isValid) {
                 if (!isValid) {
-                    throw new Error(`Invalid form data.`)
+                    AlertService.addDanger(`Invalid form data.`)
                 }
                 $log.debug('configAmazonEditor update() $scope.config', $scope.config);
                 _updateSelectedInterfaces();
 
-                var maybeUpload = preparedUpload ?
+                var maybeUpload = preparedUpload.size > 0 ?
                     ConvoworksApi.uploadMedia(
                         $scope.service.service_id,
-                        'dialogflow.self_signed_certificate',
-                        preparedUpload.file) :
+                        preparedUpload.entries()) :
                     null;
 
                 $q.when(maybeUpload).then(function (res) {
-                    if (res && res.mediaItemId) {
-                        $scope.config.self_signed_certificate = res.mediaItemId;
-                        preparedUpload = null;
+                    if (res && res.length > 0) {
+
+                        for(var i = 0; i < res.length; i++) {
+                            const width = res[i].imageWidth;
+                            const height = res[i].imageHeight;
+
+                            if (width === 108 && height === 108) {
+                                $scope.config.skill_preview_in_store.small_skill_icon = res[i].mediaItemId;
+                            } else if (width === 512 && height === 512) {
+                                $scope.config.skill_preview_in_store.large_skill_icon = res[i].mediaItemId;
+                            } else if (width === null && height === null ) {
+                                $scope.config.self_signed_certificate = res[i].mediaItemId;
+                            }
+                        }
+
+                        preparedUpload.clear();
                     }
+                    _setIsChildDirected();
+                    $scope.validateKeywords(false);
                     if ( is_new) {
-                        ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                        return ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                             configBak = angular.copy( $scope.config);
                             is_new      =   false;
                             is_error    =   false;
+                            $scope.config.app_id = data.app_id;
+                            $scope.config.enable_account_linking = data.enable_account_linking || false;
+                            if ($scope.config.enable_account_linking) {
+                                $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement || false;
+                                $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url || '';
+                                $scope.config.account_linking_config.access_token_url = data.account_linking_config.access_token_url || '';
+                                $scope.config.account_linking_config.client_id = data.account_linking_config.client_id || '';
+                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes.join(';') || '';
+                                $scope.config.account_linking_config.domains = data.account_linking_config.domains.join(';') || '';
+                            }
+
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
                             $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            throw new Error(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
+                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
                         });
                     } else {
-                        ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
-                            configBak = angular.copy( $scope.config);
-                            is_error    =   false;
-                            AlertService.addSuccess('Amazon config updated.');
-                            $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
-                        }, function ( response) {
-                            $log.debug('configAmazonEditor update() response', response);
-                            is_error    =   true;
-                            throw new Error(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
-                        });
+                        if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
+                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                                if (res.manifest) {
+                                    return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                        configBak = angular.copy( $scope.config);
+                                        is_error    =   false;
+                                        AlertService.addSuccess('Amazon config updated.');
+                                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                                    }, function ( response) {
+                                        $log.debug('configAmazonEditor update() response', response);
+                                        is_error    =   true;
+                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                    });
+                                } else {
+                                    is_error = true;
+                                    AlertService.addDanger(`Provided Service ID could not find a valid Alexa Skill Manifest. Please change your Service ID in manual mode then try again later.`);
+                                }
+                            }).catch(function () {
+                                is_error = true;
+                                AlertService.addDanger(`Your Service ID ${$scope.app_id} is not valid, please change it in manual mode then try later again.`);
+                            });
+                        } else {
+                            return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                configBak = angular.copy( $scope.config);
+                                is_error    =   false;
+                                AlertService.addSuccess('Amazon config updated.');
+                                $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                            }, function ( response) {
+                                $log.debug('configAmazonEditor update() response', response);
+                                is_error    =   true;
+                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                            });
+                        }
+
                     }
                 }).then(function (data) {
-                    configBak = angular.copy($scope.config);
-                    is_error = false;
-                    $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                    if (!is_error) {
+                        configBak = angular.copy($scope.config);
+                        is_error = false;
+                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                    }
                 }, function (response) {
                     $log.debug(logline, response);
                     is_error = true;
@@ -155,6 +317,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.revertConfig = function () {
                 $scope.config = angular.copy(configBak);
+                if (preparedUpload.size > 0) {
+                    preparedUpload.clear();
+                }
             }
 
 
@@ -175,10 +340,98 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return $scope.interfaces;
             };
 
+            $scope.validateKeywords = function(validateForm = true) {
+                const words = $scope.config.skill_preview_in_store.keywords.replace(/\s/g, ',').replace(/[0-9]/g, "");
+                let length = words.split(',').length;
+                if (words === '') {
+                    length = 0;
+                }
+                const invalid = length > 30;
+                $scope.keywordsLength = length;
+
+                if (validateForm) {
+                    $scope.amazonPlatformConfigForm.skill_preview_in_store_keywords.$invalid = invalid;
+                    $scope.amazonPlatformConfigForm.$invalid = invalid;
+                    $scope.config.skill_preview_in_store.keywords = words;
+                }
+            }
+
+            $scope.getSkillManifest = function () {
+                $scope.gettingSkillManifest = true;
+                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                    if (res.manifest.publishingInformation) {
+                        if (res.manifest.publishingInformation.locales) {
+                            if (res.manifest.publishingInformation.locales[$scope.default_locale] ) {
+                                $scope.config.skill_preview_in_store.public_name = res.manifest.publishingInformation.locales[$scope.default_locale].name;
+                                $scope.config.skill_preview_in_store.one_sentence_description = res.manifest.publishingInformation.locales[$scope.default_locale].summary;
+                                $scope.config.skill_preview_in_store.detailed_description = res.manifest.publishingInformation.locales[$scope.default_locale].description;
+                                $scope.config.skill_preview_in_store.whats_new = res.manifest.publishingInformation.locales[$scope.default_locale].updatesDescription ?? '';
+                                $scope.config.skill_preview_in_store.example_phrases = res.manifest.publishingInformation.locales[$scope.default_locale].examplePhrases.join(';');
+                                $scope.config.skill_preview_in_store.small_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].smallIconUri ?? '';
+                                $scope.config.skill_preview_in_store.large_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].largeIconUri ?? '';
+                                $scope.config.skill_preview_in_store.category = res.manifest.publishingInformation.category;
+                                $scope.config.skill_preview_in_store.keywords = res.manifest.publishingInformation.locales[$scope.default_locale].keywords.join(',');
+
+                                if (res.manifest.privacyAndCompliance) {
+                                    $scope.config.skill_preview_in_store.terms_of_use_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].termsOfUseUrl;
+                                    $scope.config.skill_preview_in_store.privacy_policy_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].privacyPolicyUrl;
+
+                                    $scope.config.privacy_and_compliance.allows_purchases = res.manifest.privacyAndCompliance.allowsPurchases ?? false;
+                                    $scope.config.privacy_and_compliance.uses_personal_info = res.manifest.privacyAndCompliance.usesPersonalInfo ?? false;
+                                    $scope.config.privacy_and_compliance.is_child_directed = res.manifest.privacyAndCompliance.isChildDirected ?? false;
+                                    $scope.config.privacy_and_compliance.contains_ads = res.manifest.privacyAndCompliance.containsAds ?? false;
+                                    $scope.config.privacy_and_compliance.is_export_compliant = res.manifest.privacyAndCompliance.isExportCompliant ?? true;
+
+                                    $scope.config.privacy_and_compliance.testing_instructions = res.manifest.publishingInformation.testingInstructions ?? 'N/A';
+                                } else {
+                                    AlertService.addWarning("Privacy and Compliance is missing. Terms of Use URL, Privacy Policy URL, and the entire Privacy and Compliance Section won't be changed.");
+                                }
+                                AlertService.addSuccess("Fields were filled successfully.");
+                            } else {
+                                $scope.gettingSkillManifest = false;
+                                AlertService.addDanger(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
+                            }
+                        }
+                    }
+                    $scope.gettingSkillManifest = false;
+                }).catch(function () {
+                    $scope.gettingSkillManifest = false;
+                    AlertService.addDanger(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
+                });
+            }
+
+            $scope.getSkillAccountLinkingInformation = function () {
+                $scope.gettingSkillAccountLinkingInformation = true;
+                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.config.app_id).then(function (res) {
+                    if (res) {
+                        $scope.config.enable_account_linking = true;
+                        $scope.config.account_linking_config.skip_on_enablement = res.skipOnEnablement;
+                        $scope.config.account_linking_config.authorization_url = res.authorizationUrl;
+                        $scope.config.account_linking_config.access_token_url = res.accessTokenUrl;
+                        $scope.config.account_linking_config.client_id = res.clientId;
+                        $scope.config.account_linking_config.scopes = res.scopes.join(";");
+                        $scope.config.account_linking_config.domains = res.domains.join(";");
+                        AlertService.addSuccess("Fields were filled successfully.");
+                    } else {
+                        $scope.config.enable_account_linking = false;
+                        AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
+                    }
+                    $scope.gettingSkillAccountLinkingInformation = false;
+                }).catch(function () {
+                    $scope.gettingSkillAccountLinkingInformation = false;
+                    $scope.config.enable_account_linking = false;
+                    AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
+                });
+            }
+
+            $scope.onCategoryChange = function () {
+                _setIsChildDirected(true);
+            };
+
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
                 for (var i = 0; i < $scope.interfaces.length; i++) {
-                    if ($scope.interfaces[i].checked) {
+                    if ($scope.interfaces[i].checked && $scope.interfaces[i].supported) {
                         var interfaceType = $scope.interfaces[i].type;
                         $scope.config.interfaces.push(interfaceType);
                     }
@@ -221,6 +474,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
+                    $scope.categories = config_options['CONVO_AMAZON_SKILL_CATEGORIES'];
                     $scope.interfaces = config_options['CONVO_ALEXA_INTERFACES'];
 
                     $scope.$watch('config.auto_display', function(newVal) {
@@ -245,6 +499,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'amazon').then(function (data) {
                         $scope.config = data;
+                        _setIsChildDirected();
+                        $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
                         is_error    =   false;
@@ -261,6 +517,21 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 })
             }
 
+            function _invocationToName(str) {
+                return (str + '').replace(/^(.)|\s+(.)/g, function ($1) {
+                    return $1.toUpperCase()
+                })
+            }
+
+            function _setIsChildDirected(notifyChange = false) {
+                if ($scope.config.skill_preview_in_store.category && $scope.config.skill_preview_in_store.category.toLowerCase().includes('child')) {
+                    $scope.config.privacy_and_compliance.is_child_directed = true;
+
+                    if (notifyChange) {
+                        AlertService.addInfo("Question related to is child directed is answered in yes. Please review the Privacy and Compliance section.");
+                    }
+                }
+            }
 
         }
     }
