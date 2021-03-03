@@ -1,7 +1,7 @@
 import template from './convoworks-add-block.tmpl.html';
 
 /* @ngInject */
-export default function ConvoworksAddBlockService( $log, $uibModal) {
+export default function ConvoworksAddBlockService($log, $document, $uibModal) {
 
     this.showModal              =   showModal;
     this.showSubroutineModal    =   showSubroutineModal;
@@ -11,6 +11,7 @@ export default function ConvoworksAddBlockService( $log, $uibModal) {
         return $uibModal.open({
             template: template,
             controller: ModalInstanceCtrl,
+            appendTo: $document.find('.convoworks').eq(0),
             size : 'md',
             resolve: {
                 service: function () {
