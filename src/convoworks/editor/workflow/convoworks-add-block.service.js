@@ -71,6 +71,7 @@ export default function ConvoworksAddBlockService($log, $document, $uibModal) {
         return $uibModal.open({
             template: template,
             controller: ModalInstanceCtrl,
+            appendTo: $document.find('.convoworks').eq(0),
             size : 'md',
             resolve: {
                 service: function () {
