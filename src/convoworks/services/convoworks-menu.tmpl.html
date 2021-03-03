@@ -1,61 +1,63 @@
-<div class="layout convoworks">
-    <div class="header">
-        <div class="logo expanded" ui-sref="convoworks-editor">
-            <div class="image"></div>
-            <div class="text">&nbsp; Convoworks</div>
+<div class="convoworks">
+    <div class="layout">
+        <div class="header">
+            <div class="logo expanded" ui-sref="convoworks-editor">
+                <div class="image"></div>
+                <div class="text">&nbsp; Convoworks</div>
+            </div>
+            <div class="contents blue">
+            </div>
         </div>
-        <div class="contents blue">
-        </div>
-    </div>
-    <div class="view">
-        <div class="tabs collapsed"></div>
-        <div class="contents">
-            <div class="wide-panel services">
-                <div class="title">
-                    <h3>Services</h3>
-                    <div class="actions convo-form-group">
-                        <input type="text" class="convo-form-input" placeholder="&#xe003;  Search" ng-model="filter">
+        <div class="view">
+            <div class="tabs collapsed"></div>
+            <div class="contents">
+                <div class="wide-panel services">
+                    <div class="title">
+                        <h3>Services</h3>
+                        <div class="actions convo-form-group">
+                            <input type="text" class="convo-form-input" placeholder="&#xe003;  Search" ng-model="filter">
+                        </div>
+                        <a class="btn btn-md btn-primary" ui-sref="convoworks-add-new-service">Create new</a>
                     </div>
-                    <a class="btn btn-md btn-primary" ui-sref="convoworks-add-new-service">Create new</a>
+                    <table class="skill-list" ng-if="ready">
+                        <thead>
+                            <tr>
+                                <th>Service name</th>
+                                <th>Owner</th>
+                                <th>Modified</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="filtered.length > 0">
+                            <tr ng-repeat-start="service in filtered" class="card-pane service-data">
+                                <td>
+                                    <a ui-sref="convoworks-editor-service.editor( { service_id: service.service_id} )">{{ service.name }}</a>
+                                </td>
+                                <td>
+                                    {{ service.owner.email || 'No owner' }}
+                                </td>
+                                <td>
+                                    {{ service.time_updated | admDate : 'dd MMM yyyy' }}
+                                </td>
+                                <td>
+                                    <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
+                                        <i class="glyphicon glyphicon-trash"></i> Delete Service
+                                    </button>
+                                    <div ng-if="service.owner && service.owner.email !== getAuthUserEmail()">N/A</div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat-end class="divider"></tr>
+                        </tbody>
+                        <tbody ng-if="filtered.length === 0">
+                            <tr class="card-pane service-data">
+                                <td>No results</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table class="skill-list" ng-if="ready">
-                    <thead>
-                        <tr>
-                            <th>Service name</th>
-                            <th>Owner</th>
-                            <th>Modified</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody ng-if="filtered.length > 0">
-                        <tr ng-repeat-start="service in filtered" class="card-pane service-data">
-                            <td>
-                                <a ui-sref="convoworks-editor-service.editor( { service_id: service.service_id} )">{{ service.name }}</a>
-                            </td>
-                            <td>
-                                {{ service.owner.email || 'No owner' }}
-                            </td>
-                            <td>
-                                {{ service.time_updated | admDate : 'dd MMM yyyy' }}
-                            </td>
-                            <td>
-                                <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
-                                    <i class="glyphicon glyphicon-trash"></i> Delete Service
-                                </button>
-                                <div ng-if="service.owner && service.owner.email !== getAuthUserEmail()">N/A</div>
-                            </td>
-                        </tr>
-                        <tr ng-repeat-end class="divider"></tr>
-                    </tbody>
-                    <tbody ng-if="filtered.length === 0">
-                        <tr class="card-pane service-data">
-                            <td>No results</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
