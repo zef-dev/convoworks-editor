@@ -47,7 +47,7 @@ export default function WorkflowEditorController( $log, $scope, $state, $statePa
 
     _initBlockDefaults();
     _initFragmentDefaults();
-     _resolveParams( $stateParams);
+    _resolveParams( $stateParams);
 
     function _initBlockDefaults()
     {

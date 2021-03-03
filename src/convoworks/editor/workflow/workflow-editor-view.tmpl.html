@@ -62,7 +62,7 @@
                 </uib-tab-heading>
                 <div class="blocks-container">
                     <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-default btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock()">
+                        <button type="button" class="btn btn-default btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
                             <span class="glyphicon glyphicon-plus"></span>
                             Add new block
                         </button>
@@ -104,7 +104,7 @@
                             <li class="divider"></li>
                             <li ng-repeat="option in availableBlockTypes track by $index" role="menuitem" class="{{option.role}}"
                                 ng-if="isRoleAvailable( option.role)">
-                                <a ng-click="openAddNewBlock(option.class)"
+                                <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
                                    class="dropdown-item"
                                    title="{{option.description}}"
                                    href="javascript:void(0);">
