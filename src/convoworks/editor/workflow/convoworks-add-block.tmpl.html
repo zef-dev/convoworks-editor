@@ -1,15 +1,14 @@
 <form ng-submit="createBlock()">
-	<div class="modal-listing-source">
+	<div class="modal-listing-source convoworks">
 	    <div class="modal-content">
 	        <div class="modal-header">
 	            <h4 class="modal-title">{{title}}</h4>
 	            {{description}}
 	        </div>
 	        <div class="modal-body">
-				
-				  <div class="form-group">
-				    <label for="block_name">Name:</label>
-				    <input type="text" class="form-control" id="block_name" ng-focus="$event.target.select()"
+				  <div class="convo-form-group">
+				    <label class="convo-form-label" for="block_name">Name:</label>
+				    <input type="text" class="convo-form-input" id="block_name" ng-focus="$event.target.select()"
 				    	ng-model="block.name" required>
 				  </div>
 	        </div>
