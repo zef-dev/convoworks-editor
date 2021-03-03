@@ -4,9 +4,9 @@ import deleteServiceTemplate from './convoworks-delete-service.tmpl.html';
 import ModalInstanceCtrl from './convoworks-add-service.controller';
 import ServiceDeleteModalCtrl from './convoworks-delete-service.controller';
 
-ConvoworksMainController.$inject = [ '$log', '$scope', '$uibModal', 'ConvoworksApi', 'LoginService'];
+ConvoworksMainController.$inject = ['$log', '$document', '$scope', '$uibModal', 'ConvoworksApi', 'LoginService'];
 
-export default function ConvoworksMainController( $log, $scope, $uibModal, ConvoworksApi, LoginService)
+export default function ConvoworksMainController($log, $document, $scope, $uibModal, ConvoworksApi, LoginService)
 {
     $log.debug( 'ConvoworksMainController init');
 
@@ -53,6 +53,7 @@ export default function ConvoworksMainController( $log, $scope, $uibModal, Convo
         $uibModal.open({
             template: createServiceTemplate,
             controller: ModalInstanceCtrl,
+            appendTo: $document.find('.convoworks').eq(0),
             size : 'md',
             resolve: { ConvoworksApi: function() { return ConvoworksApi; }}
         })
@@ -67,6 +68,7 @@ export default function ConvoworksMainController( $log, $scope, $uibModal, Convo
             template: deleteServiceTemplate,
             controller: ServiceDeleteModalCtrl,
             size: 'md',
+            appendTo: $document.find('.convoworks').eq(0),
             resolve: {
                 ConvoworksApi: function() { return ConvoworksApi; },
                 serviceId: function() { return serviceId; }
