@@ -16,9 +16,9 @@ export default function loadingIndicator( $http, $log) {
                 return $http.pendingRequests.length > 0;
             }, function (v) {
                 if (v) {
-                    elm.find('div.sk-cube-grid').show();
+                    elm.find('.sk-cube-grid').show();
                 } else {
-                    elm.find('div.sk-cube-grid').hide();
+                    elm.find('.sk-cube-grid').hide();
                 }
             });
         }
