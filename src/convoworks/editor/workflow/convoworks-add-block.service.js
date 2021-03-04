@@ -1,14 +1,14 @@
 import template from './convoworks-add-block.tmpl.html';
 
 /* @ngInject */
-export default function ConvoworksAddBlockService($log, $document, $uibModal) {
+export default function ConvoworksAddBlockService($log, $timeout, $document, $uibModal) {
 
     this.showModal              =   showModal;
     this.showSubroutineModal    =   showSubroutineModal;
 
     function showModal( service, type, propertiesContext, className, role, defaultName)
     {
-        return $uibModal.open({
+        const modal = $uibModal.open({
             template: template,
             controller: ModalInstanceCtrl,
             appendTo: $document.find('.convoworks').eq(0),
@@ -36,7 +36,23 @@ export default function ConvoworksAddBlockService($log, $document, $uibModal) {
                     return defaultName;
                 },
             }
-        }).result;
+        })
+        
+        let modal_timeout = null;
+
+        modal.opened.then(() => {
+            if (modal_timeout) {
+                $timeout.cancel(modal_timeout);
+            }
+
+            modal_timeout = $timeout(() => {
+                const input = $document.find('input#block_name');
+                $log.log('convoworksAddBlock modal.opened.then input selector', input);
+                input.focus();
+            }, 150);
+        });
+
+        return modal.result;
     }
 
 
@@ -68,7 +84,8 @@ export default function ConvoworksAddBlockService($log, $document, $uibModal) {
             definition.component_properties.name.defaultValue :
             null;
 
-        return $uibModal.open({
+        
+        const modal = $uibModal.open({
             template: template,
             controller: ModalInstanceCtrl,
             appendTo: $document.find('.convoworks').eq(0),
@@ -96,12 +113,28 @@ export default function ConvoworksAddBlockService($log, $document, $uibModal) {
                     return defaultName;
                 },
             }
-        }).result;
+        });
+
+        let modal_timeout = null;
+
+        modal.opened.then(() => {
+            if (modal_timeout) {
+                $timeout.cancel(modal_timeout);
+            }
+
+            modal_timeout = $timeout(() => {
+                const input = $document.find('input#block_name');
+                $log.log('convoworksAddBlock modal.opened.then input selector', input);
+                input.focus();
+            }, 150);
+        });
+
+        return modal.result;
     }
 
 
     /* @ngInject */
-    var ModalInstanceCtrl = function ( $scope, $timeout, $uibModalInstance, service, type, subroutineType, propertiesContext, className, role, defaultName) {
+    var ModalInstanceCtrl = function ($scope, $uibModalInstance, service, type, subroutineType, propertiesContext, className, role, defaultName) {
 
         $scope.service          =   service;
 
