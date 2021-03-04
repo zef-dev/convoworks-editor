@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksAddNewServiceController($log, $scope, $state, ConvoworksApi)
+export default function ConvoworksAddNewServiceController($log, $scope, $state, $timeout, $document, ConvoworksApi)
 {
     $scope.new_service = {
         "name" : "",
@@ -13,6 +13,17 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
     $scope.templates = [];
     $scope.languages = [];
     $scope.locales = [];
+
+    let input_timeout = null;
+
+    if (input_timeout) {
+        $timeout.cancel(input_timeout);
+    }
+
+    input_timeout = $timeout(() => {
+        const input = $document.find('#service_name');
+        input.focus();
+    }, 150);
 
     ConvoworksApi.getTemplates().then(function (all) {
         $scope.templates = all;
@@ -37,8 +48,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
 
     $scope.create = function()
     {
-        $log.log("new service state", $scope.new_service);
-
         ConvoworksApi.createService(
             $scope.new_service.name,
             $scope.new_service.default_language,
