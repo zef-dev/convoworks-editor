@@ -1,7 +1,7 @@
 import template from './convo-intent-editor.tmpl.html';
 
 /* @ngInject */
-export default function convoIntentEditor( $log) {
+export default function convoIntentEditor($log) {
     return {
         restrict: 'E',
         require: '^propertiesContext',
