@@ -45,6 +45,28 @@
                     </div>
 
                     <div class="convo-form-group"
+                         ng-switch-when="block_id">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <span ng-click="copyToClipboard(component.properties[key]); $event.preventDefault();">
+                            <input class="convo-form-input copy monospace" type="text" readonly ng-model="component.properties[key]">
+                        </span>
+                        <span class="help-block">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
+                         ng-switch-when="fragment_id">
+
+                        <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                        <span ng-click="copyToClipboard(component.properties[key]); $event.preventDefault();">
+                            <input class="convo-form-input copy monospace" type="text" readonly ng-model="component.properties[key]">
+                        </span>
+                        <span class="help-block">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</span>
+
+                    </div>
+
+                    <div class="convo-form-group"
                          ng-switch-when="text"
                          ng-if="!!definition.component_properties[key].editor_properties.multiple">
 
