@@ -48,6 +48,10 @@
         outline: none !important;
     }
     
+    input.copy:hover {
+        cursor: copy;
+    }
+
     .convo-form-group {
         font-family: "DM Sans", sans-serif;
     
