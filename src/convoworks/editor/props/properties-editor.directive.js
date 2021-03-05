@@ -1,7 +1,7 @@
 import template from './properties-editor.tmpl.html';
 
 /* @ngInject */
-export default function propertiesEditor( $log, $document, $transitions, ConvoworksApi) {
+export default function propertiesEditor($log, $document, $transitions, ConvoworksApi, AlertService) {
     return  {
         restrict: 'E',
         require: '^propertiesContext',
@@ -226,6 +226,20 @@ export default function propertiesEditor( $log, $document, $transitions, Convowo
                     }
                 });
             }, true);
+
+            $scope.copyToClipboard = function (value)
+            {
+                const el = document.createElement('textarea');
+                el.value = value;
+                el.setAttribute('readonly', '');
+                el.style = {position: 'absolute', left: '-9999px'};
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+
+                AlertService.addSuccess(`Copied [${value}] to clipboard.`);
+            }
 
             function _setupBlockIds()
             {
