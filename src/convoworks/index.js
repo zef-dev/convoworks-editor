@@ -15,17 +15,19 @@ appModule.config(app_route);
 
 appModule.run(/* @ngInject */ ($document, $rootScope) => {
     $document.bind('keydown', function (e) {
+        if (e.keyCode === 13) {
+            $rootScope.$apply(() => { $rootScope.$broadcast('EnterKeyPressed'); });
+        }
+        
         if (e.keyCode === 27) {
-            $rootScope.$apply( function () {
-                $rootScope.$broadcast('EscKeyPressed');
-            })
-        } else if (e.keyCode === 83 && e.ctrlKey) {
+            $rootScope.$apply(() => { $rootScope.$broadcast('EscKeyPressed'); });
+        }
+        
+        if (e.keyCode === 83 && e.ctrlKey) {
             e.preventDefault();
             e.stopPropagation();
 
-            $rootScope.$apply(() => {
-                $rootScope.$broadcast('CtrlSPressed');
-            })
+            $rootScope.$apply(() => { $rootScope.$broadcast('CtrlSPressed'); });
         }
     });
 });
