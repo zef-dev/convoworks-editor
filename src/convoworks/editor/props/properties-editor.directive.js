@@ -1,7 +1,7 @@
 import template from './properties-editor.tmpl.html';
 
 /* @ngInject */
-export default function propertiesEditor($log, $document, $transitions, ConvoworksApi, AlertService) {
+export default function propertiesEditor($log, $document, $transitions, $rootScope, ConvoworksApi, AlertService) {
     return  {
         restrict: 'E',
         require: '^propertiesContext',
@@ -33,7 +33,7 @@ export default function propertiesEditor($log, $document, $transitions, Convowor
                     $log.log('propertiesEditor _click() save button clicked.');
                     return;
                 }
-                
+
                 if (!$(event.target).closest(".properties-editor-wrapper").length) {
                     $scope.$apply( function () {
                         propertiesContext.setSelectedComponent( null );
@@ -46,6 +46,12 @@ export default function propertiesEditor($log, $document, $transitions, Convowor
             $scope.$on( '$destroy', function () {
                 $document.unbind( 'click', _click);
                 $noTransition();
+            });
+
+            $rootScope.$on('EnterKeyPressed', () => {
+                if ($element.find("input[type=text]:focus, textarea:focus").length) {
+                    $scope.$applyAsync(() => { propertiesContext.setSelectedComponent(null); });
+                }
             });
 
             $scope.getBlockId   =   function() {
