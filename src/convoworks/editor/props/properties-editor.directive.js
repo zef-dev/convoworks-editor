@@ -27,6 +27,18 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
 
             // CLICK ON OUTSIDE
+            let last_mouse_x = 0;
+            let last_mouse_y = 0;
+            let last_outside = false;
+
+            function _mdown (event) {
+                last_mouse_x = event.offsetX;
+                last_mouse_y = event.offsetY;
+                last_outside = !$(event.target).closest(".properties-editor-wrapper").length;
+            }
+
+            $document.bind('mousedown', _mdown);
+
             function _click( event)
             {
                 if ($(event.target).is("button[type=submit].btn.btn-primary")) {
@@ -34,17 +46,23 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     return;
                 }
 
-                if (!$(event.target).closest(".properties-editor-wrapper").length) {
-                    $scope.$apply( function () {
-                        propertiesContext.setSelectedComponent( null );
-                    });
+                const dx = event.offsetX - last_mouse_x;
+                const dy = event.offsetY - last_mouse_y;
+
+                const dist_sq = (dx * dx) + (dy * dy);
+                const is_drag = dist_sq > 3;
+                const is_drag_exception = is_drag && !last_outside;
+
+                if (last_outside && !is_drag_exception) {
+                    $scope.$apply(() => { propertiesContext.setSelectedComponent(null); });    
                 }
             }
 
             $document.bind( 'click', _click);
 
             $scope.$on( '$destroy', function () {
-                $document.unbind( 'click', _click);
+                $document.unbind('click', _click);
+                $document.unbind('mousedown', _mdown);
                 $noTransition();
             });
 
