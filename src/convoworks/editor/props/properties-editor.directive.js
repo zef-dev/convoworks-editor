@@ -258,16 +258,9 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
             $scope.copyToClipboard = function (value)
             {
-                const el = document.createElement('textarea');
-                el.value = value;
-                el.setAttribute('readonly', '');
-                el.style = {position: 'absolute', left: '-9999px'};
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-
-                AlertService.addSuccess(`Copied [${value}] to clipboard.`);
+                navigator.clipboard.writeText(value).then(() => {
+                    AlertService.addSuccess(`Copied [${value}] to clipboard.`);
+                });
             }
 
             function _setupBlockIds()
