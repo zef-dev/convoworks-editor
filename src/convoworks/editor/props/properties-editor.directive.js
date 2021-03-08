@@ -29,6 +29,11 @@ export default function propertiesEditor($log, $document, $transitions, Convowor
             // CLICK ON OUTSIDE
             function _click( event)
             {
+                if ($(event.target).is("button[type=submit].btn.btn-primary")) {
+                    $log.log('propertiesEditor _click() save button clicked.');
+                    return;
+                }
+                
                 if (!$(event.target).closest(".properties-editor-wrapper").length) {
                     $scope.$apply( function () {
                         propertiesContext.setSelectedComponent( null );
