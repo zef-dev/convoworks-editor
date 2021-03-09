@@ -1,6 +1,6 @@
 
 /* @ngInject */
-export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService) {
+export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService, localStorageService) {
     return {
         restrict: 'A',
         require: '^propertiesContext',
@@ -110,65 +110,73 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 })
             }
 
-            this.hasClipboard       =   hasClipboard;
-            this.getClipboard       =   getClipboard;
-            this.cut        =   cut;
-            this.copy       =   copy;
-            this.paste      =   paste;
-            this.isCut      =   isCut;
-
-            var clipboard   =   null;
+            this.hasClipboard = hasClipboard;
+            this.getClipboard = getClipboard;
+            this.cut = cut;
+            this.copy = copy;
+            this.paste = paste;
+            this.isCut = isCut;
 
             function getClipboard()
             {
-                return clipboard;
+                return localStorageService.get('clipboard');
             }
 
             function hasClipboard()
             {
-                return !!clipboard;
+                return !!localStorageService.get('clipboard');
             }
 
-            function cut( container, component)
+            function cut(container, component)
             {
-                clipboard   =   {
-                        is_cut : true,
-                        component : component,
-                        container : container,
-                };
+                localStorageService.set('clipboard', {
+                    service_id: service_id,
+                    is_cut: true,
+                    component: component,
+                    container: container,
+                })
             }
 
-            function copy( component)
+            function copy(component)
             {
-                clipboard   =   {
-                        is_cut : false,
-                        component : component,
-                };
+                localStorageService.set('clipboard', {
+                    service_id: service_id,
+                    is_cut: false,
+                    component: component
+                })
             }
 
-            function paste( containerController, index)
+            function paste(containerController, index)
             {
-                if ( !clipboard) {
+                const clipboard = getClipboard();
+                
+                if (!clipboard) {
                     return;
                 }
 
-                if ( clipboard.is_cut) {
+                if (clipboard.is_cut && clipboard.service_id !== service_id) {
                     $log.log( 'propertiesContext paste cut');
                     // function moveComponent( oldContainerController, containerController, component, index)
-                    moveComponent( clipboard.container, containerController, clipboard.component, index);
-                    clipboard.is_cut    =   false;
-                    clipboard.container =   null;
+                    moveComponent(clipboard.container, containerController, clipboard.component, index);
+                    localStorageService.set('clipboard', {
+                        service_id: clipboard.service_id,
+                        is_cut: false,
+                        container: null,
+                        component: clipboard.component
+                    });
                 } else {
                     $log.log( 'propertiesContext paste copy');
 
                     containerController.addComponent(
-                            ConvoComponentFactoryService.copyComponent( getSelectedService(), clipboard.component),
-                            index);
+                        ConvoComponentFactoryService.copyComponent(getSelectedService(), clipboard.component),
+                        index
+                    );
                 }
             }
 
-            function isCut( component)
+            function isCut(component)
             {
+                const clipboard = getClipboard();
                 return clipboard && clipboard.is_cut && clipboard.component === component;
             }
 
