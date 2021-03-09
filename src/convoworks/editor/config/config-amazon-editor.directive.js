@@ -46,6 +46,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 self_signed_certificate: null,
                 auto_display: false,
                 enable_account_linking: false,
+                account_linking_with: 'amazon',
                 account_linking_config: {
                     skip_on_enablement: false,
                     authorization_url: "",
@@ -95,6 +96,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.gotoConfigUrl = function() {
                 $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+$scope.service_language+'/skill-info', '_blank');
+            }
+
+            $scope.gotoLwaConsoleUrl = function() {
+                $window.open('https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html', '_blank');
             }
 
             $scope.isModeValid  = function () {
@@ -428,6 +433,32 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 _setIsChildDirected(true);
             };
 
+            $scope.onAccountLinkingOfferChange = function () {
+                if ($scope.config.account_linking_with !== 'something_else') {
+                    const ceca = ConvoworksApi.getAccountLinkingUrls('amazon', $scope.config.account_linking_with);
+                    $scope.config.account_linking_config.authorization_url = ceca.webAuthorizationURI;
+                    $scope.config.account_linking_config.access_token_url = ceca.accessTokenURI;
+                    if ($scope.config.account_linking_with === 'convoworks_installation') {
+                        const clientId = "convo." + ceca.accountLinkingWith + ".account.linking." + $scope.service.service_id;
+                        $scope.config.account_linking_config.client_id =  clientId;
+                        $scope.config.account_linking_config.client_secret = generateClientSecretFromClientID(clientId);
+                    }
+                }
+            };
+
+            $scope.showFieldFor = function(account_linking_type) {
+                switch (account_linking_type) {
+                    case 'convoworks_installation':
+                        return true;
+                    case 'amazon':
+                        return true;
+                    case 'something_else':
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
                 for (var i = 0; i < $scope.interfaces.length; i++) {
@@ -473,6 +504,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
+                    $scope.account_linking_offers = config_options['CONVO_AMAZON_ACCOUNT_LINKING_OFFERS'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
                     $scope.categories = config_options['CONVO_AMAZON_SKILL_CATEGORIES'];
                     $scope.interfaces = config_options['CONVO_ALEXA_INTERFACES'];
@@ -533,6 +565,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
+            function generateClientSecretFromClientID(clientID) {
+                let hash = 0;
+                for(let i = 0; i < clientID.length; i++) {
+                    hash = Math.imul(31, hash) + clientID.charCodeAt(i) | 0;
+                }
+
+                return hash.toString();
+            }
         }
     }
 }
