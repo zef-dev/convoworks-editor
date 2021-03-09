@@ -82,6 +82,13 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // get-existing-alexa-skill/{skillId}/account-linking-information
         this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
 
+        // supply-urls/static-url/{forWhat}
+        this.getStaticUrls = getStaticUrls;
+        // supply-urls/dynamic-url/{serviceId}{platformId}/{forWhat}
+        this.getDynamicUrls = getDynamicUrls;
+        // supply-urls/account-linking/{platformId}/{accountLinkingMode}
+        this.getAccountLinkingUrls = getAccountLinkingUrls;
+
         function getPlatformConfiguration()
         {
             return $http({
@@ -683,5 +690,39 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
             return res.data;
         });
+    }
+    function getAccountLinkingUrls(platform, account_linking_with) {
+            if (platform === 'amazon') {
+                switch (account_linking_with) {
+                    case 'amazon':
+                        return {
+                            accountLinkingWith: platform,
+                            webAuthorizationURI: 'https://www.amazon.com/ap/oa',
+                            accessTokenURI: 'https://api.amazon.com/auth/o2/token',
+                        }
+                    case 'convoworks_installation':
+                        const publicApiUrl = new URL(CONVO_PUBLIC_API_BASE_URL);
+                        const loginViewURL = publicApiUrl.protocol + '//' + publicApiUrl.host + '/login/amazon';
+                        const tokenURL = publicApiUrl.protocol + '//' + publicApiUrl.host + '/rest_public/proto/v1/token/amazon';
+
+                        return {
+                            accountLinkingWith: platform,
+                            webAuthorizationURI: loginViewURL,
+                            accessTokenURI: tokenURL
+                        }
+                    default:
+                        throw new Error(account_linking_with + ' is not supported.');
+                }
+            } else {
+                throw new Error(platform + ' is not supported.');
+            }
+
+    }
+    function getStaticUrls(platform) {
+
+    }
+
+    function getDynamicUrls(platform) {
+
     }
     }
