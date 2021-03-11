@@ -299,14 +299,24 @@
 
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_privacy_policy_url" class="convo-form-label">Privacy Policy URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the privacy policy that applies to this skill."></i></label>
-                                            <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
+                                            <div class="input-group">
+                                                <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
+                                                <span class="input-group-btn">
+                                                    <button ng-click="getPrivacyPolicyUrl()" class="btn btn-default" type="button">Get Privacy Policy URL.</button>
+                                                </span>
+                                            </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$pristine" class="text-danger">This must be a valid url.</b>
                                             <b ng-show="config.skill_preview_in_store.privacy_policy_url.length < 1" class="text-danger">Skill Validation in Certification will fail if no Privacy Policy URL is present.</b>
                                         </div>
 
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_terms_of_use_url" class="convo-form-label">Terms of Use URL <i class="glyphicon glyphicon-question-sign" uib-tooltip="Link to the terms of use document for this skill."></i></label>
-                                            <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
+                                            <div class="input-group">
+                                                <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
+                                                <span class="input-group-btn">
+                                                    <button ng-click="getTermsOfUseUrl()" class="btn btn-default" type="button">Get Terms of Use URL.</button>
+                                                </span>
+                                            </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$pristine" class="text-danger">This must be an valid url.</b>
                                         </div>
                                     </div>
