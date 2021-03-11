@@ -447,14 +447,29 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.onAccountLinkingOfferChange = function () {
                 if ($scope.config.account_linking_with !== 'something_else') {
-                    const ceca = ConvoworksApi.getAccountLinkingUrls('amazon', $scope.config.account_linking_with);
-                    $scope.config.account_linking_config.authorization_url = ceca.webAuthorizationURI;
-                    $scope.config.account_linking_config.access_token_url = ceca.accessTokenURI;
-                    if ($scope.config.account_linking_with === 'convoworks_installation') {
-                        const clientId = "convo." + ceca.accountLinkingWith + ".account.linking." + $scope.service.service_id;
-                        $scope.config.account_linking_config.client_id =  clientId;
-                        $scope.config.account_linking_config.client_secret = generateClientSecretFromClientID(clientId);
-                    }
+                    ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'account_linking', $scope.config.account_linking_with).then(function (response) {
+                        $scope.config.account_linking_config.authorization_url = response.webAuthorizationURI;
+                        $scope.config.account_linking_config.access_token_url = response.accessTokenURI;
+                        if ($scope.config.account_linking_with === 'convoworks_installation') {
+                            const clientId = $scope.service.service_id;
+                            $scope.config.account_linking_config.client_id =  clientId;
+                            $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                            $scope.config.account_linking_config.scopes =  '';
+                            $scope.config.account_linking_config.domains =  '';
+                        } else if ($scope.config.account_linking_with === 'amazon') {
+                            $scope.config.account_linking_config.client_id =  '';
+                            $scope.config.account_linking_config.client_secret =  '';
+                            $scope.config.account_linking_config.scopes =  '';
+                            $scope.config.account_linking_config.domains =  '';
+                        }
+                    });
+                } else {
+                    $scope.config.account_linking_config.authorization_url = '';
+                    $scope.config.account_linking_config.access_token_url = '';
+                    $scope.config.account_linking_config.client_id =  '';
+                    $scope.config.account_linking_config.client_secret = '';
+                    $scope.config.account_linking_config.scopes =  '';
+                    $scope.config.account_linking_config.domains =  '';
                 }
             };
 
@@ -577,7 +592,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
-            function generateClientSecretFromClientID(clientID) {
+            function _generateClientSecretFromClientID(clientID) {
                 let hash = 0;
                 for(let i = 0; i < clientID.length; i++) {
                     hash = Math.imul(31, hash) + clientID.charCodeAt(i) | 0;
