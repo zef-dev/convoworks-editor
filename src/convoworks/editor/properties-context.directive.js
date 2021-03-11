@@ -135,6 +135,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 });
 
                 container.removeComponent(component);
+                $scope.$broadcast('ComponentRemoved', component);
             }
 
             function copy(component)
