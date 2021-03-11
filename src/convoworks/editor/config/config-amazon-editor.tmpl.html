@@ -172,21 +172,15 @@
                             </button>
                         </div>
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'convoworks_installation'">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking">
                         <label for="account_linking_config_client_id" class="convo-form-label">Your Client ID * <i class="glyphicon glyphicon-question-sign" uib-tooltip="Unique public string used to identify the client requesting for authentication."></i></label>
                         <input ng-required="true" type="text" class="convo-form-input" id="account_linking_config_client_id" name="account_linking_config_client_id" placeholder="" ng-model="config.account_linking_config.client_id">
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_id.$invalid && !amazonPlatformConfigForm.account_linking_config_client_id.$pristine" class="text-danger">Client ID is required.</b>
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with === 'convoworks_installation'">
-                        <p>Your Generated Client ID: <b>{{config.account_linking_config.client_id}}</b></p>
-                    </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'convoworks_installation'">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking">
                         <label for="account_linking_config_client_secret" class="convo-form-label">Your Secret * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A credential you provide that lets the Alexa service authenticate with the Access Token URI. This is combined with the Client ID to identify the request as coming from Alexa."></i></label>
                         <input ng-required="true" type="password" class="convo-form-input" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid && !amazonPlatformConfigForm.account_linking_config_client_secret.$pristine" class="text-danger">Secret is required.</b>
-                    </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with === 'convoworks_installation'">
-                        <p>Your Generated Client Secret: <b>{{config.account_linking_config.client_secret}}</b></p>
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'convoworks_installation'">
                         <label for="account_linking_config_scopes" class="convo-form-label">Scope <i class="glyphicon glyphicon-question-sign" uib-tooltip="The list of permissions to request from the skill user. You can provide up to 15 scopes. Separate list items with a semicolon (;)"></i></label>
