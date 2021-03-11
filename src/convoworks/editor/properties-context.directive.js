@@ -107,7 +107,9 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     }, function( reason) {
                         $log.error( 'propertiesContext controller definitions got reason', reason);
                     });
-                })
+                });
+
+                // localStorageService.set('clipboard', null);
             }
 
             this.hasClipboard = hasClipboard;
@@ -115,7 +117,6 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             this.cut = cut;
             this.copy = copy;
             this.paste = paste;
-            this.isCut = isCut;
 
             function getClipboard()
             {
@@ -130,18 +131,15 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             function cut(container, component)
             {
                 localStorageService.set('clipboard', {
-                    service_id: service_id,
-                    is_cut: true,
-                    component: component,
-                    container: container,
-                })
+                    component: component
+                });
+
+                container.removeComponent(component);
             }
 
             function copy(component)
             {
                 localStorageService.set('clipboard', {
-                    service_id: service_id,
-                    is_cut: false,
                     component: component
                 })
             }
@@ -154,30 +152,10 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     return;
                 }
 
-                if (clipboard.is_cut && clipboard.service_id !== service_id) {
-                    $log.log( 'propertiesContext paste cut');
-                    // function moveComponent( oldContainerController, containerController, component, index)
-                    moveComponent(clipboard.container, containerController, clipboard.component, index);
-                    localStorageService.set('clipboard', {
-                        service_id: clipboard.service_id,
-                        is_cut: false,
-                        container: null,
-                        component: clipboard.component
-                    });
-                } else {
-                    $log.log( 'propertiesContext paste copy');
-
-                    containerController.addComponent(
-                        ConvoComponentFactoryService.copyComponent(getSelectedService(), clipboard.component),
-                        index
-                    );
-                }
-            }
-
-            function isCut(component)
-            {
-                const clipboard = getClipboard();
-                return clipboard && clipboard.is_cut && clipboard.component === component;
+                containerController.addComponent(
+                    ConvoComponentFactoryService.copyComponent(getSelectedService(), clipboard.component),
+                    index
+                );
             }
 
             function addConvoEntity( entity) {
@@ -290,7 +268,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
 
                 selection.containerController   =   containerController;
                 try {
-                    selection.definition            =   getComponentDefinition( component['class']);
+                    selection.definition        =   getComponentDefinition( component['class']);
                 } catch ( err) {
                     $log.error( err);
                     selection.definition    =   {

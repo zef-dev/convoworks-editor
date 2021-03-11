@@ -1,7 +1,7 @@
 <div ng-if="ready" class="selectable-component {{definition.component_properties._workflow}}" 
 	ng-mouseover="over=true; $event.stopPropagation()" 
 	ng-mouseout="over=false; $event.stopPropagation()"
-	ng-class="{ 'over' : over, 'selected' : isSelected(), 'clipboard-cut' : isCut() }"
+	ng-class="{ 'over' : over, 'selected' : isSelected() }"
     context-menu="getContextOptions()"
     >
 

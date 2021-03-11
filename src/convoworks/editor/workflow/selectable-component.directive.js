@@ -105,10 +105,6 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                     }
                 }
 
-                $scope.isCut    =   function() {
-                    return propertiesContext.isCut( $scope.component);
-                }
-
                 $scope.getContextOptions    =   function() {
 
                     var options =   [];
