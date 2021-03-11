@@ -83,11 +83,9 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
 
         // supply-urls/static-url/{forWhat}
-        this.getStaticUrls = getStaticUrls;
-        // supply-urls/dynamic-url/{serviceId}{platformId}/{forWhat}
-        this.getDynamicUrls = getDynamicUrls;
-        // supply-urls/account-linking/{platformId}/{accountLinkingMode}
-        this.getAccountLinkingUrls = getAccountLinkingUrls;
+        this.getStaticUrl = getStaticUrl;
+        // supply-urls/dynamic-url/{serviceId}{platformId}/{forWhat}/{?accountLinkingMode}
+        this.getDynamicUrl = getDynamicUrl;
 
         function getPlatformConfiguration()
         {
@@ -691,38 +689,27 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             return res.data;
         });
     }
-    function getAccountLinkingUrls(platform, account_linking_with) {
-            if (platform === 'amazon') {
-                switch (account_linking_with) {
-                    case 'amazon':
-                        return {
-                            accountLinkingWith: platform,
-                            webAuthorizationURI: 'https://www.amazon.com/ap/oa',
-                            accessTokenURI: 'https://api.amazon.com/auth/o2/token',
-                        }
-                    case 'convoworks_installation':
-                        const publicApiUrl = new URL(CONVO_PUBLIC_API_BASE_URL);
-                        const loginViewURL = publicApiUrl.protocol + '//' + publicApiUrl.host + '/login/amazon';
-                        const tokenURL = publicApiUrl.protocol + '//' + publicApiUrl.host + '/rest_public/proto/v1/token/amazon';
-
-                        return {
-                            accountLinkingWith: platform,
-                            webAuthorizationURI: loginViewURL,
-                            accessTokenURI: tokenURL
-                        }
-                    default:
-                        throw new Error(account_linking_with + ' is not supported.');
-                }
-            } else {
-                throw new Error(platform + ' is not supported.');
-            }
-
-    }
-    function getStaticUrls(platform) {
-
+    function getStaticUrl(forWhat)
+    {
+        $log.log('ConvoworksApi getAccountLinkingUrls()', forWhat);
+        return $http({
+            method: 'GET',
+            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/static-url/' + forWhat
+        }).then(function(res) {
+            $log.log('ConvoworksApi getStaticUrl() then', res.data);
+            return res.data;
+        });
     }
 
-    function getDynamicUrls(platform) {
-
+    function getDynamicUrl(serviceId, platformId, forWhat, accountLinkingMode = '')
+    {
+        $log.log('ConvoworksApi getAccountLinkingUrls()', serviceId, platformId, forWhat);
+        return $http({
+            method: 'GET',
+            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/dynamic-url/' + serviceId + '/' + platformId + '/' + forWhat + '/' + accountLinkingMode
+        }).then(function(res) {
+            $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
+            return res.data;
+        });
     }
     }
