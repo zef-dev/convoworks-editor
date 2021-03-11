@@ -155,7 +155,7 @@
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_authorization_url.$invalid && !amazonPlatformConfigForm.account_linking_config_authorization_url.$pristine" class="text-danger">Web Authorization URI is required.</b>
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'something_else'">
-                        <p>Your Access Token URI: <b>{{config.account_linking_config.authorization_url}}</b></p>
+                        <p>Your Web Authorization URI: <b>{{config.account_linking_config.authorization_url}}</b></p>
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with === 'something_else'">
                         <label for="account_linking_config_access_token_url" class="convo-form-label">Access Token URI * <i class="glyphicon glyphicon-question-sign" uib-tooltip="This URI will be used for both access token and token refresh requests."></i></label>
