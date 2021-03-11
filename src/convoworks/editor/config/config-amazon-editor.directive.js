@@ -429,6 +429,18 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 });
             }
 
+            $scope.getTermsOfUseUrl = function () {
+                ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
+                    $scope.config.skill_preview_in_store.terms_of_use_url = response.dynamicUrl;
+                })
+            }
+
+            $scope.getPrivacyPolicyUrl = function () {
+                ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
+                    $scope.config.skill_preview_in_store.privacy_policy_url = response.dynamicUrl;
+                })
+            }
+
             $scope.onCategoryChange = function () {
                 _setIsChildDirected(true);
             };
