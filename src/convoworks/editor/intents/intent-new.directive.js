@@ -38,8 +38,8 @@ export default function intentNew( $log, $rootScope, $state, $stateParams)
 
             $scope.submitIntent = function() {
                 var index   =   propertiesContext.addConvoIntent( current);
-//                $state.go('^.intent-model-details', {index:index});
-                $state.go('^.intent-model');
+//                $state.go('^.intents-entities-details', {index:index});
+                $state.go('^.intents-entities');
             }
 
             $scope.isIntentChanged = function() {

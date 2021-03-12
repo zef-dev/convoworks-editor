@@ -36,8 +36,8 @@ export default function entityNew( $log, $state)
 
             $scope.submitEntity = function() {
                 var index   =   propertiesContext.addConvoEntity( current);
-//                $state.go('^.intent-model-details', {index:index});
-                $state.go('^.intent-model');
+//                $state.go('^.intents-entities-details', {index:index});
+                $state.go('^.intents-entities');
             }
 
             $scope.isEntityChanged = function() {

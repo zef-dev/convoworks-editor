@@ -50,36 +50,36 @@ export default function ($stateProvider, $urlRouterProvider) {
                 template: require('./editor/variables/variables-view.tmpl.html'),
               }
             }
-        }).state('convoworks-editor-service.intent-model', {
-            url:'/intent-model',
+        }).state('convoworks-editor-service.intents-entities', {
+            url:'/intents-entities',
             views: {
                 'serviceTabView': {
-                template: require('./editor/intents/intent-model-view.tmpl.html'),
+                template: require('./editor/intents/intents-entities-view.tmpl.html'),
                 },
             }
         }).state('convoworks-editor-service.intent-new', {
-            url:'/intent/new',
+            url:'/intents-entities/intent/new',
             views: {
                 'serviceTabView': {
                 template: '<intent-new></intent-new>',
               }
             }
         }).state('convoworks-editor-service.intent-details', {
-            url:'/intent/:index/details',
+            url:'/intents-entities/intent/:index/details',
             views: {
                 'serviceTabView': {
                 template: '<intent-details></intent-details>',
               }
             }
         }).state('convoworks-editor-service.entity-new', {
-            url:'/entity/new',
+            url:'/intents-entities/entity/new',
             views: {
                 'serviceTabView': {
                 template: '<entity-new></entity-new>',
               }
             }
         }).state('convoworks-editor-service.entity-details', {
-            url:'/entity/:index/details',
+            url:'/intents-entities/entity/:index/details',
             views: {
                 'serviceTabView': {
                 template: '<entity-details entity="getSelection().service.entities[index]"></entity-details>',
@@ -97,7 +97,7 @@ export default function ($stateProvider, $urlRouterProvider) {
               }
             }
         }).state('convoworks-editor-service.configuration-amazon', {
-            url: '/configuration-amazon',
+            url: '/configuration/amazon',
             views: {
                 'serviceTabView': {
                     // template: require('./editor/config/config-amazon-editor.tmpl.html'),
@@ -106,28 +106,28 @@ export default function ($stateProvider, $urlRouterProvider) {
                 }
             }
         }).state('convoworks-editor-service.configuration-dialogflow', {
-            url: '/configuration-dialogflow',
+            url: '/configuration/dialogflow',
             views: {
                 'serviceTabView': {
                     template: '<config-dialogflow-editor service="getSelection().service"></config-dialogflow-editor>'
                 }
             }
         }).state('convoworks-editor-service.configuration-messenger', {
-            url: '/configuration-messenger',
+            url: '/configuration/messenger',
             views: {
                 'serviceTabView': {
                     template: '<config-messenger-editor service="getSelection().service"></config-messenger-editor>'
                 }
             }
         }).state('convoworks-editor-service.configuration-viber', {
-            url: '/configuration-viber',
+            url: '/configuration/viber',
             views: {
                 'serviceTabView': {
                     template: '<config-viber-editor service="getSelection().service"></config-viber-editor>'
                 }
             }
         }).state('convoworks-editor-service.configuration-convo-chat', {
-            url: '/configuration-convo-chat',
+            url: '/configuration/convo-chat',
             views: {
                 'serviceTabView': {
                     template: '<config-convo-chat-editor service="getSelection().service"></config-convo-chat-editor>'

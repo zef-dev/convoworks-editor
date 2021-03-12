@@ -28,8 +28,9 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             _initDelegationNlp();
         }
 
-        $scope.isServiceTabActive = function( tabName) {
-            return $state.includes( '*.'+tabName);
+        $scope.isServiceTabActive = function(tabName) {
+            const r = new RegExp(`\/${tabName}\/?`);
+            return r.test($state.href($state.current.name, $state.params, {absolute: true}));
         }
 
         $log.log( 'ConvoworksEditorController $state.current', $state.current);
