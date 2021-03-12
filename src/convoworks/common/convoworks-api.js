@@ -82,10 +82,10 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // get-existing-alexa-skill/{skillId}/account-linking-information
         this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
 
-        // supply-urls/static-url/{forWhat}
-        this.getStaticUrl = getStaticUrl;
-        // supply-urls/dynamic-url/{serviceId}{platformId}/{forWhat}/{?accountLinkingMode}
-        this.getDynamicUrl = getDynamicUrl;
+        // supply-urls/system-url/{forWhat}
+        this.getSystemUrl = getSystemUrl;
+        // supply-urls/service-url/{serviceId}{platformId}/{forWhat}/{?accountLinkingMode}
+        this.getServiceUrl = getServiceUrl;
 
         function getPlatformConfiguration()
         {
@@ -689,24 +689,24 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             return res.data;
         });
     }
-    function getStaticUrl(forWhat)
+    function getSystemUrl(forWhat)
     {
         $log.log('ConvoworksApi getAccountLinkingUrls()', forWhat);
         return $http({
             method: 'GET',
-            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/static-url/' + forWhat
+            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/system-url/' + forWhat
         }).then(function(res) {
             $log.log('ConvoworksApi getStaticUrl() then', res.data);
             return res.data;
         });
     }
 
-    function getDynamicUrl(serviceId, platformId, forWhat, accountLinkingMode = '')
+    function getServiceUrl(serviceId, platformId, forWhat, accountLinkingMode = 'convoworks_installation')
     {
         $log.log('ConvoworksApi getAccountLinkingUrls()', serviceId, platformId, forWhat);
         return $http({
             method: 'GET',
-            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/dynamic-url/' + serviceId + '/' + platformId + '/' + forWhat + '/' + accountLinkingMode
+            url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/service-url/' + serviceId + '/' + platformId + '/' + forWhat + '/' + accountLinkingMode
         }).then(function(res) {
             $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
             return res.data;
