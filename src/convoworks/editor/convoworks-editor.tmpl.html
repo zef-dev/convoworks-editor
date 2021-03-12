@@ -14,7 +14,7 @@
                 <div class="publish">
                     <div class="btn-group icon-button publish-group" uib-dropdown>
                         <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8"
-                            ng-disabled="getAvailablePlatforms().length === 0" ng-click="propagatePlatformChanges('all')">
+                            ng-disabled="getAllowedPlatforms().length === 0" ng-click="propagatePlatformChanges('all')">
                             <span ng-class="getPropagationIconClass()"></span>
                             {{ getPropagationText() }}
                         </button>

@@ -78,14 +78,14 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             return platform_info[platformId]['available'];
         }
 
-        $scope.getAvailablePlatforms = function()
+        $scope.getAllowedPlatforms = function()
         {
-            return Object.keys(platform_info).filter(p => platform_info[p].available && platform_info[p].allowed);
+            return Object.keys(platform_info).filter(p => platform_info[p].allowed);
         }
 
         $scope.getPropagationText = function()
         {
-            if ($scope.getAvailablePlatforms().length === 0)
+            if ($scope.getAllowedPlatforms().length === 0)
             {
                 return 'No platforms';
             }
@@ -95,7 +95,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.getPropagationIconClass = function()
         {
-            if ($scope.getAvailablePlatforms().length === 0)
+            if ($scope.getAllowedPlatforms().length === 0)
             {
                 return 'glyphicon glyphicon-minus-sign';
             }
