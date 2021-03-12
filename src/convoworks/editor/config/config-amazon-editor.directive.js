@@ -430,14 +430,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.getTermsOfUseUrl = function () {
-                ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
-                    $scope.config.skill_preview_in_store.terms_of_use_url = response.dynamicUrl;
+                ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
+                    $scope.config.skill_preview_in_store.terms_of_use_url = response.serviceUrl.termsOfUse;
                 })
             }
 
             $scope.getPrivacyPolicyUrl = function () {
-                ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
-                    $scope.config.skill_preview_in_store.privacy_policy_url = response.dynamicUrl;
+                ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'privacy_policy').then(function (response) {
+                    $scope.config.skill_preview_in_store.privacy_policy_url = response.serviceUrl.privacyPolicy;
                 })
             }
 
@@ -447,9 +447,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.onAccountLinkingOfferChange = function () {
                 if ($scope.config.account_linking_with !== 'something_else') {
-                    ConvoworksApi.getDynamicUrl($scope.service.service_id, 'amazon', 'account_linking', $scope.config.account_linking_with).then(function (response) {
-                        $scope.config.account_linking_config.authorization_url = response.webAuthorizationURI;
-                        $scope.config.account_linking_config.access_token_url = response.accessTokenURI;
+                    ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'account_linking', $scope.config.account_linking_with).then(function (response) {
+                        $scope.config.account_linking_config.authorization_url = response.serviceUrl.webAuthorizationURI;
+                        $scope.config.account_linking_config.access_token_url = response.serviceUrl.accessTokenURI;
                         if ($scope.config.account_linking_with === 'convoworks_installation') {
                             const clientId = $scope.service.service_id;
                             $scope.config.account_linking_config.client_id =  clientId;
