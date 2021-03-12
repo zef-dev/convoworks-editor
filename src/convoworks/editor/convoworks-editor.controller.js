@@ -80,9 +80,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.getAvailablePlatforms = function()
         {
-            const platforms = Object.keys(platform_info).filter(p => platform_info[p].available);
-
-            return platforms;
+            return Object.keys(platform_info).filter(p => platform_info[p].available && platform_info[p].allowed);
         }
 
         $scope.getPropagationText = function()
