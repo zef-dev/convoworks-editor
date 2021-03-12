@@ -78,6 +78,33 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             return platform_info[platformId]['available'];
         }
 
+        $scope.getAvailablePlatforms = function()
+        {
+            const platforms = Object.keys(platform_info).filter(p => platform_info[p].available);
+
+            return platforms;
+        }
+
+        $scope.getPropagationText = function()
+        {
+            if ($scope.getAvailablePlatforms().length === 0)
+            {
+                return 'No platforms';
+            }
+
+            return $scope.propagating? 'Propagating...' : 'Propagate to all';
+        }
+
+        $scope.getPropagationIconClass = function()
+        {
+            if ($scope.getAvailablePlatforms().length === 0)
+            {
+                return 'glyphicon glyphicon-minus-sign';
+            }
+
+            return $scope.propagating ? 'glyphicon glyphicon-cog spinning' : 'glyphicon glyphicon-play';
+        }
+
         $scope.propagatePlatformChanges = function(platformId) {
             $log.log( 'ConvoworksEditorController propagatePlatformChanges() platformId', platformId);
 
