@@ -82,6 +82,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.gettingSkillManifest = false;
             $scope.gettingSkillAccountLinkingInformation = false;
             $scope.keywordsLength = 0;
+            $scope.secretFieldType = 'password'
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -215,6 +216,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.updateConfig = function (isValid) {
+                $scope.secretFieldType = 'password';
                 if (!isValid) {
                     AlertService.addDanger(`Invalid form data.`)
                 }
@@ -446,6 +448,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             };
 
             $scope.onAccountLinkingOfferChange = function () {
+                $scope.secretFieldType = 'password';
+
                 if ($scope.config.account_linking_with !== 'something_else') {
                     ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'account_linking', $scope.config.account_linking_with).then(function (response) {
                         $scope.config.account_linking_config.authorization_url = response.serviceUrl.webAuthorizationURI;
@@ -473,16 +477,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             };
 
-            $scope.showFieldFor = function(account_linking_type) {
-                switch (account_linking_type) {
-                    case 'convoworks_installation':
-                        return true;
-                    case 'amazon':
-                        return true;
-                    case 'something_else':
-                        return true;
-                    default:
-                        return false;
+            $scope.toggleShowSecret = function () {
+                if ($scope.secretFieldType === 'password') {
+                    $scope.secretFieldType = 'text';
+                } else if ($scope.secretFieldType === 'text') {
+                    $scope.secretFieldType = 'password';
                 }
             }
 

@@ -179,7 +179,14 @@
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking">
                         <label for="account_linking_config_client_secret" class="convo-form-label">Your Secret * <i class="glyphicon glyphicon-question-sign" uib-tooltip="A credential you provide that lets the Alexa service authenticate with the Access Token URI. This is combined with the Client ID to identify the request as coming from Alexa."></i></label>
-                        <input ng-required="true" type="password" class="convo-form-input" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
+                        <!---->
+                        <div class="input-group">
+                            <input ng-required="true" type="{{secretFieldType}}" class="convo-form-input" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
+                            <span class="input-group-btn">
+                                <button ng-click="toggleShowSecret()" class="btn btn-default" type="button"> {{secretFieldType === 'password' ? 'Show Secret' : 'Hide Secret'}}</button>
+                            </span>
+                        </div>
+
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid && !amazonPlatformConfigForm.account_linking_config_client_secret.$pristine" class="text-danger">Secret is required.</b>
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'convoworks_installation'">
