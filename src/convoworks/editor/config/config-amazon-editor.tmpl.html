@@ -189,12 +189,12 @@
 
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid && !amazonPlatformConfigForm.account_linking_config_client_secret.$pristine" class="text-danger">Secret is required.</b>
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'convoworks_installation'">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'installation'">
                         <label for="account_linking_config_scopes" class="convo-form-label">Scope <i class="glyphicon glyphicon-question-sign" uib-tooltip="The list of permissions to request from the skill user. You can provide up to 15 scopes. Separate list items with a semicolon (;)"></i></label>
                         <p ng-if="config.account_linking_with === 'amazon'">Scopes can be the following: <b>profile</b>, <b>profile:user_id</b> and <b>postal_code</b></p>
                         <input type="text" class="convo-form-input" id="account_linking_config_scopes" name="account_linking_config_scopes" placeholder="" ng-model="config.account_linking_config.scopes">
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'amazon' && config.account_linking_with !== 'convoworks_installation'">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_with !== 'amazon' && config.account_linking_with !== 'installation'">
                         <label for="account_linking_config_client_domains" class="convo-form-label">Domain List <i class="glyphicon glyphicon-question-sign" uib-tooltip="The list of domains that the authorization URL will fetch content from. You can provide up to 30 domains. Separate list items with a semicolon (;)"></i></label>
                         <input type="text" class="convo-form-input" id="account_linking_config_client_domains" name="account_linking_config_domains" placeholder="" ng-model="config.account_linking_config.domains">
                     </div>
