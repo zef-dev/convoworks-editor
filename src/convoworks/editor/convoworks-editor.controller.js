@@ -1,5 +1,26 @@
 /* @ngInject */
-export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $q, ConvoworksApi, AlertService, UserPreferencesService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService) {
+
+        // MODAL FIX
+        $rootScope.$watch(() => document.querySelectorAll('.modal').length, val => {
+            $log.log('ConvoworksEditorController watching modals');
+            
+            for (let modal of document.querySelectorAll('.modal')) {
+                if ($uibModalStack.getTop().value.backdrop !== 'static') {
+                    modal.addEventListener('mousedown', e => {
+                        if (e.which === 1) {
+                            $uibModalStack.getTop().key.dismiss()
+                        }
+                    })
+                    modal.querySelector('.modal-content').addEventListener('mousedown', e => {
+                        e.stopPropagation()
+                    })
+                }
+            }
+            if (val > 0) {
+                $uibModalStack.getTop().value.backdrop = 'static'
+            }
+        });
 
         var random_slug                =   Math.floor( Math.random() * 100000);
         var device_id                  =   'admin-chat-' + random_slug;
