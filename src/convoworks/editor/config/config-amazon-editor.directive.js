@@ -281,7 +281,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
-                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.service.service_id).then(function (res) {
                                 if (res.manifest) {
                                     return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                                         configBak = angular.copy( $scope.config);
@@ -372,7 +372,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.getSkillManifest = function () {
                 $scope.gettingSkillManifest = true;
-                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.service.service_id).then(function (res) {
                     if (res.manifest.publishingInformation) {
                         if (res.manifest.publishingInformation.locales) {
                             if (res.manifest.publishingInformation.locales[$scope.default_locale] ) {
@@ -416,7 +416,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.getSkillAccountLinkingInformation = function () {
                 $scope.gettingSkillAccountLinkingInformation = true;
-                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.config.app_id).then(function (res) {
+                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.service.service_id).then(function (res) {
                     if (res) {
                         $scope.config.enable_account_linking = true;
                         $scope.config.account_linking_config.skip_on_enablement = res.skipOnEnablement;
