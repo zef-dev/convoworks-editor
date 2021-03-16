@@ -565,6 +565,17 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         if ( response.status === 404) {
                             is_new      =   true
                             is_error    =   false;
+
+                            const index = service_urls.accountLinkingModes.findIndex(x => x.id === $scope.config.account_linking_mode);
+                            $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
+                            $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
+                            $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
+
+                            const clientId = $scope.service.service_id;
+                            $scope.config.account_linking_config.client_id =  clientId;
+                            $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                            $scope.config.account_linking_config.scopes =  '';
+
                             return;
                         }
                         is_error    =   true;
