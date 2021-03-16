@@ -439,11 +439,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.getTermsOfUseUrl = function () {
-                $scope.config.skill_preview_in_store.terms_of_use_url = service_urls.termsOfUse;
+                $scope.config.skill_preview_in_store.terms_of_use_url = service_urls.termsOfUseUrl;
             }
 
             $scope.getPrivacyPolicyUrl = function () {
-                $scope.config.skill_preview_in_store.privacy_policy_url = service_urls.privacyPolicy;
+                $scope.config.skill_preview_in_store.privacy_policy_url = service_urls.privacyPolicyUrl;
             }
 
             $scope.onCategoryChange = function () {
@@ -453,9 +453,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.onAccountLinkingOfferChange = function (selectedItem) {
                 const index = service_urls.accountLinkingModes.findIndex(x => x.id === selectedItem);
                 $scope.secretFieldType = 'password';
-                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].urls.webAuthorizationURI;
-                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].urls.accessTokenURI;
-                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].urls.domains.join(';');
+                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
+                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
+                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
 
                 if ($scope.config.account_linking_mode !== 'something_else') {
                     if ($scope.config.account_linking_mode === 'installation') {
