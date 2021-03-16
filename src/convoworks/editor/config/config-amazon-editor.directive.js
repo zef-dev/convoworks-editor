@@ -18,11 +18,17 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.owner    =   '';
             let service_language = 'en';
             let default_invocation = null;
+            let service_urls = null;
             $scope.service_language = 'en';
 
             LoginService.getUser().then( function ( u) {
                 user = u;
             });
+
+            ConvoworksApi.getServiceUrls($scope.service.service_id).then(function (response) {
+                service_urls = response.amazon;
+                $scope.account_linking_modes = service_urls.accountLinkingModes;
+            })
 
             ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
                 service_language = serviceMeta['default_language'];
@@ -46,7 +52,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 self_signed_certificate: null,
                 auto_display: false,
                 enable_account_linking: false,
-                account_linking_with: 'amazon',
+                account_linking_mode: 'installation',
                 account_linking_config: {
                     skip_on_enablement: false,
                     authorization_url: "",
@@ -83,6 +89,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.gettingSkillAccountLinkingInformation = false;
             $scope.keywordsLength = 0;
             $scope.secretFieldType = 'password'
+            $scope.account_linking_modes = [];
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -432,48 +439,39 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.getTermsOfUseUrl = function () {
-                ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'terms_of_use').then(function (response) {
-                    $scope.config.skill_preview_in_store.terms_of_use_url = response.serviceUrl.termsOfUse;
-                })
+                $scope.config.skill_preview_in_store.terms_of_use_url = service_urls.termsOfUse;
             }
 
             $scope.getPrivacyPolicyUrl = function () {
-                ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'privacy_policy').then(function (response) {
-                    $scope.config.skill_preview_in_store.privacy_policy_url = response.serviceUrl.privacyPolicy;
-                })
+                $scope.config.skill_preview_in_store.privacy_policy_url = service_urls.privacyPolicy;
             }
 
             $scope.onCategoryChange = function () {
                 _setIsChildDirected(true);
             };
 
-            $scope.onAccountLinkingOfferChange = function () {
+            $scope.onAccountLinkingOfferChange = function (selectedItem) {
+                const index = service_urls.accountLinkingModes.findIndex(x => x.id === selectedItem);
                 $scope.secretFieldType = 'password';
+                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].urls.webAuthorizationURI;
+                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].urls.accessTokenURI;
+                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].urls.domains.join(';');
 
-                if ($scope.config.account_linking_with !== 'something_else') {
-                    ConvoworksApi.getServiceUrl($scope.service.service_id, 'amazon', 'account_linking', $scope.config.account_linking_with).then(function (response) {
-                        $scope.config.account_linking_config.authorization_url = response.serviceUrl.webAuthorizationURI;
-                        $scope.config.account_linking_config.access_token_url = response.serviceUrl.accessTokenURI;
-                        if ($scope.config.account_linking_with === 'convoworks_installation') {
-                            const clientId = $scope.service.service_id;
-                            $scope.config.account_linking_config.client_id =  clientId;
-                            $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
-                            $scope.config.account_linking_config.scopes =  '';
-                            $scope.config.account_linking_config.domains =  '';
-                        } else if ($scope.config.account_linking_with === 'amazon') {
-                            $scope.config.account_linking_config.client_id =  '';
-                            $scope.config.account_linking_config.client_secret =  '';
-                            $scope.config.account_linking_config.scopes =  '';
-                            $scope.config.account_linking_config.domains =  '';
-                        }
-                    });
+                if ($scope.config.account_linking_mode !== 'something_else') {
+                    if ($scope.config.account_linking_mode === 'installation') {
+                        const clientId = $scope.service.service_id;
+                        $scope.config.account_linking_config.client_id =  clientId;
+                        $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                        $scope.config.account_linking_config.scopes =  '';
+                    } else if ($scope.config.account_linking_mode === 'amazon') {
+                        $scope.config.account_linking_config.client_id =  '';
+                        $scope.config.account_linking_config.client_secret =  '';
+                        $scope.config.account_linking_config.scopes =  '';
+                    }
                 } else {
-                    $scope.config.account_linking_config.authorization_url = '';
-                    $scope.config.account_linking_config.access_token_url = '';
                     $scope.config.account_linking_config.client_id =  '';
                     $scope.config.account_linking_config.client_secret = '';
                     $scope.config.account_linking_config.scopes =  '';
-                    $scope.config.account_linking_config.domains =  '';
                 }
             };
 
@@ -530,7 +528,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
-                    $scope.account_linking_offers = config_options['CONVO_AMAZON_ACCOUNT_LINKING_OFFERS'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
                     $scope.categories = config_options['CONVO_AMAZON_SKILL_CATEGORIES'];
                     $scope.interfaces = config_options['CONVO_ALEXA_INTERFACES'];
