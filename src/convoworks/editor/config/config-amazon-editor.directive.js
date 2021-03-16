@@ -18,11 +18,17 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.owner    =   '';
             let service_language = 'en';
             let default_invocation = null;
+            let service_urls = null;
             $scope.service_language = 'en';
 
             LoginService.getUser().then( function ( u) {
                 user = u;
             });
+
+            ConvoworksApi.getServiceUrls($scope.service.service_id).then(function (response) {
+                service_urls = response.amazon;
+                $scope.account_linking_modes = service_urls.accountLinkingModes;
+            })
 
             ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
                 service_language = serviceMeta['default_language'];
@@ -46,6 +52,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 self_signed_certificate: null,
                 auto_display: false,
                 enable_account_linking: false,
+                account_linking_mode: 'installation',
                 account_linking_config: {
                     skip_on_enablement: false,
                     authorization_url: "",
@@ -81,6 +88,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.gettingSkillManifest = false;
             $scope.gettingSkillAccountLinkingInformation = false;
             $scope.keywordsLength = 0;
+            $scope.secretFieldType = 'password'
+            $scope.account_linking_modes = [];
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -95,6 +104,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.gotoConfigUrl = function() {
                 $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+$scope.service_language+'/skill-info', '_blank');
+            }
+
+            $scope.gotoLwaConsoleUrl = function() {
+                $window.open('https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html', '_blank');
             }
 
             $scope.isModeValid  = function () {
@@ -210,6 +223,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.updateConfig = function (isValid) {
+                $scope.secretFieldType = 'password';
                 if (!isValid) {
                     AlertService.addDanger(`Invalid form data.`)
                 }
@@ -424,9 +438,50 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 });
             }
 
+            $scope.getTermsOfUseUrl = function () {
+                $scope.config.skill_preview_in_store.terms_of_use_url = service_urls.termsOfUseUrl;
+            }
+
+            $scope.getPrivacyPolicyUrl = function () {
+                $scope.config.skill_preview_in_store.privacy_policy_url = service_urls.privacyPolicyUrl;
+            }
+
             $scope.onCategoryChange = function () {
                 _setIsChildDirected(true);
             };
+
+            $scope.onAccountLinkingOfferChange = function (selectedItem) {
+                const index = service_urls.accountLinkingModes.findIndex(x => x.id === selectedItem);
+                $scope.secretFieldType = 'password';
+                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
+                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
+                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
+
+                if ($scope.config.account_linking_mode !== 'something_else') {
+                    if ($scope.config.account_linking_mode === 'installation') {
+                        const clientId = $scope.service.service_id;
+                        $scope.config.account_linking_config.client_id =  clientId;
+                        $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                        $scope.config.account_linking_config.scopes =  '';
+                    } else if ($scope.config.account_linking_mode === 'amazon') {
+                        $scope.config.account_linking_config.client_id =  '';
+                        $scope.config.account_linking_config.client_secret =  '';
+                        $scope.config.account_linking_config.scopes =  '';
+                    }
+                } else {
+                    $scope.config.account_linking_config.client_id =  '';
+                    $scope.config.account_linking_config.client_secret = '';
+                    $scope.config.account_linking_config.scopes =  '';
+                }
+            };
+
+            $scope.toggleShowSecret = function () {
+                if ($scope.secretFieldType === 'password') {
+                    $scope.secretFieldType = 'text';
+                } else if ($scope.secretFieldType === 'text') {
+                    $scope.secretFieldType = 'password';
+                }
+            }
 
             function _updateSelectedInterfaces() {
                 $scope.config.interfaces = [];
@@ -533,6 +588,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
+            function _generateClientSecretFromClientID(clientID) {
+                let hash = 0;
+                for(let i = 0; i < clientID.length; i++) {
+                    hash = Math.imul(31, hash) + clientID.charCodeAt(i) | 0;
+                }
+
+                return hash.toString();
+            }
         }
     }
 }
