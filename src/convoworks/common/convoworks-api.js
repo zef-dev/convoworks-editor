@@ -77,9 +77,9 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // config-options
         this.getConfigOptions               =   getConfigOptions;
 
-        // get-existing-alexa-skill/{skillId}/manifest
+        // get-existing-alexa-skill/{serviceId}/manifest
         this.getExistingAlexaSkill          =   getExistingAlexaSkill;
-        // get-existing-alexa-skill/{skillId}/account-linking-information
+        // get-existing-alexa-skill/{serviceId}/account-linking-information
         this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
 
         // supply-urls/system-urls
@@ -663,26 +663,26 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                 })
         }
 
-    function getExistingAlexaSkill(owner, skillId)
+    function getExistingAlexaSkill(owner, serviceId)
     {
-        $log.log('ConvoworksApi getExistingAlexaSkill()', owner, skillId);
+        $log.log('ConvoworksApi getExistingAlexaSkill()', owner, serviceId);
 
         return $http({
             method: 'POST',
-            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/manifest',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + serviceId + '/manifest',
             data: { 'owner': owner }
         }).then(function(res) {
             $log.log('ConvoworksApi getExistingAlexaSkill() then', res.data);
             return res.data;
         });
     }
-    function getExistingAlexaSkillAccountLinkingInformation(owner, skillId)
+    function getExistingAlexaSkillAccountLinkingInformation(owner, serviceId)
     {
-        $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation()', owner, skillId);
+        $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation()', owner, serviceId);
 
         return $http({
             method: 'POST',
-            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + skillId + '/account-linking-information',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + serviceId + '/account-linking-information',
             data: { 'owner': owner }
         }).then(function(res) {
             $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
