@@ -1,7 +1,7 @@
 import template from './config-amazon-editor.tmpl.html';
 
 /* @ngInject */
-export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService) {
+export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService, CONVO_PUBLIC_API_BASE_URL) {
     return {
         restrict: 'E',
         scope: { service: '=', meta: '=' },
@@ -281,7 +281,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
-                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                            return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.service.service_id).then(function (res) {
                                 if (res.manifest) {
                                     return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                                         configBak = angular.copy( $scope.config);
@@ -372,7 +372,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.getSkillManifest = function () {
                 $scope.gettingSkillManifest = true;
-                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.config.app_id).then(function (res) {
+                ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.service.service_id).then(function (res) {
                     if (res.manifest.publishingInformation) {
                         if (res.manifest.publishingInformation.locales) {
                             if (res.manifest.publishingInformation.locales[$scope.default_locale] ) {
@@ -416,15 +416,27 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.getSkillAccountLinkingInformation = function () {
                 $scope.gettingSkillAccountLinkingInformation = true;
-                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.config.app_id).then(function (res) {
+                ConvoworksApi.getExistingAlexaSkillAccountLinkingInformation($scope.owner, $scope.service.service_id).then(function (res) {
                     if (res) {
                         $scope.config.enable_account_linking = true;
-                        $scope.config.account_linking_config.skip_on_enablement = res.skipOnEnablement;
-                        $scope.config.account_linking_config.authorization_url = res.authorizationUrl;
-                        $scope.config.account_linking_config.access_token_url = res.accessTokenUrl;
-                        $scope.config.account_linking_config.client_id = res.clientId;
-                        $scope.config.account_linking_config.scopes = res.scopes.join(";");
-                        $scope.config.account_linking_config.domains = res.domains.join(";");
+                        $scope.config.account_linking_config.skip_on_enablement = res.skipOnEnablement ?? true;
+                        $scope.config.account_linking_config.authorization_url = res.authorizationUrl ?? '';
+                        $scope.config.account_linking_config.access_token_url = res.accessTokenUrl ?? '';
+                        $scope.config.account_linking_config.client_id = res.clientId  ?? '';
+                        $scope.config.account_linking_config.scopes = res.scopes ? res.scopes.join(";") : '';
+                        $scope.config.account_linking_config.domains = res.domains ? res.domains.join(";") : '';
+
+                        const url = new URL(CONVO_PUBLIC_API_BASE_URL);
+                        const installationDomain = url.host;
+
+                        if ($scope.config.account_linking_config.authorization_url.includes(installationDomain)) {
+                            $scope.config.account_linking_mode = 'installation';
+                        } else if ($scope.config.account_linking_config.authorization_url.includes('amazon.com')) {
+                            $scope.config.account_linking_mode = 'amazon';
+                        } else {
+                            $scope.config.account_linking_mode = 'something_else';
+                        }
+
                         AlertService.addSuccess("Fields were filled successfully.");
                     } else {
                         $scope.config.enable_account_linking = false;
@@ -565,6 +577,17 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         if ( response.status === 404) {
                             is_new      =   true
                             is_error    =   false;
+
+                            const index = service_urls.accountLinkingModes.findIndex(x => x.id === $scope.config.account_linking_mode);
+                            $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
+                            $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
+                            $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
+
+                            const clientId = $scope.service.service_id;
+                            $scope.config.account_linking_config.client_id =  clientId;
+                            $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                            $scope.config.account_linking_config.scopes =  '';
+
                             return;
                         }
                         is_error    =   true;

@@ -201,7 +201,7 @@
                 </fieldset>
                 <fieldset ng-if="config.mode === 'auto'">
                     <legend>Distribution Information: </legend>
-                    <div class="convo-form-group" ng-if="config.app_id">
+                    <div class="convo-form-group" ng-if="config.app_id && !isNew()">
                         <div class="btn-group icon-button publish-group" uib-dropdown>
                             <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="getSkillManifest()">
                                 <span ng-class="{ 'glyphicon glyphicon-play': !gettingSkillManifest, 'glyphicon glyphicon-cog spinning': gettingSkillManifest }"></span>
