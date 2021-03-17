@@ -67,7 +67,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
             });
 
             $rootScope.$on('EnterKeyPressed', () => {
-                if ($element.find("input[type=text]:focus, textarea:focus").length) {
+                if ($element.find("input[type=text]:focus").length) {
                     $scope.$applyAsync(() => { propertiesContext.setSelectedComponent(null); });
                 }
             });
