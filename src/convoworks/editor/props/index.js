@@ -1,6 +1,7 @@
 import angular from 'angular';
 
 import './properties-editor.scss';
+import './component-help.scss';
 
 import propertiesEditor from './properties-editor.directive';
 
