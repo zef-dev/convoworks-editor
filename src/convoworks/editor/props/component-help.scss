@@ -1,4 +1,6 @@
 .component-help {
+    padding: 0 24px 24px;
+
     code {
         padding: .2em .4em;
         margin: 0;
@@ -6,4 +8,15 @@
         background-color: #1b1f230d;
         border-radius: 6px;
     }
+
+    h3 {
+        font-size: 1.15em;
+        font-weight: bold;
+    }
+
+    ol, ul {
+        padding-left: 16px;
+    }
+
+    p { display: inline-block; }
 }
