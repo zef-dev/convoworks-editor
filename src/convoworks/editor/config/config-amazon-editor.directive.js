@@ -463,28 +463,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             };
 
             $scope.onAccountLinkingOfferChange = function (selectedItem) {
-                const index = service_urls.accountLinkingModes.findIndex(x => x.id === selectedItem);
-                $scope.secretFieldType = 'password';
-                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
-                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
-                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
-
-                if ($scope.config.account_linking_mode !== 'something_else') {
-                    if ($scope.config.account_linking_mode === 'installation') {
-                        const clientId = $scope.service.service_id;
-                        $scope.config.account_linking_config.client_id =  clientId;
-                        $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
-                        $scope.config.account_linking_config.scopes =  '';
-                    } else if ($scope.config.account_linking_mode === 'amazon') {
-                        $scope.config.account_linking_config.client_id =  '';
-                        $scope.config.account_linking_config.client_secret =  '';
-                        $scope.config.account_linking_config.scopes =  '';
-                    }
-                } else {
-                    $scope.config.account_linking_config.client_id =  '';
-                    $scope.config.account_linking_config.client_secret = '';
-                    $scope.config.account_linking_config.scopes =  '';
-                }
+                _changeAccountLinkingMode(selectedItem);
             };
 
             $scope.toggleShowSecret = function () {
@@ -567,6 +546,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'amazon').then(function (data) {
                         $scope.config = data;
                         _setIsChildDirected();
+                        _changeAccountLinkingMode($scope.config.account_linking_mode);
                         $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
@@ -577,16 +557,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         if ( response.status === 404) {
                             is_new      =   true
                             is_error    =   false;
-
-                            const index = service_urls.accountLinkingModes.findIndex(x => x.id === $scope.config.account_linking_mode);
-                            $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
-                            $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
-                            $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
-
-                            const clientId = $scope.service.service_id;
-                            $scope.config.account_linking_config.client_id =  clientId;
-                            $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
-                            $scope.config.account_linking_config.scopes =  '';
+                           _changeAccountLinkingMode($scope.config.account_linking_mode);
 
                             return;
                         }
@@ -618,6 +589,31 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
 
                 return hash.toString();
+            }
+
+            function _changeAccountLinkingMode(accountLinkingMode) {
+                const index = service_urls.accountLinkingModes.findIndex(x => x.id === accountLinkingMode);
+                $scope.secretFieldType = 'password';
+                $scope.config.account_linking_config.authorization_url = service_urls.accountLinkingModes[index].webAuthorizationURI;
+                $scope.config.account_linking_config.access_token_url = service_urls.accountLinkingModes[index].accessTokenURI;
+                $scope.config.account_linking_config.domains = service_urls.accountLinkingModes[index].domains.join(';');
+
+                if ($scope.config.account_linking_mode !== 'something_else') {
+                    if ($scope.config.account_linking_mode === 'installation') {
+                        const clientId = $scope.service.service_id;
+                        $scope.config.account_linking_config.client_id =  clientId;
+                        $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                        $scope.config.account_linking_config.scopes =  '';
+                    } else if ($scope.config.account_linking_mode === 'amazon') {
+                        $scope.config.account_linking_config.client_id =  '';
+                        $scope.config.account_linking_config.client_secret =  '';
+                        $scope.config.account_linking_config.scopes =  '';
+                    }
+                } else {
+                    $scope.config.account_linking_config.client_id =  '';
+                    $scope.config.account_linking_config.client_secret = '';
+                    $scope.config.account_linking_config.scopes =  '';
+                }
             }
         }
     }
