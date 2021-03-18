@@ -54,7 +54,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 enable_account_linking: false,
                 account_linking_mode: 'installation',
                 account_linking_config: {
-                    skip_on_enablement: false,
+                    skip_on_enablement: true,
                     authorization_url: "",
                     access_token_url: "",
                     client_id: "",
