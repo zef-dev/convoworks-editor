@@ -1,7 +1,7 @@
 import template from './properties-editor.tmpl.html';
 
 /* @ngInject */
-export default function propertiesEditor($log, $document, $transitions, $rootScope, ConvoworksApi, AlertService) {
+export default function propertiesEditor($log, $document, $transitions, $rootScope, $parse, ConvoworksApi, AlertService) {
     return  {
         restrict: 'E',
         require: '^propertiesContext',
@@ -143,6 +143,17 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 propertiesContext.removeComponent();
                 propertiesContext.setSelectedComponent( null, null);
             };
+
+            $scope.shouldRender = function(key, definition, component)
+            {
+                if (!definition.component_properties[key].editor_properties || !definition.component_properties[key].editor_properties.dependency) {
+                    return true;
+                }
+
+                const result = $parse(definition.component_properties[key].editor_properties.dependency)({ component });
+
+                return !!result;
+            }
 
             $scope.isObject         =   function( val) {
                 return ( val !== null) && ( !Array.isArray( val)) && ( val instanceof Object);

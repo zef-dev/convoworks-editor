@@ -16,6 +16,7 @@
         <uib-tab heading="Properties">
             <form class="properties-editor-form">
                 <div ng-repeat="(key, val) in definition.component_properties track by key"
+                     ng-if="shouldRender(key, definition, component)"
                      ng-switch="definition.component_properties[key].editor_type">
 
                     <convo-intent-editor
