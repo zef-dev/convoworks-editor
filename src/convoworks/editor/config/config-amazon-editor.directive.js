@@ -605,9 +605,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
                         $scope.config.account_linking_config.scopes =  '';
                     } else if ($scope.config.account_linking_mode === 'amazon') {
-                        $scope.config.account_linking_config.client_id =  '';
-                        $scope.config.account_linking_config.client_secret =  '';
-                        $scope.config.account_linking_config.scopes =  '';
+                        if (accountLinkingMode !== $scope.config.account_linking_mode) {
+                            $scope.config.account_linking_config.client_id =  '';
+                            $scope.config.account_linking_config.client_secret =  '';
+                            $scope.config.account_linking_config.scopes =  '';
+                        }
                     }
                 } else {
                     $scope.config.account_linking_config.client_id =  '';
