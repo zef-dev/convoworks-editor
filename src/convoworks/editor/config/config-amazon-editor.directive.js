@@ -82,6 +82,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     contains_ads: false,
                     is_export_compliant: true,
                     testing_instructions: "N/A",
+                },
+                availability: {
+                    automatic_distribution: true,
                 }
             };
 
