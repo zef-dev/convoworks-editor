@@ -407,6 +407,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                    <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Edit Availability
+                                    </span>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        <div class="convo-form-group">
+                                            <label class="convo-form-label" for="config-auto-display">Opt in to automated locale distribution </label>
+                                            <div class="checkbox">
+                                                <label for="availability_automatic_distribution">
+                                                    <input type="checkbox" ng-model="config.availability.automatic_distribution" id="availability_automatic_distribution"/>
+                                                    When you submit your skill, Amazon will assess its eligibility for distribution to all locales of a given language. If eligible, your skill will be made live in the Alexa Skills Store associated with each additional locale. Once a skill is live for a particular locale, the skill can only be removed by suppressing the entire skill. Please remember to update your privacy policy and terms of use to be applicable globally. To learn more, read the technical documentation <a href="https://developer.amazon.com/en-US/docs/alexa/devconsole/launch-your-skill.html#opt-in-to-automated-locale-distribution" target="_blank">here</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto' && config.availability.automatic_distribution">
+                                            <p>Amazon will use the source locale <b>({{default_locale}})</b> to distribute your skill to additional locales <b>(<span ng-repeat="(index, supported_locale) in supported_locales">{{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span>)</b> in the same language.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                 <b ng-show="config.privacy_and_compliance.is_child_directed" class="text-danger">Skill is directed to children and may result in skill validation failure in Certification section. In the validation report you'll be offered to make children's skill with <a target="_blank" href="https://blueprints.amazon.com/">Alexa BluePrints Portal</a>  or seek approval to build custom skills for children via the contact us form <a target="_blank" href="https://developer.amazon.com/alexa/console/contact-us">here</a> in the Amazon Alexa Developer Portal.</b>
                             </div>
