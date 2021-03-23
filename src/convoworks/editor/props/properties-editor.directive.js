@@ -72,6 +72,26 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 }
             });
 
+            $rootScope.$on('DeleteKeyPressed', () => {
+                $scope.$applyAsync(() => {
+                    if (!$scope.component) {
+                        $log.log('propertiesEditor no component');
+                        return;
+                    }
+    
+                    if ($element.find("input:focus, textarea:focus").length) {
+                        $log.log('propertiesEditor delete key pressed but text input focused. Will not delete component.');
+                        return;
+                    }
+
+                    $log.log('propertiesEditor going to delete component [', $scope.component.properties._component_id,']');;
+
+                    propertiesContext.removeComponent();
+                    propertiesContext.setSelectedComponent(null, null);
+                    $scope.$destroy();
+                });
+            });
+
             $scope.getBlockId   =   function() {
                 var block_id    =   null;
                 if ( $scope.component.properties.block_id) {

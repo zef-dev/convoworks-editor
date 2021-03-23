@@ -22,6 +22,10 @@ appModule.run(/* @ngInject */ ($document, $rootScope) => {
         if (e.keyCode === 27) {
             $rootScope.$apply(() => { $rootScope.$broadcast('EscKeyPressed'); });
         }
+
+        if (e.keyCode === 46) {
+            $rootScope.$apply(() => { $rootScope.$broadcast('DeleteKeyPressed'); });
+        }
         
         if (e.keyCode === 83 && e.ctrlKey) {
             e.preventDefault();
