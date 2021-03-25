@@ -170,7 +170,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             {
                 const data = {
                     allowed: true,
-                    missing: null
+                    missing: []
                 };
 
                 const r = /"namespace":"(.*?)"/g;
@@ -184,7 +184,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     if (!getSelectedService().packages.includes(nmspc)) {
                         $log.warn(`selectableComponent can't paste, missing package [${nmspc}]`);
                         data.allowed = false;
-                        data.missing = nmspc;
+                        data.missing.push(nmspc);
                     }
                 }
 

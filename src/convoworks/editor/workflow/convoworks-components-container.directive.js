@@ -238,7 +238,7 @@ export default function convoworksComponentsContainer( $log, $rootScope, $timeou
                                 {
                                     text: 'Paste',
                                     click: function () {
-                                        AlertService.addWarning(`You do not have the [${paste_data.missing}] package enabled. Cannot paste.`);
+                                        AlertService.addWarning(`Cannot paste, the following packages are not enabled: [${paste_data.missing.join(', ')}].`);
                                     }
                                 }
                             );
