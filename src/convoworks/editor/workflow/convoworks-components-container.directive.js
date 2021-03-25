@@ -224,21 +224,35 @@ export default function convoworksComponentsContainer( $log, $rootScope, $timeou
 
                 $scope.getContainer =   convoworksComponentsContainer.getContainer;
 
-                $scope.getContextOptions    =   function() {
+                $scope.getContextOptions = function () {
 
-                    var options =   [];
+                    var options = [];
 
-                    if ( propertiesContext.hasClipboard() && convoworksComponentsContainer.acceptsComponent( propertiesContext.getClipboard().component)) {
-
-                        options.push(
-                            {
-                                text: 'Paste',
-                                click: function ($itemScope, $event, modelValue, text, $li) {
-                                    $log.log( 'convoworksComponentsContainer context paste');
-                                    propertiesContext.paste( convoworksComponentsContainer, convoworksComponentsContainer.getContainer().length);
+                    if (propertiesContext.hasClipboard())
+                    {
+                        if (!propertiesContext.getSelection().service.packages.includes(propertiesContext.getClipboard().component.namespace))
+                        {
+                            options.push(
+                                {
+                                    text: 'Paste',
+                                    click: function () {
+                                        AlertService.addWarning(`You do not have the [${propertiesContext.getClipboard().component.namespace}] package enabled. Cannot paste.`);
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }
+                        else if (convoworksComponentsContainer.acceptsComponent(propertiesContext.getClipboard().component))
+                        {
+                            options.push(
+                                {
+                                    text: 'Paste',
+                                    click: function ($itemScope, $event, modelValue, text, $li) {
+                                        $log.log('convoworksComponentsContainer context paste');
+                                        propertiesContext.paste(convoworksComponentsContainer, convoworksComponentsContainer.getContainer().length);
+                                    }
+                                }
+                            );
+                        }
                     }
 
                     return options;

@@ -153,6 +153,11 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     return;
                 }
 
+                if (!selection.service.packages.includes(clipboard.component.namespace)) {
+                    AlertService.addWarning(`You do not have the [${clipboard.component.namespace}] package enabled. Cannot paste.`);
+                    return;
+                }
+
                 containerController.addComponent(
                     ConvoComponentFactoryService.copyComponent(getSelectedService(), clipboard.component),
                     index

@@ -129,17 +129,32 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                         }
                     );
 
-                    if ( propertiesContext.hasClipboard() && convoworksComponentsContainer.acceptsComponent( propertiesContext.getClipboard().component)) {
-                        options.push(
-                            {
-                                text: 'Paste',
-                                click: function ($itemScope, $event, modelValue, text, $li) {
-                                    $log.log( 'selectableComponent context paste');
-                                    var index       =   convoworksComponentsContainer.indexOf( $scope.component) + 1;
-                                    propertiesContext.paste( convoworksComponentsContainer, index);
+                    if ( propertiesContext.hasClipboard())
+                    {
+                        if (!propertiesContext.getSelection().service.packages.includes(propertiesContext.getClipboard().component.namespace))
+                        {
+                            options.push(
+                                {
+                                    text: 'Paste',
+                                    click: function () {
+                                        AlertService.addWarning(`You do not have the [${propertiesContext.getClipboard().component.namespace}] package enabled. Cannot paste.`);
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        }
+                        else if (convoworksComponentsContainer.acceptsComponent( propertiesContext.getClipboard().component))
+                        {
+                            options.push(
+                                {
+                                    text: 'Paste',
+                                    click: function ($itemScope, $event, modelValue, text, $li) {
+                                        $log.log( 'selectableComponent context paste');
+                                        var index       =   convoworksComponentsContainer.indexOf( $scope.component) + 1;
+                                        propertiesContext.paste( convoworksComponentsContainer, index);
+                                    }
+                                }
+                            );
+                        }
                     }
 
                     options.push( null);
