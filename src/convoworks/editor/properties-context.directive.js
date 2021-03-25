@@ -118,6 +118,8 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             this.copy = copy;
             this.paste = paste;
 
+            this.getPasteData = getPasteData;
+
             function getClipboard()
             {
                 return localStorageService.get('clipboard');
@@ -162,6 +164,31 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     ConvoComponentFactoryService.copyComponent(getSelectedService(), clipboard.component),
                     index
                 );
+            }
+
+            function getPasteData()
+            {
+                const data = {
+                    allowed: true,
+                    missing: null
+                };
+
+                const r = /"namespace":"(.*?)"/g;
+                const cmpstr = JSON.stringify(getClipboard().component);
+                const matches = [...cmpstr.matchAll(r)];
+                
+                for (const match of matches)
+                {
+                    const nmspc = match[1];
+                    
+                    if (!getSelectedService().packages.includes(nmspc)) {
+                        $log.warn(`selectableComponent can't paste, missing package [${nmspc}]`);
+                        data.allowed = false;
+                        data.missing = nmspc;
+                    }
+                }
+
+                return data;
             }
 
             function addConvoEntity( entity) {

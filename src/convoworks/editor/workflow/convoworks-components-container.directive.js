@@ -230,13 +230,15 @@ export default function convoworksComponentsContainer( $log, $rootScope, $timeou
 
                     if (propertiesContext.hasClipboard())
                     {
-                        if (!propertiesContext.getSelection().service.packages.includes(propertiesContext.getClipboard().component.namespace))
+                        const paste_data = propertiesContext.getPasteData();
+
+                        if (!paste_data.allowed)
                         {
                             options.push(
                                 {
                                     text: 'Paste',
                                     click: function () {
-                                        AlertService.addWarning(`You do not have the [${propertiesContext.getClipboard().component.namespace}] package enabled. Cannot paste.`);
+                                        AlertService.addWarning(`You do not have the [${paste_data.missing}] package enabled. Cannot paste.`);
                                     }
                                 }
                             );
