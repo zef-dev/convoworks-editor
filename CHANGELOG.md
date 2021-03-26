@@ -3,6 +3,10 @@
 ## [Current development]
 
 * Added css classes for list and card elements preview
+* Allow propagation on Alexa Distribution Information from Convoworks
+* Add the ability to make Account Linking Configurable 
+* Add the ability to display contents of uploaded Self Signed Certificate on Amazon Config
+* Minor fixes
 
 ## [Releases]
 
