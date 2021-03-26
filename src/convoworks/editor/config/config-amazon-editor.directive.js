@@ -92,6 +92,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.gettingSkillAccountLinkingInformation = false;
             $scope.keywordsLength = 0;
             $scope.secretFieldType = 'password'
+            $scope.showCertificate = false
             $scope.account_linking_modes = [];
 
             var configBak   =   angular.copy( $scope.config);
@@ -113,6 +114,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 $window.open('https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html', '_blank');
             }
 
+            $scope.gotoLearnHowToCreateSelfSignedCertificate = function() {
+                $window.open('https://developer.amazon.com/en-US/docs/alexa/custom-skills/configure-web-service-self-signed-certificate.html', '_blank');
+            }
+
             $scope.isModeValid  = function () {
                 return !( $scope.config.mode === 'auto' && !user.amazon_account_linked);
             }
@@ -127,7 +132,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.onFileUpload = function (file, type) {
                 $log.log('ConfigurationsEditor onFileUpload file', file);
-                previousMediaItemId.set('certificate', $scope.config.self_signed_certificate);
                 previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
                 previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
 
@@ -136,9 +140,20 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     if (type === 'certificate') {
                         if (!file.name.includes('.pem')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
+                            return;
                         }
-                        preparedUpload.set('amazon.self_signed_certificate', file);
-                        $scope.config.self_signed_certificate = 'tmp_certificate_upload_ready';
+                        const reader = new FileReader();
+                        reader.readAsText(file, "UTF-8");
+                        reader.onload = function (evt) {
+                            $scope.showCertificate = false;
+                            $scope.config.self_signed_certificate = evt.target.result;
+                            $scope.$apply();
+                        }
+                        reader.onerror = function (evt) {
+                            $scope.showCertificate = false;
+                            $scope.config.self_signed_certificate = null;
+                            $scope.$apply();
+                        }
                     } else if (type === 'small_skill_icon') {
                         if (!file.name.includes('.png')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
@@ -151,6 +166,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     } else if (type === 'large_skill_icon') {
                         if (!file.name.includes('.png')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                            return;
                         }
                         preparedUpload.set('amazon.large_skill_icon', file);
                         $scope.config.skill_preview_in_store.large_skill_icon = 'tmp_large_skill_icon_upload_ready';
@@ -227,6 +243,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.updateConfig = function (isValid) {
                 $scope.secretFieldType = 'password';
+                $scope.showCertificate = false;
                 if (!isValid) {
                     AlertService.addDanger(`Invalid form data.`)
                 }
@@ -250,8 +267,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $scope.config.skill_preview_in_store.small_skill_icon = res[i].mediaItemId;
                             } else if (width === 512 && height === 512) {
                                 $scope.config.skill_preview_in_store.large_skill_icon = res[i].mediaItemId;
-                            } else if (width === null && height === null ) {
-                                $scope.config.self_signed_certificate = res[i].mediaItemId;
                             }
                         }
 
@@ -273,6 +288,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $scope.config.account_linking_config.client_id = data.account_linking_config.client_id || '';
                                 $scope.config.account_linking_config.scopes = data.account_linking_config.scopes.join(';') || '';
                                 $scope.config.account_linking_config.domains = data.account_linking_config.domains.join(';') || '';
+                            }
+
+                            $scope.config.endpoint_ssl_certificate_type = data.endpoint_ssl_certificate_type;
+                            if (data.endpoint_ssl_certificate_type === 'SelfSigned') {
+                                $scope.config.self_signed_certificate = data.self_signed_certificate
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
@@ -474,6 +494,13 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.secretFieldType = 'text';
                 } else if ($scope.secretFieldType === 'text') {
                     $scope.secretFieldType = 'password';
+                }
+            }
+            $scope.toggleShowCertificate = function () {
+                if ($scope.showCertificate === false) {
+                    $scope.showCertificate = true;
+                } else if ($scope.showCertificate === true) {
+                    $scope.showCertificate = false;
                 }
             }
 
