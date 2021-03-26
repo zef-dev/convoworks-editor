@@ -1,7 +1,7 @@
 import template from './convoworks-components-container.tmpl.html';
 
 /* @ngInject */
-export default function convoworksComponentsContainer( $log, $rootScope, $timeout, UserPreferencesService, AlertService)
+export default function convoworksComponentsContainer($log, $rootScope, $timeout, UserPreferencesService, AlertService)
     {
         var AUTO_OPEN_TIMEOUT   =   1500;
 
@@ -219,6 +219,11 @@ export default function convoworksComponentsContainer( $log, $rootScope, $timeou
                     if ( !convoworksComponentsContainer.getContainer()) {
                         return true;
                     }
+
+                    if (UserPreferencesService.get('show_hidden_containers', true)) {
+                        return false;
+                    }
+
                     return $scope.propertyDefinition.editor_properties.hideWhenEmpty && convoworksComponentsContainer.getContainer().length == 0;
                 }
 
