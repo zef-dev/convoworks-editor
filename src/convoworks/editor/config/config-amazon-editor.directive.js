@@ -284,12 +284,12 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.config.invocation = data.invocation;
                             $scope.config.interfaces = data.interfaces;
                             if ($scope.config.enable_account_linking) {
-                                $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement || false;
-                                $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url || '';
-                                $scope.config.account_linking_config.access_token_url = data.account_linking_config.access_token_url || '';
-                                $scope.config.account_linking_config.client_id = data.account_linking_config.client_id || '';
-                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes.join(';') || '';
-                                $scope.config.account_linking_config.domains = data.account_linking_config.domains.join(';') || '';
+                                $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement ?? false;
+                                $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url ?? '';
+                                $scope.config.account_linking_config.access_token_url = data.account_linking_config.access_token_url ?? '';
+                                $scope.config.account_linking_config.client_id = data.account_linking_config.client_id ?? '';
+                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes ? data.account_linking_config.scopes.join(";") : '';
+                                $scope.config.account_linking_config.domains = data.account_linking_config.domains ? data.account_linking_config.domains.join(';') : '';
                             }
 
                             $scope.config.endpoint_ssl_certificate_type = data.endpoint_ssl_certificate_type;
