@@ -184,7 +184,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     if (!getSelectedService().packages.includes(nmspc)) {
                         $log.warn(`selectableComponent can't paste, missing package [${nmspc}]`);
                         data.allowed = false;
-                        if (!data.missing.includes(nmspc) {
+                        if (!data.missing.includes(nmspc)) {
                             data.missing.push(nmspc);
                         }
                     }
