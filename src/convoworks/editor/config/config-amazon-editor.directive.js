@@ -114,6 +114,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 $window.open('https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html', '_blank');
             }
 
+            $scope.gotoLearnHowToCreateSelfSignedCertificate = function() {
+                $window.open('https://developer.amazon.com/en-US/docs/alexa/custom-skills/configure-web-service-self-signed-certificate.html', '_blank');
+            }
+
             $scope.isModeValid  = function () {
                 return !( $scope.config.mode === 'auto' && !user.amazon_account_linked);
             }

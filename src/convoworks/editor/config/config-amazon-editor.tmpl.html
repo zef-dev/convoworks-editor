@@ -86,10 +86,16 @@
 
                     <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
                         <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
-                        <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
-                               ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
-                               ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
-                        <br>
+                        <div class="input-group">
+                            <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
+                                   ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
+                                   ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
+                            <span class="input-group-btn">
+                                <button ng-click="gotoLearnHowToCreateSelfSignedCertificate()" title="Learn how to create a self signed certificate" class="btn btn-sm btn-primary submit">
+                                    Learn how to create a self signed certificate <i class="glyphicon glyphicon-new-window"></i>
+                                </button>
+                            </span>
+                        </div>
                         <button ng-if="config.self_signed_certificate" ng-click="toggleShowCertificate()" class="btn btn-default" type="button"> {{showCertificate === true ? 'Hide Uploaded Certificate' : 'Show Uploaded Certificate'}}</button>
                         <div ng-if="config.self_signed_certificate && showCertificate">
                             <span>Uploaded SSL Certificate Media ID:</span>
