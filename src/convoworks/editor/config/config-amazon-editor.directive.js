@@ -281,6 +281,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             is_error    =   false;
                             $scope.config.app_id = data.app_id;
                             $scope.config.enable_account_linking = data.enable_account_linking || false;
+                            $scope.config.invocation = data.invocation;
+                            $scope.config.interfaces = data.interfaces;
                             if ($scope.config.enable_account_linking) {
                                 $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement || false;
                                 $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url || '';
