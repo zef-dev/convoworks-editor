@@ -410,7 +410,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $scope.config.skill_preview_in_store.large_skill_icon = res.manifest.publishingInformation.locales[$scope.default_locale].largeIconUri ?? '';
                                 $scope.config.skill_preview_in_store.category = res.manifest.publishingInformation.category;
                                 $scope.config.skill_preview_in_store.keywords = res.manifest.publishingInformation.locales[$scope.default_locale].keywords.join(',');
-
+                                if (res.manifest.publishingInformation.automaticDistribution) {
+                                    $scope.config.availability.automatic_distribution = res.manifest.publishingInformation.automaticDistribution.isActive;
+                                }
                                 if (res.manifest.privacyAndCompliance) {
                                     $scope.config.skill_preview_in_store.terms_of_use_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].termsOfUseUrl;
                                     $scope.config.skill_preview_in_store.privacy_policy_url = res.manifest.privacyAndCompliance.locales[$scope.default_locale].privacyPolicyUrl;
