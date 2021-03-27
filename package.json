@@ -1,6 +1,6 @@
 {
   "name": "@zef-dev/convoworks-editor",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "Editor GUI for the Convoworks framework",
   "author": "zef-dev",
   "license": "MIT",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.28",
-    "@zef-dev/convoworks-intent-model-editor": "^1.2.*",
+    "@zef-dev/convoworks-intent-model-editor": "1.2.*",
     "angular-bootstrap-contextmenu": "^1.2.1",
     "angular-local-storage": "~0.2.7",
     "angular-ui-sortable": "^0.19.0",

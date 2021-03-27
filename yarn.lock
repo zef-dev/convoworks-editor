@@ -1192,7 +1192,7 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@zef-dev/convoworks-intent-model-editor@^1.2.*":
+"@zef-dev/convoworks-intent-model-editor@1.2.*":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@zef-dev/convoworks-intent-model-editor/-/convoworks-intent-model-editor-1.2.1.tgz#7147b221fd1713335cd5580040b4d068c71706ae"
   integrity sha512-VIOFmJW51Cqq1AMagr6SGzK0oYGPfzUpAst3Rb/ikZa/Xi6jH1idvxQaJD/hGpXAymVM2nb0ALIUMF7q6wW8qw==
