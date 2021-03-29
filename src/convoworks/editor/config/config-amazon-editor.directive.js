@@ -198,7 +198,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 }
                             }
                             if (errorReport !== '') {
-                                AlertService.addDanger(`Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 512 X 512.`);
+                                AlertService.addDanger(errorReport);
                             }
                             URL.revokeObjectURL(file);
                         }
