@@ -278,7 +278,7 @@
 
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_small_skill_icon" class="convo-form-label">Small Icon</label>
-                                            <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_small_skill_icon"
+                                            <input type="file" accept="image/png" class="convo-form-input" id="skill_preview_in_store_small_skill_icon"
                                                    ngf-drop="onFileUpload($file, 'small_skill_icon')" ng-model="config.skill_preview_in_store.small_skill_icon"
                                                    ngf-select="onFileUpload($file, 'small_skill_icon')" ngf-multiple="false">
                                             <img ng-if="config.skill_preview_in_store.small_skill_icon !== ''" ng-src="{{ getSkillIcon('small_skill_icon') }}" id="small_skill_icon" width="108" height="108">
@@ -286,7 +286,7 @@
 
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_large_skill_icon" class="convo-form-label">Large Icon</label>
-                                            <input type="file" accept=".png" class="convo-form-input" id="skill_preview_in_store_large_skill_icon"
+                                            <input type="file" accept="image/png" class="convo-form-input" id="skill_preview_in_store_large_skill_icon"
                                                    ngf-drop="onFileUpload($file, 'large_skill_icon')" ng-model="config.skill_preview_in_store.large_skill_icon"
                                                    ngf-select="onFileUpload($file, 'large_skill_icon')" ngf-multiple="false">
                                             <img ng-if="config.skill_preview_in_store.large_skill_icon !== ''" ng-src="{{ getSkillIcon('large_skill_icon') }}" id="large_skill_icon" width="108" height="108">

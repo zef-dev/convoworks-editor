@@ -132,11 +132,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.onFileUpload = function (file, type) {
                 $log.log('ConfigurationsEditor onFileUpload file', file);
-                previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
-                previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
 
                 if (file) {
                     var image = new Image();
+                    const allowedImageTypes = ['image/png'];
                     if (type === 'certificate') {
                         if (!file.name.includes('.pem')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
@@ -155,8 +154,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.$apply();
                         }
                     } else if (type === 'small_skill_icon') {
-                        if (!file.name.includes('.png')) {
-                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        if (!allowedImageTypes.includes(file.type)) {
+                            AlertService.addDanger(`Invalid file type ${file.type} of ${file.name}. It must be image/png!`);
+                            $scope.config.skill_preview_in_store.small_skill_icon = previousMediaItemId.get('small_skill_icon') ?? '';
+                            return;
                         }
                         preparedUpload.set('amazon.small_skill_icon', file);
                         $scope.config.skill_preview_in_store.small_skill_icon = 'tmp_small_skill_icon_upload_ready';
@@ -164,8 +165,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         fileBytesSmallIcon = URL.createObjectURL(file);
                         image.src = fileBytesSmallIcon;
                     } else if (type === 'large_skill_icon') {
-                        if (!file.name.includes('.png')) {
-                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        if (!allowedImageTypes.includes(file.type)) {
+                            AlertService.addDanger(`Invalid file type ${file.type} of ${file.name}. It must be image/png!`);
+                            $scope.config.skill_preview_in_store.large_skill_icon = previousMediaItemId.get('large_skill_icon') ?? '';
                             return;
                         }
                         preparedUpload.set('amazon.large_skill_icon', file);
@@ -182,19 +184,19 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 if (image.height !== 108 && image.width !== 108) {
                                     preparedUpload.delete('amazon.small_skill_icon');
                                     errorReport = `Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 108 X 108.`;
-                                    $scope.config.skill_preview_in_store.small_skill_icon = '';
+                                    $scope.config.skill_preview_in_store.small_skill_icon = previousMediaItemId.get('small_skill_icon') ?? '';
                                     $scope.$apply();
                                 }
                             } else if (type === 'large_skill_icon') {
                                 if (image.height !== 512 && image.width !== 512) {
                                     preparedUpload.delete('amazon.large_skill_icon');
                                     errorReport = `Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 512 X 512.`;
-                                    $scope.config.skill_preview_in_store.large_skill_icon = '';
+                                    $scope.config.skill_preview_in_store.large_skill_icon = previousMediaItemId.get('large_skill_icon') ?? '';
                                     $scope.$apply();
                                 }
                             }
                             if (errorReport !== '') {
-                                AlertService.addDanger(`Invalid image size of ${file.name}. Actual image size is ${image.width} X ${image.width}. It should be 512 X 512.`);
+                                AlertService.addDanger(errorReport);
                             }
                             URL.revokeObjectURL(file);
                         }
@@ -225,9 +227,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
 
                 if (mediaItemId === previousMediaItemId.get('small_skill_icon') && type === 'small_skill_icon') {
-                    mediaItemId = previousMediaItemId.get('small_skill_icon');
+                    mediaItemId = previousMediaItemId.get('small_skill_icon') ?? '';
                 } else if (mediaItemId === previousMediaItemId.get('large_skill_icon') && type === 'large_skill_icon') {
-                    mediaItemId = previousMediaItemId.get('large_skill_icon');
+                    mediaItemId = previousMediaItemId.get('large_skill_icon') ?? '';
                 }
 
                 if (mediaItemId === 'tmp_small_skill_icon_upload_ready' && type === 'small_skill_icon') {
@@ -265,8 +267,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                             if (width === 108 && height === 108) {
                                 $scope.config.skill_preview_in_store.small_skill_icon = res[i].mediaItemId;
+                                previousMediaItemId.set('small_skill_icon', res[i].mediaItemId);
                             } else if (width === 512 && height === 512) {
                                 $scope.config.skill_preview_in_store.large_skill_icon = res[i].mediaItemId;
+                                previousMediaItemId.set('large_skill_icon', res[i].mediaItemId);
                             }
                         }
 
@@ -579,6 +583,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'amazon').then(function (data) {
                         $scope.config = data;
+                        previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
+                        previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
                         _setIsChildDirected();
                         _changeAccountLinkingMode($scope.config.account_linking_mode);
                         $scope.validateKeywords(false);
