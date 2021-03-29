@@ -137,6 +137,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                 if (file) {
                     var image = new Image();
+                    const allowedImageTypes = ['image/png'];
                     if (type === 'certificate') {
                         if (!file.name.includes('.pem')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
@@ -155,8 +156,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.$apply();
                         }
                     } else if (type === 'small_skill_icon') {
-                        if (!file.name.includes('.png')) {
-                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        if (!allowedImageTypes.includes(file.type)) {
+                            AlertService.addDanger(`Invalid file type ${file.type} of ${file.name}. It must be image/png!`);
+                            $scope.config.skill_preview_in_store.small_skill_icon = '';
+                            return;
                         }
                         preparedUpload.set('amazon.small_skill_icon', file);
                         $scope.config.skill_preview_in_store.small_skill_icon = 'tmp_small_skill_icon_upload_ready';
@@ -164,8 +167,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         fileBytesSmallIcon = URL.createObjectURL(file);
                         image.src = fileBytesSmallIcon;
                     } else if (type === 'large_skill_icon') {
-                        if (!file.name.includes('.png')) {
-                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .png!`);
+                        if (!allowedImageTypes.includes(file.type)) {
+                            AlertService.addDanger(`Invalid file type ${file.type} of ${file.name}. It must be image/png!`);
+                            $scope.config.skill_preview_in_store.large_skill_icon = '';
                             return;
                         }
                         preparedUpload.set('amazon.large_skill_icon', file);
