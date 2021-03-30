@@ -2,6 +2,8 @@
 
 ## [Current development]
 
+* Fixed upload validation for Small and Large Icons on Amazon Service Configuration under Edit Skill Store Preview tab
+
 ## [Releases]
 
 ### 0.21.0 - 2021-03-27 ###
