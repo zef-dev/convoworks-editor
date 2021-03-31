@@ -4,6 +4,11 @@
 
 ## [Releases]
 
+### 0.21.2 - 2021-03-31 ###
+
+* handle rejected promise
+* no avatar for dialogflow
+
 ### 0.21.1 - 2021-03-30 ###
 
 * Fixed upload validation for Small and Large Icons on Amazon Service Configuration under Edit Skill Store Preview tab
