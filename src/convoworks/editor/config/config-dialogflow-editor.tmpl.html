@@ -105,15 +105,6 @@
                     </label>
                 </div>
 
-                <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                    <label for="dialogflow-config-agent-avatar" class="convo-form-label">Agent Avatar</label>
-                    <input type="file" class="convo-form-input" id="dialogflow-config-agent-avatar"
-                           ngf-drop="onFileUpload($file)" ng-model="config.avatar"
-                           ngf-select="onFileUpload($file)" ngf-multiple="false">
-                    <img ng-src="{{ getMedia('avatar') }}" width="300" height="auto">
-                </div>
-
-
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
                         <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid" class="btn btn-primary btn-sm submit">

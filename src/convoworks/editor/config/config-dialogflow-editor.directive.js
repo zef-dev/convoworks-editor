@@ -33,9 +33,6 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
 
                 _load();
 
-                var preparedUpload = new Map();
-                var previousMediaItemId = null;
-
 
                 $scope.$watch('config.default_timezone', function(newDefaultTImeZone) {
                     if (newDefaultTImeZone !== undefined) {
@@ -72,19 +69,13 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                         throw new Error(`Invalid form data.`)
                     }
                     _updateSelectedInterfaces();
-                    var maybeUpload = preparedUpload ?
-                        ConvoworksApi.uploadMedia(
-                            $scope.service.service_id,
-                            preparedUpload.entries()) :
-                        null;
+                    var maybeUpload = null;
 
                     $q.when(maybeUpload).then(function (res) {
                         if (res && res.length > 0) {
                             for(var i = 0; i < res.length; i++) {
                                 $scope.config.avatar = res[i].mediaItemId;
                             }
-
-                            preparedUpload.clear();
                         }
 
                         if (is_new) {
@@ -124,40 +115,12 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 }
 
                 $scope.revertConfig = function () {
-                    if (preparedUpload.size > 0) {
-                        preparedUpload.clear();
-                    }
-
-                    if (previousMediaItemId) {
-                        previousMediaItemId = null;
-                    }
-
                     $scope.config = angular.copy(configBak);
                 }
 
                 $scope.onFileUpload = function (file) {
                     $log.log('ConfigurationsEditor onFileUpload file', file);
-
-                    preparedUpload.set('dialogflow.avatar', file);
-
-                    previousMediaItemId = $scope.config.avatar;
                     $scope.config.avatar = 'tmp_upload_ready';
-                }
-
-                $scope.getMedia = function(type) {
-                    var mediaItemId = $scope.config[type];
-
-                    if (!mediaItemId) {
-                        return '';
-                    }
-
-                    if (mediaItemId === 'tmp_upload_ready') {
-                        mediaItemId = previousMediaItemId;
-                    }
-
-//                  $log.log('ConfigurationsEditor getMedia(', type, ') mediaItemId', mediaItemId);
-
-                    return ConvoworksApi.downloadMedia($scope.service.service_id, mediaItemId);
                 }
 
                 $scope.isConfigChanged = function () {
