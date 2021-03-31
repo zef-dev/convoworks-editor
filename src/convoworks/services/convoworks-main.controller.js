@@ -87,9 +87,6 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
             _init();
         }, (reason) => {
             $log.log('ConvoworksMainController deleteService modal dismissed, reason', reason);
-            
-            $scope.ready = false;
-            _init();
         })
     }
 
