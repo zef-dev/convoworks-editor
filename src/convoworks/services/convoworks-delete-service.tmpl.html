@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="convo-form-group col-md-12">
+                    <div class="convo-form-group col-md-12" ng-if="!report">
                         <div class="checkbox">
                             <label class="convo-form-label" for="local-only">
                                 <input type="checkbox" name="local-only" id="local-only" ng-model="localOnly.selected">
@@ -16,10 +16,57 @@
                         <span class="help-block">Select this if you wish to delete only the Convoworks service model and all its accompanying configurations. This will keep remotely published services on vendors such as Amazon, Dialogflow, etc.</span>
                     </div>
 
+                    <div ng-if="report" class="report">
+                        <div ng-if="shouldShow(report.successes)">
+                            <h3>Successes</h3>
+                            <ul class="successes">
+                                <li ng-repeat="(platform, data) in report.successes track by $index">
+                                    <h4>{{ fixName(platform) }}</h4>
+                                    <span class="info" ng-repeat="(category, success) in data">
+                                        <i class="glyphicon glyphicon-ok-sign"></i>
+                                        {{ fixName(category) }}
+                                        <hr>
+                                        {{ success }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div ng-if="shouldShow(report.warnings)">
+                            <h3>Warnings</h3>
+                            <ul class="warnings">
+                                <li ng-repeat="(platform, data) in report.warnings track by $index">
+                                    <h4>{{ fixName(platform) }}</h4>
+                                    <span class="info" ng-repeat="(category, warning) in data">
+                                        <i class="glyphicon glyphicon-warning-sign"></i>
+                                        {{ fixName(category) }}
+                                        <hr>
+                                        {{ warning }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div ng-if="shouldShow(report.errors)">
+                            <h3>Errors</h3>
+                            <ul class="errors">
+                                <li ng-repeat="(platform, data) in report.errors track by $index">
+                                    <h4>{{ fixName(platform) }}</h4>
+                                    <span class="info" ng-repeat="(category, error) in data">
+                                        <i class="glyphicon glyphicon-remove-sign"></i>
+                                        {{ fixName(category) }}
+                                        <hr>
+                                        {{ error }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="convo-form-group col-md-12">
                         <div class="button-group">
-                            <button type="submit" class="btn btn-danger delete" title="Delete service">Delete</button>
-                            <a class="cancel" ng-click="cancel()" title="Cancel deletion">Cancel</a>
+                            <button type="submit" class="btn btn-danger delete" title="Delete service" ng-if="!report">Delete</button>
+                            <a class="cancel" ng-click="cancel()" title="Cancel deletion" ng-if="!report">Cancel</a>
+                            
+                            <button type="button" class="btn btn-primary" title="OK" ng-if="report" ng-click="ok()">OK</button>
                         </div>
                     </div>
                 </div>
