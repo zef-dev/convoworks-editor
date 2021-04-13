@@ -69,7 +69,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $scope.config.time_created = data.time_created;
                         $scope.config.time_updated = data.time_created;
                         AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Facebook Messenger.`);
-                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'facebook_messenger', platform_config: $scope.config});
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
@@ -83,7 +83,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $scope.config.time_created = data.time_created;
                         $scope.config.time_updated = data.time_updated;
                         AlertService.addSuccess(`Facebook Messenger config updated.`)
-                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'facebook_messenger', platform_config: $scope.config});
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
