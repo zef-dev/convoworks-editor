@@ -23,7 +23,9 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     name: null,
                     description: null,
                     avatar: null,
-                    default_timezone: 'Europe/Madrid'
+                    default_timezone: 'Europe/Madrid',
+                    time_created: 0,
+                    time_updated: 0
                 };
 
                 var configBak   =   angular.copy( $scope.config);
@@ -87,6 +89,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                                 configBak = angular.copy( $scope.config);
                                 logline = 'configDialogflowEditor create() response';
                                 is_new = false;
+                                $scope.config.time_created = data.time_created;
+                                $scope.config.time_updated = data.time_created;
                                 AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
                                 $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                             }, function (response) {
@@ -105,6 +109,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     }).then(function (data) {
                         configBak = angular.copy($scope.config);
                         is_error = false;
+                        $scope.config.time_created = data.time_created;
+                        $scope.config.time_updated = data.time_updated;
                         AlertService.addSuccess('Dialogflow config updated.');
                         $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                     }, function (response) {
