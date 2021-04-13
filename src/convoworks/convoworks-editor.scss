@@ -123,6 +123,12 @@
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
     }
 
+    .header > .contents > .status {
+        width: auto;
+        text-align: end;
+        margin: auto;
+    }
+
      .header > .contents > .publish > .publish-group {
         width: 100%;
     }
