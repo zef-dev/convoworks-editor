@@ -48,6 +48,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         this.getServicePlatformConfig   =   getServicePlatformConfig;
         this.createServicePlatformConfig   =   createServicePlatformConfig;
         this.updateServicePlatformConfig   =   updateServicePlatformConfig;
+        // /service-platform-propagate/{serviceId}/{platformId}
         this.propagateServicePlatform   =   propagateServicePlatform;
         this.getPropagateInfo           =   getPropagateInfo;
 
