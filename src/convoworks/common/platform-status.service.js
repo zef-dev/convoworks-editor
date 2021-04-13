@@ -9,6 +9,7 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
         let pollTry = [];
 
         this.checkStatus = checkStatus;
+        this.cancelAllPolls = cancelAllPolls;
 
         function checkStatus(serviceId, platformId)
         {
@@ -28,6 +29,16 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
                 pollTry[platformId] = 0;
                 $rootScope.$broadcast('PlatformStatusUpdated', broadcastPayload);
             });
+        }
+
+        function cancelAllPolls() {
+            $log.log('going to cancel all polls in PlatformStatusService', timeout, pollTry);
+
+            for (const platformId in timeout) {
+                if (timeout.hasOwnProperty(platformId))  {
+                    _cancelPoll(platformId);
+                }
+            }
         }
 
         function _pollUntilStatusFinished(serviceId, platformId) {
