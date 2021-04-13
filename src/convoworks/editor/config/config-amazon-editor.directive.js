@@ -85,7 +85,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 },
                 availability: {
                     automatic_distribution: true,
-                }
+                },
+                time_created: 0,
+                time_updated: 0
             };
 
             $scope.gettingSkillManifest = false;
@@ -287,6 +289,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.config.enable_account_linking = data.enable_account_linking || false;
                             $scope.config.invocation = data.invocation;
                             $scope.config.interfaces = data.interfaces;
+                            $scope.config.time_created = data.time_created;
+                            $scope.config.time_updated = data.time_created;
                             if ($scope.config.enable_account_linking) {
                                 $scope.config.account_linking_config.skip_on_enablement = data.account_linking_config.skip_on_enablement ?? false;
                                 $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url ?? '';
@@ -313,6 +317,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             return ConvoworksApi.getExistingAlexaSkill($scope.owner, $scope.service.service_id).then(function (res) {
                                 if (res.manifest) {
                                     return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                        $scope.config.time_created = data.time_created;
+                                        $scope.config.time_updated = data.time_updated;
                                         configBak = angular.copy( $scope.config);
                                         is_error    =   false;
                                         AlertService.addSuccess('Amazon config updated.');
@@ -332,6 +338,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             });
                         } else {
                             return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
+                                $scope.config.time_created = data.time_created;
+                                $scope.config.time_updated = data.time_updated;
                                 configBak = angular.copy( $scope.config);
                                 is_error    =   false;
                                 AlertService.addSuccess('Amazon config updated.');
