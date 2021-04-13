@@ -5,8 +5,8 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
         const MAX_NUMBER_OF_TRIES = 20;
         const TIMEOUT_LENGTH = 10000;
 
-        let timeout = [];
-        let pollTry = [];
+        let pollTimeouts = [];
+        let pollTries = [];
 
         this.checkStatus = checkStatus;
         this.cancelAllPolls = cancelAllPolls;
@@ -21,45 +21,45 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
                     _pollUntilStatusFinished(serviceId, platformId);
                 } else if (data.status !== 'SERVICE_PROPAGATION_STATUS_IN_PROGRESS') {
                     broadcastPayload.checkingServiceStatus = false;
-                    pollTry[platformId] = 0;
+                    pollTries[platformId] = 0;
                 }
                 $rootScope.$broadcast('PlatformStatusUpdated', broadcastPayload);
             }).catch(function() {
                 let broadcastPayload = {checkingServiceStatus: false, status: '', platformName: platformId, errorMessage: 'Failed to check status of ' + platformId};
-                pollTry[platformId] = 0;
+                pollTries[platformId] = 0;
                 $rootScope.$broadcast('PlatformStatusUpdated', broadcastPayload);
             });
         }
 
         function cancelAllPolls() {
-            $log.log('going to cancel all polls in PlatformStatusService', timeout, pollTry);
+            $log.log('going to cancel all pollTimeouts in PlatformStatusService', pollTimeouts, pollTries);
 
-            for (const platformId in timeout) {
-                if (timeout.hasOwnProperty(platformId))  {
+            for (const platformId in pollTimeouts) {
+                if (pollTimeouts.hasOwnProperty(platformId))  {
                     _cancelPoll(platformId);
                 }
             }
         }
 
         function _pollUntilStatusFinished(serviceId, platformId) {
-            $log.log('_pollUntilStatusFinished()', timeout, pollTry, platformId);
-            pollTry[platformId] === undefined ? pollTry[platformId] = 0 : pollTry[platformId] = pollTry[platformId];
+            $log.log('_pollUntilStatusFinished()', pollTimeouts, pollTries, platformId);
+            pollTries[platformId] === undefined ? pollTries[platformId] = 0 : pollTries[platformId] = pollTries[platformId];
 
             _cancelPoll(platformId);
-            timeout[platformId] = $timeout(function() {
-                pollTry[platformId]++;
-                if (pollTry[platformId] <= MAX_NUMBER_OF_TRIES) {
+            pollTimeouts[platformId] = $timeout(function() {
+                pollTries[platformId]++;
+                if (pollTries[platformId] <= MAX_NUMBER_OF_TRIES) {
                     checkStatus(serviceId, platformId);
                 } else {
-                    pollTry[platformId] = 0;
+                    pollTries[platformId] = 0;
                 }
             }, TIMEOUT_LENGTH);
         }
 
         function _cancelPoll(platformId) {
-            if (timeout[platformId] !== undefined) {
-                $timeout.cancel(timeout[platformId]);
-                timeout[platformId] = undefined;
+            if (pollTimeouts[platformId] !== undefined) {
+                $timeout.cancel(pollTimeouts[platformId]);
+                pollTimeouts[platformId] = undefined;
             }
         }
 }
