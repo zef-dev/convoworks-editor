@@ -7,6 +7,7 @@ import AlertService from './alert-service';
 import UserPreferencesService from './user-preferences.service';
 import DeferredsStackService from './deferreds-stack.service';
 import ConvoworksApi from './convoworks-api';
+import PlatformStatusService from './platform-status.service';
 
 import jsonText from './json-text.directive';
 import loadingIndicator from './loading.directive';
@@ -33,4 +34,5 @@ export default angular
   .service('DeferredsStackService', DeferredsStackService)
   .service('UserPreferencesService', UserPreferencesService)
   .service('ConvoworksApi', ConvoworksApi)
+  .service('PlatformStatusService', PlatformStatusService)
   .name;
