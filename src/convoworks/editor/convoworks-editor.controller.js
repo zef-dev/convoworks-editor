@@ -245,6 +245,11 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             return checkCount > 0 ? 'glyphicon glyphicon-cog spinning' : '';
         }
 
+        $scope.$on( '$destroy', function() {
+            $log.log( 'convoworks-editor $destroy');
+            PlatformStatusService.cancelAllPolls();
+        });
+
         function _fixPlatformId(platform)
         {
             return platform.charAt(0).toUpperCase() + platform.slice(1);
