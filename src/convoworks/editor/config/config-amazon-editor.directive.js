@@ -306,7 +306,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
-                            $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
@@ -322,7 +321,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                         configBak = angular.copy( $scope.config);
                                         is_error    =   false;
                                         AlertService.addSuccess('Amazon config updated.');
-                                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                                     }, function ( response) {
                                         $log.debug('configAmazonEditor update() response', response);
                                         is_error    =   true;
@@ -343,7 +341,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 configBak = angular.copy( $scope.config);
                                 is_error    =   false;
                                 AlertService.addSuccess('Amazon config updated.');
-                                $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
                             }, function ( response) {
                                 $log.debug('configAmazonEditor update() response', response);
                                 is_error    =   true;
@@ -356,7 +353,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     if (!is_error) {
                         configBak = angular.copy($scope.config);
                         is_error = false;
-                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'amazon', platform_config: $scope.config});
                     }
                 }, function (response) {
                     $log.debug(logline, response);
