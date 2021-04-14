@@ -196,6 +196,11 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     return true;
                 }
 
+                $scope.validateAgentName = function() {
+                    $scope.dialogflowPlatformConfigForm.name.$invalid = $scope.config.name ? $scope.config.name.match(/\s/g) : true;
+                }
+
+
                 function _load()
                 {
                     ConvoworksApi.getConfigOptions().then(function (options) {
