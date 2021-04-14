@@ -4,9 +4,14 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
 
         const MAX_NUMBER_OF_TRIES = 20;
         const TIMEOUT_LENGTH = 10000;
+        const SERVICE_PROPAGATION_STATUS_IN_PROGRESS = 'SERVICE_PROPAGATION_STATUS_IN_PROGRESS';
+        const SERVICE_PROPAGATION_STATUS_FINISHED = 'SERVICE_PROPAGATION_STATUS_FINISHED';
 
         let pollTimeouts = [];
         let pollTries = [];
+
+        this.SERVICE_PROPAGATION_STATUS_IN_PROGRESS = SERVICE_PROPAGATION_STATUS_IN_PROGRESS;
+        this.SERVICE_PROPAGATION_STATUS_FINISHED = SERVICE_PROPAGATION_STATUS_FINISHED;
 
         this.checkStatus = checkStatus;
         this.cancelAllPolls = cancelAllPolls;
@@ -17,9 +22,9 @@ export default function PlatformStatusService( $rootScope, $log, $http, $q, $tim
             ConvoworksApi.checkExternalServiceStatus(serviceId, platformId).then(function (data) {
                 $log.log('checkExternalServiceStatus', serviceId, platformId, data);
                 let broadcastPayload = {checkingServiceStatus: true, status: data.status, platformName: platformId};
-                if (data.status === 'SERVICE_PROPAGATION_STATUS_IN_PROGRESS') {
+                if (data.status === SERVICE_PROPAGATION_STATUS_IN_PROGRESS) {
                     _pollUntilStatusFinished(serviceId, platformId);
-                } else if (data.status !== 'SERVICE_PROPAGATION_STATUS_IN_PROGRESS') {
+                } else if (data.status !== SERVICE_PROPAGATION_STATUS_IN_PROGRESS) {
                     broadcastPayload.checkingServiceStatus = false;
                     pollTries[platformId] = 0;
                 }
