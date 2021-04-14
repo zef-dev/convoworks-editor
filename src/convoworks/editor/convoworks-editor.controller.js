@@ -69,10 +69,12 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         }
 
         $scope.$on( 'ServiceConfigUpdated', function ( evt, data) {
+            $log.log('ServiceConfigUpdated in convowork-editor.controller.js', data);
+
             const platformData = data.platform_config;
             const platformId = data.platform_id;
+
             if (platformData.time_created === platformData.time_updated) {
-                $log.log('ServiceConfigUpdated in convowork-editor.controller.js', data);
                 AlertService.addInfo(`Going to check build status of ${_fixPlatformId(platformId)}.`);
                 PlatformStatusService.checkStatus($scope.serviceId, platformId);
             }
@@ -237,7 +239,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
             for (const allowedPlatform of allowedPlatforms)
             {
-                if ($scope.platformStatus.has(allowedPlatform) && $scope.platformStatus.get('amazon').checkingServiceStatus) {
+                if ($scope.platformStatus.has(allowedPlatform) && $scope.platformStatus.get(allowedPlatform).checkingServiceStatus) {
                     checkCount++;
                 }
             }
