@@ -20,7 +20,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     mode: 'manual',
                     projectId: null,
                     serviceAccount: null,
-                    name: null,
+                    name: _generateDialogflowAgentName($scope.service.name),
                     description: null,
                     avatar: null,
                     default_timezone: 'Europe/Madrid',
@@ -219,6 +219,10 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             is_error    =   true;
                         });
                     });
+                }
+
+                function _generateDialogflowAgentName(agentName) {
+                    return agentName.replace(/\s/g,'');
                 }
             }
         }
