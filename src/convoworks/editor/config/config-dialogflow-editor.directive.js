@@ -71,53 +71,44 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                         throw new Error(`Invalid form data.`)
                     }
                     _updateSelectedInterfaces();
-                    var maybeUpload = null;
 
-                    $q.when(maybeUpload).then(function (res) {
-                        if (res && res.length > 0) {
-                            for(var i = 0; i < res.length; i++) {
-                                $scope.config.avatar = res[i].mediaItemId;
-                            }
-                        }
-
-                        if (is_new) {
-                            return ConvoworksApi.createServicePlatformConfig(
-                                $scope.service.service_id,
-                                'dialogflow',
-                                $scope.config
-                            ).then(function (data) {
-                                configBak = angular.copy( $scope.config);
-                                logline = 'configDialogflowEditor create() response';
-                                is_new = false;
-                                $scope.config.time_created = data.time_created;
-                                $scope.config.time_updated = data.time_created;
-                                AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
-                                $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
-                            }, function (response) {
-                                $log.debug('configDialogflowEditor create() response', response);
-                                is_error    =   true;
-                                throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
-                            });
-                        }
-
-                        logline = 'configDialogflowEditor update() response';
+                    if (is_new) {
+                        return ConvoworksApi.createServicePlatformConfig(
+                            $scope.service.service_id,
+                            'dialogflow',
+                            $scope.config
+                        ).then(function (data) {
+                            configBak = angular.copy( $scope.config);
+                            logline = 'configDialogflowEditor create() response';
+                            is_new = false;
+                            $scope.config.time_created = data.time_created;
+                            $scope.config.time_updated = data.time_created;
+                            AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
+                            $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
+                        }, function (response) {
+                            $log.debug('configDialogflowEditor create() response', response);
+                            is_error    =   true;
+                            throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
+                        });
+                    } else {
                         return ConvoworksApi.updateServicePlatformConfig(
                             $scope.service.service_id,
                             'dialogflow',
                             $scope.config
-                        );
-                    }).then(function (data) {
-                        configBak = angular.copy($scope.config);
-                        is_error = false;
-                        $scope.config.time_created = data.time_created;
-                        $scope.config.time_updated = data.time_updated;
-                        AlertService.addSuccess('Dialogflow config updated.');
-                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
-                    }, function (response) {
-                        $log.debug(logline, response);
-                        is_error = true;
-                        throw new Error(`Can't update config for Dialogflow. ${response.data.message}`);
-                    });
+                        ).then(function (data) {
+                            configBak = angular.copy( $scope.config);
+                            logline = 'configDialogflowEditor update() response';
+                            is_new = false;
+                            $scope.config.time_created = data.time_created;
+                            $scope.config.time_updated = data.time_updated;
+                            AlertService.addSuccess(`Dialogflow config updated.`);
+                            $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
+                        }, function (response) {
+                            $log.debug('configDialogflowEditor create() response', response);
+                            is_error    =   true;
+                            throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
+                        });
+                    }
                 }
 
                 $scope.revertConfig = function () {
