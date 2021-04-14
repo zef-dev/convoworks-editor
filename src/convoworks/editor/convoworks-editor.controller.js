@@ -110,7 +110,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             if (data.errorMessage) {
                 AlertService.addDanger(data.errorMessage);
             } else {
-                if (data.status === 'SERVICE_PROPAGATION_STATUS_FINISHED') {
+                if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
                 }
             }
@@ -218,9 +218,9 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             $log.log('getPropagationStatusText()', $scope.platformStatus)
 
             if ($scope.platformStatus.has(platformId)) {
-                if ($scope.platformStatus.get(platformId).status === 'SERVICE_PROPAGATION_STATUS_FINISHED') {
+                if ($scope.platformStatus.get(platformId).status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     text = '';
-                } else if ($scope.platformStatus.get(platformId).status === 'SERVICE_PROPAGATION_STATUS_IN_PROGRESS') {
+                } else if ($scope.platformStatus.get(platformId).status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_IN_PROGRESS) {
                     text = 'Building ' + _fixPlatformId($scope.platformStatus.get(platformId).platformName) + '...';
                 }
             }
