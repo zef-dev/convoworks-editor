@@ -24,7 +24,9 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                 app_id: null,
                 app_secret: null,
                 webhook_verify_token: null,
-                webhook_events: []
+                webhook_events: [],
+                time_created: 0,
+                time_updated: 0
             };
 
             $scope.intentNlps  =   [
@@ -64,8 +66,10 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         configBak = angular.copy( $scope.config);
                         is_new      =   false;
                         is_error    =   false;
+                        $scope.config.time_created = data.time_created;
+                        $scope.config.time_updated = data.time_created;
                         AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Facebook Messenger.`);
-                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'facebook_messenger', platform_config: $scope.config});
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
@@ -76,8 +80,10 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
                         configBak = angular.copy( $scope.config);
                         is_error    =   false;
+                        $scope.config.time_created = data.time_created;
+                        $scope.config.time_updated = data.time_updated;
                         AlertService.addSuccess(`Facebook Messenger config updated.`)
-                        $rootScope.$broadcast('ServiceConfigUpdated', $scope.config);
+                        $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'facebook_messenger', platform_config: $scope.config});
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;

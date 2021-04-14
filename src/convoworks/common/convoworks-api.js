@@ -48,8 +48,11 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         this.getServicePlatformConfig   =   getServicePlatformConfig;
         this.createServicePlatformConfig   =   createServicePlatformConfig;
         this.updateServicePlatformConfig   =   updateServicePlatformConfig;
+        // /service-platform-propagate/{serviceId}/{platformId}
         this.propagateServicePlatform   =   propagateServicePlatform;
         this.getPropagateInfo           =   getPropagateInfo;
+        // service-platform-status/{serviceId}/{platformId}
+        this.checkExternalServiceStatus = checkExternalServiceStatus;
 
         // publish-service/{platformId}/{serviceId}
         this.getPublishInformation      =   getPublishInformation;
@@ -709,6 +712,17 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             url: CONVO_ADMIN_API_BASE_URL + '/supply-urls/service-urls/' + serviceId
         }).then(function(res) {
             $log.log('ConvoworksApi getServiceUrls() then', res.data);
+            return res.data;
+        });
+    }
+
+    function checkExternalServiceStatus(serviceId, platformId) {
+        $log.log('ConvoworksApi checkExternalServiceStatus()', serviceId, platformId);
+        return $http({
+            method: 'GET',
+            url: CONVO_ADMIN_API_BASE_URL + '/service-platform-status/' + serviceId +'/' + platformId
+        }).then(function(res) {
+            $log.log('ConvoworksApi checkExternalServiceStatus() then', res.data);
             return res.data;
         });
     }
