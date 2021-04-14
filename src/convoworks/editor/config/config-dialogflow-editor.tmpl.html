@@ -81,8 +81,9 @@
 
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
                     <label for="name" class="convo-form-label">Agent Name</label>
-                    <input ng-required="true" type="text" class="convo-form-input" id="name"  name="name" placeholder="" ng-model="config.name">
-                    <b ng-show="dialogflowPlatformConfigForm.name.$invalid && !dialogflowPlatformConfigForm.name.$pristine" class="text-danger">Agent Name is required.</b>
+                    <input ng-required="true" ng-change="validateAgentName()" type="text" class="convo-form-input" id="name"  name="name" placeholder="" ng-model="config.name">
+                    <b ng-show="dialogflowPlatformConfigForm.name.$error.required && !dialogflowPlatformConfigForm.name.$pristine" class="text-danger">Agent Name is required.</b>
+                    <b ng-show="dialogflowPlatformConfigForm.name.$invalid && !dialogflowPlatformConfigForm.name.$pristine" class="text-danger">No whitespaces are allowed for Agent Name.</b>
                 </div>
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">
                     <label for="description" class="convo-form-label">Agent Description</label>
@@ -107,7 +108,7 @@
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid" class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid" class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
                         <a type="button" ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
@@ -118,7 +119,7 @@
 
                 <div class="convo-form-group" ng-if="isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Create Dialogflow configuration" class="btn btn-primary btn-sm submit" ng-disabled="dialogflowPlatformConfigForm.$invalid">
+                        <button type="submit" title="Create Dialogflow configuration" class="btn btn-primary btn-sm submit" ng-disabled="dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid">
                             Create
                         </button>
                         <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">
