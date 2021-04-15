@@ -91,6 +91,11 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                     return intentName.includes('.');
                 }
 
+                $scope.getIntentIndex = function(intentName)
+                {
+                    return propertiesContext.getSelectedService().intents.findIndex((intent) => intent.name === intentName);
+                }
+
                 $scope.gotoIntent = function(intentName)
                 {
                     const i = propertiesContext.getSelectedService().intents.findIndex((intent) => intent.name === intentName);
