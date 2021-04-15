@@ -78,11 +78,6 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
         instance.result.then(function (res) {
             $log.log('ConvoworksMainController deleteService modal then res', res);
 
-            if (res.errors && Object.keys(res.errors).length > 0)
-            {
-                throw new Error('Delete encountered errors ['+JSON.stringify(res.errors, null, 2)+']')
-            }
-
             $scope.ready = false;
             _init();
         }, (reason) => {
