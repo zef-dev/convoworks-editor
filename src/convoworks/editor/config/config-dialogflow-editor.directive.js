@@ -28,10 +28,13 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     time_updated: 0
                 };
 
+                $scope.showServiceAccount = false
+
                 var configBak   =   angular.copy( $scope.config);
                 var is_new      =   true;
                 var is_error    =   false;
                 var logline     =   '';
+                var previousServiceAccountJSON = null;
 
                 _load();
 
@@ -83,6 +86,10 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             is_new = false;
                             $scope.config.time_created = data.time_created;
                             $scope.config.time_updated = data.time_created;
+                            if (!_isJsonInvalid(data.serviceAccount)) {
+                                $scope.config.serviceAccount = data.serviceAccount;
+                                previousServiceAccountJSON = $scope.config.serviceAccount;
+                            }
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
                             $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
                         }, function (response) {
@@ -101,6 +108,10 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             is_new = false;
                             $scope.config.time_created = data.time_created;
                             $scope.config.time_updated = data.time_updated;
+                            if (!_isJsonInvalid(data.serviceAccount)) {
+                                $scope.config.serviceAccount = data.serviceAccount;
+                                previousServiceAccountJSON = $scope.config.serviceAccount;
+                            }
                             AlertService.addSuccess(`Dialogflow config updated.`);
                             $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
                         }, function (response) {
@@ -175,31 +186,50 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     $scope.getDialogflowInterfaces();
                 }
 
-                $scope.validateJSON = function() {
-                    $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = true;
-                    try {
-                        var serviceAccountJSON = JSON.parse($scope.config.serviceAccount);
-                        var keys = Object.keys(serviceAccountJSON);
-
-                        if (keys.length > 0) {
-                            var filteredKeys = keys.filter(function(val) {
-                                return $scope.serviceAccountFields.includes(val);
-                            });
-
-                            if (filteredKeys.length === $scope.serviceAccountFields.length) {
-                                $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = false;
-                            }
-                        }
-                    } catch (e) {
-                        $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = true;
-                    }
-                    return true;
-                }
-
                 $scope.validateAgentName = function() {
                     $scope.dialogflowPlatformConfigForm.name.$invalid = $scope.config.name ? $scope.config.name.match(/\s/g) : true;
                 }
 
+                $scope.toggleShowServiceAccount = function () {
+                    if ($scope.showServiceAccount === false) {
+                        $scope.showServiceAccount = true;
+                    } else if ($scope.showServiceAccount === true) {
+                        $scope.showServiceAccount = false;
+                    }
+                }
+
+                $scope.onFileUpload = function (file) {
+                    $log.log('ConfigurationsEditor onFileUpload file', file);
+                    if (file) {
+                        if (!file.name.includes('.json')) {
+                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
+                            return;
+                        }
+
+                        const jsonReader = new FileReader();
+                        jsonReader.readAsText(file, "UTF-8");
+
+                        jsonReader.onload = function (evt) {
+                            $scope.showServiceAccount = false;
+                            if (!_isJsonInvalid(evt.target.result)) {
+                                $scope.config.serviceAccount = evt.target.result;
+                            } else {
+                                $scope.config.serviceAccount = previousServiceAccountJSON;
+                                AlertService.addDanger('Malformed Service Account JSON was provided.');
+                            }
+                            $scope.$apply();
+                        }
+
+                        jsonReader.onerror = function (evt) {
+                            $scope.showServiceAccount = false;
+                            $scope.config.serviceAccount = previousServiceAccountJSON;
+                            AlertService.addDanger('Something went wrong.');
+                            $scope.$apply();
+                        }
+                    } else {
+                        $scope.config.serviceAccount = previousServiceAccountJSON;
+                    }
+                }
 
                 function _load()
                 {
@@ -213,6 +243,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             configBak = angular.copy( $scope.config);
                             is_new  =   false;
                             is_error    =   false;
+                            previousServiceAccountJSON = data.serviceAccount;
                         }, function ( response) {
                             $log.debug('configDialogflowEditor loadPlatformConfig() response', response);
 
@@ -228,6 +259,32 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
 
                 function _generateDialogflowAgentName(agentName) {
                     return agentName.replace(/\s/g,'');
+                }
+
+                function _isJsonInvalid(serviceAccountJson) {
+                    $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = true;
+                    let isInvalid = true;
+
+                    try {
+                        let serviceAccountJSON = JSON.parse(serviceAccountJson);
+                        let keys = Object.keys(serviceAccountJSON);
+
+                        if (keys.length > 0) {
+                            const filteredKeys = keys.filter(function(val) {
+                                return $scope.serviceAccountFields.includes(val);
+                            });
+
+                            if (filteredKeys.length === $scope.serviceAccountFields.length) {
+                                $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = false;
+                                isInvalid = false;
+                            }
+                        }
+                    } catch (e) {
+                        $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = true;
+                        isInvalid = true;
+                    }
+
+                    return isInvalid;
                 }
             }
         }
