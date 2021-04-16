@@ -54,8 +54,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                         stage).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
+                            AlertService.addSuccess('Release successfully promoted.');
                 }, function ( reason) {
                     $log.log( 'releasesEditor promoteRelease reason', reason);
+                    AlertService.addDanger('Couldn\'t promote release.')
                 });
             };
 
@@ -71,8 +73,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 ).then(function() {
                     _load();
                     $rootScope.$broadcast('ServiceReleasesUpdated');
+                    AlertService.addSuccess('Version tagged.');
                 }, function (reason) {
                     $log.log('releasesEditor tagAsSimpleVersion rejected, reason', reason);
+                    AlertService.addDanger('Couldn\'t tag simple version.');
                 });
             }
 
@@ -89,8 +93,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                         stage).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
+                            AlertService.addSuccess('Release created successfully.');
                 }, function ( reason) {
                     $log.log( 'releasesEditor submitRelease reason', reason);
+                    AlertService.addDanger('Couldn\'t create new release.');
                 });
             };
 
@@ -107,8 +113,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                         row['version_id']).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
+                            AlertService.addSuccess('Workflow successfully imported into release [' + releaseId + ']');
                 }, function ( reason) {
                     $log.log( 'releasesEditor importWorkflowRelease', reason);
+                    AlertService.addDanger(`Couldn't import workflow into release [${releaseId}]`)
                 });
             };
 
@@ -122,6 +130,7 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                     $rootScope.$broadcast('ServiceReleaseDevelopImport');
                 }, function (reason) {
                     $log.log('releaseEditor importToDevelop rejected', reason);
+                    AlertService.addDanger('Couldn\'t import release into develop.');
                 })
             }
 
