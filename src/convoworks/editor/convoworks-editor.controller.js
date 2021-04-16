@@ -51,7 +51,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         }
 
         $scope.isServiceTabActive = function(tabName) {
-            const r = new RegExp(`\/${tabName}\/?`);
+            const r = new RegExp(`\/${tabName}(?=\/|\\\?|$)`);
             return r.test($state.href($state.current.name, $state.params, {absolute: true}));
         }
 
