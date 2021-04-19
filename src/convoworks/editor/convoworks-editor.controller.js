@@ -1,6 +1,8 @@
 /* @ngInject */
 export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
 
+        const available_tabs = new RegExp(`\/(?:editor|preview|variables|intents\-entities|configuration|releases|import\-export|test)(?=\/|\\\?|$)`, 'g');
+
         // MODAL FIX
         $rootScope.$watch(() => document.querySelectorAll('.modal').length, val => {
             $log.log('ConvoworksEditorController watching modals');
@@ -51,8 +53,10 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         }
 
         $scope.isServiceTabActive = function(tabName) {
-            const r = new RegExp(`\/${tabName}(?=\/|\\\?|$)`);
-            return r.test($state.href($state.current.name, $state.params, {absolute: true}));
+            const url = $state.href($state.current.name, $state.params, { absolute: false });
+            const matches = [...new Set(url.match(available_tabs))];
+            
+            return matches.includes(`/${tabName}`) && matches.findIndex(t => t === `/${tabName}`) === matches.length - 1;
         }
 
         $log.log( 'ConvoworksEditorController $state.current', $state.current);
