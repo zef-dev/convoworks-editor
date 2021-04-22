@@ -197,7 +197,7 @@
                             </span>
                         </div>
 
-                        <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid && !amazonPlatformConfigForm.account_linking_config_client_secret.$pristine" class="text-danger">Secret is required.</b>
+                        <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid" class="text-danger">Secret is required.</b>
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_scopes" class="convo-form-label">Scope <i class="glyphicon glyphicon-question-sign" uib-tooltip="The list of permissions to request from the skill user. You can provide up to 15 scopes. Separate list items with a semicolon (;)"></i></label>
