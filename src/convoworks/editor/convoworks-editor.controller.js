@@ -219,7 +219,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 return text;
             }
 
-            $log.log('getPropagationStatusText()', $scope.platformStatus)
+            // $log.log('getPropagationStatusText()', $scope.platformStatus)
 
             if ($scope.platformStatus.has(platformId)) {
                 if ($scope.platformStatus.get(platformId).status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
