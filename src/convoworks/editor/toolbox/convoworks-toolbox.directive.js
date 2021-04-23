@@ -1,7 +1,8 @@
 import template from './convoworks-toolbox.tmpl.html';
+import unsavedChangesTemplate from './unsaved-changes.tmpl.html';
 
 /* @ngInject */
-export default function convoworksToolbox( $log, $rootScope, ConvoworksApi, UserPreferencesService)
+export default function convoworksToolbox($log, $rootScope, $uibModal, $document, $timeout, ConvoworksApi, UserPreferencesService)
 {
     return {
         restrict: 'E',
@@ -15,6 +16,8 @@ export default function convoworksToolbox( $log, $rootScope, ConvoworksApi, User
         link: function( $scope, $element, $attributes, propertiesContext)
         {
             $log.log( 'convoworksToolbox _init() $scope.definitions', $scope.definitions, $scope.availablePackages);
+            
+            const TOGGLE_TIMEOUT = 350;
 
             var core            =   ['convo-core', 'amazon', 'google-nlp'];
             $scope.open         =   {};
@@ -24,6 +27,7 @@ export default function convoworksToolbox( $log, $rootScope, ConvoworksApi, User
             $scope.groupedDefinitions   =   {};
             $scope.filtered             =   {};
             $scope.searchTerm           =   '';
+            $scope.toggling             =   null;
 
             if ( !$scope.service.packages) {
                 $scope.service.packages =   [];
@@ -87,20 +91,73 @@ export default function convoworksToolbox( $log, $rootScope, ConvoworksApi, User
 
             $scope.toggleEnabled = function(namespace)
             {
-                if ( $scope.isEnabled(namespace)) {
-                    ConvoworksApi.removeServicePackage( $scope.service.service_id, namespace).then(function(packages) {
-                        $log.log('ConvoworksToolbox toggled package', namespace, 'new definitions', packages);
-                        $rootScope.$broadcast('PackagesUpdated');
-                    }, function (reason) {
-                        $log.error('ConvoworksToolbox package toggle failed with reason', reason);
-                    })
-                } else {
-                    ConvoworksApi.addServicePackage( $scope.service.service_id, namespace).then(function(packages) {
-                        $log.log('ConvoworksToolbox toggled package', namespace, 'new definitions', packages);
-                        $rootScope.$broadcast('PackagesUpdated');
-                    }, function (reason) {
-                        $log.error('ConvoworksToolbox package toggle failed with reason', reason);
-                    })
+                if (propertiesContext.isServiceChanged())
+                {
+                    const modal = $uibModal.open({
+                        template: unsavedChangesTemplate,
+                        controller: ModalInstanceCtrl,
+                        appendTo: $document.find('.convoworks').eq(0),
+                        size: 'md'
+                    });
+
+                    modal.result.then((result) => {
+                        switch (result) {
+                            case 0: // save service and toggle
+                                propertiesContext.saveChanges();
+                                _toggleEnabled(namespace);
+                                break;
+                            case 1: // toggle without saving
+                                _toggleEnabled(namespace);
+                                break;
+                            case 2: // cancel
+                                $rootScope.$broadcast('PackagesUpdated');
+                                break;
+                            default:
+                                $log.error('Unexpected package toggle state: ' + result);
+                                throw new Error('Something went wrong. Please try again later.');
+                        }
+
+                        return;
+                    });
+                }
+                else
+                {
+                    _toggleEnabled(namespace);
+                }
+            }
+
+            function _toggleEnabled(namespace)
+            {
+                $scope.toggling = namespace;
+                let toggle_timeout = null;
+                // const removed = $scope.isEnabled(namespace);
+                const promise = $scope.isEnabled(namespace) ?
+                    ConvoworksApi.removeServicePackage($scope.service.service_id, namespace) :
+                    ConvoworksApi.addServicePackage($scope.service.service_id, namespace);
+
+                promise.then(() => {
+                    // removed ? $scope.service.packages = $scope.service.packages.filter(n => n !== namespace) : $scope.service.packages.push(namespace);
+                    $rootScope.$broadcast('PackagesUpdated');
+
+                    if (toggle_timeout) {
+                        $timeout.cancel(toggle_timeout);
+                    }
+
+                    toggle_timeout = $timeout(() => {
+                        $scope.toggling = null;
+                    }, TOGGLE_TIMEOUT);
+                }, (reason) => {
+                    $log.error('ConvoworksToolbox package toggle failed with reason', reason);
+                    $scope.toggling = null;
+                });
+            }
+
+            /* @ngInject */
+            var ModalInstanceCtrl = function ($scope, $uibModalInstance)
+            {
+                $scope.resolve = function (state)
+                {
+                    $uibModalInstance.close(state);
                 }
             }
 
