@@ -1,6 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+    display: none !important;
+}
+
 .notify-container {
     width: 350px;
     
