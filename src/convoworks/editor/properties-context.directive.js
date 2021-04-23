@@ -361,6 +361,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
 
             function saveChanges() {
                 $log.log( 'propertiesContext controller saveChanges()');
+                var d = $q.defer();
 
                 ConvoworksApi.updateService( service_id, selection.service).then( function( res) {
                     $log.log( 'propertiesContext controller saveChanges() done');
@@ -368,11 +369,15 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     angular.merge( selection.service, res.data);
                     original_service    =   angular.copy( selection.service);
                     $rootScope.$broadcast('ServiceWorkflowUpdated', selection.service);
+                    d.resolve(selection.service);
                     AlertService.addSuccess( 'Service workflow saved');
                 }, function( reason) {
                     $log.log( 'propertiesContext controller saveChanges() reason', reason);
+                    d.reject(reason);
                     throw new Error(reason.data.message);
                 })
+
+                return d.promise;
             }
 
             $rootScope.$on('CtrlSPressed', () => {
