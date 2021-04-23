@@ -110,7 +110,7 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                                 _toggleEnabled(namespace);
                                 break;
                             case 2: // cancel
-                                $rootScope.$broadcast('PackagesUpdated');
+                                // $rootScope.$broadcast('PackagesUpdated');
                                 break;
                             default:
                                 $log.error('Unexpected package toggle state: ' + result);
