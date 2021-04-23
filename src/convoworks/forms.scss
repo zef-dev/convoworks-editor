@@ -12,7 +12,9 @@
     
         display: inline-block;
     
-        // float: right;
+        &:hover {
+            cursor: pointer;
+        }
     }
     
     .toggled-indicator.inactive {
