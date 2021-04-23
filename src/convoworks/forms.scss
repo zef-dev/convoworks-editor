@@ -12,15 +12,23 @@
     
         display: inline-block;
     
-        float: right;
+        // float: right;
     }
     
     .toggled-indicator.inactive {
         background-color: #bababa;
+
+        &.disabled {
+            background-color: #7e7e7e;
+        }
     }
     
     .toggled-indicator.active {
         background-color: #2F74EA;
+
+        &.disabled {
+            background-color: #375b99;
+        }
     }
     
     .toggled-indicator:after {
@@ -32,6 +40,15 @@
         border-radius: 50%;
     
         transition: transform 100ms ease-out;
+    }
+
+    .toggled-indicator.disabled {
+        &:after {
+            background-color: #acacac;
+        }
+        &:hover {
+            cursor: not-allowed;
+        }
     }
     
     .toggled-indicator.active:after {

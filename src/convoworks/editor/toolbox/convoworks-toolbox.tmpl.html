@@ -42,14 +42,19 @@
         <div class="configure-packages" ng-hide="!configuring">
             <div ng-repeat="pckg in availablePackages" class="available-package">
                 <div class="selector-title">
-                    <label class="title {{::pckg.stability}}">
-                        <input type="checkbox" ng-cloak
-                               title="Enable or disable package for the service"
-                               ng-disabled="toggling || pckg.namespace === 'convo-core'"
-                               ng-show="toggling !== pckg.namespace"
-                               ng-click="toggleEnabled(pckg.namespace)"
-                               ng-checked="isEnabled(pckg.namespace)">
-                        <i ng-cloak class="glyphicon glyphicon-cog spinning" ng-show="toggling === pckg.namespace"></i>
+                    <label class="title {{::pckg.stability}}" ng-switch="pckg.namespace === 'convo-core'">
+                        <div class="toggled-indicator"
+                            ng-switch-when="false"
+                            ng-class="{ 'active': isEnabled(pckg.namespace), 'inactive': !isEnabled(pckg.namespace), 'disabled': toggling === pckg.namespace }"
+                            title="Enable or disable package for the service"
+                            ng-click="toggleEnabled(pckg.namespace);"
+                            ng-disabled="toggling">
+                        </div>
+                        <div class="toggled-indicator disabled"
+                            ng-switch-when="true"
+                            ng-class="{ 'active': isEnabled(pckg.namespace), 'inactive': !isEnabled(pckg.namespace) }"
+                            title="Enable or disable package for the service">
+                        </div>
                         {{ ::pckg.namespace }}
                         <i ng-if="pckg.stability === 'experimental'" class="glyphicon glyphicon-exclamation-sign text-danger"
                            uib-tooltip="This package is considered experimental. Use at your own risk.">

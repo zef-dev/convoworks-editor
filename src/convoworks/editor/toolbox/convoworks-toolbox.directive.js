@@ -105,13 +105,14 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                             case 0: // save service and toggle
                                 propertiesContext.saveChanges().then(() => {
                                     _toggleEnabled(namespace);
-                                    break;
                                 });
+                                break;
                             case 1: // toggle without saving
                                 _toggleEnabled(namespace);
                                 break;
                             case 2: // cancel
                                 // $rootScope.$broadcast('PackagesUpdated');
+                                $scope.$evalAsync();
                                 break;
                             default:
                                 $log.error('Unexpected package toggle state: ' + result);
