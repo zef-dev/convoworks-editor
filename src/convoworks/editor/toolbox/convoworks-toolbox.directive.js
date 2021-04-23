@@ -17,7 +17,7 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
         {
             $log.log( 'convoworksToolbox _init() $scope.definitions', $scope.definitions, $scope.availablePackages);
             
-            const TOGGLE_TIMEOUT = 350;
+            const TOGGLE_TIMEOUT = 450;
 
             var core            =   ['convo-core', 'amazon', 'google-nlp'];
             $scope.open         =   {};
@@ -103,9 +103,10 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                     modal.result.then((result) => {
                         switch (result) {
                             case 0: // save service and toggle
-                                propertiesContext.saveChanges();
-                                _toggleEnabled(namespace);
-                                break;
+                                propertiesContext.saveChanges().then(() => {
+                                    _toggleEnabled(namespace);
+                                    break;
+                                });
                             case 1: // toggle without saving
                                 _toggleEnabled(namespace);
                                 break;
@@ -116,8 +117,6 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                                 $log.error('Unexpected package toggle state: ' + result);
                                 throw new Error('Something went wrong. Please try again later.');
                         }
-
-                        return;
                     });
                 }
                 else
