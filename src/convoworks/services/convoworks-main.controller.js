@@ -4,9 +4,9 @@ import deleteServiceTemplate from './convoworks-delete-service.tmpl.html';
 import ModalInstanceCtrl from './convoworks-add-service.controller';
 import ServiceDeleteModalCtrl from './convoworks-delete-service.controller';
 
-ConvoworksMainController.$inject = ['$log', '$document', '$scope', '$uibModal', 'ConvoworksApi', 'LoginService'];
+ConvoworksMainController.$inject = ['$log', '$document', '$scope', '$uibModal', 'UserPreferencesService', 'ConvoworksApi', 'LoginService'];
 
-export default function ConvoworksMainController($log, $document, $scope, $uibModal, ConvoworksApi, LoginService)
+export default function ConvoworksMainController($log, $document, $scope, $uibModal, UserPreferencesService, ConvoworksApi, LoginService)
 {
     $log.debug( 'ConvoworksMainController init');
 
@@ -117,6 +117,8 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
                         service.service_id.toLowerCase().includes(lcase_query) ||
                         JSON.stringify(service.owner).toLowerCase().includes(lcase_query);
                     })
+
+                    _initSort();
                 })
             })
         }, function( reason) {
@@ -126,6 +128,46 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
         }).finally( function() {
             $scope.ready    =   true;
         })
+    }
+
+    function _initSort()
+    {
+        UserPreferencesService.getData('allServicesSortingOptions').then((opts) => {
+            $scope.sorting = {
+                by: (opts && opts.by) ? opts.by : 'name',
+                ascending: (opts && opts.ascending) ? opts.ascending : true
+            };
+        });
+
+        $scope.$watch('sorting', (val) => {
+            UserPreferencesService.registerData('allServicesSortingOptions', val);
+
+            _sort(val);
+        }, true);
+    }
+
+    function _sort(criteria)
+    {
+        $log.log('ConvoworksMainController sorting by criteria', criteria);
+
+        switch (criteria.by) {
+            case 'name':
+                $scope.filtered = $scope.filtered.sort((a, b) => {
+                    return criteria.ascending ?
+                        a.owner.email.charCodeAt(0) - b.owner.email.charCodeAt(0) :
+                        b.owner.email.charCodeAt(0) - a.owner.email.charCodeAt(0);
+                })
+                break;
+            case 'date':
+                $scope.filtered = $scope.filtered.sort((a, b) => {
+                    return criteria.ascending ?
+                        a.time_updated - b.time_updated :
+                        b.time_updated - a.time_updated;
+                })
+                break;
+            default:
+                throw new Error(`Unknown sorting option [${criteria.by}]`);
+        }
     }
 
     function _cleanKey(key) {

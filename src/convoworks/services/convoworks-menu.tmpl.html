@@ -15,6 +15,13 @@
                     <div class="title">
                         <h3>Services</h3>
                         <div class="actions convo-form-group">
+                            <button class="btn btn-sm btn-gray" ng-click="sorting.ascending = !sorting.ascending">
+                                <i ng-class="{'glyphicon glyphicon-sort-by-attributes': sorting.ascending, 'glyphicon glyphicon-sort-by-attributes-alt': !sorting.ascending}"></i>
+                            </button>
+                            <select class="convo-form-input" ng-model="sorting.by">
+                                <option value="name">Owner email</option>
+                                <option value="date">Last updated on</option>
+                            </select>
                             <input type="text" class="convo-form-input" placeholder="&#xe003;  Search" ng-model="filter">
                         </div>
                         <a class="btn btn-md btn-primary" ui-sref="convoworks-add-new-service">Create new</a>
@@ -25,6 +32,7 @@
                                 <th>Service name</th>
                                 <th>Owner</th>
                                 <th>Last updated on</th>
+                                <th>Published on</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -38,6 +46,9 @@
                                 </td>
                                 <td>
                                     {{ service.time_updated | admDate : 'dd MMM yyyy' }}
+                                </td>
+                                <td>
+                                    N/A
                                 </td>
                                 <td>
                                     <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
