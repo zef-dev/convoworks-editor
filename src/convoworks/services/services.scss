@@ -5,73 +5,77 @@
         flex-flow: column nowrap;
     
         padding: 34px 70px;
-    }
-    
-    .services > .title {
-        display: flex;
-        flex-flow: row nowrap;
-    
-        align-items: center;
-        margin-bottom: 49px;
-    }
-    
-    .services > .title > h3 {
-        margin: 0;
-    }
-    
-    .services > .title > .actions {
-        margin: 0 40px 0 auto;
-        width: 308px;
-    }
-    
-    .services > .title > .actions > input {
-        font-family: "DM Sans", "Glyphicons Halflings", sans-serif;
-    }
-    
-    .services > .title > .actions,
-    .services > .title > a.btn {
-        height: 40px;
-    }
-    
-    .services > .skill-list {
-        width: 100%;
-    
-        border-collapse: separate;
-    }
-    
-    .services > .skill-list > thead {
-        color: rgba(0,0,0,0.5);
-    }
-    
-    .services > .skill-list > thead > tr > th {
-        padding: 0 0 20px 30px;
-    }
-    
-    .services > .skill-list > tbody > tr.service-data {
-        height: 60px;
-        line-height: 60px;
-    
-        border-radius: 8px;
-    
-        margin: 8px 0;
-    }
-    
-    .services > .skill-list > tbody > tr.service-data > td {
-        padding: 15px 30px;
-    }
-    
-    .services > .skill-list > tbody > tr.service-data > td:first-of-type {
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-    }
-    .services > .skill-list > tbody > tr.service-data > td:last-child {
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
-    
-    .services > .skill-list > tbody > tr.divider {
-        background-color: transparent;
-        height: 8px;
+
+        & > .title {
+            display: flex;
+            flex-flow: row nowrap;
+        
+            align-items: center;
+            margin-bottom: 49px;
+
+            & > h3 {
+                margin: 0;
+            }
+
+            & > .actions {
+                margin: 0 40px 0 auto;
+                width: 308px;
+
+                & > input {
+                    font-family: "DM Sans", "Glyphicons Halflings", sans-serif;
+                }
+            }
+
+            & > .actions, & > a.btn {
+                height: 40px;
+            }
+        }
+
+        & > .skill-list {
+            width: 100%;
+        
+            border-collapse: separate;
+
+            & > thead {
+                color: rgba(0,0,0,0.5);
+
+                & > tr {
+                    & > th {
+                        padding: 0 0 20px 30px;
+                    }
+                }
+            }
+
+            & > tbody {
+                & > tr.service-data {
+                    height: 60px;
+                    line-height: 60px;
+                
+                    border-radius: 8px;
+                
+                    margin: 8px 0;
+
+                    & > td {
+                        padding: 15px 30px;
+
+                        &:first-of-type {
+                            border-top-left-radius: 8px;
+                            border-bottom-left-radius: 8px;
+                        }
+                    }
+
+                    & > td, & > td:last-child {
+                        border-top-right-radius: 8px;
+                        border-bottom-right-radius: 8px;
+                    }
+                }
+            }
+
+            & > tr.divider {
+                background-color: transparent;
+                height: 8px;
+            }
+        }
     }
 
     .modal .report {
