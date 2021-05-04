@@ -19,9 +19,27 @@
 
             & > .actions {
                 margin: 0 40px 0 auto;
-                width: 308px;
+                width: 408px;
 
-                & > input {
+                display: flex;
+                flex-flow: row nowrap;
+
+                justify-content: space-around;
+                align-content: center;
+
+                & > button {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                
+                & > select {
+                    border-radius: 0;
+                }
+
+                & > .search {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    margin-left: -1px;
                     font-family: "DM Sans", "Glyphicons Halflings", sans-serif;
                 }
             }
