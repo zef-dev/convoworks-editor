@@ -175,7 +175,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
             for (const alias in service.release_mapping[platform]) {
                 release["alias"] = alias;
-                release["stage"] = _cleanKey(service.release_mapping[platform][alias].type);
+                release["stage"] = service.release_mapping[platform][alias].type;
             }
 
             all.push(release);
@@ -187,4 +187,6 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
     function _cleanKey(key) {
         return key.split('_').map(function (word) { return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(); }).join(' ');
     }
+
+    $scope.clean = (key) => _cleanKey(key);
 }

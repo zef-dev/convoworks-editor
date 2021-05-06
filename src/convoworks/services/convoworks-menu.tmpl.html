@@ -50,7 +50,10 @@
                                     {{ service.time_updated | admDate : 'dd MMM yyyy' }}
                                 </td>
                                 <td>
-                                    <span class="release-badge {{ release.stage }}" ng-repeat="release in service.releases track by $index">{{ release.platform }} ({{ release.alias.toUpperCase() }}) | {{ release.stage }}</span>
+                                    <span ng-repeat="release in service.releases track by $index"
+                                          class="release-badge {{ release.stage }}">
+                                            <span class="alias">{{ release.alias.toUpperCase() }}</span> {{ release.platform }} | {{ clean(release.stage) }}
+                                    </span>
                                 </td>
                                 <td>
                                     <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
@@ -61,7 +64,7 @@
                             </tr>
                             <tr ng-repeat-end class="divider"></tr>
                         </tbody>
-                        <tbody ng-if="filtered.length === 0">
+                        <tbody ng-if="!filtered.length">
                             <tr class="card-pane service-data">
                                 <td>No results</td>
                                 <td></td>

@@ -21,7 +21,7 @@
 
             & > .actions {
                 margin: 0 40px 0 auto;
-                width: 408px;
+                width: 600px;
 
                 display: flex;
                 flex-flow: row nowrap;
@@ -42,6 +42,7 @@
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
                     margin-left: -1px;
+                    width: 900px;
                     font-family: "DM Sans", "Glyphicons Halflings", sans-serif;
                 }
             }
@@ -71,7 +72,7 @@
                     background-color: transparent;
                     height: 8px;
                 }
-                
+
                 & > tr.service-data {
                     height: 60px;
                     line-height: 60px;
@@ -89,14 +90,54 @@
                         }
 
                         & > span.release-badge {
+                            line-height: normal;
                             white-space: nowrap;
 
-                            border: 1px solid gray;
                             border-radius: 4px;
 
                             margin: 2px 6px;
+                            padding: 10px 16px;
 
-                            padding: 4px 8px;
+                            & .alias {
+                                display: inline-block;
+
+                                width: 20px;
+                                height: 20px;
+                                text-align: center;
+
+                                margin-right: 4px;
+                                border-radius: 50%;
+                            }
+
+                            &.review {
+                                background-color: rgba(244, 154, 3, 0.1);
+                                color: #f49a03;
+
+                                & .alias {
+                                    background-color: #F49A03;
+                                    color: #fef5e5;
+                                }
+                            }
+
+                            &.develop {
+                                background-color: rgba(47,116,234,0.1);
+                                color: #2F74EA;
+
+                                & .alias {
+                                    background-color: #2F74EA;
+                                    color: #E9F1FD;
+                                }
+                            }
+
+                            &.release {
+                                background-color: rgba(13,190,38,0.1);
+                                color: #0DBE26;
+
+                                & .alias {
+                                    background-color: #0DBE26;
+                                    color: #e6f9e9;
+                                }
+                            }
                         }
                     }
 
@@ -105,11 +146,6 @@
                         border-bottom-right-radius: 8px;
                     }
                 }
-            }
-
-            & > tr.divider {
-                background-color: transparent;
-                height: 8px;
             }
         }
     }
