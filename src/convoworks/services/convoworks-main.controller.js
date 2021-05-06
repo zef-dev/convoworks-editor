@@ -6,69 +6,66 @@ import ServiceDeleteModalCtrl from './convoworks-delete-service.controller';
 
 ConvoworksMainController.$inject = ['$log', '$document', '$scope', '$uibModal', 'UserPreferencesService', 'ConvoworksApi', 'LoginService'];
 
-export default function ConvoworksMainController($log, $document, $scope, $uibModal, UserPreferencesService, ConvoworksApi, LoginService)
-{
-    $log.debug( 'ConvoworksMainController init');
+export default function ConvoworksMainController($log, $document, $scope, $uibModal, UserPreferencesService, ConvoworksApi, LoginService) {
+    $log.debug('ConvoworksMainController init');
 
     // API
-    $scope.ready                =   false;
-    $scope.availableServices    =   [];
-    $scope.filtered             =   [];
+    $scope.ready = false;
+    $scope.availableServices = [];
+    $scope.filtered = [];
 
-    $scope.filter               =   '';
+    $scope.filter = '';
 
-    $scope.user                 =   null;
+    $scope.user = null;
 
     // LOGIN STATE
-    $scope.$watch( function () {
+    $scope.$watch(function () {
         return LoginService.isSignedIn();
-    }, function( value) {
-        if ( value) {
-            LoginService.getUser().then( function ( user) {
-                $scope.user         =   user;
-            }, function ( reason) {
+    }, function (value) {
+        if (value) {
+            LoginService.getUser().then(function (user) {
+                $scope.user = user;
+            }, function (reason) {
                 $log.log('ConvoworksMainController getUser() failed reason', reason);
             });
         } else {
-            $scope.user         =   null;
+            $scope.user = null;
         }
     });
 
-    $scope.getAuthUserEmail          =   function () {
-        if ( $scope.user) {
+    $scope.getAuthUserEmail = function () {
+        if ($scope.user) {
             return $scope.user.email;
         }
         return null;
     };
 
-    $scope.getAuthUser          =   function () {
-        if ( $scope.user) {
+    $scope.getAuthUser = function () {
+        if ($scope.user) {
             return $scope.user.name;
         }
         return null;
     };
 
-    $scope.createService        =   function()
-    {
+    $scope.createService = function () {
         $uibModal.open({
             template: createServiceTemplate,
             controller: ModalInstanceCtrl,
             appendTo: $document.find('.convoworks').eq(0),
-            size : 'md',
-            resolve: { ConvoworksApi: function() { return ConvoworksApi; }}
+            size: 'md',
+            resolve: { ConvoworksApi: function () { return ConvoworksApi; } }
         })
     };
 
-    $scope.deleteService        =   function($event, serviceId)
-    {
+    $scope.deleteService = function ($event, serviceId) {
         var instance = $uibModal.open({
             template: deleteServiceTemplate,
             controller: ServiceDeleteModalCtrl,
             size: 'md',
             appendTo: $document.find('.convoworks').eq(0),
             resolve: {
-                ConvoworksApi: function() { return ConvoworksApi; },
-                serviceId: function() { return serviceId; }
+                ConvoworksApi: function () { return ConvoworksApi; },
+                serviceId: function () { return serviceId; }
             }
         });
 
@@ -82,7 +79,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
         })
     }
 
-    $scope.publishedOn = function(service) {
+    $scope.publishedOn = function (service) {
         var published = [];
 
         angular.forEach(service.versions, function (value, key) {
@@ -98,43 +95,41 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
     _init();
 
     // INIT
-    function _init()
-    {
-        ConvoworksApi.getAllServices().then( function( services) {
+    function _init() {
+        ConvoworksApi.getAllServices().then(function (services) {
             services = services.map(s => {
                 s.releases = _getReleases(s);
                 return s;
             });
 
-            $scope.availableServices    =   services;
+            $scope.availableServices = services;
 
-            $scope.$watch('filter', function(value) {
+            $scope.$watch('filter', function (value) {
                 if (!value || value === '') {
                     $scope.filtered = angular.copy($scope.availableServices);
                 }
 
-                $scope.$applyAsync(function() {
+                $scope.$applyAsync(function () {
                     $scope.filtered = $scope.availableServices.filter(function (service) {
                         const lcase_query = value.toLowerCase();
                         return service.name.toLowerCase().includes(lcase_query) ||
-                        service.service_id.toLowerCase().includes(lcase_query) ||
-                        JSON.stringify(service.owner).toLowerCase().includes(lcase_query);
+                            service.service_id.toLowerCase().includes(lcase_query) ||
+                            JSON.stringify(service.owner).toLowerCase().includes(lcase_query);
                     });
 
                     _sort($scope.sorting);
                 });
             });
-        }, function( reason) {
-            $log.warn( 'ConvoworksMainController fetching all services failed because of', reason);
+        }, function (reason) {
+            $log.warn('ConvoworksMainController fetching all services failed because of', reason);
 
-            throw new Error( reason.data.message);
-        }).finally( function() {
-            $scope.ready    =   true;
+            throw new Error(reason.data.message);
+        }).finally(function () {
+            $scope.ready = true;
         })
     }
 
-    function _initSort()
-    {
+    function _initSort() {
         UserPreferencesService.getData('allServicesSortingOptions').then((opts) => {
             $scope.sorting = {
                 by: (opts && opts.by) ? opts.by : 'name',
@@ -143,14 +138,13 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
             $scope.$watch('sorting', (val) => {
                 UserPreferencesService.registerData('allServicesSortingOptions', val);
-    
+
                 _sort(val);
             }, true);
         });
     }
 
-    function _sort(criteria)
-    {
+    function _sort(criteria) {
         switch (criteria.by) {
             case 'name':
                 $scope.filtered = $scope.filtered.sort((a, b) => {
