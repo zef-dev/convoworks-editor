@@ -6,6 +6,8 @@
     
         padding: 34px 70px;
 
+        max-width: none !important;
+
         & > .title {
             display: flex;
             flex-flow: row nowrap;
@@ -79,6 +81,17 @@
                         &:first-of-type {
                             border-top-left-radius: 8px;
                             border-bottom-left-radius: 8px;
+                        }
+
+                        & > span.release-badge {
+                            white-space: nowrap;
+
+                            border: 1px solid gray;
+                            border-radius: 4px;
+
+                            margin: 2px 6px;
+
+                            padding: 4px 8px;
                         }
                     }
 
