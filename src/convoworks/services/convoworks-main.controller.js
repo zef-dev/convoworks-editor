@@ -61,9 +61,6 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
     $scope.deleteService        =   function($event, serviceId)
     {
-        // $event.preventDefault();
-        // $event.stopPropagation();
-
         var instance = $uibModal.open({
             template: deleteServiceTemplate,
             controller: ServiceDeleteModalCtrl,
@@ -97,12 +94,18 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
         return published;
     }
 
+    _initSort();
     _init();
 
     // INIT
     function _init()
     {
         ConvoworksApi.getAllServices().then( function( services) {
+            services = services.map(s => {
+                s.releases = _getReleases(s);
+                return s;
+            });
+
             $scope.availableServices    =   services;
 
             $scope.$watch('filter', function(value) {
@@ -116,11 +119,11 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
                         return service.name.toLowerCase().includes(lcase_query) ||
                         service.service_id.toLowerCase().includes(lcase_query) ||
                         JSON.stringify(service.owner).toLowerCase().includes(lcase_query);
-                    })
+                    });
 
-                    _initSort();
-                })
-            })
+                    _sort($scope.sorting);
+                });
+            });
         }, function( reason) {
             $log.warn( 'ConvoworksMainController fetching all services failed because of', reason);
 
@@ -137,19 +140,17 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
                 by: (opts && opts.by) ? opts.by : 'name',
                 ascending: (opts && opts.ascending) ? opts.ascending : true
             };
+
+            $scope.$watch('sorting', (val) => {
+                UserPreferencesService.registerData('allServicesSortingOptions', val);
+    
+                _sort(val);
+            }, true);
         });
-
-        $scope.$watch('sorting', (val) => {
-            UserPreferencesService.registerData('allServicesSortingOptions', val);
-
-            _sort(val);
-        }, true);
     }
 
     function _sort(criteria)
     {
-        $log.log('ConvoworksMainController sorting by criteria', criteria);
-
         switch (criteria.by) {
             case 'name':
                 $scope.filtered = $scope.filtered.sort((a, b) => {
@@ -168,6 +169,25 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
             default:
                 throw new Error(`Unknown sorting option [${criteria.by}]`);
         }
+    }
+
+    function _getReleases(service) {
+        const all = [];
+
+        for (const platform in service.release_mapping) {
+            let release = {
+                platform: _cleanKey(platform)
+            };
+
+            for (const alias in service.release_mapping[platform]) {
+                release["alias"] = alias;
+                release["stage"] = _cleanKey(service.release_mapping[platform][alias].type);
+            }
+
+            all.push(release);
+        }
+
+        return all;
     }
 
     function _cleanKey(key) {

@@ -34,11 +34,11 @@
                                 <th>Service name</th>
                                 <th>Owner</th>
                                 <th>Last updated on</th>
-                                <th>Published on</th>
+                                <th>Releases</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody ng-if="filtered.length > 0">
+                        <tbody ng-if="filtered.length">
                             <tr ng-repeat-start="service in filtered" class="card-pane service-data">
                                 <td>
                                     <a ui-sref="convoworks-editor-service.editor( { service_id: service.service_id} )">{{ service.name }}</a>
@@ -50,7 +50,7 @@
                                     {{ service.time_updated | admDate : 'dd MMM yyyy' }}
                                 </td>
                                 <td>
-                                    N/A
+                                    <span class="release-badge {{ release.stage }}" ng-repeat="release in service.releases track by $index">{{ release.platform }} ({{ release.alias.toUpperCase() }}) | {{ release.stage }}</span>
                                 </td>
                                 <td>
                                     <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
@@ -64,6 +64,7 @@
                         <tbody ng-if="filtered.length === 0">
                             <tr class="card-pane service-data">
                                 <td>No results</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
