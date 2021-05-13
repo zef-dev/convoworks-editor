@@ -39,22 +39,24 @@
                         </thead>
                         <tbody ng-if="filtered.length">
                             <tr ng-repeat-start="service in filtered" class="card-pane service-data">
-                                <td>
+                                <td class="service__link">
                                     <a ui-sref="convoworks-editor-service.editor( { service_id: service.service_id} )">{{ service.name }}</a>
                                 </td>
-                                <td>
+                                <td class="service__owner">
                                     {{ service.owner.email || 'No owner' }}
                                 </td>
-                                <td>
+                                <td class="service__time-updated">
                                     {{ service.time_updated | admDate : 'dd MMM yyyy' }}
                                 </td>
-                                <td>
-                                    <span ng-repeat="release in service.releases track by $index"
+                                <td class="service__releases">
+                                    <div class="service__releases--holder">
+                                        <span ng-repeat="release in service.releases track by $index"
                                           class="release-badge {{ release.stage }}">
                                             <span class="alias">{{ release.alias.toUpperCase() }}</span> {{ release.platform }} | {{ clean(release.stage) }}
-                                    </span>
+                                        </span>
+                                    </div>
                                 </td>
-                                <td>
+                                <td class="service__actions">
                                     <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
                                         <i class="glyphicon glyphicon-trash"></i> Delete Service
                                     </button>

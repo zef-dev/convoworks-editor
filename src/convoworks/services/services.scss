@@ -89,10 +89,9 @@
                             border-bottom-left-radius: 8px;
                         }
 
-                        & > span.release-badge {
+                        & > div > span.release-badge {
                             line-height: normal;
-                            white-space: nowrap;
-
+                            
                             border-radius: 4px;
 
                             margin: 2px 6px;
@@ -142,8 +141,38 @@
                     }
 
                     & > td, & > td:last-child {
+                        max-height: 60px;
+
                         border-top-right-radius: 8px;
                         border-bottom-right-radius: 8px;
+                    }
+
+                    & > td.service__link {
+                        width: 15%;
+                    }
+
+                    & > td.service__owner {
+                        width: 15%;
+                    }
+
+                    & > td.service__time-updated {
+                        width: 10%;
+                    }
+
+                    & > td.service__releases {
+                        & > .service__releases--holder {
+                            max-width: 100%;
+                            max-height: 60px;
+
+                            overflow: auto;
+
+                            display: flex;
+                            flex-flow: row wrap;
+                        }
+                    }
+
+                    & > td.service__actions {
+                        width: 10%;
                     }
                 }
             }
