@@ -18,6 +18,8 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
     $scope.user = null;
 
+    $scope.sortingOptions = [{ label: "Service name", value: "name"}, { label: "Last updated", value: "date" }];
+
     // LOGIN STATE
     $scope.$watch(function () {
         return LoginService.isSignedIn();
@@ -147,6 +149,10 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
     }
 
     function _sort(criteria) {
+        if (![$scope.sortingOptions.map(o => o.value).includes(criteria.by)]) {
+            criteria.by = $scope.sortingOptions[0].value;
+        }
+
         switch (criteria.by) {
             case 'name':
                 $scope.filtered = $scope.filtered.sort((a, b) => {
