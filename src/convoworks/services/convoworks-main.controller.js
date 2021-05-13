@@ -149,7 +149,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
     }
 
     function _sort(criteria) {
-        if (![$scope.sortingOptions.map(o => o.value).includes(criteria.by)]) {
+        if (!$scope.sortingOptions.map(o => o.value).includes(criteria.by)) {
             criteria.by = $scope.sortingOptions[0].value;
         }
 
