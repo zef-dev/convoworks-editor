@@ -134,7 +134,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
             $log.log('ConvoworksMainController _initSort getData allServicesSortingOptions', opts);
 
             $scope.sorting = {
-                by: opts ? opts.by : 'email',
+                by: opts ? opts.by : 'name',
                 ascending: opts ? opts.ascending : true
             };
 
@@ -148,9 +148,9 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
     function _sort(criteria) {
         switch (criteria.by) {
-            case 'email':
+            case 'name':
                 $scope.filtered = $scope.filtered.sort((a, b) => {
-                    const res = a.owner.email.localeCompare(b.owner.email);
+                    const res = a.name.localeCompare(b.name);
 
                     return criteria.ascending ? res : (res * -1);
                 });
