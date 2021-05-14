@@ -4,6 +4,13 @@
 
 ## [Releases]
 
+### 0.22.0 - 2021-05-14 ###
+
+* Extended all services view with platforms and sort options
+* Enable/disable packages improved
+* New intent editor included
+* Small fixes
+
 ### 0.21.2 - 2021-03-31 ###
 
 * handle rejected promise
