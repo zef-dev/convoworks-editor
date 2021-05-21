@@ -95,13 +95,6 @@
                     <b ng-show="dialogflowPlatformConfigForm.description.$invalid && !dialogflowPlatformConfigForm.description.$pristine" class="text-danger">Agent Description is required.</b>
                 </div>
 
-                <div class="convo-form-group" ng-model="config.interfaces" ng-if="config.mode === 'auto'">
-                    <label class="convo-form-label">Dialogflow Interfaces</label>
-                    <label ng-repeat="itf in getDialogflowInterfaces()" class="convo-form-label">
-                        <input type="checkbox" ng-click="registerChange(this)" ng-model="itf.checked"> {{itf.name}}
-                    </label>
-                </div>
-
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
                         <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid" class="btn btn-primary btn-sm submit">

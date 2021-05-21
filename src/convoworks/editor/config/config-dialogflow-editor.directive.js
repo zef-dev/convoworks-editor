@@ -73,7 +73,6 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     if (!isValid) {
                         throw new Error(`Invalid form data.`)
                     }
-                    _updateSelectedInterfaces();
 
                     if (is_new) {
                         return ConvoworksApi.createServicePlatformConfig(
@@ -135,55 +134,10 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     return !angular.equals( configBak, $scope.config);
                 }
 
-                $scope.getDialogflowInterfaces = function () {
-                    // update array with values from config
-                    if ($scope.config.interfaces && $scope.config.interfaces.length > 0) {
-                        for (var i = 0; i < $scope.interfaces.length; i++) {
-                            if ($scope.config.interfaces.includes($scope.interfaces[i].type)) {
-                                $scope.interfaces[i].checked = true;
-                            }
-                        }
-                    }
-
-                    return $scope.interfaces;
-                };
-
-                function _updateSelectedInterfaces() {
-                    $scope.config.interfaces = [];
-                    for (var i = 0; i < $scope.interfaces.length; i++) {
-                        if ($scope.interfaces[i].checked) {
-                            var interfaceType = $scope.interfaces[i].type;
-                            $scope.config.interfaces.push(interfaceType);
-                        }
-                    }
-                }
-
                 function _arrayRemove(arr, value) {
                     return arr.filter(function(ele) {
                         return ele !== value;
                     });
-                }
-
-                $scope.registerChange = function(itfRecord) {
-                    var eventName = itfRecord.itf.type;
-                    var isInterfaceEnabled = !itfRecord.itf.checked;
-                    var newArr = [];
-
-                    if (isInterfaceEnabled) {
-                        if ($scope.config.interfaces === undefined) {
-                            newArr.push(eventName);
-                            $scope.config.interfaces = newArr;
-                        } else {
-                            $scope.config.interfaces.push(eventName);
-                        }
-                    } else {
-                        if ($scope.config.interfaces === undefined) {
-                            $scope.config.interfaces = _arrayRemove(newArr, eventName);
-                        } else {
-                            $scope.config.interfaces = _arrayRemove($scope.config.interfaces, eventName);
-                        }
-                    }
-                    $scope.getDialogflowInterfaces();
                 }
 
                 $scope.validateAgentName = function() {
@@ -235,7 +189,6 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 {
                     ConvoworksApi.getConfigOptions().then(function (options) {
                         $scope.timezones = options['CONVO_DIALOGFLOW_TIMEZONES'];
-                        $scope.interfaces = options['CONVO_DIALOGFLOW_INTERFACES'];
                         $scope.serviceAccountFields = options['CONVO_DIALOGFLOW_SERVICE_ACCOUNT_FIELDS'];
 
                         ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'dialogflow').then(function (data) {

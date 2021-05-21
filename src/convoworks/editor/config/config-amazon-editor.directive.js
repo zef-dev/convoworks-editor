@@ -252,7 +252,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     AlertService.addDanger(`Invalid form data.`)
                 }
                 $log.debug('configAmazonEditor update() $scope.config', $scope.config);
-                _updateSelectedInterfaces();
 
                 var maybeUpload = preparedUpload.size > 0 ?
                     ConvoworksApi.uploadMedia(
@@ -288,7 +287,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $scope.config.app_id = data.app_id;
                             $scope.config.enable_account_linking = data.enable_account_linking || false;
                             $scope.config.invocation = data.invocation;
-                            $scope.config.interfaces = data.interfaces;
                             $scope.config.time_created = data.time_created;
                             $scope.config.time_updated = data.time_created;
                             if ($scope.config.enable_account_linking) {
@@ -374,19 +372,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.isConfigChanged = function () {
                 return !angular.equals( configBak, $scope.config);
             }
-
-            $scope.getAlexaInterfaces = function () {
-                // update array with values from config
-                if ($scope.config.interfaces && $scope.config.interfaces.length > 0) {
-                    for (var i = 0; i < $scope.interfaces.length; i++) {
-                        if ($scope.config.interfaces.includes($scope.interfaces[i].type)) {
-                            $scope.interfaces[i].checked = true;
-                        }
-                    }
-                }
-
-                return $scope.interfaces;
-            };
 
             $scope.validateKeywords = function(validateForm = true) {
                 const words = $scope.config.skill_preview_in_store.keywords.replace(/\s/g, ',').replace(/[0-9]/g, "");
@@ -517,42 +502,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
-            function _updateSelectedInterfaces() {
-                $scope.config.interfaces = [];
-                for (var i = 0; i < $scope.interfaces.length; i++) {
-                    if ($scope.interfaces[i].checked && $scope.interfaces[i].supported) {
-                        var interfaceType = $scope.interfaces[i].type;
-                        $scope.config.interfaces.push(interfaceType);
-                    }
-                }
-            }
-
             function _arrayRemove(arr, value) {
                 return arr.filter(function(ele) {
                     return ele !== value;
                 });
-            }
-
-            $scope.registerChange = function(itfRecord) {
-                var eventName = itfRecord.itf.type;
-                var isInterfaceEnabled = !itfRecord.itf.checked;
-                var newArr = [];
-
-                if (isInterfaceEnabled) {
-                    if ($scope.config.interfaces === undefined) {
-                        newArr.push(eventName);
-                        $scope.config.interfaces = newArr;
-                    } else {
-                        $scope.config.interfaces.push(eventName);
-                    }
-                } else {
-                    if ($scope.config.interfaces === undefined) {
-                        $scope.config.interfaces = _arrayRemove(newArr, eventName);
-                    } else {
-                        $scope.config.interfaces = _arrayRemove($scope.config.interfaces, eventName);
-                    }
-                }
-                $scope.getAlexaInterfaces();
             }
 
             function _load()
@@ -564,7 +517,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
                     $scope.categories = config_options['CONVO_AMAZON_SKILL_CATEGORIES'];
-                    $scope.interfaces = config_options['CONVO_ALEXA_INTERFACES'];
 
                     $scope.$watch('config.auto_display', function(newVal) {
                         if (newVal !== undefined)
