@@ -215,6 +215,10 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 }
 
                 function _isJsonInvalid(serviceAccountJson) {
+                    if ($scope.config.mode === 'manual') {
+                        return true;
+                    }
+
                     $scope.dialogflowPlatformConfigForm.serviceAccount.$invalid = true;
                     let isInvalid = true;
 
