@@ -26,11 +26,11 @@
                         </button>
                         <button type="button"
                             class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" ng-disabled="getAvailablePlatforms().length === 0"
-                            uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                            aria-haspopup="true" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                        <ul class="dropdown-menu" role="menu">
                             <li role="menuitem" ng-if="isPlatformPropagateAllowed('amazon')">
                                 <a ng-click="propagatePlatformChanges('amazon')"
                                     ng-class="{'dropdown-item': !isPlatformPropagateAvailable('amazon'), 'dropdown-item bold': isPlatformPropagateAvailable('amazon')}"
