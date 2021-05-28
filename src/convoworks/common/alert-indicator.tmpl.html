@@ -1,7 +1,6 @@
 <div class="notify-container" ng-hide="getAlerts().length == 0">
-    <div uib-alert ng-repeat="alert in getAlerts()"
-        ng-class="'alert alert-' + alert.type"
-        close="closeAlert($index)">
+    <div ng-repeat="alert in getAlerts()" ng-class="'alert alert-' + alert.type + ' alert-dismissible fade show'" role="alert">
         <i ng-if="hasIcon(alert.type)" class="{{getAlertIconClass(alert.type)}}"></i>&nbsp;&nbsp;{{ alert.msg }}
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
