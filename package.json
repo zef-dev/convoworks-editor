@@ -32,7 +32,7 @@
     "angular-animate": "1.8.*",
     "angular-cookies": "1.8.*",
     "angular-sanitize": "1.8.*",
-    "bootstrap": "^3.4.1",
+    "bootstrap": "^5.0.1",
     "jquery": "^1.12.1",
     "jquery-ui-dist": "^1.12.1",
     "react": "^16.13.1",
