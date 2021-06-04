@@ -146,10 +146,10 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         {
             if ($scope.getAllowedPlatforms().length === 0)
             {
-                return 'glyphicon glyphicon-minus-sign';
+                return 'fa fa-minus-sign';
             }
 
-            return $scope.propagating ? 'glyphicon glyphicon-cog spinning' : 'glyphicon glyphicon-play';
+            return $scope.propagating ? 'fa fa-cog spinning' : 'fa fa-play';
         }
 
         $scope.propagatePlatformChanges = function(platformId) {
@@ -248,7 +248,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 }
             }
 
-            return checkCount > 0 ? 'glyphicon glyphicon-cog spinning' : '';
+            return checkCount > 0 ? 'fa fa-cog spinning' : '';
         }
 
         $scope.$on( '$destroy', function() {

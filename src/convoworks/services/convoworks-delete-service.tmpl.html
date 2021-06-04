@@ -22,7 +22,7 @@
                                 <li ng-repeat="(platform, data) in report.successes track by $index">
                                     <h4>{{ fixName(platform) }}</h4>
                                     <span class="info" ng-repeat="(category, success) in data">
-                                        <i class="glyphicon glyphicon-ok-sign"></i>
+                                        <i class="fa fa-ok-sign"></i>
                                         {{ fixName(category) }}
                                         <hr>
                                         {{ success }}
@@ -36,7 +36,7 @@
                                 <li ng-repeat="(platform, data) in report.warnings track by $index">
                                     <h4>{{ fixName(platform) }}</h4>
                                     <span class="info" ng-repeat="(category, warning) in data">
-                                        <i class="glyphicon glyphicon-warning-sign"></i>
+                                        <i class="fa fa-warning-sign"></i>
                                         {{ fixName(category) }}
                                         <hr>
                                         {{ warning }}
@@ -50,7 +50,7 @@
                                 <li ng-repeat="(platform, data) in report.errors track by $index">
                                     <h4>{{ fixName(platform) }}</h4>
                                     <span class="info" ng-repeat="(category, error) in data">
-                                        <i class="glyphicon glyphicon-remove-sign"></i>
+                                        <i class="fa fa-remove-sign"></i>
                                         {{ fixName(category) }}
                                         <hr>
                                         {{ error }}

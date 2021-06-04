@@ -7,7 +7,7 @@
                     <h4>Production</h4>
                 </div>
                 <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('production')">
-                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('production'), 'glyphicon-chevron-up': isOpen('production') }"></i>
+                    <i class="fa" ng-class="{ 'fa-chevron-down': !isOpen('production'), 'fa-chevron-up': isOpen('production') }"></i>
                 </button>
             </div>
             <table ng-class="{ 'expanded': isOpen('production') }">
@@ -33,13 +33,13 @@
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
-                            <i class="glyphicon glyphicon-copy"></i>
+                            <i class="fa fa-copy"></i>
                         </button>
                     </td>
                     <td>
                         <div class="btn-group no-border-radius" uib-dropdown is-open="status.isopen">
                             <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
-                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                <i class="fa fa-option-vertical"></i>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem"
@@ -69,7 +69,7 @@
                     <h4>Test</h4>
                 </div>
                 <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('test')">
-                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('test'), 'glyphicon-chevron-up': isOpen('test') }"></i>
+                    <i class="fa" ng-class="{ 'fa-chevron-down': !isOpen('test'), 'fa-chevron-up': isOpen('test') }"></i>
                 </button>
             </div>
             <table ng-class="{'expanded': isOpen('test')}">
@@ -95,13 +95,13 @@
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
-                            <i class="glyphicon glyphicon-copy"></i>
+                            <i class="fa fa-copy"></i>
                         </button>
                     </td>
                     <td>
                         <div class="btn-group" uib-dropdown is-open="status.isopen">
                             <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
-                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                <i class="fa fa-option-vertical"></i>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem"
@@ -137,7 +137,7 @@
                     <h4>Development</h4>
                 </div>
                 <button class="btn btn-muted btn-xs border-radius-8" ng-click="toggleSection('development')">
-                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !isOpen('development'), 'glyphicon-chevron-up': isOpen('development') }"></i>
+                    <i class="fa" ng-class="{ 'fa-chevron-down': !isOpen('development'), 'fa-chevron-up': isOpen('development') }"></i>
                 </button>
             </div>
             <table ng-class="{'expanded': isOpen('development')}">
@@ -157,13 +157,13 @@
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
-                            <i class="glyphicon glyphicon-copy"></i>
+                            <i class="fa fa-copy"></i>
                         </button>
                     </td>
                     <td>
                         <div class="btn-group" uib-dropdown is-open="status.isopen">
                             <button type="button" class="btn btn-muted btn-xs no-border-radius" uib-dropdown-toggle>
-                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                <i class="fa fa-option-vertical"></i>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem"

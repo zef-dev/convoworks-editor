@@ -3,7 +3,7 @@
         <fieldset>
             <legend>
                 <a ui-sref="convoworks-editor-service.configuration" class="back">
-                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    <i class="fa fa-arrow-left"></i>
                 </a>&nbsp;Dialogflow
             </legend>
 
@@ -14,17 +14,17 @@
                 <div class="convo-form-group">
                     <div class="button-group">
                         <button ng-click="gotoConfigUrl()" ng-if="config.mode === 'manual' && config.projectId && config.projectId !== ''" title="Actions on Google - Directory information" class="btn btn-primary btn-sm submit">
-                            Actions on Google - Directory information <i class="glyphicon glyphicon-new-window"></i>
+                            Actions on Google - Directory information <i class="fa fa-new-window"></i>
                         </button>
                         <button disabled ng-if="config.mode === 'manual' && (!config.projectId || config.projectId === '')" title="Actions on Google - Directory information" class="btn btn-primary btn-sm submit">
-                            Actions on Google - Directory information <i class="glyphicon glyphicon-new-window"></i>
+                            Actions on Google - Directory information <i class="fa fa-new-window"></i>
                         </button>
 
                         <button ng-click="gotoConfigUrl()" ng-if="config.mode === 'auto' && config.serviceAccount && config.serviceAccount !== ''" title="Actions on Google - Directory information" class="btn btn-primary btn-sm submit">
-                            Actions on Google - Directory information <i class="glyphicon glyphicon-new-window"></i>
+                            Actions on Google - Directory information <i class="fa fa-new-window"></i>
                         </button>
                         <button disabled ng-if="config.mode === 'auto' && (!config.serviceAccount || config.serviceAccount === '')" title="Actions on Google - Directory information" class="btn btn-primary btn-sm submit">
-                            Actions on Google - Directory information <i class="glyphicon glyphicon-new-window"></i>
+                            Actions on Google - Directory information <i class="fa fa-new-window"></i>
                         </button>
                     </div>
                 </div>

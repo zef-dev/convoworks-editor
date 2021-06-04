@@ -6,7 +6,7 @@
                     <h4>All versions</h4>
                 </div>
                 <button class="btn btn-muted btn-xs border-radius-8" ng-click="expanded = !expanded;">
-                    <i class="glyphicon" ng-class="{ 'glyphicon-chevron-down': !expanded, 'glyphicon-chevron-up': expanded }"></i>
+                    <i class="fa" ng-class="{ 'fa-chevron-down': !expanded, 'fa-chevron-up': expanded }"></i>
                 </button>
             </div>
             <table ng-class="{ 'expanded': expanded }">
@@ -40,7 +40,7 @@
                     <td class="release-actions">
                         <div class="btn-group" uib-dropdown is-open="status.isopen">
                             <button id="single-button" type="button" class="btn btn-muted btn-xs border-radius-8" uib-dropdown-toggle>
-                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                <i class="fa fa-option-vertical"></i>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem" ng-click="importToDevelop( row)">

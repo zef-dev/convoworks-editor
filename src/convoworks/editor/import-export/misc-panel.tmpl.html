@@ -44,20 +44,20 @@
             </div>
             <div class="convo-form-group">
                 <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="download()">
-                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Convoworks model download
+                    <i class="fa fa-download-alt"></i>&nbsp;Convoworks model download
                 </button>
             </div>
             <div class="convo-form-group">
                 <button type="button" ng-disabled="!hasPlatformRelease('dialogflow')" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('dialogflow')">
-                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Dialogflow export download
+                    <i class="fa fa-download-alt"></i>&nbsp;Dialogflow export download
                 </button>
-                <i ng-show="!hasPlatformRelease('dialogflow')" class="glyphicon glyphicon-question-sign" uib-tooltip="Can't download export for Dialogflow at the moment. Please create an configuration for the Dialogflow Platform."></i>
+                <i ng-show="!hasPlatformRelease('dialogflow')" class="fa fa-question-sign" uib-tooltip="Can't download export for Dialogflow at the moment. Please create an configuration for the Dialogflow Platform."></i>
             </div>
             <div class="convo-form-group">
                 <button type="button" ng-disabled="!hasPlatformRelease('amazon')" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('amazon')">
-                    <i class="glyphicon glyphicon-download-alt"></i>&nbsp;Amazon Alexa export download
+                    <i class="fa fa-download-alt"></i>&nbsp;Amazon Alexa export download
                 </button>
-                <i ng-show="!hasPlatformRelease('amazon')" class="glyphicon glyphicon-question-sign" uib-tooltip="Can't download export for Amazon Alexa at the moment. Please create an configuration for the Amazon Alexa Platform."></i>
+                <i ng-show="!hasPlatformRelease('amazon')" class="fa fa-question-sign" uib-tooltip="Can't download export for Amazon Alexa at the moment. Please create an configuration for the Amazon Alexa Platform."></i>
             </div>
         </form>
     </div>

@@ -32,11 +32,11 @@ export default function alertIndicator( AlertService, $log) {
             {
                 switch (type) {
                     case "success":
-                        return 'glyphicon glyphicon-ok';
+                        return 'fa fa-ok';
                     case "danger":
-                        return 'glyphicon glyphicon-remove-circle';
+                        return 'fa fa-remove-circle';
                     case "warning":
-                        return 'glyphicon glyphicon-exclamation-sign';
+                        return 'fa fa-exclamation-sign';
                     case "info":
                     default:
                         return '';
