@@ -92,9 +92,18 @@
         margin-top: 65px;
     }
 
-    .panel-default > .panel-heading {
+    .panel-default {
+        margin-bottom: 5px;
+        padding: 2px;
+    }
+    .panel-default > .card-header {
         color: white;
         background-color: #2F74EA;
         border-color: #2F74EA;
+    }
+    
+    .panel-default > .card-header h5 {
+        font-size: 16px;
+        margin: 0;
     }
 }
