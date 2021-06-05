@@ -70,49 +70,41 @@
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <li role="menuitem" class="session_start"
-                                ng-if="isRoleAvailable( 'session_start')">
-                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_start', 'Session start')"
-                                   class="dropdown-item"
-                                   title="Add session start block"
-                                   href="javascript:void(0);">
-                                    Session start
-                                    <span>convo-core</span>
-                                </a>
-                            </li>
-                            <li role="menuitem" class="service_processors"
+                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_start', 'Session start')"
+                               class="dropdown-item session_start"
+                               title="Add session start block"
+                               href="javascript:void(0);"
+                               ng-if="isRoleAvailable( 'session_start')">
+                                Session start
+                                <span>convo-core</span>
+                            </a>
+                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_ended', 'Session ended')"
+                               class="dropdown-item service_processors"
+                               title="Add session end block"
+                               href="javascript:void(0);"
                                 ng-if="isRoleAvailable( 'session_ended')">
-                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_ended', 'Session ended')"
-                                   class="dropdown-item"
-                                   title="Add session end block"
-                                   href="javascript:void(0);">
-                                    Session ended
-                                    <span>convo-core</span>
-                                </a>
-                            </li>
-                            <li role="menuitem" class="service_processors"
-                                ng-if="isRoleAvailable( 'service_processors')">
-                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
-                                   class="dropdown-item"
-                                   title="Add service processors block. This processors will be considered in every process request."
-                                   href="javascript:void(0);">
-                                    Service processors
-                                    <span>convo-core</span>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li ng-repeat="option in availableBlockTypes track by $index" role="menuitem" class="{{option.role}}"
-                                ng-if="isRoleAvailable( option.role)">
-                                <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
-                                   class="dropdown-item"
-                                   title="{{option.description}}"
-                                   href="javascript:void(0);">
-                                    {{ option.name }}
-                                    <span>{{ option.namespace }}</span>
-                                </a>
-                            </li>
-                        </ul>
+                                Session ended
+                                <span>convo-core</span>
+                            </a>
+                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
+                               class="dropdown-item service_processors"
+                               title="Add service processors block. This processors will be considered in every process request."
+                               href="javascript:void(0);" 
+                               ng-if="isRoleAvailable( 'service_processors')">
+                                Service processors
+                                <span>convo-core</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
+                               class="dropdown-item {{option.role}}"
+                               title="{{option.description}}"
+                               href="javascript:void(0);" ng-if="isRoleAvailable( option.role)" 
+                               ng-repeat="option in availableBlockTypes track by $index">
+                                {{ option.name }}
+                                <span>{{ option.namespace }}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="blocks-container" ui-sortable="sortableOptions" ng-model="getSelectedService().blocks">
@@ -156,24 +148,20 @@
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <li role="menuitem">
-                                <a ng-click="openNewReadSubroutine()"
-                                   class="dropdown-item"
-                                   href="javascript:void(0);">
-                                    Read fragment
-                                    <span>convo-core</span>
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a ng-click="openNewProcessSubroutine()"
-                                   class="dropdown-item"
-                                   href="javascript:void(0);">
-                                    Process fragment
-                                    <span>convo-core</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <a ng-click="openNewReadSubroutine()"
+                               class="dropdown-item"
+                               href="javascript:void(0);">
+                                Read fragment
+                                <span>convo-core</span>
+                            </a>
+                            <a ng-click="openNewProcessSubroutine()"
+                               class="dropdown-item"
+                               href="javascript:void(0);">
+                                Process fragment
+                                <span>convo-core</span>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -207,16 +195,14 @@
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <li role="menuitem" ng-repeat="context in availableContexts track by $index">
-                                <a ng-click="addNewContext(context)"
-                                   class="dropdown-item"
-                                   href="javascript:void(0);">
-                                    {{ context.name }}
-                                    <span>{{ context.namespace }}</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                            <a ng-click="addNewContext(context)"
+                               class="dropdown-item"
+                               href="javascript:void(0);" ng-repeat="context in availableContexts track by $index">
+                                {{ context.name }}
+                                <span>{{ context.namespace }}</span>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
