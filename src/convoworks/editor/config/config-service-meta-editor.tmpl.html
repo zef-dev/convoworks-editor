@@ -8,7 +8,7 @@
 			<input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
 
             <div class="convo-form-group">
-                <label for="service-meta-name" class="convo-form-label">Service Name <i class="fa fa-question-sign" uib-tooltip="Internal name for this service"></i></label>
+                <label for="service-meta-name" class="convo-form-label">Service Name <i class="fa fa-question-circle" uib-tooltip="Internal name for this service"></i></label>
                 <input type="text" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid}" ng-model="config.name" ng-focus="$event.target.select()" id="service-meta-name" name="serviceMetaName" required>
                 <ng-messages role="alert" class="error"
                     ng-if="serviceMeta.serviceMetaName.$touched && serviceMeta.serviceMetaName.$invalid"
@@ -19,7 +19,7 @@
             </div>
 
 			<div class="convo-form-group">
-				<label for="service-meta-description" class="convo-form-label">Service Description <i class="fa fa-question-sign" uib-tooltip="Service description"></i></label>
+				<label for="service-meta-description" class="convo-form-label">Service Description <i class="fa fa-question-circle" uib-tooltip="Service description"></i></label>
                 <textarea class="convo-form-input"
                           ng-model="config.description"
                           rows="3" cols="80"
@@ -27,7 +27,7 @@
 			</div>
 
             <div class="convo-form-group">
-                <label for="default_language" class="convo-form-label">Default Language <i class="fa fa-question-sign" uib-tooltip="Default Language"></i></label>
+                <label for="default_language" class="convo-form-label">Default Language <i class="fa fa-question-circle" uib-tooltip="Default Language"></i></label>
                 <select ng-model="config.default_language" ng-change="onLanguageChange()" class="convo-form-input" id="default_language">
                     <option ng-repeat="(index, language)  in languages track by index"
                             value="{{ language.code }}"> {{ language.name }}
@@ -36,7 +36,7 @@
             </div>
 
             <div class="convo-form-group" ng-if="config.default_language === 'en'">
-                <label class="convo-form-label" for="default_locale">Default Locale for Publishing Preview <i class="fa fa-question-sign" uib-tooltip="Default Locale"></i></label>
+                <label class="convo-form-label" for="default_locale">Default Locale for Publishing Preview <i class="fa fa-question-circle" uib-tooltip="Default Locale"></i></label>
                 <select ng-model="config.default_locale" ng-change="onDefaultLocaleChange()" class="convo-form-input" id="default_locale">
                     <option ng-repeat="(index, locale) in locales track by index"
                             value="{{ locale.code }}"> {{ locale.name }}
@@ -61,7 +61,7 @@
 
 
 			<div class="convo-form-group">
-				<label for="service-meta-owner" class="convo-form-label">Service Owner <i class="fa fa-question-sign" uib-tooltip="Owner of this service"></i></label>
+				<label for="service-meta-owner" class="convo-form-label">Service Owner <i class="fa fa-question-circle" uib-tooltip="Owner of this service"></i></label>
                 <input ng-disabled="originalOwner !== getAuthUserEmail()" type="email" class="convo-form-input ng-class:{'error': serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid}" ng-focus="$event.target.select()" ng-model="config.owner" id="service-meta-owner" required name="serviceMetaOwner">
                 <ng-messages role="alert" class="error"
                     ng-if="serviceMeta.serviceMetaOwner.$touched && serviceMeta.serviceMetaOwner.$invalid"
@@ -83,7 +83,7 @@
             </div>
 
 			<div class="convo-form-group">
-				<label for="service-meta-admins" class="convo-form-label">Service Admins <i class="fa fa-question-sign" uib-tooltip="Users with administrative privileges for this service. Separate list items with a comma (,)"></i></label>
+				<label for="service-meta-admins" class="convo-form-label">Service Admins <i class="fa fa-question-circle" uib-tooltip="Users with administrative privileges for this service. Separate list items with a comma (,)"></i></label>
                 <input type="text" class="convo-form-input" ng-model="config.admins" text-array id="service-meta-admins">
 			</div>
 
