@@ -44,43 +44,38 @@
     .properties-editor .nav.nav-tabs li {
         margin: 0;
         padding: 0;
-    
         height: 100%;
-    
-        border: none;
-        border-radius: 0;
-    
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0;
-        line-height: 18px;
         text-align: center;
     }
     
-    .properties-editor .nav.nav-tabs li.active {
+    .properties-editor .nav.nav-tabs li a {
+        padding: 8px 12px;
+        line-height: 18px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
         border: none;
+        border-radius: 0;  
+        color: #fff;  
+        height: 100%;
+        width: 100%;
+        min-width: 100px;
     }
     
     .properties-editor .nav.nav-tabs li:hover,
-    .properties-editor .nav.nav-tabs li a,
     .properties-editor .nav.nav-tabs li a:hover,
-    .properties-editor .nav.nav-tabs li.active a {
-        color: #fff;
+    .properties-editor .nav.nav-tabs li a.active {
+        color: #fff;  
         border: none;
+        font-weight: 800;
     }
 
     .properties-editor .nav.nav-tabs li a:focus,
-    .properties-editor .nav.nav-tabs li.active a:focus {
+    .properties-editor .nav.nav-tabs li a.active:focus {
         outline: none;
     }
     
-    .properties-editor .nav.nav-tabs li.active a {
-        height: 100%;
-        width: 100%;
-    
-        margin: 0;
-        border-radius: 0;
-        border: none;
+    .properties-editor .nav.nav-tabs li a.active {
     }
     
     .properties-editor.read header {
@@ -89,7 +84,7 @@
     .properties-editor.read .nav.nav-tabs {
         background-color: #478d37;
     }
-    .properties-editor.read .nav.nav-tabs li.active a {
+    .properties-editor.read .nav.nav-tabs li a.active {
         background-color: #58984b;
     }
     
@@ -99,7 +94,7 @@
     .properties-editor.process .nav.nav-tabs {
         background-color: #854688;
     }
-    .properties-editor.process .nav.nav-tabs li.active a {
+    .properties-editor.process .nav.nav-tabs li a.active {
         background-color: #915894;
     }
     
@@ -109,7 +104,7 @@
     .properties-editor.datasource .nav.nav-tabs {
         background-color: #e18f00;
     }
-    .properties-editor.datasource .nav.nav-tabs li.active a {
+    .properties-editor.datasource .nav.nav-tabs li a.active {
         background-color: #e39a20;
     }
     
@@ -119,7 +114,7 @@
     .properties-editor.filter .nav.nav-tabs {
         background-color: #529bce;
     }
-    .properties-editor.filter .nav.nav-tabs li.active a {
+    .properties-editor.filter .nav.nav-tabs li a.active {
         background-color: #62a5d3;
     }
     
