@@ -118,47 +118,34 @@
     
     .editor .col-right .nav-tabs > li
     {
-        border-bottom: 1px solid rgba(0,0,0,0.1);
-        box-shadow: inset 0px 15px 10px -5px rgba(0,0,0,0.03);
-    /*     border: none; */
         font-size: 16px;
         letter-spacing: 0;
         line-height: 21px;
         text-align: center;
-        padding: 10px 4px 4px 4px;
         font-weight: bold;
-    }
-    
-    
-    .editor .col-right .nav-tabs > li.active
-    {
-        border-bottom: 2px solid #2F74EA;
-        box-shadow: inset 0px 15px 10px -5px rgba(0,0,0,0.03);
-    }
-    
-    .editor .col-right .nav-tabs > li.active a
-    {
-        color: rgba(0,0,0,0.8);
     }
     
     .editor .col-right .nav-tabs > li a
     {
-      color: rgba(0,0,0,0.4);
-      border: 0!important;
+        display: block;
+        padding: 16px 0;
+        border-bottom: 2px solid rgba(0,0,0,0.1);
+        box-shadow: inset 0px 15px 10px -5px rgba(0,0,0,0.03);
+        color: rgba(0,0,0,0.4);
+    }
+    
+    .editor .col-right .nav-tabs > li a.active
+    {
+        color: rgba(0,0,0,0.8);
+        border-bottom: 2px solid #2F74EA;
     }
     
     .editor .col-right .nav-tabs > li a:hover
     {
         background-color: inherit;
         color: rgba(0,0,0,0.8);
+        border-bottom: 2px solid rgba(47,116,234,0.4);
     }
-    
-    .editor .col-right .nav-tabs > li:hover
-    {
-        border-bottom: 1px solid #2F74EA;
-    /*     border-bottom: 2px solid rgba(0,0,0,0.3); */
-    }
-    
     
     .selected-block-container
     {
