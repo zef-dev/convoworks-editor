@@ -3,7 +3,7 @@
     
     input[type=text]
     {
-        font-size: 12px;
+        font-size: 14px;
         padding: 5px 10px;
         height: 2.5em;
     }
@@ -66,6 +66,15 @@
         width: 40px;
     }
     
+    .card-header {
+        background-color: #2F74EA;
+        color: white;
+    }
+    
+    .card-header i {
+        font-size: 18px;
+    }
+    
     .card .slidedown .fa, .chat .fa
     {
         margin-right: 5px;
@@ -107,6 +116,7 @@
     .convo-form-group input.convo-form-input {
         height: 40px;
     }
+    
     
     button.btn, a.btn {
         border-radius: 20px;
