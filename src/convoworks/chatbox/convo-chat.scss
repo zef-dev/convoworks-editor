@@ -66,18 +66,18 @@
         width: 40px;
     }
     
-    .panel .slidedown .fa, .chat .fa
+    .card .slidedown .fa, .chat .fa
     {
         margin-right: 5px;
     }
     
-    .panel-body
+    .card-body
     {
         overflow-y: scroll;
         height: 200px;
     }
     
-    .panel-footer {
+    .card-footer {
         padding: 5px 15px;
     }
     
@@ -112,6 +112,7 @@
         border-radius: 20px;
         font-size: 14px;
         font-weight: 500;
+        color: white;
         transition: background-color 50ms ease-in, border-color 50ms ease-in;
     }
        

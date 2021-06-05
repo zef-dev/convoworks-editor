@@ -1,6 +1,6 @@
 <div class="convo-chat">
-    <div class="panel panel-primary">
-        <div class="panel-heading" id="accordion" style="padding: 0.5em 0.5em;">
+    <div class="card">
+        <div class="panel-heading bg-primary text-white" id="accordion" style="padding: 0.5em 0.5em;">
             <span class="fa fa-comment"></span> &nbsp; {{ name }}
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-default btn-xs no-border-radius" title="Reset chat" ng-click="resetChat()">
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="panel-collapse" ng-hide="collapsed" id="collapseOne">
-            <div class="panel-body" id="chat-panel-body">
+            <div class="card-body" id="chat-panel-body">
                 <ul class="chat">
                     <li class="clearfix" ng-repeat="message in messages track by $index" >
                         <div ng-if="message.type == 'break'" style="height:6px;">
@@ -23,7 +23,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <form ng-submit="formSubmited()">
                     <div class="convo-form-group inline" id="chat">
                         <input ng-model="message" autocomplete="off" id="message" type="text"
