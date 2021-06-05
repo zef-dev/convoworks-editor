@@ -41,17 +41,12 @@
                             <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
                                 <i class="fa fa-option-vertical"></i>
                             </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                <li role="menuitem"
-                                    ng-repeat="option in getPromoteOptions( row)"
-                                    ng-click="promoteRelease( row, option.type, option.stage)">
-                                    <a href="javascript:void(0);"> {{option.title}} </a>
-                                </li>
-                                <li class="divider" ng-if="getPromoteOptions( row).length"></li>
-                                <li role="menuitem" ng-click="importToDevelop( row)">
-                                    <a href="javascript:void(0);">Import to develop</a>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <a href="javascript:void(0);" class="dropdown-item" ng-repeat="option in getPromoteOptions( row)"
+                                    ng-click="promoteRelease( row, option.type, option.stage)"> {{option.title}} </a>
+                                <div class="dropdown-divider" ng-if="getPromoteOptions( row).length"></div>
+                                <a href="javascript:void(0);" class="dropdown-item" role="menuitem" ng-click="importToDevelop( row)">Import to develop</a>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -103,23 +98,15 @@
                             <button id="single-button" type="button" class="btn btn-muted btn-sm no-border-radius" uib-dropdown-toggle>
                                 <i class="fa fa-option-vertical"></i>
                             </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                <li role="menuitem"
-                                    ng-repeat="option in getPromoteOptions( row)"
-                                    ng-click="promoteRelease( row, option.type, option.stage)"
-                                ><a href="javascript:void(0);">{{option.title}}</a></li>
-                                <li role="menuitem"
-                                    ng-repeat="option in getImportWorkflow( row)"
-                                    ng-click="importWorkflowRelease( row, option.release_id)"
-                                ><a href="javascript:void(0);">{{option.title}}</a></li>
-                                <li class="divider"></li>
-                                <li role="menuitem" ng-click="importToDevelop( row)">
-                                    <a href="javascript:void(0);">Import to develop</a>
-                                </li>
-                                <li role="menuitem" ng-click="tagAsSimpleVersion( row)">
-                                    <a href="javascript:void(0);">Tag as simple version</a>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <a href="javascript:void(0);" ng-repeat="option in getPromoteOptions( row)" class="dropdown-item"
+                                    ng-click="promoteRelease( row, option.type, option.stage)">{{option.title}}</a>
+                                <a href="javascript:void(0);" ng-repeat="option in getImportWorkflow( row)" class="dropdown-item"
+                                    ng-click="importWorkflowRelease( row, option.release_id)">{{option.title}}</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" role="menuitem" ng-click="importToDevelop( row)" class="dropdown-item">Import to develop</a>
+                                <a href="javascript:void(0);" ng-click="tagAsSimpleVersion( row)" class="dropdown-item">Tag as simple version</a>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -165,20 +152,14 @@
                             <button type="button" class="btn btn-muted btn-xs no-border-radius" uib-dropdown-toggle>
                                 <i class="fa fa-option-vertical"></i>
                             </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                <li role="menuitem"
-                                    ng-repeat="option in getSubmitOptions( row)"
-                                    ng-click="submitRelease( row, option.type, option.stage)"
-                                ><a href="javascript:void(0);">{{option.title}}</a></li>
-                                <li role="menuitem"
-                                    ng-repeat="option in getImportWorkflow( row)"
-                                    ng-click="importWorkflowRelease( row, option.release_id)"
-                                ><a href="javascript:void(0);">{{option.title}}</a></li>
-                                <li class="divider"></li>
-                                <li role="menuitem" ng-click="tagAsSimpleVersion( row)">
-                                    <a href="javascript:void(0);">Tag as simple version</a>
-                                </li>
-                            </ul>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <a href="javascript:void(0);" class="dropdown-item"ng-repeat="option in getSubmitOptions( row)"
+                                    ng-click="submitRelease( row, option.type, option.stage)">{{option.title}}</a>
+                                <a href="javascript:void(0);" class="dropdown-item" ng-repeat="option in getImportWorkflow( row)"
+                                    ng-click="importWorkflowRelease( row, option.release_id)">{{option.title}}</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0);" class="dropdown-item" role="menuitem" ng-click="tagAsSimpleVersion( row)">Tag as simple version</a>
+                            </div>
                         </div>
 
                 </tr>
