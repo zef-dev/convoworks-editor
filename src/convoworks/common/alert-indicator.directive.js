@@ -32,11 +32,11 @@ export default function alertIndicator( AlertService, $log) {
             {
                 switch (type) {
                     case "success":
-                        return 'fa fa-ok';
+                        return 'fa fa-check';
                     case "danger":
-                        return 'fa fa-remove-circle';
+                        return 'fa fa-times-circle';
                     case "warning":
-                        return 'fa fa-exclamation-sign';
+                        return 'fa fa-exclamation-circle';
                     case "info":
                     default:
                         return '';
