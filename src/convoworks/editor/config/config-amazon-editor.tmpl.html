@@ -210,16 +210,16 @@
                     </div>
                     <div class="convo-form-group" ng-if="config.mode === 'auto'">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
+                            <div class="card panel-default">
+                                <div class="card-header bg-primary text-white" role="tab" id="headingOne">
+                                    <h5>
                                     <span role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_skill_preview_in_store_public_name" aria-expanded="false" aria-controls="collapse_skill_preview_in_store_public_name">
                                         Edit Skill Store Preview for <span ng-repeat="(index, supported_locale) in supported_locales">  {{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span> {{supported_locales.length > 1 ? "stores" : "store"}}
                                     </span>
-                                    </h4>
+                                    </h5>
                                 </div>
                                 <div id="collapse_skill_preview_in_store_public_name" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <div class="panel-body">
+                                    <div class="card-body">
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="fa fa-question-sign" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
                                             <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="skill_preview_in_store_public_name" name="skill_preview_in_store_public_name" placeholder="" ng-model="config.skill_preview_in_store.public_name">
@@ -322,13 +322,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
+                            <div class="card panel-default">
+                                <div class="card-header bg-primary text-white" role="tab" id="headingTwo">
+                                    <h5>
                                     <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         Edit Privacy and Compliance
                                     </span>
-                                    </h4>
+                                    </h5>
                                 </div>
                                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                     <div class="panel-body">
@@ -406,13 +406,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingThree">
-                                    <h4 class="panel-title">
+                            <div class="card panel-default">
+                                <div class="card-header bg-primary text-white" role="tab" id="headingThree">
+                                    <h5>
                                     <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         Edit Availability
                                     </span>
-                                    </h4>
+                                    </h5>
                                 </div>
                                 <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                     <div class="panel-body">
