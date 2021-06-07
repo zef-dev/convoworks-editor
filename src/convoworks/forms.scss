@@ -165,7 +165,11 @@
         font-size: 14px;
         font-weight: 500;
     
-        transition: background-color 50ms ease-in, border-color 50ms ease-in
+        transition: background-color 50ms ease-in, border-color 50ms ease-in;
+
+        &:hover {
+            background-color: initial;
+        }
     }
     
     button.btn.no-border-radius,
