@@ -15,10 +15,10 @@
                     <div class="title">
                         <h3>Services</h3>
                         <div class="actions convo-form-group">
-                            <button class="btn btn-sm btn-gray"
+                            <button class="btn btn-sm btn-secondary"
                                 ng-click="sorting.ascending = !sorting.ascending"
                                 title="{{ sorting.ascending ? 'Toggle to sort descending' : 'Toggle to sort ascending' }}">
-                                <i ng-class="{'fa fa-sort-by-attributes': sorting.ascending, 'fa fa-sort-by-attributes-alt': !sorting.ascending}"></i>
+                                <i ng-class="{'fa fa-sort-up': sorting.ascending, 'fa fa-sort-down': !sorting.ascending}"></i>
                             </button>
                             <select class="convo-form-input" ng-model="sorting.by">
                                 <option ng-repeat="option in sortingOptions track by $index" value="{{ option.value }}">{{ option.label }}</option>
