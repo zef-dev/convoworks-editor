@@ -679,6 +679,14 @@ html {
         max-width: none;
         width: 100%;
     }
+
+    .modal {
+        .modal-footer {
+            button.cancel:hover {
+                color: #0a6aa1;
+            }
+        }
+    }
     
     @media (max-width: 975px) {
     	.service a {
