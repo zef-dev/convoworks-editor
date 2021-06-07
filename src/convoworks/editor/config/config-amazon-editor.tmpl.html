@@ -209,16 +209,17 @@
                         </div>
                     </div>
                     <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="card panel-default">
-                                <div class="card-header bg-primary text-white" role="tab" id="headingOne">
-                                    <h5>
-                                    <span role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_skill_preview_in_store_public_name" aria-expanded="false" aria-controls="collapse_skill_preview_in_store_public_name">
-                                        Edit Skill Store Preview for <span ng-repeat="(index, supported_locale) in supported_locales">  {{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span> {{supported_locales.length > 1 ? "stores" : "store"}}
-                                    </span>
-                                    </h5>
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Edit Skill Store Preview for <span ng-repeat="(index, supported_locale) in supported_locales">  {{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span> {{supported_locales.length > 1 ? "stores" : "store"}}
+                                        </button>
+                                    </h2>
                                 </div>
-                                <div id="collapse_skill_preview_in_store_public_name" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="fa fa-question-circle" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
@@ -322,16 +323,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card panel-default">
-                                <div class="card-header bg-primary text-white" role="tab" id="headingTwo">
-                                    <h5>
-                                    <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Edit Privacy and Compliance
-                                    </span>
-                                    </h5>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Edit Privacy and Compliance
+                                        </button>
+                                    </h2>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                    <div class="panel-body">
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="privacy_and_compliance_allows_purchases" class="convo-form-label">Does this skill allow users to make purchases or spend real money? *</label>
                                             <div id="privacy_and_compliance_allows_purchases">
@@ -406,16 +407,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card panel-default">
-                                <div class="card-header bg-primary text-white" role="tab" id="headingThree">
-                                    <h5>
-                                    <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Edit Availability
-                                    </span>
-                                    </h5>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Edit Availability
+                                        </button>
+                                    </h2>
                                 </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                    <div class="panel-body">
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
                                         <div class="convo-form-group">
                                             <label class="convo-form-label" for="config-auto-display">Opt in to automated locale distribution </label>
                                             <div class="checkbox">
@@ -430,9 +431,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                <b ng-show="config.privacy_and_compliance.is_child_directed" class="text-danger">Skill is directed to children and may result in skill validation failure in Certification section. In the validation report you'll be offered to make children's skill with <a target="_blank" href="https://blueprints.amazon.com/">Alexa BluePrints Portal</a>  or seek approval to build custom skills for children via the contact us form <a target="_blank" href="https://developer.amazon.com/alexa/console/contact-us">here</a> in the Amazon Alexa Developer Portal.</b>
                             </div>
                         </div>
                     </div>
