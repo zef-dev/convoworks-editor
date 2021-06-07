@@ -169,12 +169,17 @@
      .header > .contents > .publish .dropdown-menu > li {
         height: 40px;
         border: 1px solid rgba(0, 0, 0, 0.08);
+
+        display: flex;
+        flex-flow: row nowrap;
     }
 
      .header > .contents > .publish .dropdown-menu > li > a.dropdown-item {
         color: rgba(0, 0, 0, 0.8);
-        line-height: 30px;
-        height: 100%;
+        
+        padding: inherit;
+        margin: auto;
+        text-align: center;
     }
 
     .view {
