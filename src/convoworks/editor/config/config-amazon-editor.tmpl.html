@@ -87,11 +87,11 @@
                     <div class="convo-form-group" ng-if="config.mode === 'auto' && config.endpoint_ssl_certificate_type === 'SelfSigned'">
                         <label for="dialogflow-config-agent-avatar" class="convo-form-label">Self Signed Certificate</label>
                         <div class="input-group">
-                            <input type="file" accept=".pem" class="convo-form-input" id="dialogflow-config-agent-avatar"
+                            <input type="file" accept=".pem" class="form-control" id="dialogflow-config-agent-avatar"
                                    ngf-drop="onFileUpload($file, 'certificate')" ng-model="config.self_signed_certificate"
                                    ngf-select="onFileUpload($file, 'certificate')" ngf-multiple="false">
-                            <span class="input-group-btn">
-                                <button ng-click="gotoLearnHowToCreateSelfSignedCertificate()" title="Learn how to create a self signed certificate" class="btn btn-sm btn-primary submit">
+                            <span class="input-group-append">
+                                <button ng-click="gotoLearnHowToCreateSelfSignedCertificate()" title="Learn how to create a self signed certificate" class="btn btn-sm btn-primary submit rounded-right">
                                     Learn how to create a self signed certificate <i class="fa fa-new-window"></i>
                                 </button>
                             </span>
@@ -180,10 +180,10 @@
                     <div class="convo-form-group" ng-if="config.enable_account_linking">
                         <label for="account_linking_config_client_secret" class="convo-form-label">Your Secret * <i class="fa fa-question-circle" uib-tooltip="A credential you provide that lets the Alexa service authenticate with the Access Token URI. This is combined with the Client ID to identify the request as coming from Alexa."></i></label>
                         <div class="input-group">
-                            <input ng-required="true" type="{{secretFieldType}}" class="convo-form-input" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
-                            <span class="input-group-btn">
-                                <button ng-click="toggleShowSecret()" class="btn btn-outline-primary" type="button"> {{secretFieldType === 'password' ? 'Show Secret' : 'Hide Secret'}}</button>
-                            </span>
+                            <input ng-required="true" type="{{secretFieldType}}" class="form-control" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
+                            <div class="input-group-append">
+                                <button ng-click="toggleShowSecret()" class="btn btn-outline-primary rounded-right" type="button"> {{secretFieldType === 'password' ? 'Show Secret' : 'Hide Secret'}}</button>
+                            </div>
                         </div>
 
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid" class="text-danger">Secret is required.</b>
@@ -301,9 +301,9 @@
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_privacy_policy_url" class="convo-form-label">Privacy Policy URL <i class="fa fa-question-circle" uib-tooltip="Link to the privacy policy that applies to this skill."></i></label>
                                             <div class="input-group">
-                                                <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
-                                                <span class="input-group-btn">
-                                                    <button ng-click="getPrivacyPolicyUrl()" class="btn btn-outline-primary" type="button">Get Privacy Policy URL.</button>
+                                                <input type="url" class="form-control" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
+                                                <span class="input-group-append">
+                                                    <button ng-click="getPrivacyPolicyUrl()" class="btn btn-outline-primary rounded-right" type="button">Get Privacy Policy URL.</button>
                                                 </span>
                                             </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$pristine" class="text-danger">This must be a valid url.</b>
@@ -313,9 +313,9 @@
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_terms_of_use_url" class="convo-form-label">Terms of Use URL <i class="fa fa-question-circle" uib-tooltip="Link to the terms of use document for this skill."></i></label>
                                             <div class="input-group">
-                                                <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
-                                                <span class="input-group-btn">
-                                                    <button ng-click="getTermsOfUseUrl()" class="btn btn-outline-primary" type="button">Get Terms of Use URL.</button>
+                                                <input type="url" class="form-control" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
+                                                <span class="input-group-append">
+                                                    <button ng-click="getTermsOfUseUrl()" class="btn btn-outline-primary rounded-right" type="button">Get Terms of Use URL.</button>
                                                 </span>
                                             </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$pristine" class="text-danger">This must be an valid url.</b>
