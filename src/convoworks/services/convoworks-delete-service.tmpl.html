@@ -12,7 +12,7 @@
                                 &nbsp;Delete only local files
                             </label>
                         </div>
-                        <span class="help-block">Select this if you wish to delete only the Convoworks service model and all its accompanying configurations. This will keep remotely published services on vendors such as Amazon, Dialogflow, etc.</span>
+                        <small class="form-text text-muted">Select this if you wish to delete only the Convoworks service model and all its accompanying configurations. This will keep remotely published services on vendors such as Amazon, Dialogflow, etc.</small>
                     </div>
 
                     <div ng-if="report" class="report">
@@ -64,7 +64,7 @@
                         <div class="button-group">
                             <button type="submit" class="btn btn-danger delete" title="Delete service" ng-if="!report">Delete</button>
                             <a class="cancel" ng-click="cancel()" title="Cancel deletion" ng-if="!report">Cancel</a>
-                            
+
                             <button type="button" class="btn btn-primary" title="OK" ng-if="report" ng-click="ok()">OK</button>
                         </div>
                     </div>

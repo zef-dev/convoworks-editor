@@ -41,16 +41,16 @@
                         <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
                         <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
                     </div>
-                    <span class="help-block" ng-if="config.mode === 'auto'">
-                    Automatically propagates changes to Dialogflow</span>
-                    <span class="help-block" ng-if="config.mode === 'manual'">Intents are manually defined on Dialogflow.</span>
+                    <small class="form-text text-muted" ng-if="config.mode === 'auto'">
+                    Automatically propagates changes to Dialogflow</small>
+                    <small class="form-text text-muted" ng-if="config.mode === 'manual'">Intents are manually defined on Dialogflow.</small>
                 </div>
 
                 <div class="convo-form-group" ng-if="config.mode === 'manual'">
                     <label for="dialogflow-config-project-id" class="convo-form-label">Project ID</label>
                     <input type="text" class="convo-form-input" id="dialogflow-config-project-id" placeholder="" ng-model="config.projectId" ng-focus="$event.target.select()">
-                    <span class="help-block">Required for accessing Actions on Google Directory Information</span>
-                    <span class="help-block">Required to display the "Test on Amazon" button in Test tab</span>
+                    <small class="form-text text-muted">Required for accessing Actions on Google Directory Information</small>
+                    <small class="form-text text-muted">Required to display the "Test on Amazon" button in Test tab</small>
                 </div>
 
                 <div class="convo-form-group" ng-if="config.mode === 'auto'">

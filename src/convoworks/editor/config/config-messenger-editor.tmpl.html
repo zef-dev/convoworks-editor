@@ -26,7 +26,7 @@
                     <select class="convo-form-input" ng-model="config.delegateNlp" id="convo_chat-config-delegateNlp">
                         <option ng-repeat="nlp in getIntentNlps()" value="{{nlp.value}}">{{nlp.label}}</option>
                     </select>
-                    <span class="help-block">Will be used to parse input text into intent based result</span>
+                    <small class="form-text text-muted">Will be used to parse input text into intent based result</small>
                 </div>
 
                 <div class="convo-form-group">
@@ -44,7 +44,7 @@
                 <div class="convo-form-group">
                     <label for="page_id" class="convo-form-label">Facebook Page ID</label>
                     <input ng-required="true" type="text" class="convo-form-input" id="page_id" name="page_access_token" placeholder="" ng-model="config.page_id" ng-focus="$event.target.select()">
-                    <span class="help-block">Required to display the "Test on Messenger" button in Test tab</span>
+                    <small class="form-text text-muted">Required to display the "Test on Messenger" button in Test tab</small>
                     <b ng-show="facebookMessengerPlatformConfigForm.page_id.$invalid && !facebookMessengerPlatformConfigForm.page_id.$pristine" class="text-danger">Page ID is required.</b>
                 </div>
 

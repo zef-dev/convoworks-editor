@@ -28,13 +28,13 @@
                         <option ng-repeat="nlp in getIntentNlps()" value="{{nlp.value}}">{{nlp.label}}</option>
                     </select>
 
-                    <span class="help-block">Will be used to parse input text into intent based result</span>
+                    <small class="form-text text-muted">Will be used to parse input text into intent based result</small>
                 </div>
 
                 <div class="convo-form-group">
                     <label for="account_id" class="convo-form-label">Account ID</label>
                     <input type="text" class="convo-form-input" id="account_id" name="account_id" placeholder="" ng-model="config.account_id" ng-focus="$event.target.select()">
-                    <span class="help-block">Required to display the "Test on Viber" button in Test tab</span>
+                    <small class="form-text text-muted">Required to display the "Test on Viber" button in Test tab</small>
                 </div>
 
                 <div class="convo-form-group">

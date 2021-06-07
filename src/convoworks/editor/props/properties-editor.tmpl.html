@@ -32,7 +32,7 @@
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <textarea class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()"></textarea>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -41,7 +41,7 @@
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <textarea class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()"></textarea>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -52,7 +52,7 @@
                         <span ng-click="copyToClipboard(component.properties[key]); $event.preventDefault();">
                             <input class="convo-form-input copy monospace" type="text" readonly ng-model="component.properties[key]">
                         </span>
-                        <span class="help-block">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</small>
 
                     </div>
 
@@ -63,7 +63,7 @@
                         <span ng-click="copyToClipboard(component.properties[key]); $event.preventDefault();">
                             <input class="convo-form-input copy monospace" type="text" readonly ng-model="component.properties[key]">
                         </span>
-                        <span class="help-block">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}. Click the input to copy the value to clipboard.</small>
 
                     </div>
 
@@ -75,14 +75,14 @@
                             <label class="convo-form-label">{{ name }}</label> &mdash; <input class="convo-form-input" type="text" ng-model="component.properties[key][name]" ng-focus="$event.target.select()">
                         </div>
 
-                        <span class="help-block" ng-if="isObject( component.properties[key])">
+                        <small class="form-text text-muted" ng-if="isObject( component.properties[key])">
                             {{ definition.component_properties[key].description }}
-                        </span>
+                        </small>
 
                         <div ng-if="!isObject( component.properties[key])">
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <input class="convo-form-input" type="text" ng-model="component.properties[key]" ng-focus="$event.target.select()">
-                            <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                         </div>
 
                     </div>
@@ -93,7 +93,7 @@
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <input type="text" class="convo-form-input" required ng-model="component.properties[key]" ng-focus="$event.target.select()">
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                     </div>
 
                     <div class="convo-form-group"
@@ -102,7 +102,7 @@
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <input class="convo-form-input" type="password" ng-model="component.properties[key]" ng-focus="$event.target.select()">
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -112,7 +112,7 @@
 
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <input class="convo-form-input" type="text" ng-model="component.properties[key]" ng-focus="$event.target.select()">
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -125,7 +125,7 @@
                                 &nbsp;{{ definition.component_properties[key].name }}
                             </label>
                         </div>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -140,7 +140,7 @@
                                 {{ value }}
                             </option>
                         </select>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -155,7 +155,7 @@
                                 ng-model="component.properties[key]"
                                 ng-options="maybeInt(name) as value; for (name, value) in definition.component_properties[key].editor_properties.options">
                         </select>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -176,7 +176,7 @@
                                 {{ subroutine.name }}
                             </option>
                         </select>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                     </div>
 
                     <div class="convo-form-group"
@@ -188,7 +188,7 @@
                                 {{ subroutine.name }}
                             </option>
                         </select>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                     </div>
 
@@ -203,7 +203,7 @@
                             <option value="state">Current state (Read again)</option>
                             <option value="state_previous">Previous state</option>
                         </select>
-                        <span class="help-block">{{ definition.component_properties[key].description }}</span>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                     </div>
 
                 </div>

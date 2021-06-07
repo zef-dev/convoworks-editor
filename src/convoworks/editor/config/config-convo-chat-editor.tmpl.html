@@ -15,7 +15,7 @@
                     <select class="convo-form-input" ng-model="config.delegateNlp" id="convo_chat-config-delegateNlp">
                         <option ng-repeat="nlp in getIntentNlps()" value="{{nlp.value}}">{{nlp.label}}</option>
                     </select>
-                    <span class="help-block">Will be used to parse input text into intent based result</span>
+                    <small class="form-text text-muted">Will be used to parse input text into intent based result</small>
                 </div>
 
                 <div class="convo-form-group" ng-if="!isNew()">
