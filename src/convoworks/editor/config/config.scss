@@ -101,9 +101,15 @@
         background-color: #2F74EA;
         border-color: #2F74EA;
     }
-    
+
     .panel-default > .card-header h5 {
         font-size: 16px;
         margin: 0;
+    }
+
+    .amazon-config {
+        .btn-outline-primary:hover {
+            color: #0a6aa1;
+        }
     }
 }
