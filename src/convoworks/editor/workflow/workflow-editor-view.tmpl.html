@@ -62,11 +62,11 @@
                 </uib-tab-heading>
                 <div class="blocks-container">
                     <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-default btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
+                        <button type="button" class="btn btn-outline-primary btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
                             <span class="fa fa-plus"></span>
                             Add new block
                         </button>
-                        <button type="button" class="btn btn-default btn-xs border-radius-8 btn-borderless dropdown-toggle dropdown-toggle-split" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-outline-primary btn-xs border-radius-8 btn-borderless dropdown-toggle dropdown-toggle-split" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
@@ -90,7 +90,7 @@
                             <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
                                class="dropdown-item service_processors"
                                title="Add service processors block. This processors will be considered in every process request."
-                               href="javascript:void(0);" 
+                               href="javascript:void(0);"
                                ng-if="isRoleAvailable( 'service_processors')">
                                 Service processors
                                 <span>convo-core</span>
@@ -99,7 +99,7 @@
                             <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
                                class="dropdown-item {{option.role}}"
                                title="{{option.description}}"
-                               href="javascript:void(0);" ng-if="isRoleAvailable( option.role)" 
+                               href="javascript:void(0);" ng-if="isRoleAvailable( option.role)"
                                ng-repeat="option in availableBlockTypes track by $index">
                                 {{ option.name }}
                                 <span>{{ option.namespace }}</span>
@@ -129,22 +129,22 @@
                     Fragments
                 </uib-tab-heading>
                 <div class="blocks-container">
-<!--                         <button type="button" class="btn btn-default btn-xs icon-button" -->
+<!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
 <!--                                 ng-click="openNewProcessSubroutine()" title="Add new process workflow fragment"> -->
 <!--                             <span class="fa fa-flash"></span> -->
 <!--                         </button> -->
 
-<!--                         <button type="button" class="btn btn-default btn-xs icon-button" -->
+<!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
 <!--                                 ng-click="openNewReadSubroutine()" title="Add new read workflow fragment"> -->
 <!--                             <span class="fa fa-tasks"></span> -->
 <!--                         </button> -->
 
                         <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="openNewReadSubroutine()">
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-click="openNewReadSubroutine()">
                             <span class="fa fa-plus"></span>
                             Add new Read fragment
                         </button>
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
@@ -187,11 +187,11 @@
                 </uib-tab-heading>
                     <div class="blocks-container">
                         <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8">
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8">
                             Open to select Context
                             <span class="fa fa-chevron-right"></span>
                         </button>
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>

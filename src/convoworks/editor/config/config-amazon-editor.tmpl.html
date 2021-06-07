@@ -96,7 +96,7 @@
                                 </button>
                             </span>
                         </div>
-                        <button ng-if="config.self_signed_certificate" ng-click="toggleShowCertificate()" class="btn btn-default" type="button"> {{showCertificate === true ? 'Hide Uploaded Certificate' : 'Show Uploaded Certificate'}}</button>
+                        <button ng-if="config.self_signed_certificate" ng-click="toggleShowCertificate()" class="btn btn-outline-primary" type="button"> {{showCertificate === true ? 'Hide Uploaded Certificate' : 'Show Uploaded Certificate'}}</button>
                         <div ng-if="config.self_signed_certificate && showCertificate">
                             <span>Uploaded SSL Certificate Media ID:</span>
                             <textarea ng-disabled="true" ng-value="config.self_signed_certificate" class="form-control" id="self_signed_certificate" rows="10"></textarea>
@@ -117,7 +117,7 @@
                     <legend>Amazon Alexa Skill Account Linking: </legend>
                     <div class="convo-form-group" ng-if="config.app_id && !isNew()">
                         <div class="btn-group icon-button publish-group" uib-dropdown>
-                            <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="getSkillAccountLinkingInformation()">
+                            <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-click="getSkillAccountLinkingInformation()">
                                 <span ng-class="{ 'fa fa-play': !gettingSkillAccountLinkingInformation, 'fa fa-cog spinning': gettingSkillAccountLinkingInformation }"></span>
                                 {{ gettingSkillAccountLinkingInformation ? 'Getting existing Account Linking Information of existing Alexa Skill...'  : 'Get existing Account Linking Information of existing Alexa Skill' }}
                             </button>
@@ -182,7 +182,7 @@
                         <div class="input-group">
                             <input ng-required="true" type="{{secretFieldType}}" class="convo-form-input" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
                             <span class="input-group-btn">
-                                <button ng-click="toggleShowSecret()" class="btn btn-default" type="button"> {{secretFieldType === 'password' ? 'Show Secret' : 'Hide Secret'}}</button>
+                                <button ng-click="toggleShowSecret()" class="btn btn-outline-primary" type="button"> {{secretFieldType === 'password' ? 'Show Secret' : 'Hide Secret'}}</button>
                             </span>
                         </div>
 
@@ -202,7 +202,7 @@
                     <legend>Distribution Information: </legend>
                     <div class="convo-form-group" ng-if="config.app_id && !isNew()">
                         <div class="btn-group icon-button publish-group" uib-dropdown>
-                            <button type="button" class="btn btn-default btn-xs dropdown-default border-radius-8" ng-click="getSkillManifest()">
+                            <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-click="getSkillManifest()">
                                 <span ng-class="{ 'fa fa-play': !gettingSkillManifest, 'fa fa-cog spinning': gettingSkillManifest }"></span>
                                 {{ gettingSkillManifest ? 'Getting existing Distribution Information of existing Alexa Skill in ' + default_locale + "..."  : 'Get existing Distribution Information of existing Alexa Skill in ' + default_locale }}
                             </button>
@@ -302,7 +302,7 @@
                                             <div class="input-group">
                                                 <input type="url" class="convo-form-input" id="skill_preview_in_store_privacy_policy_url" name="skill_preview_in_store_privacy_policy_url" placeholder="" ng-model="config.skill_preview_in_store.privacy_policy_url">
                                                 <span class="input-group-btn">
-                                                    <button ng-click="getPrivacyPolicyUrl()" class="btn btn-default" type="button">Get Privacy Policy URL.</button>
+                                                    <button ng-click="getPrivacyPolicyUrl()" class="btn btn-outline-primary" type="button">Get Privacy Policy URL.</button>
                                                 </span>
                                             </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_privacy_policy_url.$pristine" class="text-danger">This must be a valid url.</b>
@@ -314,7 +314,7 @@
                                             <div class="input-group">
                                                 <input type="url" class="convo-form-input" id="skill_preview_in_store_terms_of_use_url" name="skill_preview_in_store_terms_of_use_url" placeholder="" ng-model="config.skill_preview_in_store.terms_of_use_url">
                                                 <span class="input-group-btn">
-                                                    <button ng-click="getTermsOfUseUrl()" class="btn btn-default" type="button">Get Terms of Use URL.</button>
+                                                    <button ng-click="getTermsOfUseUrl()" class="btn btn-outline-primary" type="button">Get Terms of Use URL.</button>
                                                 </span>
                                             </div>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_terms_of_use_url.$pristine" class="text-danger">This must be an valid url.</b>

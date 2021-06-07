@@ -59,7 +59,7 @@
                            ngf-drop="onFileUpload($file)" ng-model="config.serviceAccount"
                            ngf-select="onFileUpload($file)" ngf-multiple="false">
 
-                    <button ng-if="config.serviceAccount" ng-click="toggleShowServiceAccount()" class="btn btn-default" type="button"> {{showServiceAccount === true ? 'Hide contents of Service Account JSON' : 'Show contents of Service Account JSON'}}</button>
+                    <button ng-if="config.serviceAccount" ng-click="toggleShowServiceAccount()" class="btn btn-outline-primary" type="button"> {{showServiceAccount === true ? 'Hide contents of Service Account JSON' : 'Show contents of Service Account JSON'}}</button>
                     <div ng-if="config.serviceAccount && showServiceAccount">
                         <span>Saved Service Account JSON:</span>
                         <textarea ng-disabled="true" ng-value="config.serviceAccount" class="form-control" id="service_account_json" rows="10"></textarea>
