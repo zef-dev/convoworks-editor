@@ -141,6 +141,10 @@
         letter-spacing: 0;
         line-height: 18px;
 
+        &:hover {
+            background-color: inherit;
+        }
+
         & span.fa.fa-cog.spinning {
             animation: spin 1000ms ease-in-out;
             animation-fill-mode: forwards;
