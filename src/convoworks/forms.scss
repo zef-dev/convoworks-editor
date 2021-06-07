@@ -158,6 +158,16 @@
     }
     
     /* BUTTON GENERAL */
+    button {
+        &:active, &:focus {
+            box-shadow: none;
+        }
+
+        &:active:focus {
+            box-shadow: none;
+        }
+    }
+    
     button.btn,
     a.btn
     {
