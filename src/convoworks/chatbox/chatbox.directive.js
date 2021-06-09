@@ -201,11 +201,13 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
                 $log.log( 'convoChatbox _appendConvoResponse()', msgs);
 
                 for (var i=0;i<msgs.length; i++) {
-                    $scope.messages.push( {
-                        text : msgs[i],
-                        source : 'convo',
-                        avatar: 'img/pbtour-avatar-pb.png'
-                    });
+                    if (msgs[i] !== undefined && msgs[i] !== null) {
+                        $scope.messages.push( {
+                            text : msgs[i],
+                            source : 'convo',
+                            avatar: 'img/pbtour-avatar-pb.png'
+                        });
+                    }
                 }
             }
 
