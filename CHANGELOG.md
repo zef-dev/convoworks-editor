@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+### 0.22.1 - 2021-06-07 ###
+
+* Migrated to bootstrap 4
+
 ### 0.22.0 - 2021-05-14 ###
 
 * Extended all services view with platforms and sort options
