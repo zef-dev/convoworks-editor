@@ -398,7 +398,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                             var name = $scope.component.class
                                 .split('\\') // split class on namespace separator
                                 .slice(-1)[0] // take last element (class name)
-                                .split(/(?=[A-Z])/) // split on capital letters
+                                .split(/(?=[A-Z](?![A-Z]{1,}))|(?<=[a-z](?=[A-Z]))/) // split on capitals or preceeding acronyms so that e.g. 'OpenTDBTrivia' doesn't end up as 'open-t-d-b-trivia'
                                 .join('-').toLowerCase(); // join with - and lowercase -> LoopElement = loop-element
 
                             ConvoworksApi.getPackageComponentHelp( $scope.component.namespace, name).then(function (data) {
