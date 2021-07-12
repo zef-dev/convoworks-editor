@@ -44,7 +44,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             });
 
             $scope.config = {
-                mode: 'manual',
+                mode: 'auto',
                 invocation: default_invocation || $scope.meta.name,
                 app_id: null,
                 interaction_model_sensitivity: 'LOW',
