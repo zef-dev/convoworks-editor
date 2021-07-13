@@ -84,7 +84,8 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         this.getExistingAlexaSkill          =   getExistingAlexaSkill;
         // get-existing-alexa-skill/{serviceId}/account-linking-information
         this.getExistingAlexaSkillAccountLinkingInformation          =   getExistingAlexaSkillAccountLinkingInformation;
-
+        // get-existing-alexa-skill/{serviceId}/enable-alexa-skill-for-test
+        this.enableAlexaSkillForTest = enableAlexaSkillForTest;
         // supply-urls/system-urls
         this.getSystemUrls = getSystemUrls;
         // supply-urls/service-urls/{serviceId}
@@ -689,6 +690,19 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             data: { 'owner': owner }
         }).then(function(res) {
             $log.log('ConvoworksApi getExistingAlexaSkillAccountLinkingInformation() then', res.data);
+            return res.data;
+        });
+    }
+    function enableAlexaSkillForTest(owner, serviceId)
+    {
+        $log.log('ConvoworksApi enableAlexaSkillForTest()', owner, serviceId);
+
+        return $http({
+            method: 'PUT',
+            url: CONVO_ADMIN_API_BASE_URL + '/get-existing-alexa-skill/' + serviceId + '/enable-alexa-skill-for-test',
+            data: { 'owner': owner }
+        }).then(function(res) {
+            $log.log('ConvoworksApi enableAlexaSkillForTest() then', res.data);
             return res.data;
         });
     }

@@ -35,6 +35,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.tabsExpanded     =   UserPreferencesService.get( 'navi_expanded', true);
         $scope.serviceId        =   $stateParams.service_id;
+        $scope.owner    =   '';
 
         $scope.delegateNlp      =   null;
         $scope.delegateOptions  =   [
@@ -116,6 +117,16 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             } else {
                 if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
+
+                    if (data.platformName === 'amazon') {
+                       ConvoworksApi.enableAlexaSkillForTest($scope.owner, $scope.serviceId).then( function ( response) {
+                           if (response.can_be_enabled_for_testing) {
+                               AlertService.addSuccess(`${_fixPlatformId(data.platformName)} is enabled for testing.`);
+                           }
+                        }, function ( reason) {
+                           $log.log( 'convoworks-editor PlatformStatusUpdated enableAlexaSkillForTest', reason);
+                        });
+                    }
                 }
             }
         });
@@ -289,6 +300,11 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 platform_config_info = config;
             }).catch(function (reason) {
                 throw new Error(reason.data.message)
+            });
+
+            ConvoworksApi.getServiceMeta($scope.serviceId).then( function (serviceMeta) {
+                $log.log('testViewNlp got meta', serviceMeta);
+                $scope.owner = serviceMeta['owner'];
             });
             // TODO see how to solve this with multiple tabs
         }
