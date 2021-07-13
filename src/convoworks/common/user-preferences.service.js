@@ -5,6 +5,7 @@ export default function UserPreferencesService( $q, localStorageService)
     this.getData            =   getData;
     this.get                =   get;
     this.isSet              =   isSet;
+    this.removeData         =   removeData;
 
     function getData( key)
     {
@@ -34,5 +35,10 @@ export default function UserPreferencesService( $q, localStorageService)
     function registerData( key, data)
     {
         localStorageService.set( key, data)
+    }
+
+    function removeData (key)
+    {
+        localStorageService.remove(key);
     }
 };

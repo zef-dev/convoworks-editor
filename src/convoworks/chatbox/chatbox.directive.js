@@ -26,6 +26,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
 
             // $scope.collapsed    =   true;
 
+            $scope.delegateNlp  =   null;
             $scope.toggleDebug  =   false;
             $scope.message      =   '';
             $scope.messages     =   [];
@@ -44,6 +45,9 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
                     return;
                 }
 
+                UserPreferencesService.registerData( 'delegateNlp-' + $scope.serviceId, newVal);
+                $log.log('convoChatbox $watch toggleDebug new value', newVal);
+                $scope.delegateNlp = newVal;
                 $scope.resetChat();
             });
 
@@ -122,14 +126,23 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
                 $log.log( 'convoChatbox _init()');
                 sending             =   true;
 
-                _getApi().sendMessage( $scope.serviceId, $scope.deviceId, '', true, $scope.variant, $scope.delegateNlp).then( function( response) {
-                    $log.log( 'convoChatbox _init() response', response);
-                    _readResponse( response);
-                }, function( reason) {
-                    $log.log( 'convoChatbox _init() reason', reason);
-                }).finally( function() {
-                    $log.log( 'convoChatbox _init() finally');
-                    sending             =   false;
+                UserPreferencesService.getData( 'delegateNlp-' + $scope.serviceId).then( function( delegateNlp) {
+                    let defaultDelegateNlp = $scope.delegateNlp;
+                    if (delegateNlp) {
+                        defaultDelegateNlp = delegateNlp;
+                    }
+                    $log.log( 'convoChatbox getData() defaultDelegateNlp', delegateNlp);
+                    _getApi().sendMessage( $scope.serviceId, $scope.deviceId, '', true, $scope.variant, defaultDelegateNlp).then( function( response) {
+                        $log.log( 'convoChatbox _init() response', response);
+                        _readResponse( response);
+                    }, function( reason) {
+                        $log.log( 'convoChatbox _init() reason', reason);
+                    }).finally( function() {
+                        $log.log( 'convoChatbox _init() finally');
+                        sending             =   false;
+                        $scope.delegateNlp = delegateNlp;
+                    });
+
                 });
 
                 UserPreferencesService.getData( 'toggleDebug').then( function( toggleDebug) {

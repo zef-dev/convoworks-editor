@@ -73,7 +73,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
 
         instance.result.then(function (res) {
             $log.log('ConvoworksMainController deleteService modal then res', res);
-
+            UserPreferencesService.removeData('delegateNlp-' + serviceId);
             $scope.ready = false;
             _init();
         }, (reason) => {
