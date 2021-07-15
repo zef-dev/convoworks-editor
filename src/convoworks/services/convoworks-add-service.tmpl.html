@@ -19,6 +19,23 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
                             <div class="convo-form-group">
+                                <label class="convo-form-label">Upload from existing file</label>
+                                <div class="convo-form-input file"
+                                     ngf-drop="uploadSubmitted($file)"
+                                     ngf-select="uploadSubmitted($file)"
+                                     ngf-multiple="false"
+                                     ng-model="newPhoto">
+                                    Click to select service definition file or drop a <span class="monospace">.json</span> file here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="convo-form-group">
                                 <label class="convo-form-label" for="service_name">Service name</label>
                                 <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
                                        ng-model="new_service.name" required>
