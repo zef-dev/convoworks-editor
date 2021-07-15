@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
 
         const available_tabs = new RegExp(`\/(?:editor|preview|variables|intents\-entities|configuration|releases|import\-export|test)(?=\/|\\\?|$)`, 'g');
 
@@ -24,6 +24,8 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }
         });
 
+        const TIMEOUT_LENGTH           =   10000;
+        let auto_propagate_timeout        = null;
         var random_slug                =   Math.floor( Math.random() * 100000);
         var device_id                  =   'admin-chat-' + random_slug;
 
@@ -38,6 +40,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         $scope.owner    =   '';
 
         $scope.delegateNlp      =   null;
+        $scope.autoPropagateEnabled      =   UserPreferencesService.get( 'autoPropagate', true);
         $scope.delegateOptions  =   [
             {
                 label: '---',
@@ -73,6 +76,11 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             UserPreferencesService.registerData( 'navi_expanded', $scope.tabsExpanded)
         }
 
+        $scope.toggleAutoPropagate       =   function() {
+            $scope.autoPropagateEnabled = !$scope.autoPropagateEnabled;
+            UserPreferencesService.registerData( 'autoPropagate', $scope.autoPropagateEnabled)
+        }
+
         $scope.$on( 'ServiceConfigUpdated', function ( evt, data) {
             $log.log('ServiceConfigUpdated in convowork-editor.controller.js', data);
 
@@ -87,9 +95,13 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             _load();
             _initDelegationNlp();
             _resetSelectedNlp(platformData);
+            if (platformData.time_created < platformData.time_updated) {
+                _autoPropagate();
+            }
         });
 
         $scope.$on( 'ServiceWorkflowUpdated', function ( evt, data) {
+            _autoPropagate();
             _load();
         });
 
@@ -107,6 +119,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.$on( 'ServiceMetaUpdated', function ( evt, data) {
             _load();
+            _autoPropagate();
         });
 
         $scope.$on( 'PlatformStatusUpdated', function ( evt, data) {
@@ -127,6 +140,9 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                            $log.log( 'convoworks-editor PlatformStatusUpdated enableAlexaSkillForTest', reason);
                         });
                     }
+                    if (auto_propagate_timeout !== null) {
+                        _autoPropagate();
+                    }
                 }
             }
         });
@@ -141,6 +157,13 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         $scope.getAllowedPlatforms = function()
         {
             return Object.keys(platform_info).filter(p => platform_info[p].allowed);
+        }
+
+        $scope.getAvailablePlatforms = function()
+        {
+            const ceca = Object.keys(platform_info).filter(p => platform_info[p].allowed);
+            $log.log( 'ConvoworksEditorController getAvailablePlatforms()', platform_info, ceca);
+            return ceca;
         }
 
         $scope.getPropagationText = function()
@@ -265,6 +288,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         $scope.$on( '$destroy', function() {
             $log.log( 'convoworks-editor $destroy');
             PlatformStatusService.cancelAllPolls();
+            _cancelAutoPropagateTimeout();
         });
 
         function _fixPlatformId(platform)
@@ -367,6 +391,23 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                         $log.debug('testViewNlp update() response', response);
                     });
                 }
+            }
+        }
+
+        function _autoPropagate() {
+            if ($scope.autoPropagateEnabled) {
+                _cancelAutoPropagateTimeout();
+                auto_propagate_timeout = ($timeout(function() {
+                    $scope.propagatePlatformChanges('all');
+                }, TIMEOUT_LENGTH));
+            }
+        }
+
+        function _cancelAutoPropagateTimeout() {
+            $log.debug('testViewNlp _cancelPoll() auto_propagate_polls', auto_propagate_timeout);
+            if (auto_propagate_timeout !== null) {
+                $timeout.cancel(auto_propagate_timeout);
+                auto_propagate_timeout = null;
             }
         }
 

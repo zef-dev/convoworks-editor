@@ -135,6 +135,18 @@
         margin: auto;
     }
 
+    .header > .contents > .auto-propagate {
+        display: flex;
+        flex-flow: row;
+        align-self: center;
+        align-items: center;
+        margin: 0 20px 0 5px;
+
+        span {
+          margin: 0 10px 0 0;
+        }
+    }
+
      .header > .contents > .publish > .publish-group {
         width: 100%;
     }
