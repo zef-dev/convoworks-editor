@@ -7,7 +7,7 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         "default_locale" : "en-US",
         "supported_locales": ['en-US'],
         "is_private" : false,
-        "template_id" : "convo-core.blank"
+        "template_id" : "convo-core.basic-template"
     };
 
     $scope.templates = [];
