@@ -4,6 +4,12 @@
 
 ## [Releases]
 
+### 0.22.2 - 2021-07-19 ###
+
+* Add automatic Alexa Skill Enablement
+* Add Auto Propagate after Save
+
+
 ### 0.22.1 - 2021-06-07 ###
 
 * Migrated to bootstrap 4
