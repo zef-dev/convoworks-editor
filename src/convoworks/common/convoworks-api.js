@@ -43,6 +43,9 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         // /service-imp-exp/import/{serviceId}
         this.uploadServiceData          =   uploadServiceData;
 
+        // /services/import
+        this.importFromExisting         =   importFromExisting;
+
         // /service-platform-config/{serviceId}
         this.loadPlatformConfig         =   loadPlatformConfig;
         this.getServicePlatformConfig   =   getServicePlatformConfig;
@@ -377,6 +380,18 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                 $log.log('ConvoworksApi uploadServiceData() res', res);
                 return res.data;
             });
+        }
+
+        function importFromExisting(file) {
+            const fd = new FormData();
+            
+            fd.append("service_definition", file);
+            
+            return $http
+                .post(`${CONVO_ADMIN_API_BASE_URL}/services/import`, fd, { headers: { 'Content-Type': undefined } })
+                .then(function (res) {
+                    return res.data;
+                });
         }
 
         function loadPlatformConfig( serviceId) {

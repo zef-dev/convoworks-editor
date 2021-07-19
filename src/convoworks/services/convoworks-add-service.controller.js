@@ -36,6 +36,17 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         });
     });
 
+    $scope.uploadSubmitted = function(file)
+    {
+        $log.debug('miscPanel uploadSubmitted() file', file);
+        
+        ConvoworksApi.importFromExisting(file).then(function (data) {
+            $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
+        }, function (reason) {
+            $log.debug('convoworkAddServiceController uploadSubmitted() reason', reason);
+        });
+    }
+
     $scope.isTemplateSelected = function(template_id)
     {
         return $scope.new_service.template_id === template_id;
