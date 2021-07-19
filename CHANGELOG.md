@@ -8,7 +8,8 @@
 
 * Add automatic Alexa Skill Enablement
 * Add Auto Propagate after Save
-
+* Add ability to create service from existing file
+* Fix help file fetching
 
 ### 0.22.1 - 2021-06-07 ###
 
