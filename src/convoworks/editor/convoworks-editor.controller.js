@@ -24,7 +24,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }
         });
 
-        const TIMEOUT_LENGTH           =   10000;
+        const TIMEOUT_LENGTH           =   2000;
         let auto_propagate_timeout        = null;
         var random_slug                =   Math.floor( Math.random() * 100000);
         var device_id                  =   'admin-chat-' + random_slug;
