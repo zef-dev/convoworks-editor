@@ -7,7 +7,7 @@ const defaultNewIntent  =   {
 };
 
 /* @ngInject */
-export default function intentNew( $log, $rootScope, $state, $stateParams)
+export default function intentNew( $log, $window, $stateParams, localStorageService)
 {
     return {
         restrict: 'E',
@@ -38,8 +38,23 @@ export default function intentNew( $log, $rootScope, $state, $stateParams)
 
             $scope.submitIntent = function() {
                 var index   =   propertiesContext.addConvoIntent( current);
-//                $state.go('^.intents-entities-details', {index:index});
-                $state.go('^.intents-entities');
+
+                let quick_intent = localStorageService.get('quick_intent');
+
+                if (quick_intent && quick_intent.component_id) {
+                    quick_intent.intent = current.name;
+                    quick_intent.intent_index = index;
+    
+                    localStorageService.set('quick_intent', quick_intent);
+                }
+                
+                $window.history.back();
+            }
+
+            $scope.cancel = function()
+            {
+                localStorageService.set('quick_intent', null);
+                $window.history.back();
             }
 
             $scope.isIntentChanged = function() {

@@ -1,5 +1,9 @@
-  <div class="convo-form-group" ng-class="{'error':error}">
-      <label class="convo-form-label">{{ propertyDefinition.name }}</label>
+  <div class="convo-form-group input-group" ng-class="{'error':error}">
+	<label class="convo-form-label m-b-10">{{ propertyDefinition.name }}&nbsp;
+		<button class="btn btn-sm btn-primary" ng-click="quickAddIntent()">
+			<i class="fas fa-plus-circle"></i> Add new
+		</button>
+	</label>
       <select class="convo-form-input" ng-model="component.properties[key]">
           <option ng-repeat="intent in intents track by intent.name"
                   value="{{ intent.name }}">
