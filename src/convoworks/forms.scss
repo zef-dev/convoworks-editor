@@ -71,6 +71,20 @@
         cursor: copy;
     }
 
+    .expandable-textarea {
+        border: 1px solid #ccc;
+        font-family: inherit;
+        font-size: inherit;
+        padding: 1px 6px;
+      
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        resize: both;
+        min-height: 40px;
+        line-height: 20px;
+      }
+
     .convo-form-group {
         font-family: "DM Sans", sans-serif;
     
