@@ -301,6 +301,29 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 AlertService.addSuccess(`Copied [${value}] to clipboard.`);
             }
 
+            $scope.toggled = {};
+
+            $scope.canToggleToRaw = function (editorType)
+            {
+                return [
+                    'block_id',
+                    'fragment_id',
+                    'select',
+                    'read_fragment',
+                    'process_fragment',
+                    'select_block'
+                ].includes(editorType);
+            }
+
+            $scope.toggle = function(key) {
+                if ($scope.toggled[key] === undefined || $scope.toggled[key] === null) {
+                    $scope.toggled[key] = true;
+                    return;
+                }
+
+                $scope.toggled[key] = !$scope.toggled[key];
+            }
+
             function _setupBlockIds()
             {
                 $scope.processSubroutines   =   $scope.service.fragments.filter( function( fragment) {
