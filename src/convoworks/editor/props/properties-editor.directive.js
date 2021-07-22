@@ -216,6 +216,35 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 return ret;
             };
 
+            $scope.canToggleToRaw = function (editorType)
+            {
+                return [
+                    'select',
+                    'read_fragment',
+                    'process_fragment',
+                    'select_block',
+                    'boolean',
+                ].includes(editorType);
+            }
+
+            $scope.toggle = function(key) {
+                const system_key = `_use_var_${key}`;
+
+                if ($scope.component.properties[system_key] === null || $scope.component.properties[system_key] === undefined) {
+                    $scope.component.properties[system_key] = true;
+                    return;
+                }
+
+                $scope.component.properties[system_key] = !$scope.component.properties[system_key];
+            }
+
+            $scope.isToggled = function(key)
+            {
+                const system_key = `_use_var_${key}`;
+
+                return !($scope.component.properties[system_key] === undefined || $scope.component.properties[system_key] === null || $scope.component.properties[system_key] === false);
+            }
+
             $scope.$watch( 'service.blocks', _setupBlockIds, true);
             $scope.$watch( 'service.fragments', _setupBlockIds, true);
 
@@ -299,29 +328,6 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 document.body.removeChild(el);
 
                 AlertService.addSuccess(`Copied [${value}] to clipboard.`);
-            }
-
-            $scope.toggled = {};
-
-            $scope.canToggleToRaw = function (editorType)
-            {
-                return [
-                    'block_id',
-                    'fragment_id',
-                    'select',
-                    'read_fragment',
-                    'process_fragment',
-                    'select_block'
-                ].includes(editorType);
-            }
-
-            $scope.toggle = function(key) {
-                if ($scope.toggled[key] === undefined || $scope.toggled[key] === null) {
-                    $scope.toggled[key] = true;
-                    return;
-                }
-
-                $scope.toggled[key] = !$scope.toggled[key];
             }
 
             function _setupBlockIds()

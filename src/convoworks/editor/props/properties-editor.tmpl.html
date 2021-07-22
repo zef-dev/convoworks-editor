@@ -22,18 +22,16 @@
                     <button class="btn btn-default btn-xs" ng-click="toggle(key)"
                         ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">Toggle to raw</button>
 
-                    {{ toggled[key] ? "preset" : "raw" }}
-
-                    <div class="convo-form-group" ng-show="toggled[key]">
+                    <div class="convo-form-group" ng-show="isToggled(key) && canToggleToRaw(definition.component_properties[key].editor_type)">
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                        <div class="convo-form-input expandable-textarea" contenteditable role="textbox"
+                        <div class="convo-form-input expandable-textarea" contenteditable="true" role="textbox"
                             ng-model="component.properties[key]" ng-focus="$event.target.select()">
                         </div>
                         <small class="form-text text-muted">{{ definition.component_properties[key].description
                             }}</small>
                     </div>
 
-                    <div ng-show="!toggled[key]">
+                    <div ng-show="!isToggled(key) || !canToggleToRaw(definition.component_properties[key].editor_type)">
                         <convo-intent-editor ng-switch-when="convo_intent" key="key" service="service"
                             property-definition="definition.component_properties[key]" component="component">
                         </convo-intent-editor>
