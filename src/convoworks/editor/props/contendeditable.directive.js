@@ -1,33 +1,47 @@
 /* @ngInject */
-export default function contenteditable($sce) {
-    // https://stackoverflow.com/a/28583740/5552688
+export default function contenteditable()
+{
     return {
-        restrict: 'A', // only activate on element attribute
-        require: '?ngModel', // get a hold of NgModelController
+        restrict: "A",
+        require: "ngModel",
         link: function (scope, element, attrs, ngModel) {
-            if (!ngModel) return; // do nothing if no ng-model
+              // read is the main handler, invoked here by the blur event
+            function read() {
+                  // Keep the newline value for substitutin
+                  // when cleaning the <br>
+                var newLine = String.fromCharCode(10);
+                  // Firefox adds a <br> for each new line, we replace it back
+                  // to a regular '\n'
+                var formattedValue = element.html().replace(/<br>/ig,newLine).replace(/\r/ig,'');
+                  // update the model
+                ngModel.$setViewValue(formattedValue);
+                  // Set the formated (cleaned) value back into
+                  // the element's html.
+                element.text(formattedValue);
+            }
 
-            // Specify how UI should be updated
             ngModel.$render = function () {
-                element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+                element.html(ngModel.$viewValue || "");
             };
 
-            // Listen for change events to enable binding
-            element.on('blur keyup change', function () {
-                scope.$evalAsync(read);
+            element.bind("blur", function () {
+                  // update the model when
+                  // we loose focus
+                scope.$apply(read);
             });
-            read(); // initialize
-
-            // Write data to the model
-            function read() {
-                var html = element.html();
-                // When we clear the content editable the browser leaves a <br> behind
-                // If strip-br attribute is provided then we strip this out
-                if (attrs.stripBr && html == '<br>') {
-                    html = '';
-                }
-                ngModel.$setViewValue(html);
-            }
+            element.bind("paste", function(e){
+                  // This is a tricky one
+                  // when copying values while
+                  // editing, the value might be
+                  // copied with formatting, for example
+                  // <span style="line-height: 20px">copied text</span>
+                  // to overcome this, we replace
+                  // the default behavior and
+                  // insert only the plain text
+                  // that's in the clipboard
+                e.preventDefault();
+                document.execCommand('inserttext', false, e.clipboardData.getData('text/plain'));
+            });
         }
     };
 }
