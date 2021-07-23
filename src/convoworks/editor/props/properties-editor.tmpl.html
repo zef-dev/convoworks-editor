@@ -20,7 +20,9 @@
                     ng-switch="definition.component_properties[key].editor_type">
 
                     <button class="btn btn-default btn-xs" ng-click="toggle(key)"
-                        ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">Toggle to raw</button>
+                        ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">
+                        {{ isToggled(key) ? "Toggle to preset" : "Toggle to raw" }}
+                    </button>
 
                     <div class="convo-form-group" ng-show="isToggled(key) && canToggleToRaw(definition.component_properties[key].editor_type)">
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
