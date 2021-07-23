@@ -1,7 +1,7 @@
 import template from './properties-editor.tmpl.html';
 
 /* @ngInject */
-export default function propertiesEditor($log, $document, $transitions, $rootScope, $parse, ConvoworksApi, AlertService) {
+export default function propertiesEditor($log, $document, $transitions, $rootScope, $parse, $window, ConvoworksApi, AlertService) {
     return  {
         restrict: 'E',
         require: '^propertiesContext',
@@ -228,14 +228,30 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
             }
 
             $scope.toggle = function(key) {
+                $log.log('heho', key, $scope.definition);
                 const system_key = `_use_var_${key}`;
 
-                if ($scope.component.properties[system_key] === null || $scope.component.properties[system_key] === undefined) {
-                    $scope.component.properties[system_key] = true;
-                    return;
+                switch ($scope.component.properties[system_key]) {
+                    case null:
+                    case undefined:
+                    case false:
+                        $scope.component.properties[system_key] = true;
+                        break;
+                    case true:
+                        const default_val = $scope.definition.component_properties[key].defaultValue;
+                        const msg = default_val === null ? 
+                            `If you toggle back to the preset editor, you will lose your current data for this field. Proceed?` :
+                            `If you toggle back to the preset editor, your current data for this field will be reset to [${default_val}]. Proceed?`;
+                        
+                        if ($window.confirm(msg)) {
+                            $scope.component.properties[system_key] = false;
+                            $scope.component.properties[key] = default_val;
+                        }
+                        
+                        break;
+                    default:
+                        throw new Error(`Unexpected value for system key [${system_key}]: [${$scope.component.properties[system_key]}]`);
                 }
-
-                $scope.component.properties[system_key] = !$scope.component.properties[system_key];
             }
 
             $scope.isToggled = function(key)
