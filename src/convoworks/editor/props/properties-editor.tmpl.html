@@ -15,11 +15,12 @@
     <uib-tabset>
         <uib-tab heading="Properties">
             <form class="properties-editor-form">
-                <div ng-repeat="(key, val) in definition.component_properties track by key"
+                <div class="property" 
+                    ng-repeat="(key, val) in definition.component_properties track by key"
                     ng-if="shouldRender(key, definition, component)"
                     ng-switch="definition.component_properties[key].editor_type">
 
-                    <button class="btn btn-default btn-xs" ng-click="toggle(key)"
+                    <button class="btn btn-default btn-xs input-toggle" ng-click="toggle(key)"
                         ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">
                         {{ isToggled(key) ? "Toggle to preset" : "Toggle to raw" }}
                     </button>
@@ -29,8 +30,7 @@
                         <div class="convo-form-input expandable-textarea" contenteditable="true" role="textbox"
                             ng-model="component.properties[key]" ng-focus="$event.target.select()">
                         </div>
-                        <small class="form-text text-muted">{{ definition.component_properties[key].description
-                            }}</small>
+                        <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                     </div>
 
                     <div ng-show="!isToggled(key) || !canToggleToRaw(definition.component_properties[key].editor_type)">
@@ -43,8 +43,7 @@
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <textarea class="convo-form-input" required ng-model="component.properties[key]"
                                 ng-focus="$event.target.select()"></textarea>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -53,8 +52,7 @@
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <textarea class="convo-form-input" required ng-model="component.properties[key]"
                                 ng-focus="$event.target.select()"></textarea>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -100,8 +98,7 @@
                                 <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                                 <input class="convo-form-input" type="text" ng-model="component.properties[key]"
                                     ng-focus="$event.target.select()">
-                                <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                    }}</small>
+                                <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                             </div>
 
                         </div>
@@ -112,8 +109,7 @@
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <input type="text" class="convo-form-input" required ng-model="component.properties[key]"
                                 ng-focus="$event.target.select()">
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                         </div>
 
                         <div class="convo-form-group" ng-switch-when="password"
@@ -122,8 +118,7 @@
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <input class="convo-form-input" type="password" ng-model="component.properties[key]"
                                 ng-focus="$event.target.select()">
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -133,8 +128,7 @@
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <input class="convo-form-input" type="text" ng-model="component.properties[key]"
                                 ng-focus="$event.target.select()">
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -146,8 +140,7 @@
                                     &nbsp;{{ definition.component_properties[key].name }}
                                 </label>
                             </div>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -162,8 +155,7 @@
                                     {{ value }}
                                 </option>
                             </select>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -175,8 +167,7 @@
                             <select required class="convo-form-input" ng-model="component.properties[key]"
                                 ng-options="maybeInt(name) as value; for (name, value) in definition.component_properties[key].editor_properties.options">
                             </select>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -192,8 +183,7 @@
                                     {{ subroutine.name }}
                                 </option>
                             </select>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                         </div>
 
                         <div class="convo-form-group" ng-switch-when="process_fragment">
@@ -204,8 +194,7 @@
                                     {{ subroutine.name }}
                                 </option>
                             </select>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
 
                         </div>
 
@@ -218,8 +207,7 @@
                                 <option value="state">Current state (Read again)</option>
                                 <option value="state_previous">Previous state</option>
                             </select>
-                            <small class="form-text text-muted">{{ definition.component_properties[key].description
-                                }}</small>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                         </div>
                     </div>
 
