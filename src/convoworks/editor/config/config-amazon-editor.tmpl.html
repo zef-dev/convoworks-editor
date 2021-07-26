@@ -213,13 +213,13 @@
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                             Edit Skill Store Preview for <span ng-repeat="(index, supported_locale) in supported_locales">  {{index < supported_locales.length - 1 ? supported_locale + ", " : supported_locale}}</span> {{supported_locales.length > 1 ? "stores" : "store"}}
                                         </button>
                                     </h2>
                                 </div>
 
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="fa fa-question-circle" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
