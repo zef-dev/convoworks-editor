@@ -21,6 +21,14 @@ export default function ConvoworksDeleteServiceController($scope, $log, $uibModa
         });
     };
 
+    $scope.$on('modal.closing', (event, reason, closed) => {
+        if (reason === 'escape key press' && $scope.report !== null) {
+            $log.log('ConvoworksDeleteServiceController escape key pressed after delete, closing as OK');
+            event.preventDefault();
+            $scope.ok();
+        }
+    })
+
     $scope.shouldShow = function(section)
     {
         return section && !Array.isArray(section);
