@@ -385,10 +385,11 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
         function importFromExisting(name, file) {
             const fd = new FormData();
             
+            fd.append("name", name);
             fd.append("service_definition", file);
             
             return $http
-                .post(`${CONVO_ADMIN_API_BASE_URL}/services/import`, {name, fd}, { headers: { 'Content-Type': undefined } })
+                .post(`${CONVO_ADMIN_API_BASE_URL}/services/import`, fd, { headers: { 'Content-Type': undefined } })
                 .then(function (res) {
                     return res.data;
                 });
