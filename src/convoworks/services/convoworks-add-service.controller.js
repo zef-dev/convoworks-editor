@@ -1,6 +1,12 @@
 /* @ngInject */
 export default function ConvoworksAddNewServiceController($log, $scope, $state, $timeout, $document, ConvoworksApi)
 {
+    $scope.mode = 'add';
+
+    $scope.toggleMode = function() {
+        $scope.mode = ($scope.mode === 'add' ? 'import' : 'add');
+    }
+
     $scope.new_service = {
         "name" : "",
         "default_language" : "en",
@@ -8,6 +14,11 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         "supported_locales": ['en-US'],
         "is_private" : false,
         "template_id" : "convo-core.basic-template"
+    };
+
+    $scope.import_service = {
+        "name": "",
+        "file": null
     };
 
     $scope.templates = [];
@@ -40,11 +51,7 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
     {
         $log.debug('miscPanel uploadSubmitted() file', file);
         
-        ConvoworksApi.importFromExisting(file).then(function (data) {
-            $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
-        }, function (reason) {
-            $log.debug('convoworkAddServiceController uploadSubmitted() reason', reason);
-        });
+        $scope.import_service.file = file;
     }
 
     $scope.isTemplateSelected = function(template_id)
@@ -59,16 +66,32 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
 
     $scope.create = function()
     {
-        ConvoworksApi.createService(
-            $scope.new_service.name,
-            $scope.new_service.default_language,
-            $scope.new_service.default_locale,
-            $scope.new_service.supported_locales,
-            $scope.new_service.is_private,
-            $scope.new_service.template_id
-        ).then(function(data) {
-            $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
-        })
+        switch ($scope.mode) {
+            case 'add':
+                ConvoworksApi.createService(
+                    $scope.new_service.name,
+                    $scope.new_service.default_language,
+                    $scope.new_service.default_locale,
+                    $scope.new_service.supported_locales,
+                    $scope.new_service.is_private,
+                    $scope.new_service.template_id
+                ).then(function(data) {
+                    $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
+                });
+                break;
+            case 'import':
+                ConvoworksApi.importFromExisting(
+                    $scope.import_service.name,
+                    $scope.import_service.file
+                ).then(function (data) {
+                    $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
+                }, function (reason) {
+                    $log.debug('convoworkAddServiceController uploadSubmitted() reason', reason);
+                });
+                break;
+            default:
+                throw new Error(`Unexpected create mode [${$scope.mode}]`);
+        }
     };
 
     $scope.onLanguageChange = function () {
@@ -82,8 +105,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
             $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
                 return locale.code.includes($scope.new_service.default_language);
             });
-
-            $log.log("new service state", $scope.new_service);
         });
     }
 
@@ -98,8 +119,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
                 $scope.locales[i].checked = false;
             }
         }
-
-        $log.log("new service state", $scope.new_service);
     }
 
     $scope.registerChange = function(data) {
@@ -111,8 +130,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         } else {
            $scope.new_service.supported_locales = _arrayRemove($scope.new_service.supported_locales, localeCode);
         }
-
-        $log.log("new service state", $scope.new_service);
     }
 
     function _arrayRemove(array, value) {
@@ -123,10 +140,21 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
 
     $scope.submitDisabled = function()
     {
-        if (!$scope.new_service.name) {
-            return true;
+        if ($scope.mode === 'add')
+        {
+            if (!$scope.new_service.name) {
+                return true;
+            }
+    
+            return $scope.new_service.name.length === 0 || $scope.new_service.name.length > 50;
         }
-
-        return $scope.new_service.name.length === 0 || $scope.new_service.name.length > 50;
+        else if ($scope.mode === 'import')
+        {
+            if (!$scope.import_service.name) {
+                return true;
+            }
+    
+            return $scope.import_service.name.length === 0 || $scope.import_service.name.length > 50;
+        }
     }
 }

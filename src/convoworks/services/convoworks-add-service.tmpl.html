@@ -11,123 +11,151 @@
         <div class="tabs collapsed"></div>
         <div class="contents">
             <div class="wide-panel">
-                <form ng-submit="create()">
-                    <div class="header">
-                        <h1 class="text-muted">Add new service</h1>
+                
+                <div class="toggle" ng-click="toggleMode()">
+                    <div class="add-new" ng-class="{'active': mode === 'add'}">
+                        Add new service
                     </div>
+                    <div class="import" ng-class="{'active': mode === 'import'}">
+                        Import from file
+                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <label class="convo-form-label">Upload from existing file</label>
-                                <div class="convo-form-input file"
-                                     ngf-drop="uploadSubmitted($file)"
-                                     ngf-select="uploadSubmitted($file)"
-                                     ngf-multiple="false"
-                                     ng-model="newPhoto">
-                                    Click to select service definition file or drop a <span class="monospace">.json</span> file here
+                <form ng-submit="create()">
+                    <div ng-if="mode === 'add'">
+                        <div class="header">
+                            <h1 class="text-muted">Add new service</h1>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <label class="convo-form-label" for="service_name">Service name</label>
+                                    <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
+                                           ng-model="new_service.name" required>
+                                    <span class="help" ng-class="{'error': new_service.name.length > 50}">
+                                        {{(new_service.name && new_service.name.length) ? new_service.name.length : 0}}/50 characters
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <label class="convo-form-label" for="service_name">Service name</label>
-                                <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
-                                       ng-model="new_service.name" required>
-                                <span class="help" ng-class="{'error': new_service.name.length > 50}">
-                                    {{(new_service.name && new_service.name.length) ? new_service.name.length : 0}}/50 characters
-                                </span>
+    
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <label class="convo-form-label" for="default_language">Default Language</label>
+                                    <select ng-model="new_service.default_language" ng-change="onLanguageChange()" class="convo-form-input" id="default_language">
+                                        <option ng-repeat="(index, language)  in languages track by index"
+                                                value="{{ language.code }}"> {{ language.name }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <label class="convo-form-label" for="default_language">Default Language</label>
-                                <select ng-model="new_service.default_language" ng-change="onLanguageChange()" class="convo-form-input" id="default_language">
-                                    <option ng-repeat="(index, language)  in languages track by index"
-                                            value="{{ language.code }}"> {{ language.name }}
-                                    </option>
-                                </select>
+    
+                        <div class="row" ng-if="new_service.default_language === 'en'">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <label class="convo-form-label" for="default_locale">Default Locale</label>
+                                    <select ng-model="new_service.default_locale" ng-change="onDefaultLocaleChange()" class="convo-form-input" id="default_locale">
+                                        <option ng-repeat="(index, locale) in locales track by index"
+                                                value="{{ locale.code }}"> {{ locale.name }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row" ng-if="new_service.default_language === 'en'">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <label class="convo-form-label" for="default_locale">Default Locale</label>
-                                <select ng-model="new_service.default_locale" ng-change="onDefaultLocaleChange()" class="convo-form-input" id="default_locale">
-                                    <option ng-repeat="(index, locale) in locales track by index"
-                                            value="{{ locale.code }}"> {{ locale.name }}
-                                    </option>
-                                </select>
+    
+                        <div class="row" ng-if="new_service.default_language === 'en'">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <fieldset>
+                                        <legend>Supported Locales: </legend>
+                                        <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code === new_service.default_locale">
+                                            <input value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked" disabled>
+                                            <label for="checkbox-{{index}}">{{ locale.name }}</label>
+                                        </div>
+                                        <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code !== new_service.default_locale">
+                                            <input ng-click="registerChange(this)" value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked">
+                                            <label for="checkbox-{{index}}">{{ locale.name }}</label>
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row" ng-if="new_service.default_language === 'en'">
-                        <div class="col-md-4 col-sm-12">
-                            <div class="convo-form-group">
-                                <fieldset>
-                                    <legend>Supported Locales: </legend>
-                                    <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code === new_service.default_locale">
-                                        <input value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked" disabled>
-                                        <label for="checkbox-{{index}}">{{ locale.name }}</label>
-                                    </div>
-                                    <div ng-repeat="(index, locale)  in locales track by index" ng-if="locale.code !== new_service.default_locale">
-                                        <input ng-click="registerChange(this)" value="{{ locale.code }}" type="checkbox" name="checkbox-index" id="checkbox-{{index}}" ng-model="locale.checked">
-                                        <label for="checkbox-{{index}}">{{ locale.name }}</label>
-                                    </div>
-                                </fieldset>
+    
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <label class="convo-form-label" for="is_private">Is Private?</label>
+                                <div class="checkbox">
+                                    <label for="is_private">
+                                        <input type="checkbox" class="convo-form-input" id="is_private" ng-model="new_service.is_private" />
+                                        Don't share service with the entire Service Admin User Group
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                            <label class="convo-form-label" for="is_private">Is Private?</label>
-                            <div class="checkbox">
-                                <label for="is_private">
-                                    <input type="checkbox" class="convo-form-input" id="is_private" ng-model="new_service.is_private" />
-                                    Don't share service with the entire Service Admin User Group
+    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Choose a template</h3>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="template in templates">
+                                <label class="template-rectangle"
+                                       ng-class="{ 'selected': isTemplateSelected(template.template_id)}"
+                                       for="{{ ::template.template_id }}">
+    
+                                    <span class="template-title">
+                                        <span>{{ ::template.name }}</span>
+                                        <small>{{ getTemplateNamespace(template.template_id) }}</small>
+                                    </span>
+                                    <hr/>
+                                    <span class="description">{{ ::template.description }}</span>
+    
+                                    <input type="radio"
+                                           style="visibility: hidden;"
+                                           ng-model="new_service.template_id"
+                                           name="{{ ::template.template_id }}"
+                                           id="{{ ::template.template_id }}"
+                                           value="{{ ::template.template_id }}">
                                 </label>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Choose a template</h3>
+                    <div ng-if="mode === 'import'">
+                        <div class="header">
+                            <h1 class="text-muted">Import from file</h1>
                         </div>
-                    </div>
+    
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <label class="convo-form-label" for="service_name">Service name</label>
+                                    <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
+                                           ng-model="import_service.name" required>
+                                    <span class="help" ng-class="{'error': import_service.name.length > 50}">
+                                        {{(import_service.name && import_service.name.length) ? import_service.name.length : 0}}/50 characters
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-3 col-sm-4 col-xs-6" ng-repeat="template in templates">
-                            <label class="template-rectangle"
-                                   ng-class="{ 'selected': isTemplateSelected(template.template_id)}"
-                                   for="{{ ::template.template_id }}">
-
-                                <span class="template-title">
-                                    <span>{{ ::template.name }}</span>
-                                    <small>{{ getTemplateNamespace(template.template_id) }}</small>
-                                </span>
-                                <hr/>
-                                <span class="description">{{ ::template.description }}</span>
-
-                                <input type="radio"
-                                       style="visibility: hidden;"
-                                       ng-model="new_service.template_id"
-                                       name="{{ ::template.template_id }}"
-                                       id="{{ ::template.template_id }}"
-                                       value="{{ ::template.template_id }}">
-                            </label>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="convo-form-group">
+                                    <label class="convo-form-label">Upload from existing file</label>
+                                    <div class="convo-form-input file"
+                                         ngf-drop="uploadSubmitted($file)"
+                                         ngf-select="uploadSubmitted($file)"
+                                         ngf-multiple="false"
+                                         ng-model="newPhoto">
+                                        Click to select service definition file or drop a <span class="monospace">.json</span> file here
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
