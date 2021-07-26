@@ -121,7 +121,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.isModeValid  = function () {
-                return !( $scope.config.mode === 'auto' && !user.amazon_account_linked);
+                return !( $scope.config.mode === 'auto' && user !== null && !user.amazon_account_linked);
             }
 
             $scope.isNew    = function () {
