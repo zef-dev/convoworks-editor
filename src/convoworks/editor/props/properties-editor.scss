@@ -147,6 +147,16 @@
     
     .properties-editor .properties-editor-form {
         padding: 10px 15px 30px;
+
+        .property {
+            position: relative;
+
+            .input-toggle {
+                position: absolute;
+                right: 0;
+                top: -9px;
+            }
+        }
     }
     
     .properties-editor .button-container {
