@@ -11,6 +11,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
         },
         link: function ($scope, $element, $attributes) {
             var config_options = {};
+            var ready = false;
+            var promises = [];
             var user    =   null;
             $scope.service_language    =   'en';
             $scope.supported_locales    =   ['en-US'];
@@ -21,16 +23,20 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             let service_urls = null;
             $scope.service_language = 'en';
 
-            LoginService.getUser().then( function ( u) {
-                user = u;
-            });
+            promises.push(
+                LoginService.getUser().then( function ( u) {
+                    user = u;
+                })
+            );
 
-            ConvoworksApi.getServiceUrls($scope.service.service_id).then(function (response) {
-                service_urls = response.amazon;
-                $scope.account_linking_modes = service_urls.accountLinkingModes;
-            })
+            promises.push(
+                ConvoworksApi.getServiceUrls($scope.service.service_id).then(function (response) {
+                    service_urls = response.amazon;
+                    $scope.account_linking_modes = service_urls.accountLinkingModes;
+                })
+            );
 
-            ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
+            promises.push(ConvoworksApi.getServiceMeta($scope.service.service_id).then( function (serviceMeta) {
                 service_language = serviceMeta['default_language'];
                 $scope.service_language = service_language;
 
@@ -41,7 +47,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 $scope.default_locale = serviceMeta['default_locale'];
                 $scope.owner = serviceMeta['owner'];
                 $scope.service_language = serviceLanguage.replace("-", "_");
-            });
+            }));
 
             $scope.config = {
                 mode: 'auto',
@@ -108,6 +114,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             _load();
 
+            $q.all(promises).then(function(data) {
+                $log.log('configAmazonEditor all done', data);
+                ready = true;
+            }, function (reason) {
+                $log.log('configAmazonEditor all rejected, reason', reason);
+                ready = false;
+            })
+
             $scope.gotoConfigUrl = function() {
                 $window.open('https://developer.amazon.com/alexa/console/ask/publish/alexapublishing/' + $scope.config.app_id + '/development/'+$scope.service_language+'/skill-info', '_blank');
             }
@@ -121,7 +135,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.isModeValid  = function () {
-                return !( $scope.config.mode === 'auto' && !user.amazon_account_linked);
+                return !( $scope.config.mode === 'auto' && ready && !user.amazon_account_linked);
             }
 
             $scope.isNew    = function () {
@@ -510,7 +524,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             function _load()
             {
-                ConvoworksApi.getConfigOptions().then(function (options) {
+                promises.push(ConvoworksApi.getConfigOptions().then(function (options) {
                     config_options = options;
 
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
@@ -560,7 +574,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }
                         is_error    =   true;
                     });
-                })
+                }));
             }
 
             function _invocationToName(str) {
