@@ -4,6 +4,13 @@
 
 ## [Releases]
 
+### 0.22.3 - 2021-07-28 ###
+
+* Add ability to toggle preset inputs to raw input
+* Reworked loading of user data in Amazon config editor
+* Amazon config tabs closed by default
+* Split create new service view into new and import
+* Fix service delete report closing
 ### 0.22.2 - 2021-07-19 ###
 
 * Add automatic Alexa Skill Enablement
