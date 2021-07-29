@@ -227,8 +227,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 ].includes(editorType);
             }
 
-            $scope.toggle = function(key) {
-                $log.log('heho', key, $scope.definition);
+            $scope.toggle = function(key)
+            {
                 const system_key = `_use_var_${key}`;
 
                 switch ($scope.component.properties[system_key]) {
