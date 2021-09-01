@@ -557,7 +557,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
                         previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
                         _setIsChildDirected();
-                        _changeAccountLinkingMode($scope.config.account_linking_mode);
                         $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
