@@ -81,7 +81,7 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
                 break;
             case 'import':
                 ConvoworksApi.importFromExisting(
-                    $scope.import_service.name,
+                    $scope.new_service.name,
                     $scope.import_service.file
                 ).then(function (data) {
                     $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});

@@ -135,9 +135,9 @@
                                 <div class="convo-form-group">
                                     <label class="convo-form-label" for="service_name">Service name</label>
                                     <input type="text" class="convo-form-input" id="service_name" placeholder="Enter service name"
-                                           ng-model="import_service.name" required>
-                                    <span class="help" ng-class="{'error': import_service.name.length > 50}">
-                                        {{(import_service.name && import_service.name.length) ? import_service.name.length : 0}}/50 characters
+                                           ng-model="new_service.name" required>
+                                    <span class="help" ng-class="{'error': new_service.name.length > 50}">
+                                        {{(new_service.name && new_service.name.length) ? new_service.name.length : 0}}/50 characters
                                     </span>
                                 </div>
                             </div>
