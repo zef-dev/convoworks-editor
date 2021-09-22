@@ -215,7 +215,10 @@
             </form>
         </uib-tab>
         <uib-tab heading="Help" ng-if="checkComponentHelp()">
-            <div class="component-help" ng-bind-html="help"></div>
+            <div class="help-pane">
+                <span class="component-namespace">@{{ getComponentNamespace() }}</span>
+                <div class="component-help" ng-bind-html="help"></div>
+            </div>
         </uib-tab>
     </uib-tabset>
     <button class="btn btn-md btn-danger border-radius-8 delete-component-button" ng-click="removeComponent()"

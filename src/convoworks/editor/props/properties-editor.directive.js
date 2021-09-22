@@ -144,10 +144,12 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 return $scope.definition.description;
             };
 
+            $scope.getComponentNamespace = function () {
+                return $scope.component.namespace;
+            }
+
             $scope.checkComponentHelp = function() {
-                if ( $scope.help !== null) {
-                    return true;
-                }
+                return $scope.help !== null;
             };
 
             $scope.displayEditor    =   function() {
