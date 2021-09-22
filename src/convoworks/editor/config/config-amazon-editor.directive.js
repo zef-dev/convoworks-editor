@@ -308,8 +308,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $scope.config.account_linking_config.authorization_url = data.account_linking_config.authorization_url ?? '';
                                 $scope.config.account_linking_config.access_token_url = data.account_linking_config.access_token_url ?? '';
                                 $scope.config.account_linking_config.client_id = data.account_linking_config.client_id ?? '';
-                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes ? data.account_linking_config.scopes.join(";") : '';
-                                $scope.config.account_linking_config.domains = data.account_linking_config.domains ? data.account_linking_config.domains.join(';') : '';
+                                $scope.config.account_linking_config.scopes = data.account_linking_config.scopes ?? '';
+                                $scope.config.account_linking_config.domains = data.account_linking_config.domains ?? '';
                             }
 
                             $scope.config.endpoint_ssl_certificate_type = data.endpoint_ssl_certificate_type;
@@ -557,7 +557,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
                         previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
                         _setIsChildDirected();
-                        _changeAccountLinkingMode($scope.config.account_linking_mode);
                         $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
@@ -616,11 +615,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
                         $scope.config.account_linking_config.scopes =  '';
                     } else if ($scope.config.account_linking_mode === 'amazon') {
-                        if (accountLinkingMode !== $scope.config.account_linking_mode) {
-                            $scope.config.account_linking_config.client_id =  '';
-                            $scope.config.account_linking_config.client_secret =  '';
-                            $scope.config.account_linking_config.scopes =  '';
-                        }
+                        $scope.config.account_linking_config.client_id =  $scope.service.service_id;
+                        $scope.config.account_linking_config.client_secret =  '';
+                        $scope.config.account_linking_config.scopes =  'profile';
                     }
                 } else {
                     $scope.config.account_linking_config.client_id =  '';
