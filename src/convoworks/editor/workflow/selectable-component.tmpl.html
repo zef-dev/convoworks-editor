@@ -6,7 +6,7 @@
     >
 
 	<h3 ng-if="showComponentTitle()" title="{{ ::definition.description}}" class="component-title">{{ getComponentTitle() }}
-    
+    	<span class="component-namespace" ng-if="getComponentTitle() !== ''">@{{ getComponentNamespace() }}</span>
     </h3>
     <div title="{{ ::definition.description}}" class="preview"></div>
 	

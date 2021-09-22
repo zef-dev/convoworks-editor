@@ -40,6 +40,10 @@ export default function blockComponent( $log, $timeout, ConvoworksApi, UserPrefe
                 return $scope.block.properties.block_id;
             };
 
+            $scope.getComponentNamespace = function() {
+                return $scope.block.namespace;
+            }
+
             $scope.isSelected   =   function() {
                 return propertiesContext.getSelection().component === $scope.block;
             };

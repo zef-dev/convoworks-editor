@@ -193,6 +193,10 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                     return defaultTitle;
                 }
 
+                $scope.getComponentNamespace = function() {
+                    return $scope.component.namespace;
+                }
+
                 $scope.showComponentTitle =   function() {
                     if ( $scope.definition && $scope.component) {
                         if ( $scope.component.properties.name

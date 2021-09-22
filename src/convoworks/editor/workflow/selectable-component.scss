@@ -88,6 +88,13 @@
     /*     font-variant: all-petite-caps; */
     /*     transition: margin-bottom 200ms ease-in-out; */
     /*     font-style: italic; */
+        
+        .component-namespace {
+            float: right;
+            font-size: 0.9em;
+            color: rgb(180, 180, 180);
+            font-weight: lighter;
+        }
     }
     
     .selectable-component.read > .component-title {
@@ -374,6 +381,12 @@
         width: 50%;
         min-height: 45px;
         line-height: 30px;
+
+        .block-namespace {
+            font-weight: lighter;
+            font-size: 0.8em;
+            opacity: 0.5;
+        }
     }
     .selectable-component.error .block-title {
         margin-top: 80px;

@@ -5,7 +5,7 @@
     <div class="block-role">{{ block.properties.role }}</div>
 	<h3 class="block-title" title="{{ ::definition.description}}">
         <selectable-component-buttons ng-if="!isError()" toggle-fn="togglePreviewing()"></selectable-component-buttons>
-		{{ getComponentTitle() }}
+		{{ getComponentTitle() }}<span class="block-namespace">@{{ getComponentNamespace() }}</span>
 	</h3>
 
     <div ng-if="ready && !previewing">
