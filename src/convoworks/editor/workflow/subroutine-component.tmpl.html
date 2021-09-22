@@ -5,7 +5,7 @@
 	style="max-width: 100%">
     <h3 title="{{ ::definition.description}}" class="block-title">
         <selectable-component-buttons toggle-fn="togglePreviewing()"></selectable-component-buttons>
-	    {{ getComponentTitle() }}
+	    {{ getComponentTitle() }}<span class="block-namespace">@{{ getComponentNamespace() }}</span>
     </h3>
 
     <convoworks-components-container

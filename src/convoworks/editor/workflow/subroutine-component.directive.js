@@ -29,6 +29,8 @@ export default function subroutineComponent( $log, $timeout, ConvoworksApi)
                     return 'Fragment - ' + $scope.block.properties.fragment_id + '';
                 };
 
+                $scope.getComponentNamespace = () => $scope.block.namespace;
+
                 $scope.isSelected   =   function() {
                     return propertiesContext.getSelection().component === $scope.block;
                 };
