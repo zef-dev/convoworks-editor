@@ -59,7 +59,7 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
         })
     };
 
-    $scope.deleteService = function ($event, serviceId) {
+    $scope.deleteService = function ($event, serviceId, serviceReleases) {
         var instance = $uibModal.open({
             template: deleteServiceTemplate,
             controller: ServiceDeleteModalCtrl,
@@ -67,7 +67,8 @@ export default function ConvoworksMainController($log, $document, $scope, $uibMo
             appendTo: $document.find('.convoworks').eq(0),
             resolve: {
                 ConvoworksApi: function () { return ConvoworksApi; },
-                serviceId: function () { return serviceId; }
+                serviceId: function () { return serviceId; },
+                serviceReleases: function () { return serviceReleases; }
             }
         });
 

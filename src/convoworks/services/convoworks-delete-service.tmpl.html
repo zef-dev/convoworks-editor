@@ -5,7 +5,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="convo-form-group col-md-12" ng-if="!report">
+                    <div class="convo-form-group col-md-12" ng-if="!report && hasReleases()">
                         <div class="checkbox">
                             <label class="convo-form-label" for="local-only">
                                 <input type="checkbox" name="local-only" id="local-only" ng-model="localOnly.selected">
@@ -15,7 +15,11 @@
                         <small class="form-text text-muted">Select this if you wish to delete only the Convoworks service model and all its accompanying configurations. This will keep remotely published services on vendors such as Amazon, Dialogflow, etc.</small>
                     </div>
 
-                    <div ng-if="report" class="report">
+                    <div class="col-md-12" ng-if="!report && !hasReleases()">
+                        Are you sure you wish to delete this service?
+                    </div>
+
+                    <div ng-if="report" class="report col-md-12">
                         <div ng-if="shouldShow(report.successes)">
                             <h3>Successes</h3>
                             <ul class="successes">

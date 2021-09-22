@@ -57,7 +57,7 @@
                                     </div>
                                 </td>
                                 <td class="service__actions">
-                                    <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id);" title="Delete service">
+                                    <button ng-if="!service.owner || service.owner.email === getAuthUserEmail()" class="btn btn-md btn-danger" ng-click="deleteService($event, service.service_id, service.releases);" title="Delete service">
                                         <i class="fa fa-trash"></i> Delete Service
                                     </button>
                                     <div ng-if="service.owner && service.owner.email !== getAuthUserEmail()">N/A</div>

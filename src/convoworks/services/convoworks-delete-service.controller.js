@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksDeleteServiceController($scope, $log, $uibModalInstance, AlertService, ConvoworksApi, serviceId)
+export default function ConvoworksDeleteServiceController($scope, $log, $uibModalInstance, AlertService, ConvoworksApi, serviceId, serviceReleases)
 {
     $scope.localOnly = {
         selected: true
@@ -20,6 +20,8 @@ export default function ConvoworksDeleteServiceController($scope, $log, $uibModa
             AlertService.addDanger('Failed to delete service.');
         });
     };
+
+    $scope.hasReleases = () => serviceReleases.length > 0;
 
     $scope.$on('modal.closing', (event, reason, closed) => {
         if (reason === 'escape key press' && $scope.report !== null) {
