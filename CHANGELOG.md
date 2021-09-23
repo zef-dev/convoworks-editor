@@ -4,6 +4,14 @@
 
 ## [Releases]
 
+### 0.22.4 - 2021-09-23 ###
+
+* Reduce spacing on services list
+* Display fixes for service delete report
+* The "delete local files only" checkbox will appear only if the service has remote releases
+* Components in the editor now show which package they belong to
+* The component's package is also shown in its help header (if present)
+
 ### 0.22.3 - 2021-07-28 ###
 
 * Add ability to toggle preset inputs to raw input
@@ -11,6 +19,7 @@
 * Amazon config tabs closed by default
 * Split create new service view into new and import
 * Fix service delete report closing
+
 ### 0.22.2 - 2021-07-19 ###
 
 * Add automatic Alexa Skill Enablement
