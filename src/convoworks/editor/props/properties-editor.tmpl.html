@@ -198,6 +198,17 @@
 
                         </div>
 
+                        <div class="convo-form-group" ng-switch-when="context_element">
+                            <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                            <select class="convo-form-input" ng-model="component.properties[key]">
+                                <option ng-repeat="context in contexts track by context.id"
+                                    value="{{ context.id }}">
+                                    {{ context.name }}
+                                </option>
+                            </select>
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
+                        </div>
+
                         <div class="convo-form-group" ng-switch-when="select_block">
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                             <select class="convo-form-input" ng-model="component.properties[key]">

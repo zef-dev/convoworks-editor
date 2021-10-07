@@ -367,6 +367,15 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 }).map( function( block) {
                     return { id : block.properties.block_id, name : _fixName( block.properties.block_id, block.properties.name)};
                 });
+
+                $scope.contexts = $scope.service.contexts.filter(context => {
+                    return context.properties.id !== null && context.properties.id !== '';
+                }).map(context => {
+                    return {
+                        id: context.properties.id,
+                        name: _fixName(context.properties._component_id, context.properties.id)
+                    }
+                });
             }
 
             function _fixName( id, name) {
