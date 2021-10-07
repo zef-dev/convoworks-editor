@@ -1,5 +1,7 @@
-<div class="context-container prop-container \Convo\Core\Workflow\IServiceContext root-prop-container"
-    ng-class="{ 'empty' : service.contexts.length === 0}">
+<div 
+    class="context-container prop-container \Convo\Core\Workflow\IServiceContext root-prop-container"
+    ng-class="{ 'empty' : service.contexts.length === 0}"
+    context-menu="getContextOptions()">
     <h3 class="prop-title"
         title="Service contexts">
         Contexts

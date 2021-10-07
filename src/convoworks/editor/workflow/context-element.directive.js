@@ -34,6 +34,28 @@ export default function contextElement( $log, $rootScope, ConvoworksApi, $timeou
                 }
             });
 
+            $scope.getContextOptions = function()
+            {
+                let options = [];
+
+                options.push(
+                    {
+                        text: 'Delete',
+                        click: function ($itemScope, $event, modelValue, text, $li) {
+                            $log.log('contextElement context delete');
+
+                            if (propertiesContext.getSelection().component === $scope.contextElement) {
+                                propertiesContext.setSelectedComponent(null);
+                            }
+
+                            contextElementsContainer.removeComponent($scope.contextElement);
+                        }
+                    }
+                );
+
+                return options;
+            }
+
             function _init()
             {
                 if ( !$scope.contextElement) {
