@@ -187,11 +187,11 @@
                 </uib-tab-heading>
                     <div class="blocks-container">
                         <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8">
-                            Open to select Context
-                            <span class="fa fa-chevron-right"></span>
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-disabled="availableContexts.length === 0">
+                            {{ availableContexts.length === 0 ? "No available contexts" : "Open to select Context" }}
+                            <span class="fa fa-chevron-right" ng-hide="availableContexts.length === 0"></span>
                         </button>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false" ng-disabled="availableContexts.length === 0">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
