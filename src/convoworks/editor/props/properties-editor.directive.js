@@ -208,16 +208,6 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 $scope.component.properties.ok_specific[name].properties.utterances.splice( i, 1);
             };
 
-            // $scope.maybeInt                     =   function( value)
-            // {
-            //     var ret =   value * 1;
-
-            //     if ( isNaN( ret))
-            //         return value;
-
-            //     return ret;
-            // };
-
             $scope.maybeInt = value => isNaN(value * 1) ? value : value * 1;
 
             $scope.canToggleToRaw = function (editorType)
