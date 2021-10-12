@@ -216,7 +216,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'select',
                     'read_fragment',
                     'process_fragment',
-                    'context_element',
+                    'context_id',
                     'select_block',
                     'boolean',
                 ].includes(editorType);
