@@ -362,10 +362,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 });
 
                 $scope.contexts = $scope.service.contexts.filter(context => {
-                    return context.properties.id !== null && context.properties.id !== '';
+                    return context.properties.context_id !== null && context.properties.context_id !== '';
                 }).map(context => {
                     return {
-                        id: context.properties.id,
+                        id: context.properties.context_id,
                         name: _fixName(context.properties._component_id, context.properties.id)
                     }
                 });
