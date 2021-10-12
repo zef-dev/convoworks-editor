@@ -24,6 +24,7 @@ export default function intentDetails( $log, $window, $stateParams)
             }
 
             $scope.entities         =   propertiesContext.getSelectedService().entities;
+            $scope.intents          =   propertiesContext.getConvoIntents();
             $scope.system_entities  =   propertiesContext.getSystemEntities();
 
             $scope.onUpdate         =   function( intent) {

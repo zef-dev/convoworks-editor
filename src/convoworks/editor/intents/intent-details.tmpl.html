@@ -5,7 +5,7 @@
         </h3>
 
         <form ng-submit="submitIntent()">
-            <intent-editor intent="current_intent" entities="entities" system-entities="system_entities" on-update="onUpdate"></intent-editor>
+            <intent-editor intent="current_intent" intents="intents" entities="entities" system-entities="system_entities" on-update="onUpdate"></intent-editor>
 
             <div class="convo-button-group">
                 <button type="submit" title="Save changes"
@@ -13,9 +13,9 @@
                         class="btn btn-md btn-primary">
                     Save
                 </button>
-                <a ng-click="cancel(); $event.preventDefault();"
+                <button type="button" ng-click="cancel()"
                    title="Cancel changes"
-                   class="cancel">Cancel</a>
+                   class="cancel">Cancel</button>
 
             </div>
         </form>

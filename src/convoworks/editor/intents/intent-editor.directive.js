@@ -12,6 +12,7 @@ export default function intentEditor( $log)
         restrict: 'E',
         scope: {
             intent : '=',
+            intents: '=',
             entities : '=',
             systemEntities : '=',
             onUpdate : '=',
@@ -33,7 +34,7 @@ export default function intentEditor( $log)
             function _render( intent)
             {
                 $log.debug( 'intentEditor _render()', intent);
-                ReactDOM.render( <IntentEditor intent={intent} entities={$scope.entities} systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate}/>, $element[0]);
+                ReactDOM.render( <IntentEditor intent={intent} intents={$scope.intents} entities={$scope.entities} systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate}/>, $element[0]);
             }
 
             $scope.$watch( 'intent', function ( intent) {

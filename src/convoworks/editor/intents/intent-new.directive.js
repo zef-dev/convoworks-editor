@@ -25,6 +25,7 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
                 var service             =   propertiesContext.getSelectedService();
                 $scope.intent           =   current;
                 $scope.entities         =   service.entities;
+                $scope.intents          =   propertiesContext.getConvoIntents();
                 $scope.system_entities  =   propertiesContext.getSystemEntities();
             }
 
