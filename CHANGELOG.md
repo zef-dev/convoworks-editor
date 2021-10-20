@@ -4,6 +4,13 @@
 
 ## [Releases]
 
+### 0.22.5 - 2027-10-20 ###
+
+* Validate intent name and utterance uniqueness
+* Fix styling
+* Add new editor type for selecting contexts
+* Add context dropdown is disabled if none are available
+
 ### 0.22.4 - 2021-09-23 ###
 
 * Reduce spacing on services list
