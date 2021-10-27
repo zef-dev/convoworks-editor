@@ -10,33 +10,29 @@
         .prop-title {
             text-align: left;
         }
+
+        &.default-hidden {
+            // margin: 0;
+            display: none;
+            pointer-events: none;
+        }
+
+        &.ui-droppable-active {
+            .prop-container.default-hidden {
+                display: block;
+                // margin: 0.5em 0.25em;
+                pointer-events: all;
+            }
+        }
     }
     
     .root-prop-container.prop-container .prop-container > .prop-title > span {
         float: right;
     }
     
-    
     .prop-container.ui-droppable-hover {
         border: 1px solid #F5B059;
         box-shadow: 0px 0px 6px #F5B059;
-    }
-    
-    .prop-container.default-hidden {
-        height: 0px;
-        width: 0px;
-        line-height: 0;
-        overflow: hidden;
-        position: absolute;
-    }
-    
-    .prop-container.ui-droppable-active .prop-container.default-hidden {
-        display: block;
-        height: auto;
-        width: auto;
-        line-height: auto;
-        overflow: auto;
-        position: relative;
     }
     
     .prop-container.\\Convo\\Core\\Workflow\\IConversationProcessor
@@ -73,6 +69,14 @@
         border: 2px dashed;
         border-radius: 2px;
     /*     border-color: inherit; */
+
+        &.hidden {
+            height: 0;
+            opacity: 0;
+            margin: 0;
+            line-height: 0;
+            border: none;
+        }
     }
     
     .root-prop-container.prop-container > .prop-title
@@ -129,15 +133,36 @@
         background-color: rgba(244,154,3,0.05);
     }
     
-    .root-prop-container > .prop-title{
+    .root-prop-container > .prop-title {
         color: rgba(0,0,0,0.5);
         font-size: 14px;
         padding: 10px;
         border-bottom: 2px solid rgba(0,0,0,0.1);
     }
+
+    .root-prop-container {
+        .real-container {
+            margin-top: 10px;
+            
+            transform-origin: top center;
+            transform: scaleY(1);
+            opacity: 1;
     
-    .root-prop-container > .real-container{
-        margin-top: 10px;
+            pointer-events: all;
+            
+            transition: all 75ms ease-out;
+    
+            &.hidden, &.hidden * {
+                transition: all 150ms ease-out;
+    
+                transform: scaleY(0);
+                margin-top: 0;
+                height: 0;
+                opacity: 0;
+    
+                pointer-events: none;
+            }
+        }
     }
     
     .root-prop-container.closed-non-empty {

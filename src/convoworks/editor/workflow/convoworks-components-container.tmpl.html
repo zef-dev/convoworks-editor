@@ -14,11 +14,11 @@
             
     </h3>
     
-    <div class="components-placeholder" ng-hide="!isOpen()">
+    <div class="components-placeholder" ng-class="{ 'hidden' : !isOpen() }">
         Drop components here
     </div>
 
-    <div ng-if="getContainer()" class="real-container" ng-hide="!isOpen()">
+    <div ng-if="getContainer()" class="real-container" ng-class="{ 'hidden': !isOpen() }">
     
         <div ng-if="propertyDefinition.editor_properties.multiple">
             <selectable-component
