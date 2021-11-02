@@ -51,6 +51,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.config = {
                 mode: 'auto',
+                upload_own_skill_icons: false,
                 invocation: default_invocation || $scope.meta.name,
                 app_id: null,
                 interaction_model_sensitivity: 'LOW',
@@ -294,12 +295,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     _setIsChildDirected();
                     $scope.validateKeywords(false);
                     if ( is_new) {
+                        $scope.prepareDefaultSkillIcons();
                         return ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
                             configBak = angular.copy( $scope.config);
                             is_new      =   false;
                             is_error    =   false;
                             $scope.config.app_id = data.app_id;
                             $scope.config.enable_account_linking = data.enable_account_linking || false;
+                            $scope.config.upload_own_skill_icons = data.upload_own_skill_icons || false;
                             $scope.config.invocation = data.invocation;
                             $scope.config.time_created = data.time_created;
                             $scope.config.time_updated = data.time_created;
@@ -516,6 +519,25 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
+            $scope.prepareDefaultSkillIcons = function () {
+                if ($scope.config.upload_own_skill_icons === false) {
+                    $scope.config.skill_preview_in_store.small_skill_icon = service_urls.smallSkillIconUrl;
+                    $scope.config.skill_preview_in_store.large_skill_icon = service_urls.largeSkillIconUrl;
+                }
+            };
+
+            $scope.toggleShouldUploadOwnSkillIcons = function () {
+                if ($scope.config.upload_own_skill_icons === false) {
+                    $scope.config.upload_own_skill_icons = true;
+                    $scope.config.skill_preview_in_store.small_skill_icon = previousMediaItemId.get('small_skill_icon') ?? '';
+                    $scope.config.skill_preview_in_store.large_skill_icon = previousMediaItemId.get('large_skill_icon') ?? '';
+                } else if ($scope.config.upload_own_skill_icons === true) {
+                    $scope.config.upload_own_skill_icons = false;
+                    $scope.config.skill_preview_in_store.small_skill_icon = service_urls.smallSkillIconUrl;
+                    $scope.config.skill_preview_in_store.large_skill_icon = service_urls.largeSkillIconUrl;
+                }
+            }
+
             function _arrayRemove(arr, value) {
                 return arr.filter(function(ele) {
                     return ele !== value;
@@ -554,8 +576,15 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                     ConvoworksApi.getServicePlatformConfig( $scope.service.service_id, 'amazon').then(function (data) {
                         $scope.config = data;
-                        previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
-                        previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
+
+                        if ($scope.config.upload_own_skill_icons === false) {
+                            previousMediaItemId.set('small_skill_icon', service_urls.smallSkillIconUrl);
+                            previousMediaItemId.set('large_skill_icon', service_urls.largeSkillIconUrl);
+                        } else {
+                            previousMediaItemId.set('small_skill_icon', $scope.config.skill_preview_in_store.small_skill_icon);
+                            previousMediaItemId.set('large_skill_icon', $scope.config.skill_preview_in_store.large_skill_icon);
+                        }
+
                         _setIsChildDirected();
                         $scope.validateKeywords(false);
                         configBak = angular.copy( $scope.config);
