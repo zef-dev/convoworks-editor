@@ -190,8 +190,15 @@
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_scopes" class="convo-form-label">Scope <i class="fa fa-question-circle" uib-tooltip="The list of permissions to request from the skill user. You can provide up to 15 scopes. Separate list items with a semicolon (;)"></i></label>
-                        <p ng-if="config.account_linking_mode === 'amazon'">Scopes can be the following: <b>profile</b>, <b>profile:user_id</b> and <b>postal_code</b></p>
-                        <input type="text" class="convo-form-input" id="account_linking_config_scopes" name="account_linking_config_scopes" placeholder="" ng-model="config.account_linking_config.scopes">
+                        <div ng-if="config.account_linking_mode === 'amazon'">
+                            <span>Scopes can be the following:</span>
+                            <div class="form-check form-check-inline" ng-repeat="amazonSkillAccountLinkingScope in getAmazonSkillAccountLinkingScopes()">
+                                <input class="form-check-input" type="checkbox" ng-click="registerChange(this)" id="{{amazonSkillAccountLinkingScope.name}}" value="profile" ng-model="amazonSkillAccountLinkingScope.checked">
+                                <label class="form-check-label" for="{{amazonSkillAccountLinkingScope.name}}"><b>{{amazonSkillAccountLinkingScope.name}}</b></label>
+                            </div>
+                            <b ng-show="!isScopesValid()" class="text-danger">You have to select at least one scope.</b>
+                        </div>
+                        <input ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation' && config.account_linking_mode !== 'amazon'" type="text" class="convo-form-input" id="account_linking_config_scopes" name="account_linking_config_scopes" placeholder="" ng-model="config.account_linking_config.scopes">
                     </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'amazon' && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_client_domains" class="convo-form-label">Domain List <i class="fa fa-question-circle" uib-tooltip="The list of domains that the authorization URL will fetch content from. You can provide up to 30 domains. Separate list items with a semicolon (;)"></i></label>
@@ -448,7 +455,7 @@
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || amazonPlatformConfigForm.$invalid " class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="!isScopesValid() || !isConfigChanged() || amazonPlatformConfigForm.$invalid " class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
                         <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
@@ -459,7 +466,7 @@
 
                 <div class="convo-form-group" ng-if="isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Create Amazon configuration" class="btn btn-primary btn-sm submit" ng-disabled="!isModeValid() || amazonPlatformConfigForm.$invalid">
+                        <button type="submit" title="Create Amazon configuration" class="btn btn-primary btn-sm submit" ng-disabled="!isScopesValid() || !isModeValid() || amazonPlatformConfigForm.$invalid">
                             Create
                         </button>
                         <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">

@@ -103,6 +103,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.secretFieldType = 'password'
             $scope.showCertificate = false
             $scope.account_linking_modes = [];
+            $scope.amazonSkillAccountLinkingScopes = [];
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -137,6 +138,10 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
             $scope.isModeValid  = function () {
                 return !( $scope.config.mode === 'auto' && ready && !user.amazon_account_linked);
+            }
+
+            $scope.isScopesValid  = function () {
+                return $scope.config.account_linking_config.scopes.length > 0;
             }
 
             $scope.isNew    = function () {
@@ -273,6 +278,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         $scope.service.service_id,
                         preparedUpload.entries()) :
                     null;
+                _updateSelectedAmazonSkillAccountLinkingScopes()
 
                 $q.when(maybeUpload).then(function (res) {
                     if (res && res.length > 0) {
@@ -538,6 +544,54 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
+            $scope.getAmazonSkillAccountLinkingScopes = function () {
+                // update array with values from config
+                if ($scope.config.account_linking_config.scopes && $scope.config.account_linking_config.scopes.length > 0) {
+                    const scopesArray = $scope.config.account_linking_config.scopes.split(';');
+
+                    for (var i = 0; i < $scope.amazonSkillAccountLinkingScopes.length; i++) {
+                        $scope.amazonSkillAccountLinkingScopes[i].checked = scopesArray.includes($scope.amazonSkillAccountLinkingScopes[i].name);
+                    }
+                }
+                return $scope.amazonSkillAccountLinkingScopes;
+            };
+
+            $scope.registerChange = function(accountLinkingScope) {
+                var scopeName = accountLinkingScope.amazonSkillAccountLinkingScope.name;
+                var siScopeEnabled = !accountLinkingScope.amazonSkillAccountLinkingScope.checked;
+                var newArr = [];
+
+                if (siScopeEnabled) {
+                    if ($scope.config.account_linking_config.scopes === undefined) {
+                        newArr.push(scopeName);
+                        $scope.config.account_linking_config.scopes = newArr.join(';');
+                    } else {
+                        let arrayOfScopes = $scope.config.account_linking_config.scopes.split(';');
+                        arrayOfScopes.push(scopeName);
+                        $scope.config.account_linking_config.scopes = arrayOfScopes.join(';');
+                    }
+                } else {
+                    if ($scope.config.account_linking_config.scopes === undefined) {
+                        $scope.config.account_linking_config.scopes = _arrayRemove(newArr, scopeName).join(';');
+                    } else {
+                        $scope.config.account_linking_config.scopes = _arrayRemove($scope.config.account_linking_config.scopes.split(';'), scopeName).join(';');
+                    }
+                }
+                $scope.getAmazonSkillAccountLinkingScopes();
+            }
+
+            function _updateSelectedAmazonSkillAccountLinkingScopes() {
+                $scope.config.account_linking_config.scopes = '';
+                for (let i = 0; i < $scope.amazonSkillAccountLinkingScopes.length; i++) {
+                    if ($scope.amazonSkillAccountLinkingScopes[i].checked) {
+                        let scopeName = $scope.amazonSkillAccountLinkingScopes[i].name;
+                        let arrayOfScopes =  $scope.config.account_linking_config.scopes.split(';');
+                        arrayOfScopes.push(scopeName);
+                        $scope.config.account_linking_config.scopes = arrayOfScopes.join(';');
+                    }
+                }
+            }
+
             function _arrayRemove(arr, value) {
                 return arr.filter(function(ele) {
                     return ele !== value;
@@ -553,6 +607,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
                     $scope.categories = config_options['CONVO_AMAZON_SKILL_CATEGORIES'];
+                    $scope.amazonSkillAccountLinkingScopes = config_options['CONVO_AMAZON_SKILL_ACCOUNT_LINKING_SCOPES'];
 
                     $scope.$watch('config.auto_display', function(newVal) {
                         if (newVal !== undefined)
