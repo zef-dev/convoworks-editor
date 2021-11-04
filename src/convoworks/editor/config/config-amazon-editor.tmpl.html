@@ -188,6 +188,14 @@
 
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_secret.$invalid" class="text-danger">Secret is required.</b>
                     </div>
+                    <div class="convo-form-group"  ng-if="config.enable_account_linking && config.account_linking_mode === 'amazon'">
+                        <label for="account_linking_config_lwa_return_rls" class="convo-form-label">Allowed Return URLs: <i class="fa fa-question-circle" uib-tooltip="Add the URLs to your Web Settings -> Allowed Return URLs in your Security Profile."></i></label>
+                        <div id="account_linking_config_lwa_return_rls" class="list-group">
+                            <a href="javascript:void(0);" class="list-group-item list-group-item-action" ng-repeat="allowed_return_url_for_login_with_amazon in allowed_return_urls_for_login_with_amazon" ng-click="copyAllowedReturnUrl(allowed_return_url_for_login_with_amazon)">
+                                <b><i class="fa fa-copy"></i> {{allowed_return_url_for_login_with_amazon}}</b>
+                            </a>
+                        </div>
+                    </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_scopes" class="convo-form-label">Scope <i class="fa fa-question-circle" uib-tooltip="The list of permissions to request from the skill user. You can provide up to 15 scopes. Separate list items with a semicolon (;)"></i></label>
                         <div ng-if="config.account_linking_mode === 'amazon'">

@@ -33,6 +33,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 ConvoworksApi.getServiceUrls($scope.service.service_id).then(function (response) {
                     service_urls = response.amazon;
                     $scope.account_linking_modes = service_urls.accountLinkingModes;
+                    $scope.allowed_return_urls_for_login_with_amazon = service_urls.allowedReturnUrlsForLoginWithAmazon;
                 })
             );
 
@@ -103,6 +104,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.secretFieldType = 'password'
             $scope.showCertificate = false
             $scope.account_linking_modes = [];
+            $scope.allowed_return_urls_for_login_with_amazon = [];
             $scope.amazonSkillAccountLinkingScopes = [];
 
             var configBak   =   angular.copy( $scope.config);
@@ -556,6 +558,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return $scope.amazonSkillAccountLinkingScopes;
             };
 
+            $scope.copyAllowedReturnUrl = function (allowedReturnUrl) {
+                _copyToClipboard(allowedReturnUrl);
+                AlertService.addInfo('Copied Allowed Return URL to clipboard.');
+            }
+
             $scope.registerChange = function(accountLinkingScope) {
                 var scopeName = accountLinkingScope.amazonSkillAccountLinkingScope.name;
                 var siScopeEnabled = !accountLinkingScope.amazonSkillAccountLinkingScope.checked;
@@ -708,6 +715,23 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.config.account_linking_config.client_secret = '';
                     $scope.config.account_linking_config.scopes =  '';
                 }
+            }
+
+            function _copyToClipboard(text) {
+                // Create new element
+                var el = document.createElement('textarea');
+                // Set value (string to be copied)
+                el.value = text;
+                // Set non-editable to avoid focus and move outside of view
+                el.setAttribute('readonly', '');
+                el.style = {position: 'absolute', left: '-9999px'};
+                document.body.appendChild(el);
+                // Select text inside element
+                el.select();
+                // Copy text to clipboard
+                document.execCommand('copy');
+                // Remove temporary element
+                document.body.removeChild(el);
             }
         }
     }
