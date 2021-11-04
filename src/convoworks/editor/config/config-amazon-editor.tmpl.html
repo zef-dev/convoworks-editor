@@ -172,12 +172,12 @@
                             </button>
                         </div>
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_client_id" class="convo-form-label">Your Client ID * <i class="fa fa-question-circle" uib-tooltip="Unique public string used to identify the client requesting for authentication."></i></label>
                         <input ng-required="true" type="text" class="convo-form-input" id="account_linking_config_client_id" name="account_linking_config_client_id" placeholder="" ng-model="config.account_linking_config.client_id">
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_client_id.$invalid && !amazonPlatformConfigForm.account_linking_config_client_id.$pristine" class="text-danger">Client ID is required.</b>
                     </div>
-                    <div class="convo-form-group" ng-if="config.enable_account_linking">
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'installation'">
                         <label for="account_linking_config_client_secret" class="convo-form-label">Your Secret * <i class="fa fa-question-circle" uib-tooltip="A credential you provide that lets the Alexa service authenticate with the Access Token URI. This is combined with the Client ID to identify the request as coming from Alexa."></i></label>
                         <div class="input-group">
                             <input ng-required="true" type="{{secretFieldType}}" class="form-control" id="account_linking_config_client_secret" name="account_linking_config_client_secret" placeholder="" ng-model="config.account_linking_config.client_secret">
@@ -463,7 +463,7 @@
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isScopesValid() || !isConfigChanged() || amazonPlatformConfigForm.$invalid " class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || amazonPlatformConfigForm.$invalid " class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
                         <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
@@ -474,7 +474,7 @@
 
                 <div class="convo-form-group" ng-if="isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Create Amazon configuration" class="btn btn-primary btn-sm submit" ng-disabled="!isScopesValid() || !isModeValid() || amazonPlatformConfigForm.$invalid">
+                        <button type="submit" title="Create Amazon configuration" class="btn btn-primary btn-sm submit" ng-disabled="!isModeValid() || amazonPlatformConfigForm.$invalid">
                             Create
                         </button>
                         <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">

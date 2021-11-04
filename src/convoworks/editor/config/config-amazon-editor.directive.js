@@ -683,15 +683,6 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }
             }
 
-            function _generateClientSecretFromClientID(clientID) {
-                let hash = 0;
-                for(let i = 0; i < clientID.length; i++) {
-                    hash = Math.imul(31, hash) + clientID.charCodeAt(i) | 0;
-                }
-
-                return hash.toString();
-            }
-
             function _changeAccountLinkingMode(accountLinkingMode) {
                 const index = service_urls.accountLinkingModes.findIndex(x => x.id === accountLinkingMode);
                 $scope.secretFieldType = 'password';
@@ -701,9 +692,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                 if ($scope.config.account_linking_mode !== 'something_else') {
                     if ($scope.config.account_linking_mode === 'installation') {
-                        const clientId = $scope.service.service_id;
-                        $scope.config.account_linking_config.client_id =  clientId;
-                        $scope.config.account_linking_config.client_secret = _generateClientSecretFromClientID(clientId);
+                        $scope.config.account_linking_config.client_id = '';
+                        $scope.config.account_linking_config.client_secret = '';
                         $scope.config.account_linking_config.scopes =  '';
                     } else if ($scope.config.account_linking_mode === 'amazon') {
                         $scope.config.account_linking_config.client_id =  $scope.service.service_id;
