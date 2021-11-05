@@ -154,6 +154,21 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 return !is_new && configBak.mode === 'auto';
             }
 
+            $scope.isAllowedReturnUrlsValid = function () {
+                let isValid = false;
+                for (const allowedReturnUrl of $scope.allowed_return_urls_for_login_with_amazon) {
+                    const url = new URL(allowedReturnUrl);
+                    const urlPathName = url.pathname;
+                    const urlPathNameArray = urlPathName.split('/');
+                    const vendorId = urlPathNameArray[urlPathNameArray.length - 1];
+                    if (vendorId !== '') {
+                        isValid = true;
+                    }
+                }
+
+                return isValid;
+            }
+
             $scope.onFileUpload = function (file, type) {
                 $log.log('ConfigurationsEditor onFileUpload file', file);
 
