@@ -61,6 +61,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 auto_display: false,
                 enable_account_linking: false,
                 account_linking_mode: 'installation',
+                permissions: [],
                 account_linking_config: {
                     skip_on_enablement: true,
                     authorization_url: "",
@@ -578,7 +579,52 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 AlertService.addInfo('Copied Allowed Return URL to clipboard.');
             }
 
-            $scope.registerChange = function(accountLinkingScope) {
+            $scope.registerPermissionsChange = function(permission) {
+                var permissionValue = permission.amazonSkillPermission.value;
+                var isPermissionEnabled = !permission.amazonSkillPermission.checked;
+                var newArr = [];
+
+                if (isPermissionEnabled) {
+                    if ($scope.config.permissions === undefined) {
+                        newArr.push(permissionValue);
+                        $scope.config.permissions = newArr;
+                    } else {
+                        $scope.config.permissions.push(permissionValue);
+                    }
+                } else {
+                    if ($scope.config.permissions === undefined) {
+                        $scope.config.permissions = _arrayRemove(newArr, permissionValue);
+                    } else {
+                        $scope.config.permissions = _arrayRemove($scope.config.permissions, permissionValue);
+                    }
+                }
+
+                if (permissionValue === 'alexa::profile:given_name:read' && $scope.config.permissions.includes('alexa::profile:name:read')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::profile:name:read');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::profile:name:read');
+                } else if (permissionValue === 'alexa::profile:name:read' && $scope.config.permissions.includes('alexa::profile:given_name:read')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::profile:given_name:read');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::profile:given_name:read');
+                }
+
+                $scope.getPermissions();
+            }
+
+            $scope.getPermissions = function () {
+                // update array with values from config
+                if ($scope.config.permissions && $scope.config.permissions.length > 0) {
+                    for (var i = 0; i < $scope.permissions.length; i++) {
+                        if ($scope.config.permissions.includes($scope.permissions[i].value)) {
+                            $scope.permissions[i].checked = true;
+                        }
+                    }
+                }
+                return $scope.permissions;
+            };
+
+            $scope.registerScopesChange = function(accountLinkingScope) {
                 var scopeName = accountLinkingScope.amazonSkillAccountLinkingScope.name;
                 var siScopeEnabled = !accountLinkingScope.amazonSkillAccountLinkingScope.checked;
                 var newArr = [];
@@ -625,6 +671,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 promises.push(ConvoworksApi.getConfigOptions().then(function (options) {
                     config_options = options;
 
+                    $scope.permissions = config_options['CONVO_AMAZON_SKILL_PERMISSIONS'];
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
