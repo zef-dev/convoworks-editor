@@ -150,11 +150,11 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         }
         else if ($scope.mode === 'import')
         {
-            if (!$scope.import_service.name) {
+            if (!$scope.new_service.name || !$scope.import_service.file) {
                 return true;
             }
     
-            return $scope.import_service.name.length === 0 || $scope.import_service.name.length > 50;
+            return $scope.new_service.name.length === 0 || $scope.new_service.name.length > 50;
         }
     }
 }
