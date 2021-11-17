@@ -4,7 +4,9 @@
 
 ## [Releases]
 
-### 0.22.5 - 2027-10-20 ###
+### 0.22.6 - 202
+
+### 0.22.5 - 2021-10-20 ###
 
 * Validate intent name and utterance uniqueness
 * Fix styling
