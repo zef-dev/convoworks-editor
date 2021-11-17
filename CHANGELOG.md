@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+### 0.22.6.1 - 2021-11-17 ###
+
+* Fix create new service from existing
+
 ### 0.22.6 - 2021-11-17 ###
 
 * Add option for a default icon for Amazon Alexa
