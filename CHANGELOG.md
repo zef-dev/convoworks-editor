@@ -4,7 +4,11 @@
 
 ## [Releases]
 
-### 0.22.6 - 202
+### 0.22.6 - 2021-11-17 ###
+
+* Add option for a default icon for Amazon Alexa
+* Improved labels on settings
+* Bug fixes and improvements
 
 ### 0.22.5 - 2021-10-20 ###
 
