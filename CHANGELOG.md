@@ -4,7 +4,7 @@
 
 ## [Releases]
 
-### 0.22.6.1 - 2021-11-17 ###
+### 0.22.7 - 2021-11-17 ###
 
 * Fix create new service from existing
 
