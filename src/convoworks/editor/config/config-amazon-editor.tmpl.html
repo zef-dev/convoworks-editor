@@ -114,6 +114,15 @@
                     </div>
                 </fieldset>
                 <fieldset ng-if="config.mode === 'auto'">
+                    <legend>Amazon Alexa Skill Permissions: </legend>
+                    <div class="convo-form-group">
+                        <div class="form-check form-check-inline" ng-repeat="amazonSkillPermission in getPermissions()">
+                            <input class="form-check-input" type="checkbox" ng-click="registerPermissionsChange(this)" id="{{amazonSkillPermission.value}}" value="{{amazonSkillPermission.value}}" ng-model="amazonSkillPermission.checked">
+                            <label class="form-check-label" for="{{amazonSkillPermission.value}}"><b>{{amazonSkillPermission.name}}</b></label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset ng-if="config.mode === 'auto'">
                     <legend>Amazon Alexa Skill Account Linking: </legend>
                     <div class="convo-form-group" ng-if="config.app_id && !isNew()">
                         <div class="btn-group icon-button publish-group" uib-dropdown>
@@ -204,7 +213,7 @@
                         <div ng-if="config.account_linking_mode === 'amazon'">
                             <span>Scopes can be the following:</span>
                             <div class="form-check form-check-inline" ng-repeat="amazonSkillAccountLinkingScope in getAmazonSkillAccountLinkingScopes()">
-                                <input class="form-check-input" type="checkbox" ng-click="registerChange(this)" id="{{amazonSkillAccountLinkingScope.name}}" value="profile" ng-model="amazonSkillAccountLinkingScope.checked">
+                                <input class="form-check-input" type="checkbox" ng-click="registerScopesChange(this)" id="{{amazonSkillAccountLinkingScope.name}}" value="profile" ng-model="amazonSkillAccountLinkingScope.checked">
                                 <label class="form-check-label" for="{{amazonSkillAccountLinkingScope.name}}"><b>{{amazonSkillAccountLinkingScope.name}}</b></label>
                             </div>
                             <b ng-show="!isScopesValid()" class="text-danger">You have to select at least one scope.</b>
