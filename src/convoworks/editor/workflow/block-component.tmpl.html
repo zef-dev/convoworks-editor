@@ -3,7 +3,7 @@
 	ng-class="{ 'system' : isSysBlock, 'over' : over, 'selected' : isSelected(), 'error' : isError()}"
 	style="max-width: 100%">
     <div class="block-role">{{ block.properties.role }}</div>
-	<h3 class="block-title" title="{{ ::definition.description}}">
+	<h3 class="block-title" title="{{ definition.description }}">
         <selectable-component-buttons ng-if="!isError()" toggle-fn="togglePreviewing()"></selectable-component-buttons>
 		{{ getComponentTitle() }}<span class="block-namespace">@{{ getComponentNamespace() }}</span>
 	</h3>

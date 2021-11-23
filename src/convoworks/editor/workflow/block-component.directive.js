@@ -33,8 +33,8 @@ export default function blockComponent( $log, $timeout, ConvoworksApi, UserPrefe
                     return $scope.block.properties.name;
                 }
 
-                if ( $scope.block.properties.block_id.indexOf( '__') === 0) {
-                    return 'System - ' + $scope.block.properties.block_id + '';
+                if ( $scope.block.properties.role !== 'conversation_block') {
+                    return 'System - ' + $scope.block.properties.name + '';
                 }
 
                 return $scope.block.properties.block_id;
@@ -82,6 +82,25 @@ export default function blockComponent( $log, $timeout, ConvoworksApi, UserPrefe
 
                 try {
                     $scope.definition       =   propertiesContext.getComponentDefinition( $scope.block.class);
+
+                    if ($scope.block.properties.role !== 'conversation_block') {
+                        $log.log('blockComponent block has special role', $scope.block.properties.role);
+
+                        switch ($scope.block.properties.role) {
+                            case 'service_processors':
+                                $scope.definition.description = 'System block which contains only processors. This processors will be considered on any active step process phase.';
+                                break;
+                            case 'session_start':
+                                $scope.definition.description = 'System block that executes only when the new session has started. If you leave it empty, the first regular step will be used.';
+                                break;
+                            case 'session_ended':
+                                $scope.definition.description = 'This step is called when session ends. You can not output anything here, but you might do cleanup or statistics here.';
+                                break;
+                            case 'media_controls':
+                                $scope.definition.description = 'Serves for handling media playing requests (they are sessionless)';
+                                break;
+                        }
+                    }
                 } catch ( err) {
                     $log.error( err);
                     $scope.componentTitle   =   err.message;

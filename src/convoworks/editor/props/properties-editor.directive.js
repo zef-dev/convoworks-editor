@@ -104,6 +104,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 return block_id;
             };
 
+            $scope.getBlockRole = function() {
+                return $scope.component.properties.role || null;
+            }
+
             $scope.getComponentName =   function() {
 
 //                if ( $scope.component.properties.name) {
@@ -122,23 +126,23 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
             };
 
             $scope.getComponentDescription  =   function() {
+                const role = $scope.getBlockRole();
 
-                var block_id    =   $scope.getBlockId();
+                $log.log('propertiesEditor got block role', role);
 
-                if ( block_id === '__serviceProcessors') {
-                    return 'System block which contains only processors. This processors will be considered on any active step process phase.';
-                }
-
-                if ( block_id === '__sessionStart') {
-                    return 'System block that executes only when the new session has started. If you leave it empty, the first regular step will be used.';
-                }
-
-                if ( block_id === '__sessionEnd') {
-                    return 'This step is called when session ends. You can not output anything here, but you might do cleanup or statistics here.';
-                }
-
-                if ( block_id === '__mediaControls') {
-                    return 'Serves for handling media playing requests (they are sessionless)';
+                if (role) {
+                    switch (role) {
+                        case 'service_processors':
+                            return 'System block which contains only processors. This processors will be considered on any active step process phase.';
+                        case 'session_start':
+                            return 'System block that executes only when the new session has started. If you leave it empty, the first regular step will be used.';
+                        case 'session_end':
+                            return 'This step is called when session ends. You can not output anything here, but you might do cleanup or statistics here.';
+                        case 'media_controls':
+                            return 'Serves for handling media playing requests (they are sessionless)';
+                        default:
+                            return $scope.definition.description;
+                    }
                 }
 
                 return $scope.definition.description;
@@ -356,7 +360,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 });
 
                 $scope.userBlocks   =   $scope.service.blocks.filter( function( block) {
-                    return block.properties.block_id.indexOf('__') !== 0;
+                    return block.properties.block_id.indexOf('__') !== 0 && block.properties.role === 'conversation_block';
                 }).map( function( block) {
                     return { id : block.properties.block_id, name : _fixName( block.properties.block_id, block.properties.name)};
                 });
