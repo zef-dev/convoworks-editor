@@ -128,7 +128,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
             $scope.getComponentDescription  =   function() {
                 const role = $scope.getBlockRole();
 
-                $log.log('propertiesEditor got block role', role);
+                // $log.log('propertiesEditor got block role', role);
 
                 if (role) {
                     switch (role) {
