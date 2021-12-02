@@ -148,12 +148,14 @@
                                 <div class="convo-form-group">
                                     <label class="convo-form-label">Upload from existing file</label>
                                     <div class="convo-form-input file"
-                                         ngf-drop="uploadSubmitted($file)"
-                                         ngf-select="uploadSubmitted($file)"
-                                         ngf-multiple="false"
-                                         ng-model="import_service.file">
-                                        Click to select service definition file or drop a <span class="monospace">.json</span> file here
+                                        ngf-drop="uploadSubmitted($file)"
+                                        ngf-select="uploadSubmitted($file)"
+                                        ngf-multiple="false"
+                                        ng-model="import_service.file">
+                                        <span ng-if="import_service.file === null">Click to select service definition file or drop a <span class="monospace">.json</span> file here</span>
+                                        <span ng-if="import_service.file !== null"><span class="monospace">{{ import_service.file.name }}</span> ({{ import_service.file.size }} bytes)</span>
                                     </div>
+                                    <button type="button" ng-disabled="import_service.file === null" class="btn btn-sm btn-danger remove-file" ng-click="removeUploadedFile()">Remove file</button>
                                 </div>
                             </div>
                         </div>

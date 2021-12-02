@@ -5,7 +5,7 @@
 
     <div class="import">
         <h4>Import</h4>
-            <form>
+            <form ng-submit="import()">
                 <div class="convo-form-group">
                     <div class="checkbox">
                         <label>
@@ -26,9 +26,14 @@
                          ngf-drop="uploadSubmitted($file)"
                          ngf-select="uploadSubmitted($file)"
                          ngf-multiple="false"
-                         ng-model="newPhoto">
-                        Click to select service definition file or drop a <span class="monospace">.json</span> file here
-                    </div>
+                         ng-model="uploadOptions.file">
+                         <span ng-if="uploadOptions.file === null">Click to select service definition file or drop a <span class="monospace">.json</span> file here</span>
+                         <span ng-if="uploadOptions.file !== null"><span class="monospace">{{ uploadOptions.file.name }}</span> ({{ uploadOptions.file.size }} bytes)</span>
+                     </div>
+                     <button type="button" ng-disabled="uploadOptions.file === null" class="btn btn-sm btn-danger remove-file" ng-click="removeUploadFile()">Remove file</button>
+                </div>
+                <div class="convo-form-group">
+                    <button type="submit" class="btn btn-md btn-primary" ng-disabled="uploadOptions.file === null">Import</button>
                 </div>
             </form>
     </div>

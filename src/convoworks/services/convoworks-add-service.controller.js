@@ -47,11 +47,14 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
         });
     });
 
-    $scope.uploadSubmitted = function(file)
-    {
-        $log.debug('miscPanel uploadSubmitted() file', file);
-        
+    $scope.uploadSubmitted = function(file) {
+        $log.log('convoworksAddServiceController uploadSubmitted() file', file);
         $scope.import_service.file = file;
+    }
+
+    $scope.removeUploadedFile = function () {
+        $log.log('convoworksAddServiceController removing uploaded file', $scope.import_service.file);
+        $scope.import_service.file = null;
     }
 
     $scope.isTemplateSelected = function(template_id)

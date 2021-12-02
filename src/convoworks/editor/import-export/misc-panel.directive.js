@@ -13,7 +13,8 @@ export default function miscPanel( $log, $window, ConvoworksApi, CONVO_ADMIN_API
         },
         link: function( $scope, $element, $attributes, propertiesContext) {
 
-            $scope.uploadOptions    =   {
+            $scope.uploadOptions = {
+                file: null,
                 keep_vars : true,
                 keep_configs : true,
             };
@@ -33,17 +34,29 @@ export default function miscPanel( $log, $window, ConvoworksApi, CONVO_ADMIN_API
 
             $scope.uploadSubmitted  =   function( file)
             {
-                $log.debug( 'miscPanel uploadSubmitted() file', file, '$scope.uploadOptions', $scope.uploadOptions);
+                $log.debug( 'miscPanel uploadSubmitted() file', file);
+                
+                $scope.uploadOptions.file = file;
+            }
+
+            $scope.removeUploadFile = function () {
+                $scope.uploadOptions.file = null;
+            }
+
+            $scope.import = function ()
+            {
+                $log.log('miscPanel import() upload options', $scope.uploadOptions);
+                
                 ConvoworksApi.uploadServiceData(
-                                $scope.service.service_id,
-                                file,
-                                $scope.uploadOptions.keep_vars,
-                                $scope.uploadOptions.keep_configs).then( function () {
-                    $log.debug( 'miscPanel uploadSubmitted() OK');
-                    $window.location.reload();
-                }, function ( reason) {
-                    $log.debug( 'miscPanel uploadSubmitted() reason', reason);
-                });
+                    $scope.service.service_id,
+                    $scope.uploadOptions.file,
+                    $scope.uploadOptions.keep_vars,
+                    $scope.uploadOptions.keep_configs).then(function () {
+                        $log.debug('miscPanel uploadSubmitted() OK');
+                        $window.location.reload();
+                    }, function (reason) {
+                        $log.debug('miscPanel uploadSubmitted() reason', reason);
+                    });
             }
 
             $scope.download  =   function()
