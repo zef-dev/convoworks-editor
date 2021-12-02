@@ -89,73 +89,78 @@
         font-family: "DM Sans", sans-serif;
     
         margin-bottom: 20px;
-    }
-    
-    .convo-form-group.inline input,
-    .convo-form-group.inline button
-    {
-        display: inline;
-    }
-    
-    .convo-form-group label.convo-form-label {
-        min-height: 18px;
-        color: rgba(0,0,0,0.63);
-        font-size: 14px;
-        font-weight: bold;
-        letter-spacing: 0;
-        line-height: 18px;
-    
-        display: block;
-    }
-    
-    .convo-form-group label.convo-form-label.inline {
-        display: inline-block;
-    }
-    
-    .convo-form-group label.convo-form-label i {
-        color: rgba(47,116,234,0.5);
-    }
-    
-    .convo-form-group .convo-form-input {
-        border: 1px solid rgba(0,0,0,0.08);
-        border-radius: 8px;
-        width: 100%;
-        max-width: inherit;
-    
-        padding: 6px 11px;
-    
-        transition: border-color 100ms ease-in-out;
-    }
-    
-    .convo-form-group .convo-form-input[type="file"] {
-        border: 2px dashed rgba(0,0,0,0.1);
-    }
-    
-    .convo-form-group .convo-form-input[type="checkbox"] {
-        display: inline;
-    
-    }
-    
-    .convo-form-group input.convo-form-input {
-        height: 40px;
-    }
-    
-    .convo-form-group .radio-group {
-        display: inline-block;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-    
-    .convo-form-group .radio-group:first-child {
-        margin-left: 0;
-    }
-    
-    .convo-form-group .radio-group:last-child {
-        margin-right: 0;
-    }
-    
-    .convo-form-group .convo-form-input:focus {
-        border: 2px solid #2F74EA;
+
+        &.inline input,
+        &.inline button
+        {
+            display: inline;
+        }
+
+        label.convo-form-label {
+            min-height: 18px;
+            color: rgba(0,0,0,0.63);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 18px;
+        
+            display: block;
+
+            i {
+                color: rgba(47,116,234,0.5);
+            }
+
+            &.inline {
+                display: inline-block;
+            }
+        }
+
+        input.convo-form-input {
+            height: 40px;
+        }
+
+        .convo-form-input {
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 8px;
+            width: 100%;
+            max-width: inherit;
+        
+            padding: 6px 11px;
+        
+            transition: border-color 100ms ease-in-out;
+
+            &:focus {
+                border: 2px solid #2F74EA;
+            }
+
+            &[type="checkbox"] {
+                display: inline;
+            }
+
+            &.file,
+            &[type="file"] {
+                border: 4px dashed rgba(186, 186, 186, 0.62);
+                text-align: center;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .radio-group {
+            display: inline-block;
+            margin-left: 25px;
+            margin-right: 25px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
     }
     
     .convo-button-group,
@@ -221,94 +226,10 @@
         line-height: 26px;
     }
     
-    button.btn.btn-sm,
-    a.btn.btn-sm
-    {
-        /* height: 34px;
-        min-width: 83px; */
+    button.remove-file {
+        width: 100%;
+        margin-top: 8px;
     }
-    
-    button.btn.btn-xs,
-    a.btn.btn-xs
-    {
-        /* height: auto;
-        width: auto;
-        font-size: 13px; */
-    }
-    
-    /* BUTTON TYPES */
-    
-    /*PRIMARY*/
-    // button.btn.btn-primary,
-    // a.btn.btn-primary
-    // {
-    //     background-color: #2F74EA;
-    //     color: #FFFFFF;
-    // }
-    
-    // button.btn.btn-primary:hover,
-    // a.btn.btn-primary:hover
-    // {
-    //     border-color: #6593e0;
-    //     background-color: #6593e0;
-    // }
-    
-    // button.btn.btn-primary:active,
-    // a.btn.btn-primary:active
-    // {
-    //     border-color: #1354cd;
-    //     background-color: #1354cd;
-    // }
-    /*PRIMARY END*/
-    
-    /*PRIMARY INVERTED*/
-    // button.btn.btn-primary.inverted,
-    // a.btn.btn-primary.inverted
-    // {
-    //     border: 2px solid #2F74EA;
-    //     color: #2F74EA;
-    //     background-color: white;
-    // }
-    
-    // button.btn.btn-primary.inverted:hover,
-    // a.btn.btn-primary.inverted:hover
-    // {
-    //     color: white;
-    //     border-color: #6593e0;
-    //     background-color: #6593e0;
-    // }
-    
-    // button.btn.btn-primary.inverted:active,
-    // a.btn.btn-primary.inverted:active
-    // {
-    //     color: #f1f1f1;
-    //     border-color: #1354cd;
-    //     background-color: #1354cd;
-    // }
-    /*PRIMARY INVERTED END*/
-    
-    /*DANGER*/
-    // button.btn.btn-danger,
-    // a.btn.btn-danger
-    // {
-    //     background-color: #ea2f2f;
-    //     color: #FFFFFF;
-    // }
-    
-    // button.btn.btn-danger:hover,
-    // a.btn.btn-danger:hover
-    // {
-    //     border-color: #ea5858;
-    //     background-color: #ea5858;
-    // }
-    
-    // button.btn.btn-danger:active,
-    // a.btn.btn-danger:active
-    // {
-    //     border-color: #d41313;
-    //     background-color: #d41313;
-    // }
-    /*DANGER END*/
     
     /*MUTED*/
     button.btn.btn-muted,
