@@ -23,6 +23,8 @@
                 <div class="convo-form-group">
                     <label class="convo-form-label">Update service definition</label>
                     <div class="convo-form-input file"
+                         ngf-pattern="'application/json'"
+                         ngf-accept="'application/json'"
                          ngf-drop="uploadSubmitted($file)"
                          ngf-select="uploadSubmitted($file)"
                          ngf-multiple="false"
