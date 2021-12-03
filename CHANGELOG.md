@@ -4,6 +4,15 @@
 
 ## [Releases]
 
+## 0.22.8 - 2021-12-03
+
+* Fix create new service from existing. Again.
+* Improvements to file upload, now shows filename and size
+* Import-Export view now requires a button click to confirm import
+* Fix block descriptions
+* Forbid GoTo element from going to session start
+* Alexa Skills permissions are now configurable
+
 ### 0.22.7 - 2021-11-17 ###
 
 * Fix create new service from existing
