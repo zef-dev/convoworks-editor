@@ -68,29 +68,43 @@
         background-image: url('./images/convo_chat.png');
     }
 
-    .config-square .name-indicator span.platform-name {
-        height: 24px;
-        color: rgba(0,0,0,0.8);
-        font-size: 18px;
-        letter-spacing: 0;
-        line-height: 24px;
-        float: left;
+    .config-square {
+        .name-indicator {
+            display: flex;
+            flex-flow: row nowrap;
+
+            justify-items: center;
+            align-content: center;
+
+            justify-content: space-between;
+
+            span.platform-name {
+                height: 24px;
+                color: rgba(0,0,0,0.8);
+                font-size: 18px;
+                letter-spacing: 0;
+                line-height: 24px;
+                float: left;
+            }
+        }
+
+        a.configure {
+            height: 38px;
+            width: 252px;
+            border-radius: 8px;
+            background-color: #2F74EA;
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0;
+            line-height: 18px;
+            text-align: center;
+
+            margin-top: 65px;
+        }
     }
 
-    .config-square a.configure {
-        height: 38px;
-        width: 252px;
-        border-radius: 8px;
-        background-color: #2F74EA;
-        color: #FFFFFF;
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0;
-        line-height: 18px;
-        text-align: center;
-
-        margin-top: 65px;
-    }
+    .config-square 
 
     .panel-default {
         margin-bottom: 5px;

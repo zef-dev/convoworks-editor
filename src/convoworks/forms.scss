@@ -2,7 +2,6 @@
 
 
     .toggled-indicator {
-        content: " ";
         height: 20px;
         width: 36px;
         border-radius: 12px;
@@ -35,13 +34,13 @@
     
     .toggled-indicator:after {
         position: absolute;
-        content: "";
+        content: " ";
         height: 16px;
         width: 16px;
         background-color: #FFFFFF;
         border-radius: 50%;
     
-        transition: transform 100ms ease-out;
+        transition: left 100ms ease-out, right 100ms ease-out;
     }
 
     .toggled-indicator.disabled {
@@ -54,11 +53,13 @@
     }
     
     .toggled-indicator.active:after {
-        transform: translateX(100%);
+        // transform: translateX(100%);
+        left: 8%;
     }
     
     .toggled-indicator.inactive:after {
-        transform: translateX(0%);
+        // transform: translateX(0%);
+        left: 48%;
     }
     
     input:focus,
