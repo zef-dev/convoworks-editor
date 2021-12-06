@@ -107,6 +107,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             $scope.account_linking_modes = [];
             $scope.allowed_return_urls_for_login_with_amazon = [];
             $scope.amazonSkillAccountLinkingScopes = [];
+            $scope.invalidInvocation = false;
 
             var configBak   =   angular.copy( $scope.config);
             var is_new      =   true;
@@ -318,6 +319,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     }
                     _setIsChildDirected();
                     $scope.validateKeywords(false);
+                    $scope.validateInvocation(false);
                     if ( is_new) {
                         $scope.prepareDefaultSkillIcons();
                         return ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
@@ -428,6 +430,48 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.amazonPlatformConfigForm.$invalid = invalid;
                     $scope.config.skill_preview_in_store.keywords = words;
                 }
+            }
+
+            $scope.validateInvocation = function(validateForm = true) {
+                let invalid = false;
+
+                $log.debug('configAmazonEditor validateInvocation() $scope.config.invocation', $scope.config.invocation);
+
+                if ($scope.config.invocation === undefined) {
+                    return invalid;
+                }
+
+                const wordCount = $scope.config.invocation.match(/(\w+)/g).length;
+
+                if (wordCount === 2) {
+                    invalid = _validateInvocation($scope.forbidden_english_two_words_in_invocation);
+                } else {
+                    invalid = _validateInvocation($scope.forbidden_english_words_in_invocation);
+                }
+
+                if (validateForm) {
+                    $scope.amazonPlatformConfigForm.invocation.$invalid = invalid;
+                    $scope.amazonPlatformConfigForm.$invalid = invalid;
+                    $scope.invalidInvocation = invalid;
+                }
+            }
+
+            function _validateInvocation(validationContext) {
+                let invalid = false;
+
+                const invocationWords = $scope.config.invocation.toLowerCase().split(' ');
+
+                for (const invocationWord of invocationWords) {
+                    const trimmedInvocationWord = invocationWord.trim();
+                    if (trimmedInvocationWord === '') {
+                        continue;
+                    }
+                    if (validationContext.includes(trimmedInvocationWord)) {
+                        invalid = true;
+                    }
+                }
+
+                return invalid;
             }
 
             $scope.getSkillManifest = function () {
@@ -672,6 +716,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     config_options = options;
 
                     $scope.permissions = config_options['CONVO_AMAZON_SKILL_PERMISSIONS'];
+                    $scope.forbidden_english_words_in_invocation = config_options['CONVO_AMAZON_FORBIDDEN_ENGLISH_WORDS_IN_INVOCATION'];
+                    $scope.forbidden_english_two_words_in_invocation = config_options['CONVO_AMAZON_FORBIDDEN_ENGLISH_WORDS_IN_TWO_WORD_INVOCATION'];
                     $scope.languages = config_options['CONVO_AMAZON_LANGUAGES'];
                     $scope.sensitivities = config_options['CONVO_AMAZON_INTERACTION_MODEL_SENSITIVITIES'];
                     $scope.endpointCertificateTypes = config_options['CONVO_AMAZON_SKILL_ENDPOINT_SSL_CERTIFICATE'];
@@ -711,6 +757,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                         _setIsChildDirected();
                         $scope.validateKeywords(false);
+                        $scope.validateInvocation(false);
                         configBak = angular.copy( $scope.config);
                         is_new  =   false;
                         is_error    =   false;
