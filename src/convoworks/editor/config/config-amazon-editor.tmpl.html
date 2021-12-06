@@ -46,11 +46,12 @@
 
                     <div class="convo-form-group" ng-if="config.mode === 'auto'">
                         <label for="invocation" class="convo-form-label">Invocation</label>
-                        <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
-                        <b ng-show="amazonPlatformConfigForm.invocation.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
-                        <b ng-show="amazonPlatformConfigForm.invocation.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
+                        <input ng-change="validateInvocation()" ng-required="true" type="text" ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="invocation" name="invocation" placeholder="" ng-model="config.invocation">
+                        <b ng-show="amazonPlatformConfigForm.invocation.$error.minlength" class="text-danger">Invocation should contain at least 2 characters</b>
+                        <b ng-show="amazonPlatformConfigForm.invocation.$error.maxlength" class="text-danger">Invocation shouldn't contain more then 50 characters.</b>
                         <b ng-show="amazonPlatformConfigForm.invocation.$error.pattern" class="text-danger">Only letters and spaces are allowed.</b>
                         <b ng-show="amazonPlatformConfigForm.invocation.$invalid && !amazonPlatformConfigForm.invocation.$pristine" class="text-danger">Invocation is required.</b>
+                        <b ng-show="invalidInvocation" class="text-danger">Invocation contains an forbidden name.</b>
                     </div>
 
                     <div class="convo-form-group">
