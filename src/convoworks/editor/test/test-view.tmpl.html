@@ -15,7 +15,7 @@
         </div>
         <div class="chatbox">
             <convo-chatbox name="'Test'" device-id="getDeviceId()" service-id="serviceId" collapsed="false" mode="'admin'"
-                           toggle-debug="toggleDebug" delegate-nlp="delegateNlp" variables="variables" exception="exception"></convo-chatbox>
+                           toggle-debug="toggleDebug" delegate-nlp="delegateNlp" variables="variables" exception="exception" intent="intent"></convo-chatbox>
         </div>
         <div class="buttons">
             <convo-externaltest device-id="getDeviceId()" service-id="serviceId"></convo-externaltest>
@@ -27,6 +27,15 @@
             <div class="toggled-indicator" ng-class="{ 'active': toggleDebug, 'inactive': !toggleDebug }" ng-click="toggleDebug = !toggleDebug"></div>
         </div>
         <div class="panel-debug card-pane" ng-if="toggleDebug">
+            <div ng-if="intent" class="panel-debug-intent monospace">
+                <h4>Intent data</h4>
+                <span class="bold">Intent name:</span> {{ intent.name }}
+                <br>
+                <h5>Filled slots</h5>
+                <br>
+                <json-formatter data="intent.slots"></json-formatter>
+                <hr>
+            </div>
             <div class="panel-debug-variables monospace">
                 <h4>Variables</h4>
                 <div style="overflow: auto" class="panel-debug-variables-in-request">

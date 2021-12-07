@@ -17,6 +17,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
             variant : '=?',
             delegateNlp : '=?',
             toggleDebug : '=?',
+            intent: '=?',
             exception : '=?',
             variables : '=?'
         },
@@ -157,6 +158,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
             {
                 _appendBreak();
                 _appendSequence( data.text_responses, true);
+                $scope.intent = data.intent;
                 $scope.exception = data.exception;
                 $scope.variables = data.variables;
 
