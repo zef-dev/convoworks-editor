@@ -160,12 +160,12 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.getAllowedPlatforms = function()
         {
-            return Object.keys($scope.platformAvailabilities).filter(p => $scope.platformAvailabilities[p].allowed);
+            return Object.keys($scope.platformAvailabilities).filter(p => $scope.platformAvailabilities[p] && $scope.platformAvailabilities[p].allowed);
         }
 
         $scope.getAvailablePlatforms = function()
         {
-            const availablePlatforms = Object.keys($scope.platformAvailabilities).filter(p => $scope.platformAvailabilities[p].allowed);
+            const availablePlatforms = Object.keys($scope.platformAvailabilities).filter(p => $scope.platformAvailabilities[p] && $scope.platformAvailabilities[p].allowed);
             $log.log( 'ConvoworksEditorController getAvailablePlatforms()', $scope.platformAvailabilities, availablePlatforms);
             return availablePlatforms;
         }
