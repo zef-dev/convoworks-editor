@@ -214,7 +214,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
             $scope.maybeInt = value => isNaN(value * 1) ? value : value * 1;
 
-            $scope.canToggleToRaw = function (editorType, valueType)
+            $scope.canToggleToRaw = function (editorType)
             {
                 return [
                     'select',
@@ -223,7 +223,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'context_id',
                     'select_block',
                     'boolean',
-                ].includes(editorType) || ['int'].includes(valueType);
+                ].includes(editorType);
             }
 
             $scope.toggle = function(key)
@@ -316,19 +316,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                             $scope.component.properties[key]    =   _asArray( $scope.component.properties[key], 'other');
                             break;
                         case 'int':
-                            const system_key = `_use_var_${key}`;
-                            if ($scope.component.properties[system_key] !== true) {
-                                if ( !!definition.editor_properties.multiple) {
-                                    $scope.component.properties[key]    =   _asArray( $scope.component.properties[key], 'number');
-                                } else {
-                                    $scope.component.properties[key]    =   parseInt( $scope.component.properties[key], 10);
-                                }
+                            if ( !!definition.editor_properties.multiple) {
+                                $scope.component.properties[key]    =   _asArray( $scope.component.properties[key], 'number');
                             } else {
-                                if ( !!definition.editor_properties.multiple) {
-                                    $scope.component.properties[key]    =   _asArray( $scope.component.properties[key], 'string');
-                                } else {
-                                    $scope.component.properties[key]    =   "" + $scope.component.properties[key];
-                                }
+                                $scope.component.properties[key]    =   parseInt( $scope.component.properties[key], 10);
                             }
                             break;
                         case 'object':

@@ -21,11 +21,11 @@
                     ng-switch="definition.component_properties[key].editor_type">
 
                     <button class="btn btn-light btn-xs input-toggle" ng-click="toggle(key)" type="button"
-                        ng-if="canToggleToRaw(definition.component_properties[key].editor_type, definition.component_properties[key].valueType)">
+                        ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">
                         {{ isToggled(key) ? "Toggle to preset" : "Toggle to raw" }}
                     </button>
 
-                    <div class="convo-form-group" ng-show="isToggled(key) && canToggleToRaw(definition.component_properties[key].editor_type, definition.component_properties[key].valueType)">
+                    <div class="convo-form-group" ng-show="isToggled(key) && canToggleToRaw(definition.component_properties[key].editor_type)">
                         <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
                         <div class="convo-form-input expandable-textarea" contenteditable="true" role="textbox"
                             ng-model="component.properties[key]" ng-focus="$event.target.select()">
@@ -33,7 +33,7 @@
                         <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
                     </div>
 
-                    <div ng-show="!isToggled(key) || !canToggleToRaw(definition.component_properties[key].editor_type, definition.component_properties[key].valueType)">
+                    <div ng-show="!isToggled(key) || !canToggleToRaw(definition.component_properties[key].editor_type)">
                         <convo-intent-editor ng-switch-when="convo_intent" key="key" service="service"
                             property-definition="definition.component_properties[key]" component="component">
                         </convo-intent-editor>
