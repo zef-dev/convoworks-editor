@@ -1,7 +1,9 @@
 /* @ngInject */
 export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
 
-        const available_tabs = new RegExp(`\/(?:editor|preview|variables|intents\-entities|configuration|releases|import\-export|test)(?=\/|\\\?|$)`, 'g');
+        const available_tabs = ['editor', 'preview', 'variables', 'intents-entities', 'configuration', 'releases', 'import-export', 'test'];
+        const tabs_regex = new RegExp(`\/(?:${available_tabs.map(t => _pregEscape(t)).join('|')})(?=\/|\\\\|$)`, 'g');
+        // const available_tabs = new RegExp(`\/(?:editor|preview|variables|intents\-entities|configuration|releases|import\-export|test)(?=\/|\\\?|$)`, 'g');
 
         // MODAL FIX
         $rootScope.$watch(() => document.querySelectorAll('.modal').length, val => {
@@ -58,7 +60,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         $scope.isServiceTabActive = function(tabName) {
             const url = $state.href($state.current.name, $state.params, { absolute: false });
-            const matches = [...new Set(url.match(available_tabs))];
+            const matches = [...new Set(url.match(tabs_regex))];
             
             return matches.includes(`/${tabName}`) && matches.findIndex(t => t === `/${tabName}`) === matches.length - 1;
         }
@@ -439,4 +441,14 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             auto_propagate_timeout = null;
         }
 
+        function _pregEscape(str, delimiter) {
+            delimiter = delimiter || '\\';
+            const regex_chars = [".", "\\", "+", "*", "?", "[", "^", "]", "$", "(", ")", "{", "}", "=", "!", "<", ">", "|", ":", "-", "#"];
+
+            for (let i = 0; i < regex_chars.length; i++) {
+                str = str.replaceAll(regex_chars[i], `${delimiter}${regex_chars[i]}`);
+            }
+
+            return str;
+        }
     }
