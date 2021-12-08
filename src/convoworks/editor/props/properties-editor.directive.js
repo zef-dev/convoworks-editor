@@ -216,6 +216,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
             $scope.canToggleToRaw = function (editorType)
             {
+                // @TODO: should this function even exist? 
+                // Maybe we just allow toggling anything
                 return [
                     'select',
                     'read_fragment',
@@ -223,6 +225,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'context_id',
                     'select_block',
                     'boolean',
+                    'text',
                     'number'
                 ].includes(editorType);
             }
@@ -296,7 +299,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
                     if ($scope.isToggled(key)) {
                         $log.log('Will not parse toggled raw key', key);
-                        $scope.component.properties[key]    =   "" + $scope.component.properties[key];
+                        // $scope.component.properties[key] = "" + $scope.component.properties[key];
                         return;
                     }
 
