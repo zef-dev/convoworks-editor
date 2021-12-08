@@ -216,6 +216,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
             $scope.canToggleToRaw = function (editorType)
             {
+                // @TODO: should this function even exist? 
+                // Maybe we just allow toggling anything
                 return [
                     'select',
                     'read_fragment',
@@ -223,11 +225,12 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'context_id',
                     'select_block',
                     'boolean',
+                    'text',
+                    'number'
                 ].includes(editorType);
             }
 
-            $scope.toggle = function(key)
-            {
+            $scope.toggle = function (key) {
                 const system_key = `_use_var_${key}`;
 
                 switch ($scope.component.properties[system_key]) {
@@ -238,15 +241,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                         break;
                     case true:
                         const default_val = $scope.definition.component_properties[key].defaultValue;
-                        const msg = default_val === null ? 
-                            `If you toggle back to the preset editor, you will lose your current data for this field. Proceed?` :
-                            `If you toggle back to the preset editor, your current data for this field will be reset to [${default_val}]. Proceed?`;
-                        
-                        if ($window.confirm(msg)) {
-                            $scope.component.properties[system_key] = false;
-                            $scope.component.properties[key] = default_val;
-                        }
-                        
+
+                        $scope.component.properties[system_key] = false;
+                        $scope.component.properties[key] = default_val;
+
                         break;
                     default:
                         throw new Error(`Unexpected value for system key [${system_key}]: [${$scope.component.properties[system_key]}]`);
@@ -296,6 +294,12 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     }
 
                     if ( key === 'ok_specific' || key === 'nok_specific') {
+                        return;
+                    }
+
+                    if ($scope.isToggled(key)) {
+                        $log.log('Will not parse toggled raw key', key);
+                        // $scope.component.properties[key] = "" + $scope.component.properties[key];
                         return;
                     }
 
