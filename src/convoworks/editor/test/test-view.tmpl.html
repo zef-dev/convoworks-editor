@@ -30,10 +30,12 @@
             <div ng-if="intent" class="panel-debug-intent monospace">
                 <h4>Intent data</h4>
                 <span class="bold">Intent name:</span> {{ intent.name }}
-                <br>
-                <h5>Filled slots</h5>
-                <br>
-                <json-formatter data="intent.slots"></json-formatter>
+                <div ng-if="intent.slots">
+                    <br>
+                    <h5>Filled slots</h5>
+                    <br>
+                    <json-formatter data="intent.slots"></json-formatter>
+                </div>
                 <hr>
             </div>
             <div class="panel-debug-variables monospace">
