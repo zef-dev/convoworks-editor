@@ -223,6 +223,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'context_id',
                     'select_block',
                     'boolean',
+                    'number'
                 ].includes(editorType);
             }
 
@@ -296,6 +297,12 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     }
 
                     if ( key === 'ok_specific' || key === 'nok_specific') {
+                        return;
+                    }
+
+                    if ($scope.isToggled(key)) {
+                        $log.log('Will not parse toggled raw key', key);
+                        $scope.component.properties[key]    =   "" + $scope.component.properties[key];
                         return;
                     }
 

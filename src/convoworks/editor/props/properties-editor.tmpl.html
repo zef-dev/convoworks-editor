@@ -122,6 +122,15 @@
 
                         </div>
 
+                        <div class="convo-form-group" ng-switch-when="number"
+                             ng-if="!definition.component_properties[key].editor_properties.multiple">
+
+                            <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+                            <input class="convo-form-input" type="number" ng-model="component.properties[key]"
+                                   ng-focus="$event.target.select()">
+                            <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
+                        </div>
+
                         <div class="convo-form-group" ng-switch-when="slot_name"
                             ng-if="!definition.component_properties[key].editor_properties.multiple">
 
