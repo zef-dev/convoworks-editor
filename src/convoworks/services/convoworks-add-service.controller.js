@@ -17,7 +17,6 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
     };
 
     $scope.import_service = {
-        "name": "",
         "file": null
     };
 
