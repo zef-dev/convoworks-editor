@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksAddNewServiceController($log, $scope, $state, $timeout, $document, ConvoworksApi)
+export default function ConvoworksAddNewServiceController($log, $scope, $state, $timeout, $document, $window, ConvoworksApi)
 {
     $scope.mode = 'add';
 
@@ -69,32 +69,35 @@ export default function ConvoworksAddNewServiceController($log, $scope, $state, 
 
     $scope.create = function()
     {
+        let promise = null;
+
         switch ($scope.mode) {
             case 'add':
-                ConvoworksApi.createService(
+                promise = ConvoworksApi.createService(
                     $scope.new_service.name,
                     $scope.new_service.default_language,
                     $scope.new_service.default_locale,
                     $scope.new_service.supported_locales,
                     $scope.new_service.is_private,
                     $scope.new_service.template_id
-                ).then(function(data) {
-                    $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
-                });
+                );
                 break;
             case 'import':
-                ConvoworksApi.importFromExisting(
+                promise = ConvoworksApi.importFromExisting(
                     $scope.new_service.name,
                     $scope.import_service.file
-                ).then(function (data) {
-                    $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
-                }, function (reason) {
-                    $log.debug('convoworkAddServiceController uploadSubmitted() reason', reason);
-                });
+                );
                 break;
             default:
                 throw new Error(`Unexpected create mode [${$scope.mode}]`);
         }
+
+        promise.then((data) => {
+            $window.scrollTo(0, 0);
+            $state.go('convoworks-editor-service.editor', { service_id : data['service_id']});
+        }, (reason) => {
+            $log.error('convoworksAddServiceController create() failed for reason', reason);
+        })
     };
 
     $scope.onLanguageChange = function () {
