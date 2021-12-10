@@ -140,6 +140,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                             return 'This step is called when session ends. You can not output anything here, but you might do cleanup or statistics here.';
                         case 'media_controls':
                             return 'Serves for handling media playing requests (they are sessionless)';
+                        case 'default_fallback':
+                            return 'If a block gets no applicable processor results, and has no fallback defined, this will run instead.'
                         default:
                             return $scope.definition.description;
                     }
