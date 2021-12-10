@@ -19,7 +19,7 @@
         <div ng-hide="configuring">
             <div ng-repeat="pckg in availablePackages">
                 <div class="toolbox-package" ng-if="isEnabled(pckg.namespace) && !isEmpty(pckg.namespace)">
-                    <div class="title {{::pckg.namespace}}" ng-click="toggleOpen( pckg.namespace)"> &nbsp;
+                    <div class="title {{::pckg.namespace}}" ng-class="{ 'collapsed': !isOpen(pckg.namespace) }" ng-click="toggleOpen( pckg.namespace)"> &nbsp;
                         {{ ::pckg.namespace }}
                         <span style="float: right;">
                             {{ isOpen(pckg.namespace) ? '&blacktriangledown;' : '&blacktriangleright;' }}
