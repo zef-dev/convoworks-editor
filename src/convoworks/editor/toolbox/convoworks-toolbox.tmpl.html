@@ -27,10 +27,13 @@
                     </div>
                     <div ng-if="isOpen(pckg.namespace)">
                         <div ng-repeat="(name, values) in filtered[pckg.namespace]">
-                            <span ng-if="values.length > 0" class="subsection-title">
+                            <span ng-if="values.length > 0" class="subsection-title {{ name.toLowerCase() }}" ng-click="toggleComponentType(pckg.namespace, name)">
                                 {{ name }} ({{ values.length }})
+                                <span style="float: right;">
+                                    {{ showComponentType(pckg.namespace, name) ? '&blacktriangledown;' : '&blacktriangleright;' }}
+                                </span>
                             </span>
-                            <convoworks-toolbox-component
+                            <convoworks-toolbox-component ng-show="showComponentType(pckg.namespace, name)"
                                 ng-repeat="component_definition in values"
                                 component-definition="component_definition"
                             ></convoworks-toolbox-component>

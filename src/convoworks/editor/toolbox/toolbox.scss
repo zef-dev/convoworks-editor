@@ -115,17 +115,36 @@
         color: #3F789C;
     }
     
-    
-    .toolbox-container .toolbox-package .subsection-title
-    {
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: 0.5px;
-        line-height: 13px;
-        text-transform: uppercase;
-        color: rgba(0,0,0,0.4);
-        display: block;
-        padding: 10px 5px 10px 0;
+    .toolbox-container {
+        .toolbox-package {
+            .subsection-title {
+                font-size: 12px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                font-variant-caps: petite-caps;
+                color: white;
+                display: block;
+                padding: 10px 5px 10px;
+                margin: 0.5em 0;
+                border-radius: 4px;
+
+                &.read {
+                    background-color: #16A316;
+                }
+
+                &.process {
+                    background-color: #963694;
+                }
+
+                &.filter {
+                    background-color: #3EA4DE;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
     }
     
     .toolbox-container .toolbox-package .toolbox-component

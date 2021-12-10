@@ -1,3 +1,4 @@
+import angular from 'angular';
 import template from './convoworks-toolbox.tmpl.html';
 import unsavedChangesTemplate from './unsaved-changes.tmpl.html';
 
@@ -19,8 +20,9 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
             
             const TOGGLE_TIMEOUT = 450;
 
-            var core            =   ['convo-core', 'amazon', 'google-nlp'];
-            $scope.open         =   {};
+            var core = ['convo-core', 'amazon', 'google-nlp'];
+            $scope.open = {};
+            $scope.showTypes = {};
 
             $scope.configuring  =   false;
 
@@ -40,6 +42,7 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
             })
 
             _initGroupedDefinitions();
+            _initShowTypes();
 
             UserPreferencesService.getData( 'openToolboxes').then( function( openToolboxes) {
                 if ( openToolboxes) {
@@ -49,6 +52,10 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
 
             $scope.$watch( 'open', function( value) {
                 UserPreferencesService.registerData( 'openToolboxes', value);
+            }, true);
+
+            $scope.$watch('showTypes', function (value) {
+                UserPreferencesService.registerData('showTypes', value);
             }, true);
 
             $scope.$watch('definitions', function (value) {
@@ -71,7 +78,19 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                 $scope.configuring = false;
             }
 
-            $scope.isOpen       =   function( namespace)
+            $scope.showComponentType = function(namespace, type) {
+                return $scope.showTypes && $scope.showTypes[namespace] && $scope.showTypes[namespace][type];
+            }
+
+            $scope.toggleComponentType = function (namespace, type) {
+                if (!$scope.showTypes[namespace]) {
+                    $scope.showTypes[namespace] = { type: true };
+                }
+
+                $scope.showTypes[namespace][type] = !$scope.showTypes[namespace][type];
+            }
+
+            $scope.isOpen       =   function(namespace)
             {
                 if ( namespace in $scope.open) {
                     return $scope.open[namespace];
@@ -79,12 +98,12 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                 return (core.indexOf(namespace) > -1);
             };
 
-            $scope.toggleOpen   =   function( namespace)
+            $scope.toggleOpen   =   function(namespace)
             {
                 $scope.open[namespace]  =   !$scope.isOpen( namespace);
             }
 
-            $scope.isEnabled    =   function( namespace)
+            $scope.isEnabled    =   function(namespace)
             {
                 return $scope.service.packages.includes(namespace);
             }
@@ -210,6 +229,20 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                 }
 
                 _filterDefinitions();
+            }
+
+            function _initShowTypes() {
+                const default_visibility = { 'read': true, 'process': true, 'filter': true };
+
+                const user_preferences = UserPreferencesService.get('showTypes', {});
+
+                // go over currently activated definitions
+                for (const definition of $scope.definitions) {
+                    $scope.showTypes[definition.namespace] = user_preferences[definition.namespace] || default_visibility;
+                }
+
+                // merge preferences for definitions that might not be active currently but can be toggled on
+                angular.merge($scope.showTypes, user_preferences);
             }
 
             function _uppercaseWord(word) {
