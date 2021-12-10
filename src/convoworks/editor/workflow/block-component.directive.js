@@ -99,6 +99,9 @@ export default function blockComponent( $log, $timeout, ConvoworksApi, UserPrefe
                             case 'media_controls':
                                 $scope.definition.description = 'Serves for handling media playing requests (they are sessionless)';
                                 break;
+                            case 'default_fallback':
+                                $scope.definition.description = 'If a block gets no applicable processor results, and has no fallback defined, this will run instead.';
+                                break;
                         }
                     }
                 } catch ( err) {

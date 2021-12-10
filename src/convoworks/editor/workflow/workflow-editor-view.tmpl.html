@@ -95,6 +95,14 @@
                                 Service processors
                                 <span>convo-core</span>
                             </a>
+                            <a ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'default_fallback', 'Default fallback')"
+                                class="dropdown-item default_fallback"
+                                title="Add default fallback block. This block will run if no fallback is defined for a currently running block and it receives no applicable user input."
+                                href="javascript:void(0);"
+                                ng-if="isRoleAvailable('default_fallback')">
+                                Default fallback
+                                <span>convo-core</span>
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
                                class="dropdown-item {{option.role}}"
