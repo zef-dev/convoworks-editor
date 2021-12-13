@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 .convoworks {
 
     .toolbox-container
@@ -123,9 +125,7 @@
         float: left;
     }
     
-    .toolbox-container .toolbox-package .title.convo-core,
-    .toolbox-container .toolbox-package .title.amazon,
-    .toolbox-container .toolbox-package .title.google-nlp
+    .toolbox-container .toolbox-package .title.convo-core
     {
         background-color: #3F789C;
         color: white;
@@ -137,23 +137,25 @@
                 font-size: 12px;
                 font-weight: 500;
                 letter-spacing: 0.5px;
-                font-variant-caps: all-petite-caps;
-                color: white;
+                font-weight: bold;
+                letter-spacing: 1px;
+                color: #333;
                 display: block;
                 padding: 5px;
                 margin: 0.5em 0;
                 border-radius: 4px;
 
                 &.read {
-                    background-color: #16A316;
+                    // background-color: $read;
+                    background-color: rgba($read, 0.5);
                 }
 
                 &.process {
-                    background-color: #963694;
+                    background-color: rgba($process, 0.5);
                 }
 
                 &.filter {
-                    background-color: #3EA4DE;
+                    background-color: rgba($filter, 0.5);
                 }
 
                 &:hover {
@@ -193,18 +195,19 @@
     
     .toolbox-container .toolbox-package .toolbox-component.process
     {
-        border-color: #963694;
+        border-color: $process;
     }
     
     .toolbox-container .toolbox-package .toolbox-component.filter
     {
-        border-color: #3EA4DE;
+        border-color: $filter;
         margin: inherit;
     }
     
     .toolbox-container .toolbox-package .toolbox-component.filter.descend
     {
-        border-color: rgba(62,164,222, 0.5);
+        // border-color: rgba(62,164,222, 0.5);
+        border-color: rgba($filter, 0.5);
     }
     
     .toolbox-container .toolbox-package .toolbox-component.deprecated
@@ -215,7 +218,7 @@
     
     .toolbox-container .toolbox-package .toolbox-component.read
     {
-        border-color: #16A316;
+        border-color: $read;
     }
     
     .toolbox-container .toolbox-package .toolbox-component.read.descend
