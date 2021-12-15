@@ -97,27 +97,12 @@
     
     .toolbox-container .toolbox-package .title
     {
-        font-size: 16px;
-        background-color: #777;
-        color: white;
+        font-size: 14px;
+        letter-spacing: 0;
         line-height: 18px;
         text-align: left;
-        padding: 6px 6px 8px 6px;
-        margin: -3px -11px 3px -11px;
+        padding: 6px;
         cursor: pointer;
-
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-
-        transition: border-radius 100ms ease-in;
-
-        &.collapsed {
-            margin-bottom: -3px;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-        }
     }
     
     .toolbox-container .toolbox-package .selector
@@ -127,37 +112,21 @@
     
     .toolbox-container .toolbox-package .title.convo-core
     {
-        background-color: #3F789C;
-        color: white;
+        color: #3F789C;
     }
     
     .toolbox-container {
         .toolbox-package {
             .subsection-title {
-                font-size: 12px;
-                letter-spacing: 1px;
-                color: #333;
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                line-height: 13px;
+                text-transform: uppercase;
+                color: rgba(0,0,0,0.4);
                 display: block;
-                padding: 5px;
-                margin: 0.5em 0;
-                border-radius: 4px;
-
-                &.read {
-                    // background-color: $read;
-                    background-color: rgba($read, 0.5);
-                }
-
-                &.process {
-                    background-color: rgba($process, 0.5);
-                }
-
-                &.filter {
-                    background-color: rgba($filter, 0.5);
-                }
-
-                &:hover {
-                    cursor: pointer;
-                }
+                padding: 10px 5px 10px 0;
+                cursor: pointer;
             }
         }
     }
