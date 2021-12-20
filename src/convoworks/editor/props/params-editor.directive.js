@@ -15,7 +15,7 @@ export default function paramsEditor( $log, ConvoworksApi) {
         link: function ( $scope, $element, $attributes, propertiesContext) {
            $log.log( 'paramsEditor link');
 
-           $scope.pairs =   [];
+            $scope.pairs =   [];
 
             $scope.addParamPair  =   function() {
                 $scope.pairs.push( {
