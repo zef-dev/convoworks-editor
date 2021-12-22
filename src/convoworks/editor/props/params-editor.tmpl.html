@@ -1,11 +1,11 @@
-<div class="convo-form-group variables-editor-inline">
+<div class="convo-form-group variables-editor-inline" ng-if="!usingRaw()">
 
     <!-- DUMMY INPUT -->
     <input type="text" style="display: none; pointer-events: none;" ng-valid="true">
 
     <label class="convo-form-label">{{ propertyDefinition.name }}</label>
     <div class="pair convo-form-group" ng-repeat="pair in pairs track by $index">
-        <input class="convo-form-input monospace" type="text" ng-model="pair.key" ng-blur="backToComponent()" ng-focus="$event.target.select()">
+        <input class="convo-form-input monospace" type="text" ng-model="pair.key" ng-blur="backToComponent();" ng-focus="$event.target.select()">
         <span class="colon">:</span>
         <input class="convo-form-input monospace" type="text" ng-model="pair.val" ng-change="backToComponent()">
         <button class="btn btn-xs remove" ng-click="removeParamPair($index); $event.stopPropagation();">

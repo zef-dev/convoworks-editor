@@ -228,7 +228,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     'select_block',
                     'boolean',
                     'text',
-                    'number'
+                    'number',
+                    'params'
                 ].includes(editorType);
             }
 

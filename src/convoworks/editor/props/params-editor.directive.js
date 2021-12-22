@@ -15,7 +15,7 @@ export default function paramsEditor( $log, ConvoworksApi) {
         link: function ( $scope, $element, $attributes, propertiesContext) {
            $log.log( 'paramsEditor link');
 
-           $scope.pairs =   [];
+            $scope.pairs =   [];
 
             $scope.addParamPair  =   function() {
                 $scope.pairs.push( {
@@ -30,12 +30,19 @@ export default function paramsEditor( $log, ConvoworksApi) {
                 $scope.backToComponent();
             }
 
-            $scope.$watch( 'component.properties.' + $scope.key, function () {
+            $scope.$watch(`component.properties.${$scope.key}`, function () {
                 $log.log( 'paramsEditor watch', $scope.key, $scope.component.properties[$scope.key]);
-                $scope.pairs =   [];
-                for ( var key in $scope.component.properties[$scope.key]) {
-                    var val = $scope.component.properties[$scope.key][key];
-                    $scope.pairs.push( {
+
+                if ($scope.usingRaw()) {
+                    $log.log('paramsEditor using raw for key', $scope.key);
+                    return;
+                }
+
+                $scope.pairs = [];
+                for (let key in $scope.component.properties[$scope.key])
+                {
+                    let val = $scope.component.properties[$scope.key][key];
+                    $scope.pairs.push({
                         key: key,
                         val: val
                     });
@@ -44,7 +51,12 @@ export default function paramsEditor( $log, ConvoworksApi) {
 
             $scope.backToComponent = function()
             {
-                var prop_data = {};
+                if ($scope.usingRaw()) {
+                    $log.log('paramsEditor using raw for key', $scope.key);
+                    return;
+                }
+
+                let prop_data = {};
 
                 for (const pair of $scope.pairs) {
                     prop_data[pair.key] = pair.val;
@@ -52,6 +64,11 @@ export default function paramsEditor( $log, ConvoworksApi) {
 
                 $log.log('paramsEditor backToComponent prop_data', $scope.key, prop_data);
                 $scope.component.properties[$scope.key] = $scope.pairs.length ? prop_data : [];
+            }
+
+            $scope.usingRaw = function()
+            {
+                return $scope.component.properties[`_use_var_${$scope.key}`];
             }
         }
     }
