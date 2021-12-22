@@ -6,9 +6,15 @@ export default function contenteditable() {
     require: "ngModel",
     link: function (scope, element, attrs, ngModel) {
       function read() {
-        var newLine = String.fromCharCode(10);
-        var formattedValue = element.html().replace(/<br>/ig, newLine).replace(/\r/ig, '');
+        const newLine = String.fromCharCode(10);
+        const formattedValue = element
+          .html()
+          .replace(/<br>/ig, newLine)
+          .replace(/\r/ig, '')
+          .replace(/\u00A0|&nbsp;/g, ' ');
+        
         ngModel.$setViewValue(formattedValue);
+        
         element.text(formattedValue);
       }
 
