@@ -21,7 +21,8 @@ export default function contenteditable() {
       });
       element.bind("paste", function (e) {
         e.preventDefault();
-        document.execCommand('inserttext', false, e.clipboardData.getData('text/plain'));
+        const cbdata = e.clipboardData || window.clipboardData || e.originalEvent.clipboardData;
+        document.execCommand('inserttext', false, cbdata.getData('text/plain'));
       });
     }
   };
