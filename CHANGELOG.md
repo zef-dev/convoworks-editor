@@ -4,6 +4,17 @@
 
 ## [Releases]
 
+## 0.22.9 - 2021-12-23
+
+* Fix not being able to paste into raw input fields
+* Add support to toggle `number` and `params` into raw
+* Component types in a package are now collapsable
+* Add new block role - `default_fallback`
+* Fixed broken rendering for toggle indicators
+* Fix error with checking if propagation is allowed to any platform
+* Toggling back to preset editor no longer has confirm prompt
+* View now scrolls up after service creation
+
 ## 0.22.8 - 2021-12-03
 
 * Fix create new service from existing. Again.
