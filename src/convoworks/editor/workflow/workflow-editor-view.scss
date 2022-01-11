@@ -215,11 +215,13 @@
     .selectable-block-item.service_processors,
     .selectable-block-item.media_player,
     .selectable-block-item.default_fallback,
+    .selectable-block-item.error_handler,
     .blocks-container .dropdown-menu > li.session_start a,
     .blocks-container .dropdown-menu > li.session_ended a,
     .blocks-container .dropdown-menu > li.service_processors a,
     .blocks-container .dropdown-menu > li.media_player a,
-    .blocks-container .dropdown-menu > li.default_fallback a
+    .blocks-container .dropdown-menu > li.default_fallback a,
+    .blocks-container .dropdown-menu > li.error_handler a
     {
         color: #2F74EA;
     }

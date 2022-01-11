@@ -102,6 +102,9 @@ export default function blockComponent( $log, $timeout, ConvoworksApi, UserPrefe
                             case 'default_fallback':
                                 $scope.definition.description = 'If a block gets no applicable processor results, and has no fallback defined, this will run instead.';
                                 break;
+                            case 'error_handler':
+                                $scope.definition.description = 'Catch and handle any errors raised during execution.';
+                                break;
                         }
                     }
                 } catch ( err) {

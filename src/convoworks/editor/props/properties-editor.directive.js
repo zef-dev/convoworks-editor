@@ -142,6 +142,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                             return 'Serves for handling media playing requests (they are sessionless)';
                         case 'default_fallback':
                             return 'If a block gets no applicable processor results, and has no fallback defined, this will run instead.'
+                        case 'error_handler':
+                            return 'Catch and handle any errors raised during execution.';
                         default:
                             return $scope.definition.description;
                     }
