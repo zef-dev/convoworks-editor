@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.22.10 - 2022-01-20
+
+* Add new block role - `error_handler`
+
 ## 0.22.9 - 2021-12-23
 
 * Fix not being able to paste into raw input fields
