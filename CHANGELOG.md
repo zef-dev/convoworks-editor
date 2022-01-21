@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.22.11 - 2022-01-21
+
+* Fix getContainer method to try setting default value if property isn't present on component
+
 ## 0.22.10 - 2022-01-20
 
 * Add new block role - `error_handler`

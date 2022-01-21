@@ -1,6 +1,6 @@
 {
   "name": "@zef-dev/convoworks-editor",
-  "version": "0.22.10",
+  "version": "0.22.11",
   "description": "Editor GUI for the Convoworks framework",
   "author": "zef-dev",
   "license": "MIT",
