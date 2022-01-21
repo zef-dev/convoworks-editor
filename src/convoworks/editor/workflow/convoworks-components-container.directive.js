@@ -99,8 +99,17 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
                         return o;
                     }
 
-                    if ( $scope.component && $scope.component.properties)
+                    // if ( $scope.component && $scope.component.properties)
+                    //     return $scope.component.properties[$scope.propertyName];
+
+                    if ($scope.component)
+                    {
+                        if (!$scope.component.properties[$scope.propertyName] && !!$scope.propertyDefinition.defaultValue) {
+                            $scope.component.properties[$scope.propertyName] = $scope.propertyDefinition.defaultValue;
+                        }
+                        
                         return $scope.component.properties[$scope.propertyName];
+                    }
 
                     $log.warn( 'convoworksComponentsContainer controller getContainer() no property ['+$scope.propertyName+'] in $scope.component', $scope.component);
                 }
