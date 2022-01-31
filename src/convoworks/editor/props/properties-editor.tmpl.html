@@ -173,7 +173,7 @@
 
 
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
-                            <select required class="convo-form-input" ng-model="component.properties[key]"
+                            <select required class="convo-form-input" ng-model="component.properties[key]" convert-to-number
                                 ng-options="maybeInt(name) as value; for (name, value) in definition.component_properties[key].editor_properties.options">
                             </select>
                             <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
