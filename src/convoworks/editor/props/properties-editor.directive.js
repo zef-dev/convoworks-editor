@@ -180,6 +180,16 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     return true;
                 }
 
+                const all_dependencies = getAllDependencyProperties(definition.component_properties[key].editor_properties.dependency);
+
+                if (all_dependencies.map(d => $scope.isToggled(d)).includes(true)) {
+                    return true; // at least one dependency is toggled to raw
+                }
+
+                if (all_dependencies.map(d => component.properties[d]).filter(p => p.startsWith('${')).length > 0) {
+                    return true; // at least one dependency is a variable
+                }
+
                 const result = $parse(definition.component_properties[key].editor_properties.dependency)({ component });
 
                 return !!result;
@@ -484,18 +494,27 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
 
             // PARAMS UTIL
-            function _keyToIdentifier( key)
-            {
-                return '$$_'+key+'_pbuffer';
-            }
+            // function _keyToIdentifier( key)
+            // {
+            //     return '$$_'+key+'_pbuffer';
+            // }
 
-            function _identifierToKey( id)
-            {
-                var regex   =   /\$\$_(\w+)_pbuffer/g;
+            // function _identifierToKey( id)
+            // {
+            //     var regex   =   /\$\$_(\w+)_pbuffer/g;
 
-                var matches =   regex.exec( id);
+            //     var matches =   regex.exec( id);
 
-                return matches[1];
+            //     return matches[1];
+            // }
+
+            function getAllDependencyProperties(dependency) {
+                return Object.keys( // Unique values only
+                    dependency.split(" ") // split on spaces
+                    .filter(d => d.includes('.properties')) // only consider items that access properties
+                    .map(d => d.split('.').pop()) // split on periods and assume last item is property
+                    .reduce(((prev, curr) => { prev[curr] = true; return prev }), {}) // create map with unique keys
+                )
             }
         }
     }
