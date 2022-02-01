@@ -1,14 +1,13 @@
 /* @ngInject */
-export default function convertToNumber($log) {
+export default function numberAdapter($log) {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModel) {
             ngModel.$parsers.push(function (val) {
-                $log.log('hahahaeahehhaehahe', val);
-                return isNaN(val) ? val : parseInt(val, 10);
+                return `${val}`;
             });
             ngModel.$formatters.push(function (val) {
-                return `${val}`;
+                return isNaN(val) ? `${val}` : parseInt(val, 10);
             });
         }
     };

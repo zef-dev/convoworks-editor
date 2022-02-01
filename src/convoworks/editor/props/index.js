@@ -8,7 +8,7 @@ import propertiesEditor from './properties-editor.directive';
 import convoIntentEditor from './convo-intent-editor.directive';
 import paramsEditor from './params-editor.directive';
 import contenteditable from './contendeditable.directive';
-import convertToNumber from '../../common/convert-to-number.directive';
+import numberAdapter from '../../common/number-adapter.directive';
 
 /* @ngInject */
 export default angular
@@ -17,5 +17,5 @@ export default angular
   .directive('convoIntentEditor', convoIntentEditor)
   .directive('paramsEditor', paramsEditor)
   .directive('contenteditable', contenteditable)
-  .directive('convertToNumber', convertToNumber)
+  .directive('numberAdapter', numberAdapter)
   .name;
