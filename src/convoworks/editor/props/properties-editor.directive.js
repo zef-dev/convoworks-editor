@@ -186,7 +186,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     return true; // at least one dependency is toggled to raw
                 }
 
-                if (all_dependencies.map(d => component.properties[d]).filter(p => p.startsWith('${')).length > 0) {
+                if (all_dependencies.map(d => component.properties[d]).filter(p => p !== null && p !== undefined && `${p}`.startsWith('${')).length > 0) {
                     return true; // at least one dependency is a variable
                 }
 
