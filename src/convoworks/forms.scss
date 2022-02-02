@@ -14,53 +14,65 @@
         &:hover {
             cursor: pointer;
         }
-    }
-    
-    .toggled-indicator.inactive {
-        background-color: #bababa;
 
-        &.disabled {
-            background-color: #7e7e7e;
+        &.inactive {
+            background-color: #bababa;
+    
+            &.disabled {
+                background-color: #7e7e7e;
+            }
         }
-    }
-    
-    .toggled-indicator.active {
-        background-color: #2F74EA;
 
-        &.disabled {
-            background-color: #375b99;
+        &.active {
+            background-color: #2F74EA;
+    
+            &.disabled {
+                background-color: #375b99;
+            }
         }
-    }
-    
-    .toggled-indicator:after {
-        position: absolute;
-        content: " ";
-        height: 16px;
-        width: 16px;
-        background-color: #FFFFFF;
-        border-radius: 50%;
-    
-        transition: left 100ms ease-out, right 100ms ease-out;
-    }
 
-    .toggled-indicator.disabled {
+        &.switch {
+            &.active, &.inactive {
+                background-color: #2F74EA;
+    
+                &.disabled {
+                    background-color: #375b99;
+                }
+            }
+        }
+
         &:after {
-            background-color: #acacac;
+            position: absolute;
+            content: " ";
+            height: 16px;
+            width: 16px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+        
+            transition: left 100ms ease-out, right 100ms ease-out;
         }
-        &:hover {
-            cursor: not-allowed;
+    
+        &.disabled {
+            &:after {
+                background-color: #acacac;
+            }
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+        
+        &.active:after {
+            // transform: translateX(100%);
+            left: 8%;
+        }
+        
+        &.inactive:after {
+            // transform: translateX(0%);
+            left: 48%;
         }
     }
     
-    .toggled-indicator.active:after {
-        // transform: translateX(100%);
-        left: 8%;
-    }
     
-    .toggled-indicator.inactive:after {
-        // transform: translateX(0%);
-        left: 48%;
-    }
     
     input:focus,
     button:focus
