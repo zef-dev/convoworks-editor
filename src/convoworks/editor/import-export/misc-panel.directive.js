@@ -23,6 +23,12 @@ export default function miscPanel( $log, $window, ConvoworksApi, CONVO_ADMIN_API
                 include_configurations : false
             };
 
+            $scope.exportModel = true;
+            $scope.templateOptions = {
+                name: '',
+                description: ''
+            }
+
             $scope.serviceReleases = [];
 
             ConvoworksApi.getServiceReleases($scope.service.service_id).then(function (data) {
@@ -78,6 +84,24 @@ export default function miscPanel( $log, $window, ConvoworksApi, CONVO_ADMIN_API
                 var url =   CONVO_ADMIN_API_BASE_URL + '/service-imp-exp/export/' + $scope.service.service_id + '/' + platformId;
                 $log.debug( 'miscPanel redirecting to ['+url+']');
                 document.location.href  =   url;
+            }
+
+            $scope.downloadTemplate = function()
+            {
+                $log.log('misPanel downloadTemplate()', $scope.templateOptions);
+                
+                const url = encodeURI(`${CONVO_ADMIN_API_BASE_URL}/service-imp-exp/export-template/${$scope.service.service_id}?name=${$scope.templateOptions.name}&description=${$scope.templateOptions.description}`);
+                
+                $log.log(`miscPanel redirecting to [${url}]`);
+                document.location.href = url;
+            }
+
+            $scope.downloadTemplateDisabled = function()
+            {
+                return $scope.templateOptions.name === null ||
+                       $scope.templateOptions.name === '' ||
+                       $scope.templateOptions.description === null ||
+                       $scope.templateOptions.description === '';
             }
 
             $scope.hasPlatformRelease = function (platformId) {

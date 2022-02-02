@@ -42,18 +42,38 @@
     <div class="export">
         <h4>Export</h4>
         <form>
-            <div class="convo-form-group">
+            <div class="export-mode-toggle">
+                <div class="toggled-indicator switch" ng-class="{ 'active': exportModel, 'inactive': !exportModel }" ng-click="exportModel = !exportModel"></div>
+                <span>Export as {{ exportModel ? 'service model' : 'template' }}</span>
+            </div>
+            <div class="convo-form-group" ng-if="exportModel">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" ng-model="downloadOptions.include_configurations"> Include local configurations
                     </label>
                 </div>
-            </div>
-            <div class="convo-form-group">
                 <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="download()">
                     <i class="fa fa-download-alt"></i>&nbsp;Convoworks model download
                 </button>
             </div>
+            <div ng-if="!exportModel">
+                <div class="convo-form-group">
+                    <label for="templateName" class="convo-form-label">Template name</label>
+                    <input type="text" class="convo-form-input" placeholder="Template name" name="templateName" ng-model="templateOptions.name">
+                </div>
+                
+                <div class="convo-form-group">
+                    <label for="templateDescription" class="convo-form-label">Template description</label>
+                    <input type="text" class="convo-form-input" placeholder="Template description" name="templateDescription" ng-model="templateOptions.description">
+                </div>
+                
+                <div class="convo-form-group">
+                    <button type="button" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadTemplate()" ng-disabled="downloadTemplateDisabled()">
+                        <i class="fa fa-download-alt"></i>&nbsp;Download service as template
+                    </button>
+                </div>
+            </div>
+            <hr>
             <div class="convo-form-group">
                 <button type="button" ng-disabled="!hasPlatformRelease('dialogflow')" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('dialogflow')">
                     <i class="fa fa-download-alt"></i>&nbsp;Dialogflow export download
