@@ -23,7 +23,6 @@ export default function miscPanel( $log, $window, ConvoworksApi, CONVO_ADMIN_API
                 include_configurations : false
             };
 
-            $scope.exportModel = true;
             $scope.templateOptions = {
                 name: '',
                 description: ''
