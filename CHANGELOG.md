@@ -4,6 +4,13 @@
 
 ## [Releases]
 
+## 0.22.12 - 2022-02-09
+
+* Fix displaying of select data when value type is number
+* Render dependent properties if their dependency is set to raw or starts with `${`
+* Add ability to export service as a template
+* Accept templates on service import instead of just workflow files
+
 ## 0.22.11 - 2022-01-21
 
 * Fix getContainer method to try setting default value if property isn't present on component
