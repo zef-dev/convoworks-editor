@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.22.13 - 2022-02-16
+
+* Sort packages by stability - stable first
+
 ## 0.22.12 - 2022-02-09
 
 * Fix displaying of select data when value type is number
