@@ -611,6 +611,14 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                     return propertiesContext.getSelectedService().blocks;
                 };
 
+                $scope.removeBlock = function (blockId) {
+                    return propertiesContext.removeBlock(blockId);
+                };
+
+                $scope.removeSubroutine = function (subroutineId) {
+                    return propertiesContext.removeSubroutine(subroutineId);
+                };
+
                 function _initAvailableBlockTypes() {
                     var definitions = propertiesContext.getComponentDefinitions();
 
