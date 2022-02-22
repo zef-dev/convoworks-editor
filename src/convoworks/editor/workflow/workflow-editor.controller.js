@@ -175,7 +175,7 @@ export default function WorkflowEditorController($log, $scope, $rootScope, $stat
 
         if (missing.length > 0) {
             $log.log('WorkflowEditorController cannot paste, missing packages in service', missing);
-            AlertService.addDanger('Cannot paste, the following packages are missing: ' + missing.concat(', '));
+            AlertService.addDanger('Cannot paste, the following packages are missing: ' + missing.join(', '));
             return false;
         }
 
