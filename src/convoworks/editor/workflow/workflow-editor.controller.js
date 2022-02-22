@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function WorkflowEditorController( $log, $scope, $state, $stateParams, $location, $anchorScroll, $transitions) {
+export default function WorkflowEditorController($log, $scope, $rootScope, $state, $stateParams, $anchorScroll, $transitions, localStorageService, AlertService, StringService) {
 
     $log.log( 'WorkflowEditorController init');
 
@@ -44,6 +44,168 @@ export default function WorkflowEditorController( $log, $scope, $state, $statePa
             }
         }
     });
+
+    $scope.getContainerContextOptions = function(service)
+    {
+        const options = [];
+
+        options.push({
+            text: 'Paste',
+            enabled: _hasClipboard,
+            click: function ($itemScope, $event, modelValue, text, $li) {
+                _paste(service);
+            }
+        });
+
+        return options;
+    }
+
+    $scope.getStepContextOptions = function (step, removeStepFn)
+    {
+        const options = [];
+
+        options.push({
+            text: 'Cut',
+            click: function($itemScope, $event, modelValue, text, $li) {
+                _cut(step, removeStepFn);
+            }
+        })
+
+        options.push({
+            text: 'Copy',
+            click: function ($itemScope, $event, modelValue, text, $li) {
+                _copy(step);
+            }
+        })
+
+        options.push({
+            text: 'Delete',
+            click: function ($itemScope, $event, modelValue, text, $li) {
+                removeStepFn(step.properties.block_id || step.properties.fragment_id);
+            }
+        })
+
+        return options;
+    }
+
+    function _hasClipboard()
+    {
+        return !!localStorageService.get('step_clipboard');
+    }
+
+    function _getClipboard()
+    {
+        return localStorageService.get('step_clipboard');
+    }
+
+    function _cut(item, removeFn)
+    {
+        _copy(item);
+
+        const id_to_remove = item.properties.block_id || item.properties.fragment_id;
+
+        removeFn(id_to_remove);
+    }
+
+    function _copy(step)
+    {
+        const mode = $scope.getComponentMode();
+        
+        let data = _getClipboard() || {};
+        data[mode] = { step };
+
+        localStorageService.set('step_clipboard', data);
+    }
+
+    function _paste(service)
+    {
+        const clipboard = _getClipboard();
+
+        if (!clipboard) {
+            return;
+        }
+
+        const mode = $scope.getComponentMode();
+
+        if (!_canPaste(service, clipboard[mode].step)) {
+            $log.log('WorkflowEditorController cannot paste');
+            return;
+        }
+        
+        if (!clipboard[mode]) {
+            $log.log(`WorkflowEditorController nothing to paste for mode [${mode}]`);
+            return;
+        }
+
+        const step = clipboard[mode].step;
+        const container = step.properties.block_id ? 'blocks' : 'fragments';
+
+        if (!_isUnique(service[container], step)) {
+            step.properties.name = `${step.properties.name} (Copy)`;
+            step.properties._component_id = StringService.generateUUIDV4();
+
+            if (container === 'blocks') {
+                step.properties.block_id = StringService.generateUUIDV4();
+            } else {
+                step.properties.fragment_id = StringService.generateUUIDV4();
+            }
+        }
+
+        service[container].push(step);
+    }
+
+    function _canPaste(service, step)
+    {
+        const r = /"namespace":"(.*?)"/g;
+        const cmpstr = JSON.stringify(step);
+        const matches = [...cmpstr.matchAll(r)].map(i => i[1] || null).filter(i => i !== null).reduce((previous, current) => {
+            if (!previous.includes(current)) previous.push(current);
+            return previous;
+        }, []);
+        
+        $log.log('WorkflowEditorController wants to paste step, matched namespaces', matches, 'service has', service.packages);
+
+        let missing = [];
+
+        for (const p of matches) {
+            if (!service.packages.includes(p)) {
+                missing.push(p);
+            }
+        }
+
+        if (missing.length > 0) {
+            $log.log('WorkflowEditorController cannot paste, missing packages in service', missing);
+            AlertService.addDanger('Cannot paste, the following packages are missing: ' + missing.concat(', '));
+            return false;
+        }
+
+        if (step.properties.role && step.properties.role !== 'conversation_block') {
+            $log.log(`WorkflowEditorComponent want to paste block with special role [${step.properties.role}]`);
+            for (const block of service.blocks) {
+                if (block.properties.role === step.properties.role) {
+                    $log.log('WorkflowEditorController cannot paste block, unique role [' + step.properties.role + '] already exists');
+                    AlertService.addDanger('Cannot paste block, a block with the role [' + step.properties.role + '] already exists.');
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    function _isUnique(container, item)
+    {
+        if (item.properties.block_id)
+        {
+            return container.filter(b => b.properties.block_id === item.properties.block_id).length === 0;
+        }
+        else if (item.properties.fragment_id)
+        {
+            return container.filter(f => f.properties.fragment_id === item.properties.fragment_id).length === 0;
+        }
+
+        throw new Error('Item is neither a block nor a fragment.');
+    }
 
     _initBlockDefaults();
     _initFragmentDefaults();
