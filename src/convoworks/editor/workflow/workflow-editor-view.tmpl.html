@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-right">
-      <div class="properties-container">
+      <div class="properties-container" context-menu="getContainerContextOptions(getSelectedService())">
         <uib-tabset active="componentMode" justified="true">
             <uib-tab index="'steps'" select="setComponentMode('steps', $event)">
                 <uib-tab-heading>
@@ -126,6 +126,7 @@
                 <div class="blocks-container" ui-sortable="sortableOptions" ng-model="getSelectedService().blocks">
                     <div
                             class="selectable-block-item {{block.properties.role}}"
+                            context-menu="getStepContextOptions(block, removeBlock)"
                             ng-repeat="block in getSelectedService().blocks track by block.properties._component_id"
                             ng-class="{'selected':isBlockSelected( block.properties.block_id)}"
                             ng-click="selectBlock( block.properties.block_id); $event.stopPropagation()">
@@ -184,6 +185,7 @@
                 <div ui-sortable="sortableOptions" ng-model="getSelectedService().fragments" class="blocks-container">
                     <div
                             class="selectable-block-item {{getBlockWorkflow( block)}}"
+                            context-menu="getStepContextOptions(block, removeSubroutine)"
                             ng-repeat="block in getSelectedService().fragments track by block.properties._component_id"
                             ng-class="{'selected':isFragmentSelected( block.properties.fragment_id)}"
                             ng-click="selectFragment( block.properties.fragment_id); $event.stopPropagation()">
