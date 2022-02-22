@@ -125,12 +125,12 @@ export default function WorkflowEditorController($log, $scope, $rootScope, $stat
             return;
         }
 
-        if (!_canPaste(service, clipboard.step)) {
+        const mode = $scope.getComponentMode();
+
+        if (!_canPaste(service, clipboard[mode].step)) {
             $log.log('WorkflowEditorController cannot paste');
             return;
         }
-
-        const mode = $scope.getComponentMode();
         
         if (!clipboard[mode]) {
             $log.log(`WorkflowEditorController nothing to paste for mode [${mode}]`);
@@ -180,6 +180,7 @@ export default function WorkflowEditorController($log, $scope, $rootScope, $stat
         }
 
         if (step.properties.role && step.properties.role !== 'conversation_block') {
+            $log.log(`WorkflowEditorComponent want to paste block with special role [${step.properties.role}]`);
             for (const block of service.blocks) {
                 if (block.properties.role === step.properties.role) {
                     $log.log('WorkflowEditorController cannot paste block, unique role [' + step.properties.role + '] already exists');
