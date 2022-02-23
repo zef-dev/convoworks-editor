@@ -387,6 +387,10 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                         value: 'dialogflow'
                     })
                 }
+
+                if ($scope.delegateOptions.length === 1) {
+                    $scope.delegateNlp = $scope.delegateOptions[0];
+                }
             }).catch(function (reason) {
                 throw new Error(reason.data.message)
             });
