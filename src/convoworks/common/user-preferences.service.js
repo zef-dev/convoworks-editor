@@ -14,16 +14,22 @@ export default function UserPreferencesService( $q, localStorageService)
         return deferred.promise;
     }
 
-    function get( key, def)
+    function get(key, def, allowNull = false)
     {
         var val = localStorageService.get( key);
-        if ( typeof val === 'undefined' || val === null) {
+
+        if (allowNull && val === null) {
+            return null;
+        }
+
+        if (typeof val === 'undefined' || val === null) {
             return def;
         }
+
         return val;
     }
 
-    function isSet( key)
+    function isSet( key, allowNull = false)
     {
         var val = localStorageService.get( key);
         if ( typeof val === 'undefined' || val === null) {
