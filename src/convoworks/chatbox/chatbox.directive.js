@@ -42,7 +42,11 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
             $scope.$watch('delegateNlp', function(newVal, oldVal) {
                 $log.log('convoChatbox $watch delegateNlp old value', oldVal, 'new value', newVal);
 
-                if (!newVal) {
+                if (newVal === oldVal) {
+                    return;
+                }
+
+                if (newVal === undefined) {
                     return;
                 }
 
