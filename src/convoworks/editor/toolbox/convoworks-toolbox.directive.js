@@ -91,6 +91,11 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
             }
 
             $scope.showComponentType = function(namespace, type) {
+                if (Object.keys($scope.groupedDefinitions[namespace]).length === 1) {
+                    // only one type of subsection
+                    return true;
+                }
+
                 return $scope.showTypes && $scope.showTypes[namespace] && $scope.showTypes[namespace][type];
             }
 
