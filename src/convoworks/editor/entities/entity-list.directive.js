@@ -23,6 +23,19 @@ export default function entityList($log, $window, $state)
                     propertiesContext.removeConvoEntity( index);
                 }
             }
+
+            $scope.getEntitiesCount = function (entity)
+            {
+                if (!entity.values || entity.values.length === 0) {
+                    return 'No entity values';
+                }
+
+                if (entity.values.length === 1) {
+                    return '1 value';
+                }
+
+                return `${entity.values.length} values`;
+            }
         }
     }
 }

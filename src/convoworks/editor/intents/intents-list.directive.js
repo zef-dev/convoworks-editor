@@ -22,6 +22,19 @@ export default function intentList( $log, $window, $state)
                     propertiesContext.removeConvoIntent( index);
                 }
             }
+
+            $scope.getUtteranceCount = function (intent)
+            {
+                if (!intent.utterances || intent.utterances.length === 0) {
+                    return 'No utterances';
+                }
+
+                if (intent.utterances.length === 1) {
+                    return '1 utterance';
+                }
+
+                return `${intent.utterances.length} utterances`;
+            }
         }
     }
 };
