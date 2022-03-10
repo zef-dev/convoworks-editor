@@ -46,6 +46,11 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     return;
                 }
 
+                if ($(event.target).is("code.status-prop")) {
+                    _copyStatusProp($(event.target));
+                    return;
+                }
+
                 const dx = event.offsetX - last_mouse_x;
                 const dy = event.offsetY - last_mouse_y;
 
@@ -352,16 +357,7 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
 
             $scope.copyToClipboard = function (value)
             {
-                const el = document.createElement('textarea');
-                el.value = value;
-                el.setAttribute('readonly', '');
-                el.style = {position: 'absolute', left: '-9999px'};
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-
-                AlertService.addSuccess(`Copied [${value}] to clipboard.`);
+                _copyToClipboard(value);
             }
 
             function _setupBlockIds()
@@ -492,6 +488,31 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 });
             }
 
+            function _copyStatusProp(selectedProp)
+            {
+                const caption = selectedProp.parents("table").first().find('caption').first();
+
+                if (!caption) {
+                    $log.log('propertiesEditor no target prop name');
+                    return;
+                }
+
+                const prop_name = caption.children('.prop-name').first().text();
+
+                for (const def in $scope.definition.component_properties) {
+                    const definition = $scope.definition.component_properties[def];
+
+                    if (definition.name.toLowerCase() === prop_name.toLowerCase()) {
+                        const status_name = $scope.component.properties[def] || definition.defaultValue || 'status';
+                        const final = `\${${status_name}.${selectedProp.text()}}`;
+
+                        $log.log('propertiesEditor text to copy', final);
+
+                        _copyToClipboard(final);
+                        break;
+                    }
+                }
+            }
 
             // PARAMS UTIL
             // function _keyToIdentifier( key)
@@ -515,6 +536,20 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     .map(d => d.split('.').pop()) // split on periods and assume last item is property
                     .reduce(((prev, curr) => { prev[curr] = true; return prev }), {}) // create map with unique keys
                 )
+            }
+
+            function _copyToClipboard(value)
+            {
+                const el = document.createElement('textarea');
+                el.value = value;
+                el.setAttribute('readonly', '');
+                el.style = {position: 'absolute', left: '-9999px'};
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+
+                AlertService.addSuccess(`Copied [${value}] to clipboard.`);
             }
         }
     }

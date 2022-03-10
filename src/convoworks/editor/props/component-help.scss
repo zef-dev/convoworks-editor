@@ -19,4 +19,13 @@
     }
 
     p { display: inline-block; }
+
+    .status-prop {
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            color: rgb(0, 123, 255);
+        }
+    }
 }
