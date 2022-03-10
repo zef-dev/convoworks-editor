@@ -11,7 +11,7 @@
             <div class="grid-item" ng-repeat="entity in entities track by $index">
                 <a class="grid-item-main" 
                     ui-sref="convoworks-editor-service.entity-details( { index: $index} )">
-                    {{ entity.name }}
+                    {{ entity.name }} ({{ getEntitiesCount(entity) }})
                 </a>
                 <div class="grid-item-buttons">
                     <button type="button" ng-click="deleteEntity($event, $index)">

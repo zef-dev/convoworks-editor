@@ -11,7 +11,7 @@
             <div class="grid-item" ng-repeat="intent in intents track by $index">
                 <a class="grid-item-main" 
                     ui-sref="convoworks-editor-service.intent-details( { index: $index} )">
-                    {{ intent.name }}
+                    {{ intent.name }} ({{ getUtteranceCount(intent) }})
                 </a>
                 <div class="grid-item-buttons">
                     <button type="button" ng-click="deleteIntent($event, $index)">
