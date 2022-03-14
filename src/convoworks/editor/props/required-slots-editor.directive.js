@@ -35,7 +35,7 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
 
                     if (!intent) {
                         $log.log('requiredSlotsEditor $watch undefined intent');
-                        $scope.component.properties.required_slots = [];
+                        $scope.component.properties.required_slots = {};
                         return;
                     }
 
@@ -56,7 +56,7 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
                                 if (!$scope.intent_slots[value]) {
                                     $scope.intent_slots[value] = {
                                         type,
-                                        required: false
+                                        required: $scope.component.properties[$scope.key].includes(value)
                                     };
                                 }
 
@@ -66,32 +66,39 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
                 }
             });
 
-            $scope.onRequiredChange = function (slotName)
-            {
-                $log.log('requiredSlotsEditor onRequiredChange', slotName, $scope.component.properties[$scope.key], $scope.component.properties[$scope.key].indexOf(slotName));
+            $scope.$watch('intent_slots', (val) => {
+                for (const slot in val)
+                {
+                    $log.log('requiredSlotsEditor $watch intent_slots', val[slot]);
 
-                $scope.$applyAsync(() => {
-                    if (!$scope.component.properties[$scope.key].includes(slotName)) {
-                        $scope.component.properties[$scope.key].push(slotName);
-                    } else {
-                        $scope.component.properties[$scope.key].splice(
-                            $scope.component.properties[$scope.key].indexOf(slotName), 1
-                        )
+                    if (val[slot].required)
+                    {
+                        if (!$scope.component.properties[$scope.key].includes(slot)) {
+                            $scope.component.properties[$scope.key].push(slot);
+                        }
                     }
-                })
-            }
+                    else
+                    {
+                        if ($scope.component.properties[$scope.key].includes(slot)) {
+                            $scope.component.properties[$scope.key].splice(
+                                $scope.component.properties[$scope.key].indexOf(slot), 1
+                            )
+                        }
+                    }
+                }
+            }, true)
 
             $scope.isSlotRequired = function (slotName)
             {
-                return $scope.component.properties[$scope.key] && $scope.component.properties[$scope.key].includes(slotName);
+                return $scope.intent_slots[slotName].required;
             }
 
             $scope.areAllRequired = function ()
             {
-                const all = Object.keys($scope.intent_slots);
-
-                for (const slot of all) {
-                    if (!$scope.component.properties[$scope.key].includes(slot)) {
+                for (const slot of Object.keys($scope.intent_slots))
+                {
+                    if (!$scope.intent_slots[slot].required)
+                    {
                         return false;
                     }
                 }
@@ -105,16 +112,14 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
                 let all_required = true;
 
                 for (const slot of all) {
-                    if (!$scope.component.properties[$scope.key].includes(slot)) {
+                    if (!$scope.intent_slots[slot].required) {
                         all_required = false;
                         break;
                     }
                 }
 
-                if (!all_required) {
-                    $scope.component.properties[$scope.key] = all;
-                } else {
-                    $scope.component.properties[$scope.key] = [];
+                for (const slot of all) {
+                    $scope.intent_slots[slot].required = !all_required;
                 }
             }
         }
