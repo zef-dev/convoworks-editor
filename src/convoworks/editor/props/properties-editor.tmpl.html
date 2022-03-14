@@ -38,6 +38,10 @@
                             property-definition="definition.component_properties[key]" component="component">
                         </convo-intent-editor>
 
+                        <required-slots-editor ng-switch-when="required_slots" key="key" service="service"
+                            property-definition="definition.component_properties[key]" component="component">
+                        </required-slots-editor>
+
                         <div class="convo-form-group" ng-switch-when="ssml">
 
                             <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
