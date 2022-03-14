@@ -11,7 +11,7 @@
             <tr ng-repeat="(name, data) in intent_slots track by $index">
                 <td style="font-family: monospace">{{ name }}</td>
                 <td style="font-family: monospace">{{ data.type }}</td>
-                <td><input type="checkbox" ng-model="intent_slots[name].required" ng-change="onRequiredChange(name)" ng-checked="isSlotRequired(name)"></td>
+                <td><input type="checkbox" ng-model="intent_slots[name].required" ng-checked="isSlotRequired(name)"></td>
             </tr>
         </tbody>
     </table>
