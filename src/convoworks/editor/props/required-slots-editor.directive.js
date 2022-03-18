@@ -67,35 +67,29 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
             });
 
             $scope.$watch('intent_slots', (val) => {
+                let required_slots = [];
+
                 for (const slot in val)
                 {
                     $log.log('requiredSlotsEditor $watch intent_slots', val[slot]);
 
                     if (val[slot].required)
                     {
-                        if (!$scope.component.properties[$scope.key].includes(slot)) {
-                            $scope.component.properties[$scope.key].push(slot);
-                        }
-                    }
-                    else
-                    {
-                        if ($scope.component.properties[$scope.key].includes(slot)) {
-                            $scope.component.properties[$scope.key].splice(
-                                $scope.component.properties[$scope.key].indexOf(slot), 1
-                            )
-                        }
+                        required_slots.push(slot);
                     }
                 }
-            }, true)
+                required_slots.sort();
+                $scope.component.properties[$scope.key] = required_slots;
+            }, true);
 
             $scope.isSlotRequired = function (slotName)
             {
-                return $scope.intent_slots[slotName].required;
+                return $scope.component.properties[$scope.key].includes(slotName);
             }
 
             $scope.areAllRequired = function ()
             {
-                for (const slot of Object.keys($scope.intent_slots))
+                for (const slot of $scope.component.properties[$scope.key])
                 {
                     if (!$scope.intent_slots[slot].required)
                     {
