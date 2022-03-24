@@ -289,8 +289,8 @@
                                         </div>
 
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
-                                            <label for="skill_preview_in_store_example_phrases" class="convo-form-label">Example Phrases * <i class="fa fa-question-circle" uib-tooltip="Sample utterances that will appear on the skill detail card in the Alexa App. These phrases will help users get started and enable them to access your skill’s core functionality. Separate list items with a semicolon (;)"></i></label>
-                                            <input ng-required="true" type="text" class="convo-form-input" id="skill_preview_in_store_example_phrases" name="skill_preview_in_store_example_phrases" placeholder="" ng-model="config.skill_preview_in_store.example_phrases">
+                                            <label for="skill_preview_in_store_example_phrases" class="convo-form-label">Example Phrases * <i class="fa fa-question-circle" uib-tooltip="Sample utterances that will appear on the skill detail card in the Alexa App. These phrases will help users get started and enable them to access your skill’s core functionality. Put one sample utterance per line."></i></label>
+                                            <textarea ng-required="true" rows="5" cols="80" class="convo-form-input" id="skill_preview_in_store_example_phrases" name="skill_preview_in_store_example_phrases" placeholder="" ng-model="config.skill_preview_in_store.example_phrases"></textarea>
                                             <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_example_phrases.$pristine" class="text-danger">At least one Example Phrase is required.</b>
                                         </div>
 
