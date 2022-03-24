@@ -4,6 +4,14 @@
 
 ## [Releases]
 
+## 0.22.14 - 2022-03-24
+
+* Add copy and paste for blocks and fragments
+* Select the only available NLP delegate option by default
+* Display counts on entities and intents
+* Use text area for example phrases on the Amazon configuration view
+* Make required slots a grid toggle
+
 ## 0.22.13 - 2022-02-16
 
 * Sort packages by stability - stable first
