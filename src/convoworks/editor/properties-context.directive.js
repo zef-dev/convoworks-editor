@@ -83,6 +83,17 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             {
                 ConvoworksApi.getAvailablePackages().then(function(available) {
                     available_packages = available;
+                    available_packages.sort((p1, p2) => {
+                        if (p1.stability === 'experimental' && p2.stability !== 'experimental') {
+                            return 1;
+                        }
+        
+                        if (p2.stability === 'experimental' && p1.stability !== 'experimental') {
+                            return -1;
+                        }
+    
+                        return 0;
+                    });
 
                     ConvoworksApi.getComponentDefinitions(service_id, true).then( function( defs) {
                         $log.log( 'propertiesContext controller definitions pre-loaded. Now will start. defs', defs);

@@ -63,12 +63,12 @@
         
         &.active:after {
             // transform: translateX(100%);
-            left: 8%;
+            left: 48%;
         }
         
         &.inactive:after {
             // transform: translateX(0%);
-            left: 48%;
+            left: 8%;
         }
     }
     

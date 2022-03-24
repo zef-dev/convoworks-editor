@@ -35,18 +35,6 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                 $scope.service.packages =   [];
             }
 
-            $scope.availablePackages.sort((p1, p2) => {
-                if (p1.stability === 'experimental' && p2.stability !== 'experimental') {
-                    return 1;
-                }
-
-                if (p2.stability === 'experimental' && p1.stability !== 'experimental') {
-                    return -1;
-                }
-
-                return 0;
-            })
-
             $scope.$on('EscKeyPressed', function() {
                 if ($scope.configuring) {
                     $scope.configuring = false;
@@ -143,7 +131,7 @@ export default function convoworksToolbox($log, $rootScope, $uibModal, $document
                                 break;
                             case 2: // cancel
                                 // $rootScope.$broadcast('PackagesUpdated');
-                                $scope.$evalAsync();
+                                $scope.$applyAsync();
                                 break;
                             default:
                                 $log.error('Unexpected package toggle state: ' + result);
