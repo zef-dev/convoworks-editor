@@ -1,30 +1,13 @@
-  <div class="convo-form-group input-group" ng-class="{'error':error}">
+<div class="convo-form-group input-group" ng-class="{'error':error}">
 	<label class="convo-form-label m-b-10">{{ propertyDefinition.name }}&nbsp;
 		<button class="btn btn-sm btn-primary" ng-click="quickAddIntent()">
 			<i class="fas fa-plus-circle"></i> Add new
 		</button>
 	</label>
-      <select class="convo-form-input" ng-model="component.properties[key]">
-          <option ng-repeat="intent in intents track by intent.name"
-                  value="{{ intent.name }}">
-              {{ intent.name }}
-          </option>
-      </select>
-     <small class="form-text text-muted">{{propertyDefinition.description}}</small>
-	 <div ng-if="(slotPreviews | keys).length !== 0">
-		 <table class="table table-striped table-sm">
-			 <thead class="thead-dark">
-				 <tr>
-					 <th>Slot name</th>
-					 <th>Slot type</th>
-				 </tr>
-			 </thead>
-			 <tbody>
-			    <tr ng-repeat="(slotName, slotType) in slotPreviews track by $index">
-				    <td style="font-family: monospace">{{ slotName }}</td>
-				    <td style="font-family: monospace">{{ slotType }}</td>
-			    </tr>
-			 </tbody>
-		 </table>
-	 </div>
- </div>
+	<select class="convo-form-input" ng-model="component.properties[key]">
+		<option ng-repeat="intent in intents track by intent.name" value="{{ intent.name }}">
+			{{ intent.name }}
+		</option>
+	</select>
+	<small class="form-text text-muted">{{propertyDefinition.description}}</small>
+</div>
