@@ -89,6 +89,10 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
 
             $scope.areAllRequired = function ()
             {
+                if (!$scope.component.properties[$scope.key].length) {
+                    return false;
+                }
+                
                 for (const slot of $scope.component.properties[$scope.key])
                 {
                     if (!$scope.intent_slots[slot].required)
