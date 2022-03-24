@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.22.15 - 2022-03-24
+
+* Quickfix for required slots toggle all checkbox
+
 ## 0.22.14 - 2022-03-24
 
 * Add copy and paste for blocks and fragments
