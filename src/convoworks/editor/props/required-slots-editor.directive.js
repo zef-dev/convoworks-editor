@@ -126,8 +126,12 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
                 }
 
                  // old string separated with commas
-                if (!Array.isArray($scope.component.properties[$scope.key]) && $scope.component.properties[$scope.key].length) {
-                    $scope.component.properties[$scope.key] = $scope.component.properties[$scope.key].split(',');
+                if (!Array.isArray($scope.component.properties[$scope.key])) {
+                    if ($scope.component.properties[$scope.key].length) {
+                        $scope.component.properties[$scope.key] = $scope.component.properties[$scope.key].split(',');
+                    } else {
+                        $scope.component.properties[$scope.key] = [];
+                    }
                 }
             }
         }
