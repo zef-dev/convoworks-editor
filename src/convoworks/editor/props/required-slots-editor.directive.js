@@ -15,13 +15,7 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
         link: function ($scope, $element, $attributes, propertiesContext) {
             $log.log('requiredSlotsEditor link');
 
-            // {
-            //     slot_name: {
-            //         type: string,
-            //         required: boolean
-            //     }
-            // }
-            $scope.intent_slots = {};
+            _init();
 
             $scope.$watch(function() {
                 return $scope.component.properties.intent;
@@ -118,6 +112,26 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
 
                 for (const slot of all) {
                     $scope.intent_slots[slot].required = !all_required;
+                }
+            }
+
+            // INIT
+            function _init()
+            {
+                $scope.intent_slots = {};
+
+                // non existent
+                if (!$scope.component.properties[$scope.key]) {
+                    $scope.component.properties[$scope.key] = [];
+                }
+
+                 // old string separated with commas
+                if (!Array.isArray($scope.component.properties[$scope.key])) {
+                    if ($scope.component.properties[$scope.key].length) {
+                        $scope.component.properties[$scope.key] = $scope.component.properties[$scope.key].split(',');
+                    } else {
+                        $scope.component.properties[$scope.key] = [];
+                    }
                 }
             }
         }
