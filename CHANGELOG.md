@@ -4,6 +4,11 @@
 
 ## [Releases]
 
+## 0.22.16 - 2022-03-30
+
+* Check for existence of configured property before modifying it in required slots editor
+* Add compatibility for the old style of comma delimited string for required slots
+
 ## 0.22.15 - 2022-03-24
 
 * Quickfix for required slots toggle all checkbox
