@@ -50,12 +50,12 @@
                     <json-formatter data="variables.component"></json-formatter>
                 </div>
             </div>
-            <div style="word-break: break-word" ng-if="exception.exceptionMessage" class="monospace panel-debug-exception">
+            <div style="word-break: break-word" ng-if="exception.message" class="monospace panel-debug-exception">
                 <h4>Exception</h4>
-                <p>Exception message: <b>{{ exception.exceptionMessage }}</b></p>
+                <p>Exception message: <b>{{ exception.message }}</b></p>
                 <span>Stack trace:</span>
                 <ul class="list-unstyled">
-                    <li ng-repeat="message in exception.exceptionStackTrace">
+                    <li ng-repeat="message in exception.stack_trace">
                         <p><b>#{{ message }}</b></p>
                     </li>
                 </ul>
