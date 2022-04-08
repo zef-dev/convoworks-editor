@@ -2,6 +2,7 @@
 
 ## [Current development]
 
+* Fix missing exception rendering on test view
 ## [Releases]
 
 ## 0.22.16 - 2022-03-30
