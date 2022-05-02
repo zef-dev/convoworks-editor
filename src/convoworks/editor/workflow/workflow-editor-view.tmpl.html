@@ -54,13 +54,13 @@
     </div>
 
     <div class="col-right">
-      <div class="properties-container" context-menu="getContainerContextOptions(getSelectedService())">
+      <div class="properties-container">
         <uib-tabset active="componentMode" justified="true">
             <uib-tab index="'steps'" select="setComponentMode('steps', $event)">
                 <uib-tab-heading>
                     Steps
                 </uib-tab-heading>
-                <div class="blocks-container">
+                <div class="blocks-container"  context-menu="getContainerContextOptions(getSelectedService())">
                     <div class="btn-group icon-button add-block-select" uib-dropdown>
                         <button type="button" class="btn btn-outline-primary btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
                             <span class="fa fa-plus"></span>
@@ -145,7 +145,7 @@
                 <uib-tab-heading>
                     Fragments
                 </uib-tab-heading>
-                <div class="blocks-container">
+                <div class="blocks-container" context-menu="getContainerContextOptions(getSelectedService())">
 <!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
 <!--                                 ng-click="openNewProcessSubroutine()" title="Add new process workflow fragment"> -->
 <!--                             <span class="fa fa-flash"></span> -->
@@ -203,7 +203,7 @@
                 <uib-tab-heading>
                     Contexts
                 </uib-tab-heading>
-                    <div class="blocks-container">
+                    <div class="blocks-container" context-menu="getContainerContextOptions(getSelectedService())">
                         <div class="btn-group icon-button add-block-select" uib-dropdown>
                         <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-disabled="availableContexts.length === 0">
                             {{ availableContexts.length === 0 ? "No available contexts" : "Open to select Context" }}
