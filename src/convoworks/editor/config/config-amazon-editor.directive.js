@@ -67,6 +67,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     authorization_url: "",
                     access_token_url: "",
                     client_id: "",
+                    alternative_authorization_uri_path: "",
                     client_secret: "",
                     scopes: "",
                     domains: "",
@@ -692,6 +693,32 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 $scope.getAmazonSkillAccountLinkingScopes();
             }
 
+            $scope.registerAlternativeAuthorizationUrlChange = function () {
+                $scope.config.account_linking_config.authorization_url = _getAuthorizationUriForInstallation();
+            }
+
+            function _getAuthorizationUriForInstallation() {
+                let alternativeAuthorizationUrlPath = $scope.config.account_linking_config.alternative_authorization_uri_path;
+                let url;
+                let validUrl = true;
+                const index = service_urls.accountLinkingModes.findIndex(x => x.id === 'installation');
+
+                try {
+                    url = new URL(service_urls.accountLinkingModes[index].webAuthorizationURI);
+                } catch (_) {
+                    validUrl = false;
+                }
+
+                if (alternativeAuthorizationUrlPath && validUrl) {
+                    url.pathname = alternativeAuthorizationUrlPath;
+                    url.searchParams.set('type', 'amazon');
+                    url.searchParams.set('service_id', $scope.service.service_id);
+                    return url.href;
+                } else {
+                    return service_urls.accountLinkingModes[index].webAuthorizationURI;
+                }
+            }
+
             function _updateSelectedAmazonSkillAccountLinkingScopes() {
                 $scope.config.account_linking_config.scopes = '';
                 for (let i = 0; i < $scope.amazonSkillAccountLinkingScopes.length; i++) {
@@ -801,6 +828,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
 
                 if ($scope.config.account_linking_mode !== 'something_else') {
                     if ($scope.config.account_linking_mode === 'installation') {
+                        $scope.config.account_linking_config.authorization_url = _getAuthorizationUriForInstallation();
                         $scope.config.account_linking_config.client_id = '';
                         $scope.config.account_linking_config.client_secret = '';
                         $scope.config.account_linking_config.scopes =  '';

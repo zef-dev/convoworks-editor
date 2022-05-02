@@ -164,6 +164,10 @@
                         <input ng-required="true" type="url" class="convo-form-input" id="account_linking_config_authorization_url" name="account_linking_config_authorization_url" placeholder="" ng-model="config.account_linking_config.authorization_url">
                         <b ng-show="amazonPlatformConfigForm.account_linking_config_authorization_url.$invalid && !amazonPlatformConfigForm.account_linking_config_authorization_url.$pristine" class="text-danger">Web Authorization URI is required.</b>
                     </div>
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode === 'installation'">
+                        <label for="account_linking_config_alternative_authorization_uri_path" class="convo-form-label">Alternative Web Authorization URI Path <i class="fa fa-question-circle" uib-tooltip="Path to an alternative URI from your website, where customers will be redirected in the companion app to enter login credentials."></i></label>
+                        <input ng-required="false" type="text" class="convo-form-input" id="account_linking_config_alternative_authorization_uri_path" name="account_linking_config_alternative_authorization_uri_path" placeholder="" ng-model="config.account_linking_config.alternative_authorization_uri_path" ng-change="registerAlternativeAuthorizationUrlChange()">
+                    </div>
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'something_else'">
                         <p>Your Web Authorization URI: <b>{{config.account_linking_config.authorization_url}}</b></p>
                     </div>
