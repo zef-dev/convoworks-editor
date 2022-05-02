@@ -3,7 +3,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
         const available_tabs = ['editor', 'preview', 'variables', 'intents-entities', 'configuration', 'releases', 'import-export', 'test'];
         const tabs_regex = new RegExp(`\/(?:${available_tabs.map(t => _pregEscape(t)).join('|')})(?=\/|\\\?|$)`, 'g');
-        // const available_tabs = new RegExp(`\/(?:editor|preview|variables|intents\-entities|configuration|releases|import\-export|test)(?=\/|\\\?|$)`, 'g');
 
         // MODAL FIX
         $rootScope.$watch(() => document.querySelectorAll('.modal').length, val => {
