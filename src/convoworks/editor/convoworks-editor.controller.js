@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $transitions, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
 
         const available_tabs = ['editor', 'preview', 'variables', 'intents-entities', 'configuration', 'releases', 'import-export', 'test'];
         const tabs_regex = new RegExp(`\/(?:${available_tabs.map(t => _pregEscape(t)).join('|')})(?=\/|\\\?|$)`, 'g');
@@ -25,6 +25,14 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 $uibModalStack.getTop().value.backdrop = 'static'
             }
         });
+
+        $transitions.onStart({}, (transition) => {
+            transition.promise.finally(() => {
+                window.scrollTo({
+                    left: 0, top: 0
+                })
+            })
+        })
 
         const TIMEOUT_LENGTH           =   2000;
         let auto_propagate_timeout        = null;
