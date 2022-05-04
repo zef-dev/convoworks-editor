@@ -28,50 +28,48 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
                 this.acceptsComponent           =   acceptsComponent;
                 this.acceptsDefinition          =   acceptsDefinition;
 
-                function acceptsDefinition( definition)
-                {
-                    if ( !$scope.propertyDefinition.editor_properties.allow_interfaces) {
+                function acceptsDefinition(definition) {
+                    if (!$scope.propertyDefinition.editor_properties.allow_interfaces) {
                         return true;
                     }
 
-                    $log.debug( 'convoworksComponentsContainer acceptsDefinition', definition._interfaces);
+                    $log.log('convoworksComponentsContainer acceptsDefinition', definition);
 
-                    var own =   definition.type;
-                    if ( own.indexOf('\\') === 0) {
-                        own =   own.substr( 1);
+                    if (!isMultiple() && $scope.component.properties[$scope.propertyName] !== null) {
+                        $log.warn('convoworksComponentsContainer acceptsDefinition will not accept additional child for single container');
+                        return false;
                     }
 
-                    for (var i=0;i<$scope.propertyDefinition.editor_properties.allow_interfaces.length; i++) {
-                        var allowed =   $scope.propertyDefinition.editor_properties.allow_interfaces[i];
-                        if ( allowed.indexOf('\\') === 0) {
-                            allowed =   allowed.substr( 1);
+                    let own = definition.type;
+
+                    if (own.indexOf('\\') === 0) {
+                        own = own.substring(1);
+                    }
+
+                    for (let iface of $scope.propertyDefinition.editor_properties.allow_interfaces) {
+                        $log.log('convoworksComponentsContainer iterating over allowed interfaces with', iface);
+                        
+                        if (iface.indexOf('\\') === 0) {
+                            iface = iface.substring(1);
                         }
 
-                        if ( own === allowed) {
+                        if (own === iface) {
                             return true;
                         }
-                    }
 
-                    for (var i=0;i<$scope.propertyDefinition.editor_properties.allow_interfaces.length; i++) {
-                        var allowed =   $scope.propertyDefinition.editor_properties.allow_interfaces[i];
-
-                        if ( allowed.indexOf('\\') === 0) {
-                            allowed =   allowed.substr( 1);
-                        }
-
-                        for (var j=0;j<definition._interfaces.length; j++) {
-                            var implemented =   definition._interfaces[j];
-
-                            if ( implemented.indexOf('\\') === 0) {
-                                implemented =   implemented.substr( 1);
+                        for (let implemented of definition._interfaces) {
+                            if (implemented.indexOf('\\') === 0) {
+                                implemented = implemented.substring(1);
                             }
 
-                            $log.debug( 'convoworksComponentsContainer for', allowed, implemented);
-                            if ( implemented === allowed) {
+                            $log.log('ConvoworksComponentContainer for', iface, implemented);
+
+                            if (iface === implemented) {
                                 return true;
                             }
                         }
                     }
+
                     return false;
                 }
 
@@ -185,6 +183,10 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
                     return $scope.root ? true : false;
                 };
 
+                $scope.getPropTitle = () => {
+                    return `${$scope.propertyDefinition.name}${convoworksComponentsContainer.isMultiple() ? ' (' + convoworksComponentsContainer.getContainer().length + ')' : ''}`;
+                }
+
                 $rootScope.$on( 'CollapseAllRequested', function () {
                     if ( $scope.isOpen()) {
                         if ( _getDefaultOpen()) {
@@ -236,7 +238,7 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
                     return $scope.propertyDefinition.editor_properties.hideWhenEmpty && convoworksComponentsContainer.getContainer().length == 0;
                 }
 
-                $scope.getContainer =   convoworksComponentsContainer.getContainer;
+                $scope.getContainer = convoworksComponentsContainer.getContainer;
 
                 $scope.getContextOptions = function () {
 
