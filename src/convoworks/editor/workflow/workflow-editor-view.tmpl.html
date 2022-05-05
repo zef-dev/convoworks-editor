@@ -159,7 +159,7 @@
                         <div class="btn-group icon-button add-block-select" uib-dropdown>
                         <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-click="openNewReadSubroutine()">
                             <span class="fa fa-plus"></span>
-                            Add new Read fragment
+                            Add new fragment
                         </button>
                         <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
@@ -168,12 +168,14 @@
                         <div class="dropdown-menu" uib-dropdown-menu role="menu">
                             <a ng-click="openNewReadSubroutine()"
                                class="dropdown-item"
+                               title="Add new read subroutine."
                                href="javascript:void(0);">
                                 Read fragment
                                 <span>convo-core</span>
                             </a>
                             <a ng-click="openNewProcessSubroutine()"
                                class="dropdown-item"
+                               title="Add new processor subroutine."
                                href="javascript:void(0);">
                                 Process fragment
                                 <span>convo-core</span>
@@ -216,6 +218,7 @@
                         <div class="dropdown-menu" uib-dropdown-menu role="menu">
                             <a ng-click="addNewContext(context)"
                                class="dropdown-item"
+                               title="{{ context.description }}"
                                href="javascript:void(0);" ng-repeat="context in availableContexts track by $index">
                                 {{ context.name }}
                                 <span>{{ context.namespace }}</span>
