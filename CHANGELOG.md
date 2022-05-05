@@ -5,6 +5,13 @@
 * Fix missing exception rendering on test view
 ## [Releases]
 
+## 0.22.18 - 2022-05-05
+
+* Disallow adding child components to filled single flow
+* Add tooltips to context and fradments menus
+* Fix debug view displaying errors
+* Add Alternative Web Authorization URI Path field in installation mode to enter an alternative login page
+
 ## 0.22.16 - 2022-03-30
 
 * Check for existence of configured property before modifying it in required slots editor
