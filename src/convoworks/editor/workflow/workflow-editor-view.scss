@@ -120,8 +120,18 @@
         font-size: 12px;
         color: rgba(0,0,0,0.5);
     }
+
+    .steps-list {
+        height: 100%;
+    }
     
-    .editor .col-right .nav-tabs {
+    .editor .col-right .tab-set,
+    .editor .col-right .tab-set .tab-content,
+    .editor .col-right .tab-set .tab-content .tab-pane {
+        height: 100%;
+    }
+
+    .editor .col-right .tab-set .nav-tabs {
         margin-bottom: 25px;
     }
     

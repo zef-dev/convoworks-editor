@@ -1,11 +1,7 @@
-
-
 <div class="editor">
     <div class="col-left">
         <div class="toolbox-container">
-            <convoworks-toolbox
-                definitions="getDefinitions()"
-                available-packages="getAvailablePackages()"
+            <convoworks-toolbox definitions="getDefinitions()" available-packages="getAvailablePackages()"
                 service="getSelection().service"></convoworks-toolbox>
         </div>
     </div>
@@ -14,229 +10,221 @@
 
         <div style="position: relative;">
             <div style="position: absolute; right: 20px; top:20px; z-index: 100;">
-                <form ng-submit="saveChanges()"
-                    style="float:right">
+                <form ng-submit="saveChanges()" style="float:right">
                     <div class="convo-button-group">
-                        <button type="submit" title="Save changes"
-                                ng-disabled="!isServiceChanged()"
-                                class="btn btn-md btn-primary">
+                        <button type="submit" title="Save changes" ng-disabled="!isServiceChanged()"
+                            class="btn btn-md btn-primary">
                             Save
                         </button>
-                        <a ng-click="revertClicked()"
-                           title="Revert changes" ng-disabled="!isServiceChanged()"
-                           class="cancel">Revert</a>
+                        <a ng-click="revertClicked()" title="Revert changes" ng-disabled="!isServiceChanged()"
+                            class="cancel">Revert</a>
                     </div>
                 </form>
             </div>
         </div>
 
-<div class="components-container">
-    <div ng-show="componentMode === 'steps'">
-        <block-component
-                ng-if="hasBlocks()"
-                block="getSelectedBlock()">
-        </block-component>
-    </div>
+        <div class="components-container">
+            <div ng-show="componentMode === 'steps'">
+                <block-component ng-if="hasBlocks()" block="getSelectedBlock()">
+                </block-component>
+            </div>
 
-    <div ng-show="componentMode === 'fragments'">
-        <subroutine-component
-                ng-if="hasFragments()"
-                block="getSelectedFragment()">
-        </subroutine-component>
-    </div>
+            <div ng-show="componentMode === 'fragments'">
+                <subroutine-component ng-if="hasFragments()" block="getSelectedFragment()">
+                </subroutine-component>
+            </div>
 
-    <div ng-show="componentMode === 'contexts'">
-        <context-elements-container service="getSelection().service"></context-elements-container>
-    </div>
-</div>
+            <div ng-show="componentMode === 'contexts'">
+                <context-elements-container service="getSelection().service"></context-elements-container>
+            </div>
+        </div>
 
 
     </div>
 
     <div class="col-right">
-      <div class="properties-container">
-        <uib-tabset active="componentMode" justified="true">
-            <uib-tab index="'steps'" select="setComponentMode('steps', $event)">
-                <uib-tab-heading>
-                    Steps
-                </uib-tab-heading>
-                <div class="blocks-container"  context-menu="getContainerContextOptions(getSelectedService())">
-                    <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-outline-primary btn-md border-radius-8 btn-borderless dropdown-default" ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
-                            <span class="fa fa-plus"></span>
-                            Add new block
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-xs border-radius-8 btn-borderless dropdown-toggle dropdown-toggle-split" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_start', 'Session start')"
-                               class="dropdown-item session_start"
-                               title="Add session start block"
-                               href="javascript:void(0);"
-                               ng-if="isRoleAvailable( 'session_start')">
-                                Session start
-                                <span>convo-core</span>
-                            </a>
-                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_ended', 'Session ended')"
-                               class="dropdown-item service_processors"
-                               title="Add session end block"
-                               href="javascript:void(0);"
-                                ng-if="isRoleAvailable( 'session_ended')">
-                                Session ended
-                                <span>convo-core</span>
-                            </a>
-                            <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
-                               class="dropdown-item service_processors"
-                               title="Add service processors block. This processors will be considered in every process request."
-                               href="javascript:void(0);"
-                               ng-if="isRoleAvailable( 'service_processors')">
-                                Service processors
-                                <span>convo-core</span>
-                            </a>
-                            <a ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'default_fallback', 'Default fallback')"
-                                class="dropdown-item default_fallback"
-                                title="Add default fallback block. This block will run if no fallback is defined for a currently running block and it receives no applicable user input."
-                                href="javascript:void(0);"
-                                ng-if="isRoleAvailable('default_fallback')">
-                                Default fallback
-                                <span>convo-core</span>
-                            </a>
-                            <a ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'error_handler', 'Error handler')"
-                                class="dropdown-item error_handler"
-                                title="Add default fallback block. This block will run if no fallback is defined for a currently running block and it receives no applicable user input."
-                                href="javascript:void(0);"
-                                ng-if="isRoleAvailable('error_handler')">
-                                Error handler
-                                <span>convo-core</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
-                               class="dropdown-item {{option.role}}"
-                               title="{{option.description}}"
-                               href="javascript:void(0);" ng-if="isRoleAvailable( option.role)"
-                               ng-repeat="option in availableBlockTypes track by $index">
-                                {{ option.name }}
-                                <span>{{ option.namespace }}</span>
-                            </a>
+        <div class="properties-container">
+            <uib-tabset active="componentMode" justified="true" class="tab-set">
+                <uib-tab index="'steps'" select="setComponentMode('steps', $event)">
+                    <uib-tab-heading>
+                        Steps
+                    </uib-tab-heading>
+                    <div class="blocks-container">
+                        <div class="btn-group icon-button add-block-select" uib-dropdown>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-md border-radius-8 btn-borderless dropdown-default"
+                                ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'conversation_block', 'New block')">
+                                <span class="fa fa-plus"></span>
+                                Add new block
+                            </button>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-xs border-radius-8 btn-borderless dropdown-toggle dropdown-toggle-split"
+                                uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_start', 'Session start')"
+                                    class="dropdown-item session_start" title="Add session start block"
+                                    href="javascript:void(0);" ng-if="isRoleAvailable( 'session_start')">
+                                    Session start
+                                    <span>convo-core</span>
+                                </a>
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'session_ended', 'Session ended')"
+                                    class="dropdown-item service_processors" title="Add session end block"
+                                    href="javascript:void(0);" ng-if="isRoleAvailable( 'session_ended')">
+                                    Session ended
+                                    <span>convo-core</span>
+                                </a>
+                                <a ng-click="openAddNewBlock( '\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'service_processors', 'Service processors')"
+                                    class="dropdown-item service_processors"
+                                    title="Add service processors block. This processors will be considered in every process request."
+                                    href="javascript:void(0);" ng-if="isRoleAvailable( 'service_processors')">
+                                    Service processors
+                                    <span>convo-core</span>
+                                </a>
+                                <a ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'default_fallback', 'Default fallback')"
+                                    class="dropdown-item default_fallback"
+                                    title="Add default fallback block. This block will run if no fallback is defined for a currently running block and it receives no applicable user input."
+                                    href="javascript:void(0);" ng-if="isRoleAvailable('default_fallback')">
+                                    Default fallback
+                                    <span>convo-core</span>
+                                </a>
+                                <a ng-click="openAddNewBlock('\\Convo\\Pckg\\Core\\Elements\\ConversationBlock', 'error_handler', 'Error handler')"
+                                    class="dropdown-item error_handler"
+                                    title="Add default fallback block. This block will run if no fallback is defined for a currently running block and it receives no applicable user input."
+                                    href="javascript:void(0);" ng-if="isRoleAvailable('error_handler')">
+                                    Error handler
+                                    <span>convo-core</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a ng-click="openAddNewBlock(option.class, option.role, option.defaultName)"
+                                    class="dropdown-item {{option.role}}" title="{{option.description}}"
+                                    href="javascript:void(0);" ng-if="isRoleAvailable( option.role)"
+                                    ng-repeat="option in availableBlockTypes track by $index">
+                                    {{ option.name }}
+                                    <span>{{ option.namespace }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="blocks-container" ui-sortable="sortableOptions" ng-model="getSelectedService().blocks">
-                    <div
-                            class="selectable-block-item {{block.properties.role}}"
+                    <div class="blocks-container steps-list" ui-sortable="sortableOptions" ng-model="getSelectedService().blocks"
+                        context-menu="getContainerContextOptions(getSelectedService())">
+                        <div class="selectable-block-item {{block.properties.role}}"
                             context-menu="getStepContextOptions(block, removeBlock)"
                             ng-repeat="block in getSelectedService().blocks track by block.properties._component_id"
                             ng-class="{'selected':isBlockSelected( block.properties.block_id)}"
                             ng-click="selectBlock( block.properties.block_id); $event.stopPropagation()">
                             {{block.properties.name ? block.properties.name : block.properties.block_id}}
-                            {{block.properties.role && block.properties.role !== 'conversation_block' ? '['+block.properties.role+']' : ''}}
-<!--        <span style="float: right;">&nbsp; -->
-<!--            <i class="fa fa-chevron-up" ng-if="canBlockMoveUp(block.properties.block_id)" ng-click="moveBlockUp( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
-<!--                 title="Move block up"></i> -->
-<!--            <i class="fa fa-chevron-down" ng-if="canBlockMoveDown(block.properties.block_id)" ng-click="moveBlockDown( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
-<!--                 title="Move block down"></i> -->
-<!--        </span> -->
-                    </div>
-                </div>
-            </uib-tab>
-            <uib-tab index="'fragments'" select="setComponentMode('fragments', $event)">
-                <uib-tab-heading>
-                    Fragments
-                </uib-tab-heading>
-                <div class="blocks-container" context-menu="getContainerContextOptions(getSelectedService())">
-<!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
-<!--                                 ng-click="openNewProcessSubroutine()" title="Add new process workflow fragment"> -->
-<!--                             <span class="fa fa-flash"></span> -->
-<!--                         </button> -->
-
-<!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
-<!--                                 ng-click="openNewReadSubroutine()" title="Add new read workflow fragment"> -->
-<!--                             <span class="fa fa-tasks"></span> -->
-<!--                         </button> -->
-
-                        <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-click="openNewReadSubroutine()">
-                            <span class="fa fa-plus"></span>
-                            Add new fragment
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <a ng-click="openNewReadSubroutine()"
-                               class="dropdown-item"
-                               title="Add new read subroutine."
-                               href="javascript:void(0);">
-                                Read fragment
-                                <span>convo-core</span>
-                            </a>
-                            <a ng-click="openNewProcessSubroutine()"
-                               class="dropdown-item"
-                               title="Add new processor subroutine."
-                               href="javascript:void(0);">
-                                Process fragment
-                                <span>convo-core</span>
-                            </a>
+                            {{block.properties.role && block.properties.role !== 'conversation_block' ?
+                            '['+block.properties.role+']' : ''}}
+                            <!--        <span style="float: right;">&nbsp; -->
+                            <!--            <i class="fa fa-chevron-up" ng-if="canBlockMoveUp(block.properties.block_id)" ng-click="moveBlockUp( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
+                            <!--                 title="Move block up"></i> -->
+                            <!--            <i class="fa fa-chevron-down" ng-if="canBlockMoveDown(block.properties.block_id)" ng-click="moveBlockDown( block.properties.block_id); $event.preventDefault(); $event.stopPropagation();" -->
+                            <!--                 title="Move block down"></i> -->
+                            <!--        </span> -->
                         </div>
                     </div>
+                </uib-tab>
+                <uib-tab index="'fragments'" select="setComponentMode('fragments', $event)">
+                    <uib-tab-heading>
+                        Fragments
+                    </uib-tab-heading>
+                    <div class="blocks-container">
+                        <!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
+                        <!--                                 ng-click="openNewProcessSubroutine()" title="Add new process workflow fragment"> -->
+                        <!--                             <span class="fa fa-flash"></span> -->
+                        <!--                         </button> -->
 
-                </div>
-                <div ui-sortable="sortableOptions" ng-model="getSelectedService().fragments" class="blocks-container">
-                    <div
-                            class="selectable-block-item {{getBlockWorkflow( block)}}"
+                        <!--                         <button type="button" class="btn btn-outline-primary btn-xs icon-button" -->
+                        <!--                                 ng-click="openNewReadSubroutine()" title="Add new read workflow fragment"> -->
+                        <!--                             <span class="fa fa-tasks"></span> -->
+                        <!--                         </button> -->
+
+                        <div class="btn-group icon-button add-block-select" uib-dropdown>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-xs dropdown-default border-radius-8"
+                                ng-click="openNewReadSubroutine()">
+                                <span class="fa fa-plus"></span>
+                                Add new fragment
+                            </button>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8"
+                                uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                                <a ng-click="openNewReadSubroutine()" class="dropdown-item"
+                                    title="Add new read subroutine." href="javascript:void(0);">
+                                    Read fragment
+                                    <span>convo-core</span>
+                                </a>
+                                <a ng-click="openNewProcessSubroutine()" class="dropdown-item"
+                                    title="Add new processor subroutine." href="javascript:void(0);">
+                                    Process fragment
+                                    <span>convo-core</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div ui-sortable="sortableOptions" ng-model="getSelectedService().fragments"
+                        class="blocks-container steps-list" context-menu="getContainerContextOptions(getSelectedService())">
+                        <div class="selectable-block-item {{getBlockWorkflow( block)}}"
                             context-menu="getStepContextOptions(block, removeSubroutine)"
                             ng-repeat="block in getSelectedService().fragments track by block.properties._component_id"
                             ng-class="{'selected':isFragmentSelected( block.properties.fragment_id)}"
                             ng-click="selectFragment( block.properties.fragment_id); $event.stopPropagation()">
                             {{block.properties.name}}
-<!--        <span style="float: right;">&nbsp; -->
-<!--            <i class="fa fa-chevron-up" ng-if="canFragmentMoveUp(block.properties.fragment_id)" ng-click="moveFragmentUp( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
-<!--                 title="Move fragment up"></i> -->
-<!--            <i class="fa fa-chevron-down" ng-if="canFragmentMoveDown(block.properties.fragment_id)" ng-click="moveFragmentDown( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
-<!--                 title="Move fragment down"></i> -->
-<!--        </span> -->
-                    </div>
-                </div>
-            </uib-tab>
-            <uib-tab index="'contexts'" select="setComponentMode('contexts', $event)">
-                <uib-tab-heading>
-                    Contexts
-                </uib-tab-heading>
-                    <div class="blocks-container" context-menu="getContainerContextOptions(getSelectedService())">
-                        <div class="btn-group icon-button add-block-select" uib-dropdown>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-default border-radius-8" ng-disabled="availableContexts.length === 0">
-                            {{ availableContexts.length === 0 ? "No available contexts" : "Open to select Context" }}
-                            <span class="fa fa-chevron-right" ng-hide="availableContexts.length === 0"></span>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false" ng-disabled="availableContexts.length === 0">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" uib-dropdown-menu role="menu">
-                            <a ng-click="addNewContext(context)"
-                               class="dropdown-item"
-                               title="{{ context.description }}"
-                               href="javascript:void(0);" ng-repeat="context in availableContexts track by $index">
-                                {{ context.name }}
-                                <span>{{ context.namespace }}</span>
-                            </a>
+                            <!--        <span style="float: right;">&nbsp; -->
+                            <!--            <i class="fa fa-chevron-up" ng-if="canFragmentMoveUp(block.properties.fragment_id)" ng-click="moveFragmentUp( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
+                            <!--                 title="Move fragment up"></i> -->
+                            <!--            <i class="fa fa-chevron-down" ng-if="canFragmentMoveDown(block.properties.fragment_id)" ng-click="moveFragmentDown( block.properties.fragment_id); $event.preventDefault(); $event.stopPropagation();" -->
+                            <!--                 title="Move fragment down"></i> -->
+                            <!--        </span> -->
                         </div>
                     </div>
+                </uib-tab>
+                <uib-tab index="'contexts'" select="setComponentMode('contexts', $event)">
+                    <uib-tab-heading>
+                        Contexts
+                    </uib-tab-heading>
+                    <div class="blocks-container">
+                        <div class="btn-group icon-button add-block-select" uib-dropdown>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-xs dropdown-default border-radius-8"
+                                ng-disabled="availableContexts.length === 0">
+                                {{ availableContexts.length === 0 ? "No available contexts" : "Open to select Context"
+                                }}
+                                <span class="fa fa-chevron-right" ng-hide="availableContexts.length === 0"></span>
+                            </button>
+                            <button type="button"
+                                class="btn btn-outline-primary btn-xs dropdown-toggle dropdown-toggle-split border-radius-8"
+                                uib-dropdown-toggle aria-haspopup="true" aria-expanded="false"
+                                ng-disabled="availableContexts.length === 0">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" uib-dropdown-menu role="menu">
+                                <a ng-click="addNewContext(context)" class="dropdown-item"
+                                    title="{{ context.description }}" href="javascript:void(0);"
+                                    ng-repeat="context in availableContexts track by $index">
+                                    {{ context.name }}
+                                    <span>{{ context.namespace }}</span>
+                                </a>
+                            </div>
+                        </div>
 
-                </div>
-            </uib-tab>
-        </uib-tabset>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
 
-        <div class="properties-editor-wrapper" ng-class="{'closed':!getSelection().component}">
-            <properties-editor
-                    ng-if="getSelection().component"
-                    component="getSelection().component"
-                    definition="getSelection().definition"
-                    service="getSelection().service"></properties-editor>
-        </div>
+            <div class="properties-editor-wrapper" ng-class="{'closed':!getSelection().component}">
+                <properties-editor ng-if="getSelection().component" component="getSelection().component"
+                    definition="getSelection().definition" service="getSelection().service"></properties-editor>
+            </div>
         </div>
     </div>
 </div>
