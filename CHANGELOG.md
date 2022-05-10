@@ -5,6 +5,10 @@
 * Fix missing exception rendering on test view
 ## [Releases]
 
+## 0.22.19 - 2022-05-10
+
+* Fix issue where context menu for pasting steps would not appear
+
 ## 0.22.18 - 2022-05-05
 
 * Disallow adding child components to filled single flow
