@@ -62,6 +62,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 enable_account_linking: false,
                 account_linking_mode: 'installation',
                 permissions: [],
+                account_linking_consent_page_uri: "",
                 account_linking_config: {
                     skip_on_enablement: true,
                     authorization_url: "",

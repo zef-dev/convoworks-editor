@@ -179,6 +179,10 @@
                     <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode !== 'something_else'">
                         <p>Your Access Token URI: <b>{{config.account_linking_config.access_token_url}}</b></p>
                     </div>
+                    <div class="convo-form-group" ng-if="config.enable_account_linking && config.account_linking_mode === 'installation'">
+                        <label for="account_linking_config_account_linking_consent_page_uri" class="convo-form-label">Account Linking Consent Page URI <i class="fa fa-question-circle" uib-tooltip="URI from your website, where customers will be redirected after an successful registration or login decide if they really want to ling their account to an Alexa Skill. By leaving this filed blank, users accounts will be linked immediately."></i></label>
+                            <input ng-required="false" type="text" class="convo-form-input" id="account_linking_config_account_linking_consent_page_uri" name="account_linking_config_account_linking_consent_page_uri" placeholder="" ng-model="config.account_linking_consent_page_uri">
+                    </div>
                     <div class="convo-form-group" ng-if="config.account_linking_mode === 'amazon'">
                         <div class="button-group">
                             <button ng-click="gotoLwaConsoleUrl()" ng-if="config.account_linking_mode === 'amazon'" title="Get your Client ID and Client Secret from your Login with Amazon Console" class="btn btn-sm btn-primary submit">
