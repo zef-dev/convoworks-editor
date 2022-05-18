@@ -1,7 +1,7 @@
 import template from './intent-details.tmpl.html';
 
 /* @ngInject */
-export default function intentDetails( $log, $window, $stateParams)
+export default function intentDetails( $log, $window, $state, $stateParams)
 {
     return {
         restrict: 'E',
@@ -12,12 +12,18 @@ export default function intentDetails( $log, $window, $stateParams)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'intentDetails link');
 
-            var selected            =   -1;
-            var original            =   null; //              =   angular.copy( $scope.intent);
+            let submitting = false;
+            var selected = -1;
+            var original = null; //              =   angular.copy( $scope.intent);
 //            $scope.current_intent     =   angular.copy( original);
 
             selected               =   parseInt( $stateParams.index);
             $scope.current_intent  =   propertiesContext.getSelectedService().intents[selected];
+
+            if ($scope.current_intent === undefined || $scope.current_intent === null) {
+                $log.warn(`intentDetails selected intent [${selected}] does not exist.`);
+                $state.go('^.intents-entities');
+            }
 
             if ( !original) {
                 original     =   angular.copy( $scope.current_intent);
@@ -27,6 +33,8 @@ export default function intentDetails( $log, $window, $stateParams)
             $scope.intents          =   propertiesContext.getConvoIntents();
             $scope.system_entities  =   propertiesContext.getSystemEntities();
 
+            $scope.submitting = () => submitting;
+
             $scope.onUpdate         =   function( intent) {
                 $log.debug( 'intentDetails onUpdate intent', intent);
                 $scope.$applyAsync( function () {
@@ -35,12 +43,15 @@ export default function intentDetails( $log, $window, $stateParams)
             }
 
             $scope.submitIntent = function() {
+                submitting = true;
                 propertiesContext.updateConvoIntent( $scope.current_intent, selected);
+                submitting = false;
                 $window.history.back();
             }
 
             $scope.cancel = function()
             {
+                submitting = false;
                 $window.history.back();
             }
 

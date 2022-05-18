@@ -17,8 +17,9 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'intentNew link $stateParams.name', $stateParams.name);
 
-            var original    =   angular.copy( defaultNewIntent);
-            var current     =   angular.copy( original);
+            let submitting = false;
+            var original = angular.copy( defaultNewIntent);
+            var current = angular.copy( original);
 
             function _render()
             {
@@ -29,6 +30,8 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
                 $scope.system_entities  =   propertiesContext.getSystemEntities();
             }
 
+            $scope.submitting = () => submitting;
+
             $scope.onUpdate         =   function( intent) {
                 $log.debug( 'intentNew onUpdate intent', intent);
                 $scope.$applyAsync( function () {
@@ -38,6 +41,7 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
             }
 
             $scope.submitIntent = function() {
+                submitting = true;
                 var index   =   propertiesContext.addConvoIntent( current);
 
                 let quick_intent = localStorageService.get('quick_intent');
@@ -49,12 +53,15 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
                     localStorageService.set('quick_intent', quick_intent);
                 }
                 
+                submitting = false;
+
                 $window.history.back();
             }
 
             $scope.cancel = function()
             {
                 localStorageService.set('quick_intent', null);
+                submitting = false;
                 $window.history.back();
             }
 
