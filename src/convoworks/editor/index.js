@@ -1,5 +1,6 @@
 import angular from 'angular';
 
+import convoEditorActions from './actions';
 import convoEditorConfig from './config';
 import convoEditorReleases from './releases';
 import convoEditorImpExp from './import-export';
@@ -18,7 +19,7 @@ import ConvoComponentFactoryService from './convo-component-factory.service';
 
 /* @ngInject */
 export default angular
-  .module('convo.editor', [ convoEditorConfig, convoEditorReleases, convoEditorImpExp, convoEditorToolbox, convoEditorPreview,
+  .module('convo.editor', [ convoEditorActions, convoEditorConfig, convoEditorReleases, convoEditorImpExp, convoEditorToolbox, convoEditorPreview,
   			convoEditorIntents, convoEditorEntities, convoEditorWorkflow, convoEditorProps, convoEditorVariables, convoEditorTest])
   .controller('ConvoworksEditorController', ConvoworksEditorController)
   .directive('propertiesContext', propertiesContext)
