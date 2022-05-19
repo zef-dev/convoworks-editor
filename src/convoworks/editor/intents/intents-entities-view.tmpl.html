@@ -1,48 +1,17 @@
 <div class="wide-panel full">
     <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <form ng-submit="saveChanges()"
-                        style="float:right">
-                            <div class="convo-button-group">
-                                <button type="submit" title="Save changes"
-                                        ng-disabled="!isServiceChanged()"
-                                        class="btn btn-md btn-primary">
-                                    <i ng-class="{'spinning':loading}"
-                                       class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp; Save
-                                </button>
-                                <a ng-click="revertClicked()"
-                                   title="Revert changes" ng-disabled="!isServiceChanged()"
-                                   class="cancel">Revert</a>
-                            </div>
-                    </form>
-                </div>
+        <div class="col-md-12">
+            <div class="float-left">
+                <service-save-buttons></service-save-buttons>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <intents-list></intents-list>
         </div>
         <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <form ng-submit="saveChanges()"
-                        style="float:right">
-                        <div class="convo-button-group">
-                            <button type="submit" title="Save changes"
-                                    ng-disabled="!isServiceChanged()"
-                                    class="btn btn-md btn-primary">
-                                <i ng-class="{'spinning':loading}"
-                                   class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp; Save
-                            </button>
-                            <a ng-click="revertClicked()"
-                               title="Revert changes" ng-disabled="!isServiceChanged()"
-                               class="cancel">Revert</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <entity-list service="getSelection().service"></entity-list>
+            <entity-list></entity-list>
         </div>
     </div>
 </div>
-
-
