@@ -1,7 +1,8 @@
+import { $q } from '@uirouter/angularjs';
 import template from './config-service-meta-editor.tmpl.html';
 
 /* @ngInject */
-export default function configServiceMetaEditor($log, $rootScope, $window, LoginService, ConvoworksApi, AlertService)
+export default function configServiceMetaEditor($log, $rootScope, $window, ConvoworksApi, AlertService)
 {
     return {
         restrict: 'E',
@@ -11,11 +12,7 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Login
         link: function($scope, $element, $attributes) {
             $log.log('configServiceMetaEditor linked');
 
-            var user = null;
-
-            LoginService.getUser().then(function (u) {
-                user = u;
-            });
+            $scope.loading = false;
 
             $scope.config = {
                 name: '',
@@ -62,6 +59,8 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Login
                 _update();
             }
 
+            $scope.isError = () => is_error;
+
             function _update() {
                 ConvoworksApi.updateServiceMeta($scope.service.service_id, $scope.config).then(function (res) {
                     var meta = res.data;
@@ -79,33 +78,44 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Login
                     }
 
                     configBak = angular.copy($scope.config);
+
                     $scope.originalOwner = meta['owner'];
                     $rootScope.$broadcast('ServiceMetaUpdated', meta);
+
                     is_error = false;
+
+                    $scope.loading = false;
+
                     AlertService.addSuccess('Service meta configuration updated.');
                 }, function (reason) {
                     $log.warn('configServiceMetaEditor updateConfig failed for reason', reason);
+
+                    $scope.loading = false;
+
                     is_error = true;
                     throw new Error(`Could not update service meta config. ${reason.data.message}`);
                 });
             }
 
             function _load() {
-                ConvoworksApi.getServiceMeta($scope.service.service_id).then(function (meta) {
-                    $log.log('configServiceMetaEditor got service meta', meta);
-                    $scope.config = {
-                        name: meta['name'] || '',
-                        description: meta['description'] || '',
-                        default_language: meta['default_language'] || '',
-                        default_locale: meta['default_locale'] || '',
-                        supported_locales: meta['supported_locales'] || '',
-                        owner: meta['owner'] || '',
-                        admins: meta['admins'] || [''],
-                        is_private: meta['is_private'] !== undefined ? meta['is_private'] : false
-                    }
+                $scope.loading = true;
 
-                    $scope.originalOwner = meta['owner'];
-
+                const all = [
+                    ConvoworksApi.getServiceMeta($scope.service.service_id).then(function (meta) {
+                        $log.log('configServiceMetaEditor got service meta', meta);
+                        $scope.config = {
+                            name: meta['name'] || '',
+                            description: meta['description'] || '',
+                            default_language: meta['default_language'] || '',
+                            default_locale: meta['default_locale'] || '',
+                            supported_locales: meta['supported_locales'] || '',
+                            owner: meta['owner'] || '',
+                            admins: meta['admins'] || [''],
+                            is_private: meta['is_private'] !== undefined ? meta['is_private'] : false
+                        }
+    
+                        $scope.originalOwner = meta['owner'];
+                    }),
                     ConvoworksApi.getConfigOptions().then(function (options) {
                         $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
                             return locale.code.includes($scope.config.default_language);
@@ -118,7 +128,11 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Login
                                 $scope.locales[i].checked = false;
                             }
                         }
-                    });
+                    })
+                ]
+
+                $q.all(all).then((results) => {
+                    $log.log('configServiceMetaEditor all loaded');
 
                     configBak = angular.copy($scope.config);
                     is_error = false;
@@ -126,6 +140,9 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Login
                     $log.warn('configServiceMetaEditor getServiceMeta failed for reason', reason);
                     is_error = true;
                     throw new Error('Could not load service meta configuration.');
+                }).finally(() => {
+                    $log.log('configServiceMetaEditor finally');
+                    $scope.loading = false;
                 });
             }
 
