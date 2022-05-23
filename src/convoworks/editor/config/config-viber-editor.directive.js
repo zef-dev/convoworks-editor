@@ -17,6 +17,8 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                 user = u;
             });
 
+            $scope.loading = false;
+
             $scope.config = {
                 delegateNlp: null,
                 account_id: null,
@@ -56,7 +58,12 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                 if (!isValid) {
                     throw new Error(`Invalid form data.`)
                 }
+                const done = () => {
+                    $scope.loading = false;
+                }
+
                 _updateSelectedWebhookEvents();
+                
                 if ( is_new) {
                     ConvoworksApi.createServicePlatformConfig( $scope.service.service_id, 'viber', $scope.config).then(function (data) {
                         $log.debug('configConvoChatEditor create() $scope.config', $scope.config);
@@ -71,7 +78,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
                         throw new Error(`Can't create config for Viber. ${response.data.message}`)
-                    });
+                    }).finally(done);
                 } else {
                     ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'viber', $scope.config).then(function (data) {
                         $log.debug('configConvoChatEditor update() $scope.config', $scope.config);
@@ -85,7 +92,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
                         throw new Error(`Can't update config for Viber. ${response.data.message}`);
-                    });
+                    }).finally(done);
                 }
             }
 
