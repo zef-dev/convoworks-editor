@@ -5,6 +5,10 @@
 * Fix missing exception rendering on test view
 ## [Releases]
 
+## 0.22.21 - 2022-05-23
+_Hotfix_
+* Add missing loading toggle to service meta config editor on update
+
 ## 0.22.20 - 2022-05-23
 
 * Add a URL to a consent page before account linking completion
