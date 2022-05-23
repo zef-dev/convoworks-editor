@@ -192,7 +192,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                             value: 'dialogflow'
                         })
                     }
-                }).catch(function (reason) {
+                }, function (reason) {
                     throw new Error(reason.data.message)
                 });
             }
