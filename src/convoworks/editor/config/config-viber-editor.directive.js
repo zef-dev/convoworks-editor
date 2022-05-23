@@ -165,7 +165,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         is_new  =   false;
                         is_error    =   false;
                     }, function ( response) {
-                        $log.debug('configConvoChatEditor loadPlatformConfig() response', response);
+                        $log.debug('configConvoChatEditor getServicePlatformConfig() response', response);
 
                         if ( response.status === 404) {
                             is_new      =   true
