@@ -23,6 +23,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             let service_urls = null;
             $scope.service_language = 'en';
 
+            $scope.loading = false;
+
             promises.push(
                 LoginService.getUser().then( function ( u) {
                     user = u;
@@ -180,7 +182,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     var image = new Image();
                     const allowedImageTypes = ['image/png'];
                     if (type === 'certificate') {
-                        if (!file.name.includes('.pem')) {
+                        if (!file.name.endsWith('.pem')) {
                             AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
                             return;
                         }
@@ -287,6 +289,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             }
 
             $scope.updateConfig = function (isValid) {
+                $scope.loading = true;
+
                 $scope.secretFieldType = 'password';
                 $scope.showCertificate = false;
                 if (!isValid) {
@@ -401,6 +405,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 }, function (response) {
                     $log.debug(logline, response);
                     is_error = true;
+                }).finally(() => {
+                    $log.log('configAmazonEditor updateConfig() finally()');
+                    $scope.loading = false;
                 });
             }
 

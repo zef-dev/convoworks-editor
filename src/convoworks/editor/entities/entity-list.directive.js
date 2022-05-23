@@ -1,12 +1,11 @@
 import template from './entity-list.tmpl.html';
 
 /* @ngInject */
-export default function entityList($log, $window, $state)
+export default function entityList($log, $window)
 {
     return {
         restrict: 'E',
         require: '^propertiesContext',
-        scope: {},
         template: template,
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'entityList link');

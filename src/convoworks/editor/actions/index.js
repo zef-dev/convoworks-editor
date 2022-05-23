@@ -1,6 +1,9 @@
+import angular from 'angular';
 
-import * as actions from '../intents/actions';
+import serviceSaveButtons from './service-save-buttons.directive';
 
-export default actions;
-
-
+/* @ngInject */
+export default angular
+    .module('convo.editor.actions', [])
+    .directive('serviceSaveButtons', serviceSaveButtons)
+    .name;

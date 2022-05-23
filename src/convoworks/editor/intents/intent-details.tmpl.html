@@ -9,11 +9,11 @@
 
             <div class="group">
                 <button type="submit" title="Save changes"
-                        ng-disabled="!isIntentChanged()"
+                        ng-disabled="!isIntentChanged() || submitting()"
                         class="btn btn-md btn-primary">
                     Save
                 </button>
-                <button type="button" ng-click="cancel()"
+                <button type="button" ng-click="cancel()" ng-disabled="submitting()"
                    title="Cancel changes"
                    class="btn btn-md btn-primary cancel">Cancel</button>
 

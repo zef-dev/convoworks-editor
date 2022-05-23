@@ -74,7 +74,7 @@
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || facebookMessengerPlatformConfigForm.$invalid" class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="loading || !isConfigChanged() || facebookMessengerPlatformConfigForm.$invalid" class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
                         <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
@@ -85,7 +85,7 @@
 
                 <div class="convo-form-group" ng-if="isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Create Messenger configuration" class="btn btn-primary btn-sm submit" ng-disabled="facebookMessengerPlatformConfigForm.$invalid">
+                        <button type="submit" title="Create Messenger configuration" class="btn btn-primary btn-sm submit" ng-disabled="loading || facebookMessengerPlatformConfigForm.$invalid">
                             Create
                         </button>
                         <a type="button" ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">

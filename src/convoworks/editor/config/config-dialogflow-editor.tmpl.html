@@ -97,10 +97,10 @@
 
                 <div class="convo-form-group" ng-if="!isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid" class="btn btn-primary btn-sm submit">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid || loading" class="btn btn-primary btn-sm submit">
                             Save Configuration
                         </button>
-                        <a type="button" ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
+                        <a type="button" ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged() || loading" class="cancel">
                             Revert
                         </a>
                     </div>
@@ -108,7 +108,7 @@
 
                 <div class="convo-form-group" ng-if="isNew()">
                     <div class="button-group">
-                        <button type="submit" title="Create Dialogflow configuration" class="btn btn-primary btn-sm submit" ng-disabled="dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid">
+                        <button type="submit" title="Create Dialogflow configuration" class="btn btn-primary btn-sm submit" ng-disabled="dialogflowPlatformConfigForm.$invalid || dialogflowPlatformConfigForm.serviceAccount.$invalid || dialogflowPlatformConfigForm.name.$invalid || loading">
                             Create
                         </button>
                         <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">

@@ -1,5 +1,5 @@
-<div class="card-pane">
-	<fieldset>
+<div class="card-pane" ng-if="!isError()">
+	<fieldset ng-if="!loading">
 		<legend>Service Meta</legend>
 
 		<form class="form-horizontal" name="serviceMeta" ng-submit="updateConfig()" ng-cloak>
@@ -89,14 +89,18 @@
 
 			<div class="convo-form-group">
                 <div class="button-group">
-                    <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || serviceMeta.$invalid" class="btn btn-sm btn-primary submit">
+                    <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || serviceMeta.$invalid || loading" class="btn btn-sm btn-primary submit">
                         Save
                     </button>
-                    <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged()" class="cancel">
+                    <a ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged() || loading" class="cancel">
                         Revert
                     </a>
                 </div>
 			</div>
 		</form>
 	</fieldset>
+</div>
+<div class="card-pane" ng-if="isError()">
+    <h4>Something went wrong. Please try again later.</h4>
+    <p>An unexpected error occurred. Service meta data could not be loaded.</p>
 </div>

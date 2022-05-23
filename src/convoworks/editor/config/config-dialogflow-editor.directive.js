@@ -16,6 +16,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                     user = u;
                 });
 
+                $scope.loading = false;
+
                 $scope.config = {
                     mode: 'manual',
                     projectId: null,
@@ -69,6 +71,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                 }
 
                 $scope.updateConfig = function (isValid) {
+                    $scope.loading = true;
                     $log.debug('configDialogflowEditor update() $scope.config', $scope.config);
                     if (!isValid) {
                         throw new Error(`Invalid form data.`)
@@ -95,6 +98,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             $log.debug('configDialogflowEditor create() response', response);
                             is_error    =   true;
                             throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
+                        }).finally(() => {
+                            $scope.loading = false;
                         });
                     } else {
                         return ConvoworksApi.updateServicePlatformConfig(
@@ -117,6 +122,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             $log.debug('configDialogflowEditor create() response', response);
                             is_error    =   true;
                             throw new Error(`Can't create config for Dialogflow. ${response.data.message}`)
+                        }).finally(() => {
+                            $scope.loading = false;
                         });
                     }
                 }
@@ -154,39 +161,43 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
 
                 $scope.onFileUpload = function (file) {
                     $log.log('ConfigurationsEditor onFileUpload file', file);
-                    if (file) {
-                        if (!file.name.includes('.json')) {
-                            AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
-                            return;
-                        }
 
-                        const jsonReader = new FileReader();
-                        jsonReader.readAsText(file, "UTF-8");
-
-                        jsonReader.onload = function (evt) {
-                            $scope.showServiceAccount = false;
-                            if (!_isJsonInvalid(evt.target.result)) {
-                                $scope.config.serviceAccount = evt.target.result;
-                            } else {
-                                $scope.config.serviceAccount = previousServiceAccountJSON;
-                                AlertService.addDanger('Malformed Service Account JSON was provided.');
-                            }
-                            $scope.$apply();
-                        }
-
-                        jsonReader.onerror = function (evt) {
-                            $scope.showServiceAccount = false;
-                            $scope.config.serviceAccount = previousServiceAccountJSON;
-                            AlertService.addDanger('Something went wrong.');
-                            $scope.$apply();
-                        }
-                    } else {
+                    if (!file) {
                         $scope.config.serviceAccount = previousServiceAccountJSON;
+                        return;
+                    }
+
+                    if (!file.name.endsWith('.json')) {
+                        AlertService.addDanger(`Invalid file extension in ${file.name}. It must be .pem!`);
+                        return;
+                    }
+
+                    const jsonReader = new FileReader();
+                    jsonReader.readAsText(file, "UTF-8");
+
+                    jsonReader.onload = function (evt) {
+                        $scope.showServiceAccount = false;
+                        if (!_isJsonInvalid(evt.target.result)) {
+                            $scope.config.serviceAccount = evt.target.result;
+                        } else {
+                            $scope.config.serviceAccount = previousServiceAccountJSON;
+                            AlertService.addDanger('Malformed Service Account JSON was provided.');
+                        }
+                        $scope.$apply();
+                    }
+
+                    jsonReader.onerror = function (evt) {
+                        $scope.showServiceAccount = false;
+                        $scope.config.serviceAccount = previousServiceAccountJSON;
+                        AlertService.addDanger('Something went wrong.');
+                        $scope.$apply();
                     }
                 }
 
                 function _load()
                 {
+                    $scope.loading = true;
+
                     ConvoworksApi.getConfigOptions().then(function (options) {
                         $scope.timezones = options['CONVO_DIALOGFLOW_TIMEZONES'];
                         $scope.serviceAccountFields = options['CONVO_DIALOGFLOW_SERVICE_ACCOUNT_FIELDS'];
@@ -207,6 +218,8 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                             }
                             is_error    =   true;
                         });
+                    }).finally(() => {
+                        $scope.loading = false;
                     });
                 }
 

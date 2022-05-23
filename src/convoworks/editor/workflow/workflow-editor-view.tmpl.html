@@ -10,16 +10,7 @@
 
         <div style="position: relative;">
             <div style="position: absolute; right: 20px; top:20px; z-index: 100;">
-                <form ng-submit="saveChanges()" style="float:right">
-                    <div class="convo-button-group">
-                        <button type="submit" title="Save changes" ng-disabled="!isServiceChanged()"
-                            class="btn btn-md btn-primary">
-                            Save
-                        </button>
-                        <a ng-click="revertClicked()" title="Revert changes" ng-disabled="!isServiceChanged()"
-                            class="cancel">Revert</a>
-                    </div>
-                </form>
+                <service-save-buttons></service-save-buttons>
             </div>
         </div>
 
