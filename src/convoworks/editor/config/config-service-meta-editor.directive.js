@@ -62,6 +62,8 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
             $scope.isError = () => is_error;
 
             function _update() {
+                $scope.loading = true;
+
                 ConvoworksApi.updateServiceMeta($scope.service.service_id, $scope.config).then(function (res) {
                     var meta = res.data;
                     $log.log('configServiceMetaEditor updateConfig() got new meta', meta);
@@ -84,16 +86,15 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
 
                     is_error = false;
 
-                    $scope.loading = false;
-
                     AlertService.addSuccess('Service meta configuration updated.');
                 }, function (reason) {
                     $log.warn('configServiceMetaEditor updateConfig failed for reason', reason);
 
-                    $scope.loading = false;
-
                     is_error = true;
                     throw new Error(`Could not update service meta config. ${reason.data.message}`);
+                }).finally(() => {
+                    $log.log('configServiceMetaEditor _update() finally setting loading to false');
+                    $scope.loading = false;
                 });
             }
 
@@ -141,7 +142,7 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                     is_error = true;
                     throw new Error('Could not load service meta configuration.');
                 }).finally(() => {
-                    $log.log('configServiceMetaEditor finally');
+                    $log.log('configServiceMetaEditor _load() finally setting loading to false');
                     $scope.loading = false;
                 });
             }
