@@ -5,6 +5,11 @@
 * Fix missing exception rendering on test view
 ## [Releases]
 
+## 0.22.20 - 2022-05-23
+
+* Add a URL to a consent page before account linking completion
+* Disable submitting and saving during loading
+
 ## 0.22.19 - 2022-05-10
 
 * Fix issue where context menu for pasting steps would not appear
