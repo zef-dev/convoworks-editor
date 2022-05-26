@@ -5,6 +5,9 @@
 * Fix missing exception rendering on test view
 ## [Releases]
 
+## 0.22.22 - 2022-05-26
+* Remove conditional rendering from meta form
+
 ## 0.22.21 - 2022-05-23
 _Hotfix_
 * Add missing loading toggle to service meta config editor on update
