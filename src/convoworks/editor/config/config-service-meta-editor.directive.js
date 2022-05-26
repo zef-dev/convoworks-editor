@@ -25,13 +25,6 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                 admins: ['']
             };
 
-            ConvoworksApi.getConfigOptions().then(function (options) {
-                $scope.languages = options['CONVO_SERVICE_LANGUAGES'];
-                $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
-                    return locale.code.includes($scope.config.default_language);
-                });
-            });
-
             $scope.originalOwner = '';
 
             _load();
@@ -102,6 +95,12 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                 $scope.loading = true;
 
                 const all = [
+                    ConvoworksApi.getConfigOptions().then(function (options) {
+                        $scope.languages = options['CONVO_SERVICE_LANGUAGES'];
+                        $scope.locales = options['CONVO_SERVICE_LOCALES'].filter(function (locale) {
+                            return locale.code.includes($scope.config.default_language);
+                        });
+                    }),
                     ConvoworksApi.getServiceMeta($scope.service.service_id).then(function (meta) {
                         $log.log('configServiceMetaEditor got service meta', meta);
                         $scope.config = {
@@ -142,8 +141,12 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                     is_error = true;
                     throw new Error('Could not load service meta configuration.');
                 }).finally(() => {
-                    $log.log('configServiceMetaEditor _load() finally setting loading to false');
-                    $scope.loading = false;
+                    // @TODO: Quickfix. Figure out why this sometimes gets stuck and remove the
+                    // apply async call.
+                    $scope.$applyAsync(() => {
+                        $log.log('configServiceMetaEditor _load() finally setting loading to false');
+                        $scope.loading = false;
+                    });
                 });
             }
 
