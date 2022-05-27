@@ -466,16 +466,23 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     {
                         if (definition.component_properties._help.type === 'file')
                         {
-                            var name = $scope.component.class
-                                .split('\\') // split class on namespace separator
-                                .slice(-1)[0] // take last element (class name)
-                                .split(/(?=[A-Z](?![A-Z]{1,}))|(?<=[a-z](?=[A-Z]))/) // split on capitals or preceeding acronyms so that e.g. 'OpenTDBTrivia' doesn't end up as 'open-t-d-b-trivia'
-                                .join('-').toLowerCase(); // join with - and lowercase -> LoopElement = loop-element
+                            let name;
 
-                            ConvoworksApi.getPackageComponentHelp( $scope.component.namespace, name).then(function (data) {
+                            if (definition.component_properties._help.filename) {
+                                name = definition.component_properties._help.filename;
+                            } else {
+                                name = $scope.component.class
+                                    .split('\\') // split class on namespace separator
+                                    .slice(-1)[0] // take last element (class name)
+                                    .split(/(?=[A-Z](?![A-Z]{1,}))|(?<=[a-z](?=[A-Z]))/) // split on capitals or preceeding acronyms so that e.g. 'OpenTDBTrivia' doesn't end up as 'open-t-d-b-trivia'
+                                    .join('-').toLowerCase(); // join with - and lowercase -> LoopElement = loop-element
+                            }
+
+                            ConvoworksApi.getPackageComponentHelp($scope.component.namespace, name).then((data) => {
                                 $scope.help = data.html_content;
-                            }, function (reason) {
+                            }, (reason) => {
                                 $log.debug('propertiesEditor getComponentHelp() reason', reason);
+                                AlertService.addDanger('Unable to load help file for component.');
                             });
                         }
                         else if (definition.component_properties._help.type === 'html')
