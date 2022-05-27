@@ -146,7 +146,7 @@
     }
     
     .properties-editor .properties-editor-form {
-        padding: 10px 15px 30px;
+        padding: 30px 15px;
 
         .property {
             position: relative;
@@ -245,6 +245,7 @@
 
     .properties-editor {
         .help-pane {
+            padding-top: 30px;
             width: 100%;
             height: 100%;
             position: relative;
@@ -252,7 +253,7 @@
             .component-namespace {
                 display: inline;
                 position: absolute;
-                top: -23px;
+                top: 0;
                 left: 24px;
                 color: gray;
             }
