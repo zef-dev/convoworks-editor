@@ -21,6 +21,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
             let service_language = 'en';
             let default_invocation = null;
             let service_urls = null;
+            let system_urls = null;
             $scope.service_language = 'en';
 
             $scope.loading = false;
@@ -36,6 +37,9 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     service_urls = response.amazon;
                     $scope.account_linking_modes = service_urls.accountLinkingModes;
                     $scope.allowed_return_urls_for_login_with_amazon = service_urls.allowedReturnUrlsForLoginWithAmazon;
+                }),
+                ConvoworksApi.getSystemUrls().then(function (response) {
+                    system_urls = response;
                 })
             );
 
@@ -709,20 +713,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                 let alternativeAuthorizationUrlPath = $scope.config.account_linking_config.alternative_authorization_uri_path;
                 let url;
                 let validUrl = true;
-                const index = service_urls.accountLinkingModes.findIndex(x => x.id === 'installation');
 
-                try {
-                    url = new URL(service_urls.accountLinkingModes[index].webAuthorizationURI);
-                } catch (_) {
-                    validUrl = false;
-                }
 
-                if (alternativeAuthorizationUrlPath && validUrl) {
-                    url.pathname = alternativeAuthorizationUrlPath;
-                    url.searchParams.set('type', 'amazon');
-                    url.searchParams.set('service_id', $scope.service.service_id);
-                    return url.href;
+                if (alternativeAuthorizationUrlPath) {
+                    let alternativeAuthorizationUrl = system_urls.baseUrl.replace(/\/$/, '');
+                    alternativeAuthorizationUrl += '/';
+                    alternativeAuthorizationUrl += alternativeAuthorizationUrlPath.replace(/\/$/, '');
+                    alternativeAuthorizationUrl += '?type=amazon&service_id='+$scope.service.service_id;
+                    return alternativeAuthorizationUrl;
                 } else {
+                    const index = service_urls.accountLinkingModes.findIndex(x => x.id === 'installation');
                     return service_urls.accountLinkingModes[index].webAuthorizationURI;
                 }
             }
