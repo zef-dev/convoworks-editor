@@ -47,7 +47,7 @@ export default function contextElementsContainer( $log, $rootScope)
 
             function removeComponent(component)
             {
-                $scope.service.contexts= getContainer().filter(function(context) {
+                $scope.service.contexts = getContainer().filter(function(context) {
                     return context.properties._component_id !== component.properties._component_id;
                 });
             }
