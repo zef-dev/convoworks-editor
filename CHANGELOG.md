@@ -2,8 +2,15 @@
 
 ## [Current development]
 
-* Fix missing exception rendering on test view
 ## [Releases]
+
+## 0.22.23 - 2022-06-09
+* Fix missing exception rendering on test view
+* Fix deleting contexts
+* Fix toggling all intent slots required
+* Update handling for alternative web authorization URI path
+* Fix padding issues with properties editor and component help
+* Fix fetching component help files
 
 ## 0.22.22 - 2022-05-26
 * Remove conditional rendering from meta form
