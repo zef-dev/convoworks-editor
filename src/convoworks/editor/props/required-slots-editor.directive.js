@@ -33,6 +33,7 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
                     $log.log('requiredSlotsEditor $watch got matched intent', intent);
 
                     $scope.intent_slots = _setupIntentSlots(intent);
+                    _syncIntentSlots();
                 }
             }, true);
 
@@ -128,6 +129,18 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
 
                         return slots;
                     }, {});
+            }
+
+            function _syncIntentSlots()
+            {
+                for (let i = 0; i < $scope.component.properties[$scope.key].length; ++i) {
+                    const slot = $scope.component.properties[$scope.key][i];
+
+                    if (!$scope.intent_slots.hasOwnProperty(slot)) {
+                        $log.log(`requiredSlotsEditor found required slot ${slot} that doesn't exist in intent utterances.`);
+                        $scope.component.properties[$scope.key].splice(i, 1);
+                    }
+                }
             }
         }
     }
