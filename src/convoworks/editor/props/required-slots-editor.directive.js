@@ -29,7 +29,7 @@ export default function requiredSlotsEditor($log, ConvoworksApi) {
 
                     if (!intent) {
                         $log.log('requiredSlotsEditor $watch undefined intent');
-                        $scope.component.properties[$scope.key] = {};
+                        $scope.component.properties[$scope.key] = [];
                         return;
                     }
 
