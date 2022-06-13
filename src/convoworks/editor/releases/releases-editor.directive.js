@@ -66,6 +66,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 $log.log('releasesEditor tagAsSimpleVersion', row);
                 var tag = $window.prompt('Enter a simple tag for this version.');
 
+                if (tag === null) {
+                    return;
+                }
+
                 ConvoworksApi.tagAsSimpleVersion(
                     $scope.service.service_id,
                     row['version_id'],
