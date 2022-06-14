@@ -20,9 +20,13 @@
                     ng-if="shouldRender(key, definition, component)"
                     ng-switch="definition.component_properties[key].editor_type">
 
-                    <button class="btn btn-light btn-xs input-toggle" ng-click="toggle(key)" type="button"
+                    <button
+                        type="button"
+                        class="btn btn-light btn-xs input-toggle"
+                        title="{{ isToggled(key) ? 'Toggle to preset' : 'Toggle to raw' }}"
+                        ng-click="toggle(key)"
                         ng-if="canToggleToRaw(definition.component_properties[key].editor_type)">
-                        {{ isToggled(key) ? "Toggle to preset" : "Toggle to raw" }}
+                            <i ng-class="{ 'fa fa-keyboard': isToggled(key), 'fa fa-i-cursor' : !isToggled(key) }"></i>
                     </button>
 
                     <div class="convo-form-group" ng-show="isToggled(key)">
