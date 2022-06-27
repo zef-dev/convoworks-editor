@@ -21,6 +21,7 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             this.removeConvoEntity          =   removeConvoEntity;
             this.updateConvoEntity          =   updateConvoEntity;
 
+            this.setSelectedService         =   setSelectedService;
             this.setSelectedComponent       =   setSelectedComponent;
             this.setSelectedBlock           =   setSelectedBlock;
             this.setSelectedFragment        =   setSelectedFragment;
@@ -300,6 +301,10 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             }
 
             // SELECTION
+            function setSelectedService(service) {
+                selection.service = service;
+            }
+
             function setSelectedComponent( component, containerController) {
                 $log.log( 'propertiesContext setSelectedComponent component', component);
                 if ( !component) {
