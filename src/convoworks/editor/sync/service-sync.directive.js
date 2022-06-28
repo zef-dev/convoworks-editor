@@ -1,5 +1,7 @@
+import angular from "angular";
+
 /* @ngInject */
-export default function ServiceSync($log, $window, $rootScope, localStorageService, AlertService) {
+export default function ServiceSync($log, $window, $rootScope, $state, localStorageService) {
     return {
         restrict: 'A',
         require: '^propertiesContext',
@@ -11,15 +13,11 @@ export default function ServiceSync($log, $window, $rootScope, localStorageServi
 
             $rootScope.$watch(() =>
             {
-                try {
-                    return propertiesContext.getSelectedService();
-                } catch (e) {
-                    return null;
-                }
+                return $state.current.name.includes('convoworks-editor-service');
             },
-            (val) =>
+            (newVal) =>
             {
-                if (!val)
+                if (newVal === false)
                 {
                     $log.info('serviceSync tearing down window listeners');
 
@@ -46,13 +44,31 @@ export default function ServiceSync($log, $window, $rootScope, localStorageServi
                     
                     if (_shouldStoreServiceData())
                     {
-                        const old_meta = localStorageService.get(_getServiceMetaStorageKey());
-                        const new_meta = { ...old_meta, should_sync: true };
+                        const meta_key = _getServiceMetaStorageKey();
+                        const data_key = _getServiceDataStorageKey();
 
-                        localStorageService.set(_getServiceMetaStorageKey(), new_meta);
-                        localStorageService.set(_getServiceDataStorageKey(), service);
+                        const old_meta = localStorageService.get(meta_key);
+                        let new_meta;
+                        
+                        if (angular.equals(old_meta, {})) {
+                            new_meta = { last_synced: 0, should_sync: true };
+                        } else {
+                            new_meta = { ...old_meta, should_sync: true };
+                        }
 
-                        $log.log('serviceSync window blur stored service with new meta', new_meta);
+                        localStorageService.set(data_key, service);
+                        
+                        // @TODO(marko) Quickfix for first time service syncing.
+                        // Opening a service cross tabs for the first time
+                        // will cause other contexts to not pick up on the 
+                        // storage event caused by saving the meta,
+                        // since it won't trigger if the same data is saved twice.
+                        // This way we make sure that other contexts pick up
+                        // on the event properly.
+                        localStorageService.remove(meta_key)
+                        localStorageService.set(meta_key, new_meta);
+
+                        $log.log('serviceSync window blur stored service and new meta', new_meta);
                     }
                     else
                     {
@@ -67,15 +83,14 @@ export default function ServiceSync($log, $window, $rootScope, localStorageServi
 
             function _onWindowStorage(event)
             {
-                if (!event.key.startsWith("convoAdmin.currentWorkingService")) {
+                if (!event || !event.key || !event.key.includes("currentWorkingService")) {
                     $log.log('serviceSync discarding unrelated storage event');
                     return;
                 }
 
-                const target = event.key.slice("convoAdmin.".length);
                 const meta_key = _getServiceMetaStorageKey();
                 
-                if (target !== meta_key)
+                if (event.key !== localStorageService.deriveKey(meta_key))
                 {
                     return;
                 }
@@ -102,8 +117,6 @@ export default function ServiceSync($log, $window, $rootScope, localStorageServi
 
                 const now = Math.floor(new Date().getTime() / 1000);
                 localStorageService.set(meta_key, { last_synced: now, should_sync: false });
-                
-                // AlertService.addSuccess('Synchronized service state.');
             }
 
             // private
@@ -165,6 +178,15 @@ export default function ServiceSync($log, $window, $rootScope, localStorageServi
 
                     if (propertiesContext.isServiceChanged())
                     {
+                        // @TODO(marko): This causes tabs to want to sync even if there are no
+                        // changes in the working service. Consider the following, supposing you have the same service
+                        // open in both tabs:
+                        // Update service in tab 1 -> save -> switch to tab 2 -> sync triggers (-> optionally save 2) -> change back to 1
+                        // This causes the onBlur event from tab 2 to store meta as if it should sync cross tabs,
+                        // even though there have been no further user made changes.
+                        // Possible solutions:
+                        // a) compare stored service vs currently selected? Could be expensive.
+                        // b) add event to adding a component/block/whatever? Loses continuity in digest loop
                         return true;
                     }
 
