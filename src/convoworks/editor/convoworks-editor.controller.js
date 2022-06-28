@@ -154,6 +154,8 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     if (auto_propagate_timeout !== null) {
                         _autoPropagate();
                     }
+                } else if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_MISSING_INTERACTION_MODEL) {
+                    AlertService.addWarning(`The interaction model for ${_fixPlatformId(data.platformName)} could not be created.`);
                 }
             }
         });

@@ -357,6 +357,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
+                            if (data.warnings !== undefined) {
+                                for (let warning of data.warnings) {
+                                    AlertService.addWarning(warning.message);
+                                }
+                            }
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
@@ -400,10 +405,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }
 
                     }
-                }).then(function (data) {
+                }).then(function (response) {
                     if (!is_error) {
                         configBak = angular.copy($scope.config);
                         is_error = false;
+                        $log.log('configAmazonEditor updateConfig() then()' + response);
                         $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'amazon', platform_config: $scope.config});
                     }
                 }, function (response) {
