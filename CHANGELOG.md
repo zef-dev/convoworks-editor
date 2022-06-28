@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.23.0 - 2022-06-28
+* Add simple cross tab service sync capability
+* Fix cancelling tagging simple version still tagging the version
+
 ## 0.22.23 - 2022-06-09
 * Fix missing exception rendering on test view
 * Fix deleting contexts
