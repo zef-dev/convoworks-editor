@@ -104,8 +104,10 @@ export default function ServiceSync($log, $document, $state, $timeout, ProcessRe
 
                     ProcessRegistrarService.registerProcess(SERVICE_SYNC_PROCESS_KEY);
 
+                    const should_force_update_original = event.data.time_updated > selected_service.time_updated;
+
                     $timeout(() => {
-                        propertiesContext.setSelectedService(event.data);
+                        propertiesContext.setSelectedService(event.data, should_force_update_original);
                         ProcessRegistrarService.removeProcess(SERVICE_SYNC_PROCESS_KEY);
                     }, SYNC_DELAY);
                 }
