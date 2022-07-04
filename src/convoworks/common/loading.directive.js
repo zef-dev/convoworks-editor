@@ -1,7 +1,7 @@
 import template from './loading.tmpl.html';
 
 /* @ngInject */
-export default function loadingIndicator( $http, $log) {
+export default function loadingIndicator($http, $log, ProcessRegistrarService) {
 
     $log.log('loadingIndicator init');
 
@@ -13,7 +13,7 @@ export default function loadingIndicator( $http, $log) {
             $log.log( 'loadingIndicator link', elm);
 
             scope.$watch( function () {
-                return $http.pendingRequests.length > 0;
+                return $http.pendingRequests.length > 0 || ProcessRegistrarService.hasActiveProcesses();
             }, function (v) {
                 if (v) {
                     elm.find('.sk-cube-grid').show();

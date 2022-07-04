@@ -16,6 +16,7 @@ import jsonFormatter from './json-formatter.directive';
 
 import './common.scss';
 import StringService from './string.service';
+import ProcessRegistrarService from './process-registrar.service';
 
 /* @ngInject */
 export default angular
@@ -37,4 +38,5 @@ export default angular
   .service('ConvoworksApi', ConvoworksApi)
   .service('PlatformStatusService', PlatformStatusService)
   .service('StringService', StringService)
+  .service('ProcessRegistrarService', ProcessRegistrarService)
   .name;
