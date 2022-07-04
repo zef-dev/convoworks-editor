@@ -1,6 +1,6 @@
 
 /* @ngInject */
-export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService, localStorageService) {
+export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService, localStorageService, ProcessRegistrarService) {
     return {
         restrict: 'A',
         require: '^propertiesContext',
@@ -561,6 +561,8 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 $scope.getSelection         =   propertiesContext.getSelection;
                 $scope.getSelectedService   =   propertiesContext.getSelectedService;
                 $scope.addNewComponent      =   propertiesContext.addNewComponent;
+
+                $scope.hasActiveProcesses   =   ProcessRegistrarService.hasActiveProcesses;
 
                 $scope.revertClicked        =   function()
                 {
