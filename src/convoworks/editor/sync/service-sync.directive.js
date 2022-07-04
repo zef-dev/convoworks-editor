@@ -61,7 +61,7 @@ export default function ServiceSync($log, $document, $state, $timeout, ProcessRe
                 },
                 (val) => {
                     if ($document[0].hasFocus() === false) {
-                        $log.warn('serviceSync will not broadcast changes while tab is blurred');
+                        // $log.warn('serviceSync will not broadcast changes while tab is blurred');
                         return;
                     }
 
