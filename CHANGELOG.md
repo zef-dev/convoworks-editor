@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.23.1 - 2022-07-04
+* Improve cross tab service sync to be much faster and more reliable
+* Added `ProcessRegistrarService`, used to keep track of ongoing processes
+
 ## 0.23.0 - 2022-06-28
 * Add simple cross tab service sync capability
 * Fix cancelling tagging simple version still tagging the version
