@@ -301,8 +301,12 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             }
 
             // SELECTION
-            function setSelectedService(service) {
+            function setSelectedService(service, forceUpdateOriginal = false) {
                 selection.service = service;
+
+                if (forceUpdateOriginal) {
+                    original_service = angular.copy(selection.service);
+                }
             }
 
             function setSelectedComponent( component, containerController) {
