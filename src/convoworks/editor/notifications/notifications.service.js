@@ -6,7 +6,6 @@ export default function NotificationsService($log, localStorageService, StringSe
     this.getNotifications = getNotifications;
     
     this.markAsRead = markAsRead;
-    this.markAllAsRead = markAllAsRead;
 
     // IMPL
     function addNotification(serviceId, type, title, details)

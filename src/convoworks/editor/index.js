@@ -13,6 +13,7 @@ import convoEditorVariables from './variables';
 import convoEditorProps from './props';
 import convoEditorTest from './test';
 import convoEditorSync from './sync';
+import convoEditorNotifications from './notifications';
 
 import ConvoworksEditorController from './convoworks-editor.controller';
 import propertiesContext from './properties-context.directive';
@@ -33,7 +34,8 @@ export default angular
     convoEditorProps,
     convoEditorVariables,
     convoEditorTest,
-    convoEditorSync
+    convoEditorSync,
+    convoEditorNotifications
   ])
   .controller('ConvoworksEditorController', ConvoworksEditorController)
   .directive('propertiesContext', propertiesContext)
