@@ -33,37 +33,20 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             })
         })
 
-        const TIMEOUT_LENGTH           =   2000;
-        let auto_propagate_timeout        = null;
-        var random_slug                =   Math.floor( Math.random() * 100000);
-        var device_id                  =   'admin-chat-' + random_slug;
-        var platform_config_info       =   {}
-
+        const TIMEOUT_LENGTH = 2000;
+        let auto_propagate_timeout = null;
+        let platform_config_info = {}
+        
         $scope.platformAvailabilities = {};
 
         $scope.propagating = false;
         $scope.platformStatus = new Map();
 
-        $scope.tabsExpanded     =   UserPreferencesService.get( 'navi_expanded', true);
-        $scope.serviceId        =   $stateParams.service_id;
-        $scope.owner    =   '';
+        $scope.tabsExpanded = UserPreferencesService.get( 'navi_expanded', true);
+        $scope.serviceId = $stateParams.service_id;
+        $scope.owner = '';
 
-        $scope.delegateNlp      =   null;
         $scope.autoPropagateEnabled      =   UserPreferencesService.get( 'autoPropagate', true);
-        $scope.delegateOptions  =   [
-            {
-                label: '---',
-                value: null
-            }
-        ];
-
-        $scope.getDelegateOptions = function  () {
-            return $scope.delegateOptions
-        }
-
-        $scope.initDelegateOptions = function () {
-            _initDelegationNlp();
-        }
 
         $scope.isServiceTabActive = function(tabName) {
             const url = $state.href($state.current.name, $state.params, { absolute: false });
@@ -75,10 +58,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         $log.log( 'ConvoworksEditorController $state.current', $state.current);
 
         _load();
-
-        $scope.getDeviceId      =   function() {
-            return device_id;
-        }
 
         $scope.toggleExpanded       =   function() {
             $scope.tabsExpanded = !$scope.tabsExpanded;
@@ -372,40 +351,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }, function() {
                 $log.log('ConvoworksEditorController _load() ConvoworksApi.getPropagateInfo all finally');
             })
-        }
-
-        function _initDelegationNlp() {
-            $scope.delegateOptions  =   [
-                {
-                    label: '---',
-                    value: null
-                }
-            ];
-
-            ConvoworksApi.loadPlatformConfig($scope.serviceId).then(function (config) {
-                $log.log('testViewNlp got config', config);
-                if (config.amazon && config.amazon.mode === "auto") {
-                    $scope.delegateOptions.push({
-                        label: 'Amazon',
-                        value: 'amazon'
-                    })
-                }
-                if (config.dialogflow && config.dialogflow.mode === "auto") {
-                    $scope.delegateOptions.push({
-                        label: 'Dialogflow',
-                        value: 'dialogflow'
-                    })
-                }
-
-                const selectedDelegate = UserPreferencesService.get('delegateNlp-' + $scope.serviceId, undefined, true);
-
-                if (selectedDelegate === undefined && $scope.delegateOptions.length === 1) {
-                    $scope.delegateNlp = $scope.delegateOptions[0].value;
-                }
-
-            }).catch(function (reason) {
-                throw new Error(reason.data.message)
-            });
         }
 
         function _resetSelectedNlp(data) {
