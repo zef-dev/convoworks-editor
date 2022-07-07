@@ -5,13 +5,10 @@ export default function ServiceSync($log, $document, $state, $timeout, ProcessRe
     return {
         restrict: 'A',
         require: '^propertiesContext',
-        scope: {
-            'service': '='
-        },
         link: function ($scope, $element, $attributes, propertiesContext) {
             $log.log('serviceSync linked');
 
-            const SERVICE_SYNC_PROCESS_KEY = 'service_sync';
+            const SERVICE_SYNC_PROCESS_KEY = `service_sync_${$scope.serviceId}`;
             const SYNC_DELAY = 150;
 
             let broadcast_timeout = null;
@@ -90,10 +87,6 @@ export default function ServiceSync($log, $document, $state, $timeout, ProcessRe
                     const selected_service = propertiesContext.getSelectedService();
                     
                     if (angular.equals(selected_service, event.data)) {
-                        return;
-                    }
-
-                    if (selected_service.service_id !== event.data.service_id) {
                         return;
                     }
 
