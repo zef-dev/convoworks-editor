@@ -1,3 +1,16 @@
-<div>
-    Notifications
+<div uib-dropdown is-open="isOpen()">
+    <button id="dropdown-toggle"
+        title="{{ getUnreadCount() > 0 ? 'There are new notifications' : 'No new notifications' }}"
+        ng-disabled="notifications.length === 0" class="btn btn-default" uib-dropdown-toggle aria-label="Notifications">
+        {{ notifications.length }} <i class="fa fa-bell"></i>&nbsp;<span class="caret"></span>
+    </button>
+    <ul uib-dropdown-menu role="menu" aria-labelledby="dropdown-toggle">
+        <li class="notification" ng-repeat="notification in notifications track by notification.id">
+            <span class="title">{{ notification.title }}</span> | <span class="date">{{ notification.time_created | admDate }}</span>
+            <hr>
+            <span class="details">
+                {{ notification.details }}
+            </span>
+        </li>
+    </ul>
 </div>

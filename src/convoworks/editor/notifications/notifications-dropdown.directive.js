@@ -21,6 +21,8 @@ export default function notificationsDropdown($log, NotificationsService)
 
             $scope.isLoading = () => loading;
 
+            $scope.getUnreadCount = () => $scope.notifications.filter(n => !n.read).length;
+
             function _init()
             {
                 loading = true;
