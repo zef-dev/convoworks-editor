@@ -1,8 +1,9 @@
 <div uib-dropdown is-open="isOpen()">
     <button id="dropdown-toggle"
-        title="{{ getUnreadCount() > 0 ? 'There are new notifications' : 'No new notifications' }}"
-        class="btn btn-default" uib-dropdown-toggle aria-label="Notifications">
-        <i class="fa fa-bell"></i>&nbsp;<span class="caret"></span>
+        title="{{ getUnreadCount() > 0 ? getUnreadCount() + ' unread ' + (getUnreadCount() === 1 ? 'notification' : 'notifications') : 'No new notifications' }}"
+        class="btn btn-default {{ getUnreadCount() > 0 ? 'unread' : 'read' }}" uib-dropdown-toggle aria-label="Notifications">
+        <span class="unread-indicator"></span>
+        <i class="fa fa-bell"></i>&nbsp;<span class="caret">&#9660;</span>
     </button>
     <ul class="notifications-list" uib-dropdown-menu role="menu" aria-labelledby="dropdown-toggle">
         <li ng-if="notifications.length === 0">

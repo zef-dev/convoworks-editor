@@ -1,3 +1,28 @@
+#dropdown-toggle {
+    position: relative;
+
+    &.read .unread-indicator {
+        display: none;
+        opacity: 0;
+    }
+
+    &.unread .unread-indicator {
+        content: " ";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: red;
+        
+        border: none;
+        padding: 0;
+        margin: 0;
+
+        position: absolute;
+        top: 7px;
+        right: 28px;
+    }
+}
+
 .notifications-list {
     width: 500px;
     max-height: 500px;
