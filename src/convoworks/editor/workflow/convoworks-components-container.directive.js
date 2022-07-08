@@ -314,8 +314,8 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
 
                                    if ( data.type == 'component' && !convoworksComponentsContainer.acceptsComponent( data.component))
                                     {
-                                          AlertService.addInfo( 'Can not move componet to "' +
-                                          convoworksComponentsContainer.getPropertyDefinition().name) + '"';
+                                          AlertService.addInfo( 'Can\'t move component to "' +
+                                          convoworksComponentsContainer.getPropertyDefinition().name + '"');
                                           return false;
                                     }
 
