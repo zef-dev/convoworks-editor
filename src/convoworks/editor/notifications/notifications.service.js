@@ -1,13 +1,23 @@
 /* @ngInject */
-export default function NotificationsService($log, localStorageService, StringService)
+export default function NotificationsService($log, $window, localStorageService, StringService)
 {
     // API
-    this.addNotification = addNotification;
     this.getNotifications = getNotifications;
+    this.addNotification = addNotification;
+    this.deleteNotification = deleteNotification;
     
     this.markAsRead = markAsRead;
 
     // IMPL
+    function getNotifications(serviceId)
+    {
+        const notifications = _getNotifications(serviceId);
+
+        $log.log('NotificationsService got notifications for service', serviceId, notifications);
+
+        return notifications.sort((a, b) => a.time_created < b.time_created)
+    }
+
     function addNotification(serviceId, type, title, details)
     {
         _setNotifications(serviceId, [
@@ -23,20 +33,16 @@ export default function NotificationsService($log, localStorageService, StringSe
         ]);
     }
 
-    function getNotifications(serviceId)
+    function deleteNotification(serviceId, notification)
+    {
+        _setNotifications(serviceId, _getNotifications(serviceId).filter(n => n.id !== notification.id));
+    }
+
+    function markAsRead(serviceId, notification)
     {
         const notifications = _getNotifications(serviceId);
 
-        $log.log('NotificationsService got notifications for service', serviceId, notifications);
-
-        return notifications.sort((a, b) => a.time_created < b.time_created)
-    }
-
-    function markAsRead(serviceId, notificationId)
-    {
-        const notifications = _getNotifications();
-
-        const index = notifications.findIndex(n => n.id === notificationId);
+        const index = notifications.findIndex(n => n.id === notification.id);
 
         if (index === -1) {
             return;
@@ -59,5 +65,13 @@ export default function NotificationsService($log, localStorageService, StringSe
     function _setNotifications(serviceId, notifications)
     {
         localStorageService.set(`serviceNotifications_${serviceId}`, notifications);
+        _dispatchEvent(serviceId);
+    }
+
+    function _dispatchEvent(serviceId)
+    {
+        let e = new StorageEvent('storage');
+        e.initStorageEvent('storage', true, true, localStorageService.deriveKey(`serviceNotifications_${serviceId}`));
+        $window.dispatchEvent(e);
     }
 }

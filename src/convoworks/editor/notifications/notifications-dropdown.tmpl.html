@@ -1,16 +1,32 @@
 <div uib-dropdown is-open="isOpen()">
     <button id="dropdown-toggle"
         title="{{ getUnreadCount() > 0 ? 'There are new notifications' : 'No new notifications' }}"
-        ng-disabled="notifications.length === 0" class="btn btn-default" uib-dropdown-toggle aria-label="Notifications">
-        {{ notifications.length }} <i class="fa fa-bell"></i>&nbsp;<span class="caret"></span>
+        class="btn btn-default" uib-dropdown-toggle aria-label="Notifications">
+        <i class="fa fa-bell"></i>&nbsp;<span class="caret"></span>
     </button>
-    <ul uib-dropdown-menu role="menu" aria-labelledby="dropdown-toggle">
-        <li class="notification" ng-repeat="notification in notifications track by notification.id">
-            <span class="title">{{ notification.title }}</span> | <span class="date">{{ notification.time_created | admDate }}</span>
-            <hr>
-            <span class="details">
-                {{ notification.details }}
-            </span>
+    <ul class="notifications-list" uib-dropdown-menu role="menu" aria-labelledby="dropdown-toggle">
+        <li ng-if="notifications.length === 0">
+            No notifications
+        </li>
+        <li class="notification {{ notification.type.toLowerCase() }} {{ notification.read ? 'read' : 'unread' }}"
+            ng-repeat="notification in notifications track by notification.id"
+            ng-mouseover="markAsRead(notification)">
+            <div class="cover"></div>
+            <div class="contents">
+                <i class="{{ getNotificationIcon(notification.type.toLowerCase()) }}"></i>
+                <div class="info">
+                    <span class="title">{{ notification.title }}</span>&nbsp;<span class="date">{{ notification.time_created | admDate }}</span>
+                </div>
+                <br>
+                <div class="details">
+                    <span class="text">{{ notification.details }}</span>
+                </div>
+                <div class="delete">
+                    <button type="button" class="btn btn-danger" ng-click="deleteNotification($event, notification)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
         </li>
     </ul>
 </div>
