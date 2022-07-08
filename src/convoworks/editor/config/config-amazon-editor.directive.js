@@ -1,7 +1,7 @@
 import template from './config-amazon-editor.tmpl.html';
 
 /* @ngInject */
-export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService, CONVO_PUBLIC_API_BASE_URL) {
+export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService, NotificationsService, CONVO_PUBLIC_API_BASE_URL) {
     return {
         restrict: 'E',
         scope: { service: '=', meta: '=' },
@@ -246,6 +246,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
                             if (errorReport !== '') {
                                 AlertService.addDanger(errorReport);
+                                NotificationsService.addNotification($scope.service.service_id, 'Danger', 'File upload error', errorReport);
                             }
                             URL.revokeObjectURL(file);
                         }
@@ -366,6 +367,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
                             AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
+                            NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Amazon config creation failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
@@ -381,6 +383,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                         $log.debug('configAmazonEditor update() response', response);
                                         is_error    =   true;
                                         AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                        NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Amazon config update failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                                     });
                                 } else {
                                     is_error = true;

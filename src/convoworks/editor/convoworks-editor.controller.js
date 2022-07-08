@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $transitions, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $transitions, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService, NotificationsService) {
 
         const available_tabs = ['editor', 'preview', 'variables', 'intents-entities', 'configuration', 'releases', 'import-export', 'test'];
         const tabs_regex = new RegExp(`\/(?:${available_tabs.map(t => _pregEscape(t)).join('|')})(?=\/|\\\?|$)`, 'g');
@@ -117,14 +117,18 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             $scope.platformStatus.set(data.platformName, data);
             if (data.errorMessage) {
                 AlertService.addDanger(data.errorMessage);
+                NotificationsService.addNotification($scope.serviceId, 'Danger', 'Platform status failure', data.errorMessage);
+
             } else {
                 if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
+                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation finished', `${_fixPlatformId(data.platformName)} finished building.`);
 
                     if (data.platformName === 'amazon') {
                        ConvoworksApi.enableAlexaSkillForTest($scope.owner, $scope.serviceId).then( function ( response) {
                            if (response.can_be_enabled_for_testing) {
                                AlertService.addSuccess(`${_fixPlatformId(data.platformName)} is enabled for testing.`);
+                               NotificationsService.addNotification($scope.serviceId, 'Success', 'Enabled for testing', `${_fixPlatformId(data.platformName)} is enabled for testing.`);
                            }
                         }, function ( reason) {
                            $log.log( 'convoworks-editor PlatformStatusUpdated enableAlexaSkillForTest', reason);
@@ -229,6 +233,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 }, function(reason) {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() reason', reason);
                     AlertService.addDanger(`${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Propagation error', `${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
                     $scope.propagating = false;
                 }, function () {
                     $log.log('ConvoworksEditorController propagatePlatformChanges finally');

@@ -2,7 +2,7 @@ import { $q } from '@uirouter/angularjs';
 import template from './config-service-meta-editor.tmpl.html';
 
 /* @ngInject */
-export default function configServiceMetaEditor($log, $rootScope, $window, ConvoworksApi, AlertService)
+export default function configServiceMetaEditor($log, $rootScope, $window, ConvoworksApi, AlertService, NotificationsService)
 {
     return {
         restrict: 'E',
@@ -84,7 +84,7 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                     $log.warn('configServiceMetaEditor updateConfig failed for reason', reason);
 
                     is_error = true;
-                    throw new Error(`Could not update service meta config. ${reason.data.message}`);
+                    NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Meta config update failed', `Could not update service meta config. ${reason.data.message}`);
                 }).finally(() => {
                     $log.log('configServiceMetaEditor _update() finally setting loading to false');
                     $scope.loading = false;
