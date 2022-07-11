@@ -87,7 +87,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }
 
             _load(doAutoPropagate);
-            _initDelegationNlp();
             _resetSelectedNlp(platformData);
 
         });
@@ -122,7 +121,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             } else {
                 if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
-                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation finished', `${_fixPlatformId(data.platformName)} finished building.`);
+                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Build finished', `${_fixPlatformId(data.platformName)} finished building.`);
 
                     if (data.platformName === 'amazon') {
                        ConvoworksApi.enableAlexaSkillForTest($scope.owner, $scope.serviceId).then( function ( response) {
@@ -200,6 +199,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                                 $log.log( 'ConvoworksEditorController propagatePlatformChanges() propagating to ', data);
                                 $scope.platformAvailabilities[availablePlatformId] = data;
                                 AlertService.addSuccess(`Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
+                                NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation successful', `Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
                                 AlertService.addInfo(`Going to check build status of ${_fixPlatformId(availablePlatformId)}.`);
                                 PlatformStatusService.checkStatus($scope.serviceId, availablePlatformId);
                             }, function (reason) {
@@ -227,6 +227,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 ConvoworksApi.propagateServicePlatform($scope.serviceId, platformId).then(function (data) {
                     $scope.platformAvailabilities[platformId] = data;
                     AlertService.addSuccess(`Service propagation to ${_fixPlatformId(platformId)} done.`);
+                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation done', `Service propagation to ${_fixPlatformId(platformId)} done.`);
                     $scope.propagating = false;
                     AlertService.addInfo(`Going to check build status of ${_fixPlatformId(platformId)}.`);
                     PlatformStatusService.checkStatus($scope.serviceId, platformId);

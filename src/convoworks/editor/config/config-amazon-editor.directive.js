@@ -358,6 +358,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
+                            NotificationsService.addNotification($scope.service.service_id, 'Success', 'Amazon link successful', `Service ${scope.service.name} has been successfully linked with Amazon.`)
                             if (data.warnings !== undefined) {
                                 for (let warning of data.warnings) {
                                     AlertService.addWarning(warning.message);
