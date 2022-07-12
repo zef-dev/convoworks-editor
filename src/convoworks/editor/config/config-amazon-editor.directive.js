@@ -358,7 +358,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
-                            NotificationsService.addNotification($scope.service.service_id, 'Success', 'Amazon link successful', `Service ${scope.service.name} has been successfully linked with Amazon.`)
+                            NotificationsService.addNotification($scope.service.service_id, 'Success', 'Amazon link successful', `Service has been successfully linked with Amazon.`)
                             if (data.warnings !== undefined) {
                                 for (let warning of data.warnings) {
                                     AlertService.addWarning(warning.message);
@@ -393,6 +393,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }).catch(function () {
                                 is_error = true;
                                 AlertService.addDanger(`Your Service ID ${$scope.app_id} is not valid, please change it in manual mode then try later again.`);
+                                NotificationsService.addNotification($scope.service.service_id, 'Warning', 'Invalid Service ID', `Your Service ID ${$scope.app_id} is not valid. Please change it in manual mode then try again.`)
                             });
                         } else {
                             return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
