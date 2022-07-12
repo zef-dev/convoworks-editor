@@ -407,6 +407,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $log.debug('configAmazonEditor update() response', response);
                                 is_error    =   true;
                                 AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Can\'t update Amazon config', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                             });
                         }
 
