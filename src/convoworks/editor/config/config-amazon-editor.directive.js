@@ -389,6 +389,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 } else {
                                     is_error = true;
                                     AlertService.addDanger(`Provided Service ID could not find a valid Alexa Skill Manifest. Please change your Service ID in manual mode then try again later.`);
+                                    NotificationsService.addNotification($scope.service.service_id, 'Warning', 'No skill manifest found', `No Alexa skill manifest could be found for the given service ID ${$scope.app_id}. Please change the service ID in manual mode and try again.`);
                                 }
                             }).catch(function () {
                                 is_error = true;
