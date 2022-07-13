@@ -17,28 +17,30 @@ export default function NotificationsService($log, $window, localStorageService,
     this.markAsRead = markAsRead;
 
     // IMPL
-    function setServiceId(serviceId) {
+    function setServiceId(serviceId)
+    {
+        $log.log('NotificationsService setting working service ID to ${serviceId}')
         service_id = serviceId;
     }
 
     function addSuccess(title, details)
     {
-        this._addNotification('Success', title, details);
+        _addNotification('Success', title, details);
     }
 
     function addInfo(title, details)
     {
-        this._addNotification('Info', title, details);
+        _addNotification('Info', title, details);
     }
 
     function addWarning(title, details)
     {
-        this._addNotification('Warning', title, details);
+        _addNotification('Warning', title, details);
     }
 
     function addDanger(title, details)
     {
-        this._addNotification('Danger', title, details);
+        _addNotification('Danger', title, details);
     }
 
     function getNotifications()
