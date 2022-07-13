@@ -535,14 +535,18 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 AlertService.addSuccess("Fields were filled successfully.");
                             } else {
                                 $scope.gettingSkillManifest = false;
-                                AlertService.addDanger(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
+                                AlertService.addDanger(`The selected default locale "${$scope.default_locale}" does not exist in skill manifest.`);
+                                //@todo: Add details from `reason` to notification.
+                                NotificationsService.addNotification($scope.service.service_id, 'Warning', 'Missing default locale', `The selected default locale "${$scope.default_locale}" does not exist in skill manifest. Please change your default locale to one of the available locales: ${Object.keys(res.manifest.publishingInformation.locales)}, and try later again.`);
                             }
                         }
                     }
                     $scope.gettingSkillManifest = false;
-                }).catch(function () {
+                }).catch(function (reason) {
+                    $log.error('configAmazonEditor getSkillManifest() failed, reason', reason);
                     $scope.gettingSkillManifest = false;
                     AlertService.addDanger(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
+                    NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Can\'t get skill manifest', `Could not get manifest for provided Alexa skill id "${$scope.config.app_id}.`)
                 });
             }
 
