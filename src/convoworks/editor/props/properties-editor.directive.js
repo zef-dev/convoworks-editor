@@ -16,6 +16,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
             $scope.help = null;
             $scope.tabIndex = { active: "b" };
 
+            $scope.modelOptions = {
+                'debounce': 250
+            }
+
             _setupBlockIds();
 
             // REMOVE ON TRANSITION
