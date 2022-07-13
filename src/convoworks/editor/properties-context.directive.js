@@ -1,6 +1,5 @@
-
 /* @ngInject */
-export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService, localStorageService, ProcessRegistrarService) {
+export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, ConvoworksAddBlockService, ConvoComponentFactoryService, AlertService, localStorageService, ProcessRegistrarService, NotificationsService) {
     return {
         restrict: 'A',
         require: '^propertiesContext',
@@ -56,6 +55,12 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             if ( !$scope.serviceId) {
                 throw new Error( 'No serviceId in scope');
             }
+
+            $scope.$watch('serviceId', (val) => {
+                if (val) {
+                    NotificationsService.setServiceId(val);
+                }
+            });
 
             var service_id          =   $scope.serviceId;
             var ready               =   false;
@@ -120,8 +125,6 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                         $log.error( 'propertiesContext controller definitions got reason', reason);
                     });
                 });
-
-                // localStorageService.set('clipboard', null);
             }
 
             this.hasClipboard = hasClipboard;

@@ -1,7 +1,7 @@
 import template from './config-amazon-editor.tmpl.html';
 
 /* @ngInject */
-export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService, CONVO_PUBLIC_API_BASE_URL) {
+export default function configAmazonEditor($log, $q, $rootScope, $window, ConvoworksApi, LoginService, AlertService, NotificationsService, CONVO_PUBLIC_API_BASE_URL) {
     return {
         restrict: 'E',
         scope: { service: '=', meta: '=' },
@@ -246,6 +246,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
                             if (errorReport !== '') {
                                 AlertService.addDanger(errorReport);
+                                NotificationsService.addDanger('File upload error', errorReport);
                             }
                             URL.revokeObjectURL(file);
                         }
@@ -357,6 +358,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }
 
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Amazon.`);
+                            NotificationsService.addSuccess('Amazon link successful', `Service has been successfully linked with Amazon.`)
                             if (data.warnings !== undefined) {
                                 for (let warning of data.warnings) {
                                     AlertService.addWarning(warning.message);
@@ -366,6 +368,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
                             AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
+                            NotificationsService.addDanger('Amazon config creation failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
@@ -381,14 +384,17 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                         $log.debug('configAmazonEditor update() response', response);
                                         is_error    =   true;
                                         AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                        NotificationsService.addDanger('Amazon config update failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                                     });
                                 } else {
                                     is_error = true;
                                     AlertService.addDanger(`Provided Service ID could not find a valid Alexa Skill Manifest. Please change your Service ID in manual mode then try again later.`);
+                                    NotificationsService.addWarning('No skill manifest found', `No Alexa skill manifest could be found for the given service ID ${$scope.app_id}. Please change the service ID in manual mode and try again.`);
                                 }
                             }).catch(function () {
                                 is_error = true;
                                 AlertService.addDanger(`Your Service ID ${$scope.app_id} is not valid, please change it in manual mode then try later again.`);
+                                NotificationsService.addWarning('Invalid Service ID', `Your Service ID ${$scope.app_id} is not valid. Please change it in manual mode then try again.`)
                             });
                         } else {
                             return ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'amazon', $scope.config).then(function (data) {
@@ -401,6 +407,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 $log.debug('configAmazonEditor update() response', response);
                                 is_error    =   true;
                                 AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                NotificationsService.addDanger('Can\'t update Amazon config', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
                             });
                         }
 
@@ -528,14 +535,18 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                 AlertService.addSuccess("Fields were filled successfully.");
                             } else {
                                 $scope.gettingSkillManifest = false;
-                                AlertService.addDanger(`The selected default locale [${$scope.default_locale}] does no exist in skill manifest. Please change your default locale to on of the available locales [${Object.keys(res.manifest.publishingInformation.locales)}] and try later again.`);
+                                AlertService.addDanger(`The selected default locale "${$scope.default_locale}" does not exist in skill manifest.`);
+                                //@todo: Add details from `reason` to notification.
+                                NotificationsService.addWarning('Missing default locale', `The selected default locale "${$scope.default_locale}" does not exist in skill manifest. Please change your default locale to one of the available locales: ${Object.keys(res.manifest.publishingInformation.locales)}, and try later again.`);
                             }
                         }
                     }
                     $scope.gettingSkillManifest = false;
-                }).catch(function () {
+                }).catch(function (reason) {
+                    $log.error('configAmazonEditor getSkillManifest() failed, reason', reason);
                     $scope.gettingSkillManifest = false;
                     AlertService.addDanger(`Can't get skill manifest for provided Alexa Skill ID "${$scope.config.app_id}"`);
+                    NotificationsService.addDanger('Can\'t get skill manifest', `Could not get manifest for provided Alexa skill id "${$scope.config.app_id}.`)
                 });
             }
 

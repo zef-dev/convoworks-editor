@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $transitions, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService) {
+export default function ConvoworksEditorController($log, $scope, $rootScope, $stateParams, $state, $timeout, $transitions, $q, $uibModalStack, ConvoworksApi, AlertService, UserPreferencesService, PlatformStatusService, NotificationsService) {
 
         const available_tabs = ['editor', 'preview', 'variables', 'intents-entities', 'configuration', 'releases', 'import-export', 'test'];
         const tabs_regex = new RegExp(`\/(?:${available_tabs.map(t => _pregEscape(t)).join('|')})(?=\/|\\\?|$)`, 'g');
@@ -33,37 +33,20 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             })
         })
 
-        const TIMEOUT_LENGTH           =   2000;
-        let auto_propagate_timeout        = null;
-        var random_slug                =   Math.floor( Math.random() * 100000);
-        var device_id                  =   'admin-chat-' + random_slug;
-        var platform_config_info       =   {}
-
+        const TIMEOUT_LENGTH = 2000;
+        let auto_propagate_timeout = null;
+        let platform_config_info = {}
+        
         $scope.platformAvailabilities = {};
 
         $scope.propagating = false;
         $scope.platformStatus = new Map();
 
-        $scope.tabsExpanded     =   UserPreferencesService.get( 'navi_expanded', true);
-        $scope.serviceId        =   $stateParams.service_id;
-        $scope.owner    =   '';
+        $scope.tabsExpanded = UserPreferencesService.get( 'navi_expanded', true);
+        $scope.serviceId = $stateParams.service_id;
+        $scope.owner = '';
 
-        $scope.delegateNlp      =   null;
         $scope.autoPropagateEnabled      =   UserPreferencesService.get( 'autoPropagate', true);
-        $scope.delegateOptions  =   [
-            {
-                label: '---',
-                value: null
-            }
-        ];
-
-        $scope.getDelegateOptions = function  () {
-            return $scope.delegateOptions
-        }
-
-        $scope.initDelegateOptions = function () {
-            _initDelegationNlp();
-        }
 
         $scope.isServiceTabActive = function(tabName) {
             const url = $state.href($state.current.name, $state.params, { absolute: false });
@@ -75,10 +58,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
         $log.log( 'ConvoworksEditorController $state.current', $state.current);
 
         _load();
-
-        $scope.getDeviceId      =   function() {
-            return device_id;
-        }
 
         $scope.toggleExpanded       =   function() {
             $scope.tabsExpanded = !$scope.tabsExpanded;
@@ -108,7 +87,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }
 
             _load(doAutoPropagate);
-            _initDelegationNlp();
             _resetSelectedNlp(platformData);
 
         });
@@ -138,14 +116,18 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             $scope.platformStatus.set(data.platformName, data);
             if (data.errorMessage) {
                 AlertService.addDanger(data.errorMessage);
+                NotificationsService.addDanger('Platform status failure', data.errorMessage);
+
             } else {
                 if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
+                    NotificationsService.addSuccess('Build finished', `${_fixPlatformId(data.platformName)} finished building.`);
 
                     if (data.platformName === 'amazon') {
                        ConvoworksApi.enableAlexaSkillForTest($scope.owner, $scope.serviceId).then( function ( response) {
                            if (response.can_be_enabled_for_testing) {
                                AlertService.addSuccess(`${_fixPlatformId(data.platformName)} is enabled for testing.`);
+                               NotificationsService.addInfo('Enabled for testing', `${_fixPlatformId(data.platformName)} is enabled for testing.`);
                            }
                         }, function ( reason) {
                            $log.log( 'convoworks-editor PlatformStatusUpdated enableAlexaSkillForTest', reason);
@@ -156,6 +138,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     }
                 } else if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_MISSING_INTERACTION_MODEL) {
                     AlertService.addWarning(`The interaction model for ${_fixPlatformId(data.platformName)} could not be created.`);
+                    NotificationsService.addWarning('Interaction model missing', `Propagation for ${_fixPlatformId(data.platformName)} failed, the interaction model is missing.`)
                 }
             }
         });
@@ -217,10 +200,12 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                                 $log.log( 'ConvoworksEditorController propagatePlatformChanges() propagating to ', data);
                                 $scope.platformAvailabilities[availablePlatformId] = data;
                                 AlertService.addSuccess(`Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
+                                NotificationsService.addSuccess('Propagation successful', `Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
                                 AlertService.addInfo(`Going to check build status of ${_fixPlatformId(availablePlatformId)}.`);
                                 PlatformStatusService.checkStatus($scope.serviceId, availablePlatformId);
                             }, function (reason) {
                                 AlertService.addDanger(`${_fixPlatformId(availablePlatformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`)
+                                NotificationsService.addDanger(`${_fixPlatformId(availablePlatformId)}: ${reason.data.message}`, reason.data.details);
                             }
                         )
                     );
@@ -243,13 +228,20 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
 
                 ConvoworksApi.propagateServicePlatform($scope.serviceId, platformId).then(function (data) {
                     $scope.platformAvailabilities[platformId] = data;
+                    
                     AlertService.addSuccess(`Service propagation to ${_fixPlatformId(platformId)} done.`);
+                    NotificationsService.addSuccess('Propagation done', `Service propagation to ${_fixPlatformId(platformId)} done.`);
+                    
                     $scope.propagating = false;
+                    
                     AlertService.addInfo(`Going to check build status of ${_fixPlatformId(platformId)}.`);
                     PlatformStatusService.checkStatus($scope.serviceId, platformId);
                 }, function(reason) {
                     $log.log('ConvoworksEditorController propagatePlatformChanges() reason', reason);
+                   
                     AlertService.addDanger(`${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                    NotificationsService.addDanger(`${_fixPlatformId(platformId)} propagation error`, `Propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                   
                     $scope.propagating = false;
                 }, function () {
                     $log.log('ConvoworksEditorController propagatePlatformChanges finally');
@@ -318,28 +310,28 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'amazon').then(function (data) {
                     platform_info['amazon'] = data;
                 }).catch(function (reason) {
-                    throw new Error(reason.data.message +  " In order to be able to propagate changes for amazon")
+                    NotificationsService.addDanger('Amazon propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'dialogflow').then(function (data) {
                     platform_info['dialogflow'] = data;
                 }).catch(function (reason) {
-                    throw new Error(reason.data.message +  " In order to be able to propagate changes for dialogflow")
+                    NotificationsService.addDanger('Dialogflow propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'facebook_messenger').then(function (data) {
                     platform_info['facebook_messenger'] = data;
                 }).catch(function (reason) {
-                    throw new Error(reason.data.message +  " In order to be able to propagate changes for Facebook Messenger")
+                    NotificationsService.addDanger('Facebook Messenger propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'viber').then(function (data) {
                     platform_info['viber'] = data;
                 }).catch(function (reason) {
-                    throw new Error(reason.data.message +  " In order to be able to propagate changes for Viber")
+                    NotificationsService.addDanger('Viber propagation error', _extractErrorDetails(reason));
                 })
             );
 
@@ -349,7 +341,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     $log.log('testViewNlp got config', config);
                     platform_config_info = config;
                 }).catch(function (reason) {
-                    throw new Error(reason.data.message)
+                    NotificationsService.addDanger('Error fetching platform config', _extractErrorDetails(reason));
                 })
             );
             // load service meta
@@ -372,40 +364,6 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }, function() {
                 $log.log('ConvoworksEditorController _load() ConvoworksApi.getPropagateInfo all finally');
             })
-        }
-
-        function _initDelegationNlp() {
-            $scope.delegateOptions  =   [
-                {
-                    label: '---',
-                    value: null
-                }
-            ];
-
-            ConvoworksApi.loadPlatformConfig($scope.serviceId).then(function (config) {
-                $log.log('testViewNlp got config', config);
-                if (config.amazon && config.amazon.mode === "auto") {
-                    $scope.delegateOptions.push({
-                        label: 'Amazon',
-                        value: 'amazon'
-                    })
-                }
-                if (config.dialogflow && config.dialogflow.mode === "auto") {
-                    $scope.delegateOptions.push({
-                        label: 'Dialogflow',
-                        value: 'dialogflow'
-                    })
-                }
-
-                const selectedDelegate = UserPreferencesService.get('delegateNlp-' + $scope.serviceId, undefined, true);
-
-                if (selectedDelegate === undefined && $scope.delegateOptions.length === 1) {
-                    $scope.delegateNlp = $scope.delegateOptions[0].value;
-                }
-
-            }).catch(function (reason) {
-                throw new Error(reason.data.message)
-            });
         }
 
         function _resetSelectedNlp(data) {
@@ -466,5 +424,28 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             }
 
             return str;
+        }
+
+        function _extractErrorDetails(error)
+        {
+            if (!error) {
+                return 'An unknown error occurred';
+            }
+
+            if (typeof error === 'string') {
+                return error;
+            }
+
+            for (const prop in ['errorMessage', 'message', 'errorMsg', 'errMsg']) {
+                if (error.hasOwnProperty(prop)) {
+                    return error[prop];
+                }
+
+                if (error.hasOwnProperty('data') && error.data[prop]) {
+                    return error.data[prop];
+                }
+            }
+
+            return 'An unknown error occurred';
         }
     }
