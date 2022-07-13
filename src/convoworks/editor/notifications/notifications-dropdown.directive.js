@@ -5,29 +5,22 @@ export default function notificationsDropdown($log, $window, $timeout, Notificat
 {
     return {
         restrict: 'E',
-        scope: {
-            serviceId: '='
-        },
         template,
         link: function($scope, $element, $attributes)
         {
             $log.log('notificationsDropdown linked');
 
             const MARK_AS_READ_DELAY = 100;
-
-            let loading = false;
             let mark_as_read_timeout = null;
 
             $scope.notifications = [];
 
             _init();
 
-            $scope.isLoading = () => loading;
-
             $scope.getUnreadCount = () => $scope.notifications.filter(n => !n.read).length;
 
             $scope.getNotificationIcon = (type) => {
-                switch (type) {
+                switch (type.toLowerCase()) {
                     case "info":
                         return 'fa fa-info-circle';
                     case "success":
@@ -45,7 +38,7 @@ export default function notificationsDropdown($log, $window, $timeout, Notificat
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                NotificationsService.deleteNotification($scope.serviceId, notification);
+                NotificationsService.deleteNotification(notification);
             }
 
             $scope.markAsRead = (notification) => {
@@ -59,12 +52,11 @@ export default function notificationsDropdown($log, $window, $timeout, Notificat
                 }
 
                 mark_as_read_timeout = $timeout(() => {
-                    NotificationsService.markAsRead($scope.serviceId, notification);
+                    NotificationsService.markAsRead(notification);
                 }, MARK_AS_READ_DELAY);
             }
 
             $window.addEventListener('storage', (event) => {
-                $log.log('notificationsDropdown event fired', event);
                 if (!event || !event.key) {
                     return;
                 }
@@ -78,7 +70,7 @@ export default function notificationsDropdown($log, $window, $timeout, Notificat
 
             function _init()
             {
-                $scope.notifications = NotificationsService.getNotifications($scope.serviceId);
+                $scope.notifications = NotificationsService.getNotifications();
             }
         }
     }

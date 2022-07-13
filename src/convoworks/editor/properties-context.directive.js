@@ -56,13 +56,9 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 throw new Error( 'No serviceId in scope');
             }
 
-            $scope.$watch('serviceId', (newVal, oldVal) => {
-                if (newVal === oldVal) {
-                    return;
-                }
-
-                if (newVal) {
-                    NotificationsService.setServiceId(newVal);
+            $scope.$watch('serviceId', (val) => {
+                if (val) {
+                    NotificationsService.setServiceId(val);
                 }
             });
 

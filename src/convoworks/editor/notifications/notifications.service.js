@@ -19,8 +19,9 @@ export default function NotificationsService($log, $window, localStorageService,
     // IMPL
     function setServiceId(serviceId)
     {
-        $log.log('NotificationsService setting working service ID to ${serviceId}')
+        $log.log(`NotificationsService setting working service ID to ${serviceId}`);
         service_id = serviceId;
+        _dispatchEvent();
     }
 
     function addSuccess(title, details)
@@ -45,7 +46,7 @@ export default function NotificationsService($log, $window, localStorageService,
 
     function getNotifications()
     {
-        const notifications = _getNotifications(service_id);
+        const notifications = _getNotifications();
 
         $log.log('NotificationsService got notifications for service', service_id, notifications);
 
@@ -54,7 +55,7 @@ export default function NotificationsService($log, $window, localStorageService,
 
     function deleteNotification(notification)
     {
-        _setNotifications(service_id, _getNotifications(service_id).filter(n => n.id !== notification.id));
+        _setNotifications(_getNotifications(service_id).filter(n => n.id !== notification.id));
     }
 
     function markAsRead(notification)
@@ -72,13 +73,13 @@ export default function NotificationsService($log, $window, localStorageService,
             read: true
         };
 
-        _setNotifications(service_id, notifications);
+        _setNotifications(notifications);
     }
 
     // PRIVATE
     function _addNotification(type, title, details)
     {
-        _setNotifications(service_id, [
+        _setNotifications([
             {
                 id: StringService.generateUUIDV4(),
                 type,
@@ -87,7 +88,7 @@ export default function NotificationsService($log, $window, localStorageService,
                 read: false,
                 time_created: Math.floor(new Date().getTime() / 1000)
             },
-            ..._getNotifications(service_id)
+            ..._getNotifications()
         ]);
     }
 
@@ -105,11 +106,11 @@ export default function NotificationsService($log, $window, localStorageService,
     {
         if (!service_id) {
             $log.error('NotificationsService service_id not yet initialized.');
-            return [];
+            return;
         }
 
         localStorageService.set(`serviceNotifications_${service_id}`, notifications);
-        _dispatchEvent(service_id);
+        _dispatchEvent();
     }
 
     function _dispatchEvent()
