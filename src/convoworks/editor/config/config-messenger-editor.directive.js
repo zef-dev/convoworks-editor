@@ -78,12 +78,12 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                         $scope.config.time_created = data.time_created;
                         $scope.config.time_updated = data.time_created;
                         AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Facebook Messenger.`);
-                        NotificationsService.addNotification($scope.service.service_id, 'Success', 'Linked with Messenger', `Service ${$scope.service.name} has been successfully linked with Facebook Messenger.`);
+                        NotificationsService.addSuccess('Linked with Messenger', `Service ${$scope.service.name} has been successfully linked with Facebook Messenger.`);
                         $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'facebook_messenger', platform_config: $scope.config});
                     }, function ( response) {
                         $log.debug('configConvoChatEditor create() response', response);
                         is_error    =   true;
-                        NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Messenger config creation failed', `Can't create config for Messenger. ${response.data.message}`)
+                        NotificationsService.addDanger('Messenger config creation failed', `Can't create config for Messenger. ${response.data.message}`)
                     }).finally(done);
                 } else {
                     ConvoworksApi.updateServicePlatformConfig( $scope.service.service_id, 'facebook_messenger', $scope.config).then(function (data) {
@@ -97,7 +97,7 @@ export default function configConvoChatEditor($log, $q, $rootScope, $window, Con
                     }, function ( response) {
                         $log.debug('configConvoChatEditor update() response', response);
                         is_error    =   true;
-                        NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Messenger config save failed', `Can't save config for Messenger. ${response.data.message}`)
+                        NotificationsService.addDanger('Messenger config save failed', `Can't save config for Messenger. ${response.data.message}`)
                     }).finally(done);
                 }
             }

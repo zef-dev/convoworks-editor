@@ -93,12 +93,12 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                                 previousServiceAccountJSON = $scope.config.serviceAccount;
                             }
                             AlertService.addSuccess(`Service ${$scope.service.service_id} was linked successfully with Dialogflow.`);
-                            NotificationsService.addNotification($scope.service.service_id, 'Success', 'Linked with Dialogflow', `Service ${$scope.service.name} has been successfully linked with Dialogflow.`)
+                            NotificationsService.addSuccess('Linked with Dialogflow', `Service ${$scope.service.name} has been successfully linked with Dialogflow.`)
                             $rootScope.$broadcast('ServiceConfigUpdated', {platform_id: 'dialogflow', platform_config: $scope.config});
                         }, function (response) {
                             $log.debug('configDialogflowEditor create() response', response);
                             is_error    =   true;
-                            NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Dialogflow config creation failed', `Can't create config for Dialogflow. ${response.data.message}`)
+                            NotificationsService.addDanger('Dialogflow config creation failed', `Can't create config for Dialogflow. ${response.data.message}`)
                         }).finally(() => {
                             $scope.loading = false;
                         });
@@ -122,7 +122,7 @@ export default function configDialogflowEditor($log, $q, $rootScope, $window, Co
                         }, function (response) {
                             $log.debug('configDialogflowEditor create() response', response);
                             is_error    =   true;
-                            NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Dialogflow config creation failed', `Can't create config for Dialogflow. ${response.data.message}`)
+                            NotificationsService.addDanger('Dialogflow config creation failed', `Can't create config for Dialogflow. ${response.data.message}`)
                         }).finally(() => {
                             $scope.loading = false;
                         });

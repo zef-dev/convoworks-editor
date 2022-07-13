@@ -116,18 +116,18 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
             $scope.platformStatus.set(data.platformName, data);
             if (data.errorMessage) {
                 AlertService.addDanger(data.errorMessage);
-                NotificationsService.addNotification($scope.serviceId, 'Danger', 'Platform status failure', data.errorMessage);
+                NotificationsService.addDanger('Platform status failure', data.errorMessage);
 
             } else {
                 if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_FINISHED) {
                     AlertService.addSuccess(`${_fixPlatformId(data.platformName)} finished building.`);
-                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Build finished', `${_fixPlatformId(data.platformName)} finished building.`);
+                    NotificationsService.addSuccess('Build finished', `${_fixPlatformId(data.platformName)} finished building.`);
 
                     if (data.platformName === 'amazon') {
                        ConvoworksApi.enableAlexaSkillForTest($scope.owner, $scope.serviceId).then( function ( response) {
                            if (response.can_be_enabled_for_testing) {
                                AlertService.addSuccess(`${_fixPlatformId(data.platformName)} is enabled for testing.`);
-                               NotificationsService.addNotification($scope.serviceId, 'Info', 'Enabled for testing', `${_fixPlatformId(data.platformName)} is enabled for testing.`);
+                               NotificationsService.addInfo('Enabled for testing', `${_fixPlatformId(data.platformName)} is enabled for testing.`);
                            }
                         }, function ( reason) {
                            $log.log( 'convoworks-editor PlatformStatusUpdated enableAlexaSkillForTest', reason);
@@ -138,7 +138,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     }
                 } else if (data.status === PlatformStatusService.SERVICE_PROPAGATION_STATUS_MISSING_INTERACTION_MODEL) {
                     AlertService.addWarning(`The interaction model for ${_fixPlatformId(data.platformName)} could not be created.`);
-                    NotificationsService.addNotification($scope.serviceId, 'Warning', 'Interaction model missing', `Propagation for ${_fixPlatformId(data.platformName)} failed, the interaction model is missing.`)
+                    NotificationsService.addWarning('Interaction model missing', `Propagation for ${_fixPlatformId(data.platformName)} failed, the interaction model is missing.`)
                 }
             }
         });
@@ -200,12 +200,12 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                                 $log.log( 'ConvoworksEditorController propagatePlatformChanges() propagating to ', data);
                                 $scope.platformAvailabilities[availablePlatformId] = data;
                                 AlertService.addSuccess(`Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
-                                NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation successful', `Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
+                                NotificationsService.addSuccess('Propagation successful', `Service propagation to ${_fixPlatformId(availablePlatformId)} was successful.`);
                                 AlertService.addInfo(`Going to check build status of ${_fixPlatformId(availablePlatformId)}.`);
                                 PlatformStatusService.checkStatus($scope.serviceId, availablePlatformId);
                             }, function (reason) {
                                 AlertService.addDanger(`${_fixPlatformId(availablePlatformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`)
-                                NotificationsService.addNotification($scope.serviceId, 'Danger', `${_fixPlatformId(availablePlatformId)}: ${reason.data.message}`, reason.data.details);
+                                NotificationsService.addDanger(`${_fixPlatformId(availablePlatformId)}: ${reason.data.message}`, reason.data.details);
                             }
                         )
                     );
@@ -230,7 +230,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     $scope.platformAvailabilities[platformId] = data;
                     
                     AlertService.addSuccess(`Service propagation to ${_fixPlatformId(platformId)} done.`);
-                    NotificationsService.addNotification($scope.serviceId, 'Success', 'Propagation done', `Service propagation to ${_fixPlatformId(platformId)} done.`);
+                    NotificationsService.addSuccess('Propagation done', `Service propagation to ${_fixPlatformId(platformId)} done.`);
                     
                     $scope.propagating = false;
                     
@@ -240,7 +240,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     $log.log('ConvoworksEditorController propagatePlatformChanges() reason', reason);
                    
                     AlertService.addDanger(`${_fixPlatformId(platformId)} propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', `${_fixPlatformId(platformId)} propagation error`, `Propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
+                    NotificationsService.addDanger(`${_fixPlatformId(platformId)} propagation error`, `Propagation error: ${reason.data.message}. Error details: ${reason.data.details}`);
                    
                     $scope.propagating = false;
                 }, function () {
@@ -310,28 +310,28 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'amazon').then(function (data) {
                     platform_info['amazon'] = data;
                 }).catch(function (reason) {
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Amazon propagation error', _extractErrorDetails(reason));
+                    NotificationsService.addDanger('Amazon propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'dialogflow').then(function (data) {
                     platform_info['dialogflow'] = data;
                 }).catch(function (reason) {
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Dialogflow propagation error', _extractErrorDetails(reason));
+                    NotificationsService.addDanger('Dialogflow propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'facebook_messenger').then(function (data) {
                     platform_info['facebook_messenger'] = data;
                 }).catch(function (reason) {
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Facebook Messenger propagation error', _extractErrorDetails(reason));
+                    NotificationsService.addDanger('Facebook Messenger propagation error', _extractErrorDetails(reason));
                 })
             );
             promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'viber').then(function (data) {
                     platform_info['viber'] = data;
                 }).catch(function (reason) {
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Viber propagation error', _extractErrorDetails(reason));
+                    NotificationsService.addDanger('Viber propagation error', _extractErrorDetails(reason));
                 })
             );
 
@@ -341,7 +341,7 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                     $log.log('testViewNlp got config', config);
                     platform_config_info = config;
                 }).catch(function (reason) {
-                    NotificationsService.addNotification($scope.serviceId, 'Danger', 'Error fetching platform config', _extractErrorDetails(reason));
+                    NotificationsService.addDanger('Error fetching platform config', _extractErrorDetails(reason));
                 })
             );
             // load service meta

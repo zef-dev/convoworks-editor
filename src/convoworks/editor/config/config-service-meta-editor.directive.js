@@ -84,7 +84,7 @@ export default function configServiceMetaEditor($log, $rootScope, $window, Convo
                     $log.warn('configServiceMetaEditor updateConfig failed for reason', reason);
 
                     is_error = true;
-                    NotificationsService.addNotification($scope.service.service_id, 'Danger', 'Meta config update failed', `Could not update service meta config. ${reason.data.message}`);
+                    NotificationsService.addDanger('Meta config update failed', `Could not update service meta config. ${reason.data.message}`);
                 }).finally(() => {
                     $log.log('configServiceMetaEditor _update() finally setting loading to false');
                     $scope.loading = false;
