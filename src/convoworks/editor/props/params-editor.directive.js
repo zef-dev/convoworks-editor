@@ -1,8 +1,8 @@
 import template from './params-editor.tmpl.html';
 
 /* @ngInject */
-export default function paramsEditor( $log, ConvoworksApi) {
-    return  {
+export default function paramsEditor($log, $timeout) {
+    return {
         restrict: 'E',
         require: '^propertiesContext',
         template: template,
@@ -12,26 +12,29 @@ export default function paramsEditor( $log, ConvoworksApi) {
             key: '=',
             service: '='
         },
-        link: function ( $scope, $element, $attributes, propertiesContext) {
-           $log.log( 'paramsEditor link');
+        link: function ($scope, $element, $attributes, propertiesContext) {
+            $log.log('paramsEditor link');
 
-            $scope.pairs =   [];
+            const BACK_TO_COMPONENT_DELAY = 250;
+            let back_to_component_timeout = null;
 
-            $scope.addParamPair  =   function() {
-                $scope.pairs.push( {
+            $scope.pairs = [];
+
+            $scope.addParamPair = function () {
+                $scope.pairs.push({
                     key: 'my_new_param',
                     val: ''
                 });
                 $scope.backToComponent();
             }
 
-            $scope.removeParamPair  =   function( index) {
-                $scope.pairs.splice( index, 1);
+            $scope.removeParamPair = function (index) {
+                $scope.pairs.splice(index, 1);
                 $scope.backToComponent();
             }
 
             $scope.$watch(`component.properties.${$scope.key}`, function () {
-                $log.log( 'paramsEditor watch', $scope.key, $scope.component.properties[$scope.key]);
+                $log.log('paramsEditor watch', $scope.key, $scope.component.properties[$scope.key]);
 
                 if ($scope.usingRaw()) {
                     $log.log('paramsEditor using raw for key', $scope.key);
@@ -39,8 +42,7 @@ export default function paramsEditor( $log, ConvoworksApi) {
                 }
 
                 $scope.pairs = [];
-                for (let key in $scope.component.properties[$scope.key])
-                {
+                for (let key in $scope.component.properties[$scope.key]) {
                     let val = $scope.component.properties[$scope.key][key];
                     $scope.pairs.push({
                         key: key,
@@ -49,13 +51,36 @@ export default function paramsEditor( $log, ConvoworksApi) {
                 }
             }, true)
 
-            $scope.backToComponent = function()
-            {
+            $scope.backToComponent = function (debounce = false) {
                 if ($scope.usingRaw()) {
                     $log.log('paramsEditor using raw for key', $scope.key);
                     return;
                 }
 
+                if (debounce)
+                {
+                    if (back_to_component_timeout) {
+                        $timeout.cancel(back_to_component_timeout);
+                        back_to_component_timeout = null;
+                    }
+    
+                    back_to_component_timeout = $timeout(() => {
+                        _backToComponent();
+                    }, BACK_TO_COMPONENT_DELAY);
+                }
+                else
+                {
+                    _backToComponent();
+                }
+            }
+
+            $scope.usingRaw = function () {
+                return $scope.component.properties[`_use_var_${$scope.key}`];
+            }
+
+            // PRIVATE
+            function _backToComponent()
+            {
                 let prop_data = {};
 
                 for (const pair of $scope.pairs) {
@@ -64,11 +89,6 @@ export default function paramsEditor( $log, ConvoworksApi) {
 
                 $log.log('paramsEditor backToComponent prop_data', $scope.key, prop_data);
                 $scope.component.properties[$scope.key] = $scope.pairs.length ? prop_data : [];
-            }
-
-            $scope.usingRaw = function()
-            {
-                return $scope.component.properties[`_use_var_${$scope.key}`];
             }
         }
     }

@@ -7,7 +7,7 @@
     <div class="pair convo-form-group" ng-repeat="pair in pairs track by $index">
         <input class="convo-form-input monospace" type="text" ng-model="pair.key" ng-blur="backToComponent();" ng-focus="$event.target.select()">
         <span class="colon">:</span>
-        <input class="convo-form-input monospace" type="text" ng-model="pair.val" ng-change="backToComponent()">
+        <input class="convo-form-input monospace" type="text" ng-model="pair.val" ng-change="backToComponent(true)">
         <button class="btn btn-xs remove" ng-click="removeParamPair($index); $event.stopPropagation();">
             <i class="fa fa-minus"></i>
         </button>
