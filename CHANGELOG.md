@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.23.3 - 2022-07-14
+_Hotfix_
+* Fix notifications error details
+
 ## 0.23.2 - 2022-07-13
 * Added notifications dropdown next to service name
 * Ongoing processes in `ProcessRegistrarService` are no longer taken into consideration for showing the loading indicator
