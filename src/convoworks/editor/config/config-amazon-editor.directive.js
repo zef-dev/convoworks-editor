@@ -367,8 +367,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`)
-                            NotificationsService.addDanger('Amazon config creation failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`)
+                            NotificationsService.addDanger('Amazon config creation failed', `${response.data.message || ''} ${response.data.message || '' }`);
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
@@ -383,8 +383,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                     }, function ( response) {
                                         $log.debug('configAmazonEditor update() response', response);
                                         is_error    =   true;
-                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
-                                        NotificationsService.addDanger('Amazon config update failed', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`);
+                                        NotificationsService.addDanger('Amazon config update failed', `${response.data.message || ''} ${response.data.message || '' }`);
                                     });
                                 } else {
                                     is_error = true;
@@ -406,8 +406,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }, function ( response) {
                                 $log.debug('configAmazonEditor update() response', response);
                                 is_error    =   true;
-                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message.message || ''} ${response.data.message.details || '' }`);
-                                NotificationsService.addDanger('Can\'t update Amazon config', `${response.data.message.message || ''} ${response.data.message.details || '' }`);
+                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`);
+                                NotificationsService.addDanger('Can\'t update Amazon config', `${response.data.message || ''} ${response.data.message || '' }`);
                             });
                         }
 
@@ -577,12 +577,14 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     } else {
                         $scope.config.enable_account_linking = false;
                         AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
+                        NotificationsService.addDanger('Cannot get account linking information', `Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}". The provided Skill ID is either invalid or account linking has not been set up yet.`);
                     }
                     $scope.gettingSkillAccountLinkingInformation = false;
                 }).catch(function () {
                     $scope.gettingSkillAccountLinkingInformation = false;
                     $scope.config.enable_account_linking = false;
                     AlertService.addDanger(`Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}" the provided Skill ID is either invalid or account linking has not been set up yet.`);
+                    NotificationsService.addDanger('Cannot get account linking information', `Can't get skill account linking information for provided Alexa Skill ID "${$scope.config.app_id}". The provided Skill ID is either invalid or account linking has not been set up yet.`);
                 });
             }
 
