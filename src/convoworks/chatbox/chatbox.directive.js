@@ -1,7 +1,7 @@
 import template from './chatbox.tmpl.html';
 
 /* @ngInject */
-export default function convoChatbox($log, $q, $timeout, ConvoworksApi, ConvoChatApi, UserPreferencesService) {
+export default function convoChatbox($log, $timeout, AlertService, ConvoworksApi, ConvoChatApi, UserPreferencesService) {
 
     $log.log('convoChatbox init');
 
@@ -25,10 +25,6 @@ export default function convoChatbox($log, $q, $timeout, ConvoworksApi, ConvoCha
         link: function ($scope, $elem, $attrs) {
             $log.log('convoChatbox link $scope.deviceId', $scope.deviceId, '$scope.serviceId', $scope.serviceId);
 
-            // $scope.collapsed    =   true;
-
-            $scope.delegateNlp = null;
-            $scope.toggleDebug = false;
             $scope.message = '';
             $scope.messages = [];
 
@@ -39,38 +35,24 @@ export default function convoChatbox($log, $q, $timeout, ConvoworksApi, ConvoCha
             var reprompt_timeout = null;
             var sequence_timeout = null;
 
-            $scope.$watch('delegateNlp', function (newVal, oldVal) {
-                $log.log('convoChatbox $watch delegateNlp old value', oldVal, 'new value', newVal);
+            _init();
 
+            $scope.$watch(() => {
+                return $scope.deviceId;
+            }, (newVal, oldVal) => {
+                $log.log('convoChatbox deviceId changed from', oldVal, 'to', newVal);
                 if (newVal === oldVal) {
                     return;
                 }
 
-                if (newVal === undefined) {
-                    return;
-                }
-
-                UserPreferencesService.registerData('delegateNlp-' + $scope.serviceId, newVal);
-                $log.log('convoChatbox $watch toggleDebug new value', newVal);
-                // $scope.delegateNlp = newVal;
-                $scope.resetChat();
-            });
-
-            $scope.$watch('toggleDebug', function (newVal) {
-
-                UserPreferencesService.registerData('toggleDebug', newVal);
-                $log.log('convoChatbox $watch toggleDebug new value', newVal);
-                // $scope.toggleDebug = newVal;
-            });
-
-            _init();
+                _resetChat();
+            })
 
             var input = $elem.find('input[type=text]')[0];
             $log.log('convoChatbox link input', input);
 
-
-            $scope.formSubmited = function () {
-                $log.log('convoChatbox formSubmited()', $scope.message);
+            $scope.formSubmitted = function () {
+                $log.log('convoChatbox formSubmitted()', $scope.message);
                 var msg = $scope.message;
 
                 sending = true;
@@ -82,41 +64,25 @@ export default function convoChatbox($log, $q, $timeout, ConvoworksApi, ConvoCha
                 _cancelMsgs();
 
                 _getApi().sendMessage($scope.serviceId, $scope.deviceId, msg, false, $scope.variant, $scope.delegateNlp).then(function (response) {
-                    $log.log('convoChatbox formSubmited() sendMessage() response', response);
+                    $log.log('convoChatbox formSubmitted() sendMessage() response', response);
                     $scope.message = '';
                     _readResponse(response);
                 }, function (reason) {
-                    $log.log('convoChatbox formSubmited() sendMessage() reason', reason);
+                    $log.log('convoChatbox formSubmitted() sendMessage() reason', reason);
+                    AlertService.addDanger('Something went wrong. Please try again later.'); //@todo: generic message. replace with details.
                 }).finally(function () {
-                    $log.log('convoChatbox formSubmited() sendMessage() finally');
+                    $log.log('convoChatbox formSubmitted() sendMessage() finally');
                     sending = false;
                 });
-
             };
 
             $scope.resetChat = function () {
-                $log.log('convoChatbox resetChat()');
-
-                $scope.messages = [];
-                $scope.message = '';
-
-                _cancelMsgs();
-                sending = true;
-
                 if ($scope.onChatReset) {
-                    $log.log('convoChatbox resetChat() invoking on chat reset');
                     $scope.onChatReset();
+                    return;
                 }
 
-                _getApi().sendMessage($scope.serviceId, $scope.deviceId, '', true, $scope.variant, $scope.delegateNlp).then(function (response) {
-                    $log.log('convoChatbox resetChat() sendMessage() response', response);
-                    _readResponse(response);
-                }, function (reason) {
-                    $log.log('convoChatbox resetChat() sendMessage() reason', reason);
-                }).finally(function () {
-                    $log.log('convoChatbox resetChat() sendMessage() finally');
-                    sending = false;
-                });
+                _resetChat();
             };
 
             $scope.formDisabled = function () {
@@ -131,30 +97,36 @@ export default function convoChatbox($log, $q, $timeout, ConvoworksApi, ConvoCha
                 $log.log('convoChatbox _init()');
                 sending = true;
 
-                UserPreferencesService.getData('delegateNlp-' + $scope.serviceId).then(function (delegateNlp) {
-                    let defaultDelegateNlp = $scope.delegateNlp;
-                    if (delegateNlp) {
-                        defaultDelegateNlp = delegateNlp;
-                    }
-                    $log.log('convoChatbox getData() defaultDelegateNlp', delegateNlp);
-                    _getApi().sendMessage($scope.serviceId, $scope.deviceId, '', true, $scope.variant, defaultDelegateNlp).then(function (response) {
-                        $log.log('convoChatbox _init() response', response);
-                        _readResponse(response);
-                    }, function (reason) {
-                        $log.log('convoChatbox _init() reason', reason);
-                    }).finally(function () {
-                        $log.log('convoChatbox _init() finally');
-                        sending = false;
-                        $scope.delegateNlp = delegateNlp;
-                    });
-
+                _getApi().sendMessage($scope.serviceId, $scope.deviceId, '', true, $scope.variant, $scope.delegateNlp).then(function (response) {
+                    $log.log('convoChatbox _init() response', response);
+                    _readResponse(response);
+                }, function (reason) {
+                    $log.log('convoChatbox _init() reason', reason);
+                    AlertService.addDanger('Something went wrong. Please try again later.');
+                }).finally(function () {
+                    $log.log('convoChatbox _init() finally');
+                    sending = false;
                 });
+            }
 
-                UserPreferencesService.getData('toggleDebug').then(function (toggleDebug) {
-                    $log.log('convoChatbox getData() toggleDebug', toggleDebug);
-                    if (toggleDebug) {
-                        $scope.toggleDebug = toggleDebug;
-                    }
+            function _resetChat()
+            {
+                $log.log('convoChatbox _resetChat()');
+
+                $scope.messages = [];
+                $scope.message = '';
+
+                _cancelMsgs();
+                sending = true;
+
+                _getApi().sendMessage($scope.serviceId, $scope.deviceId, '', true, $scope.variant, $scope.delegateNlp).then(function (response) {
+                    $log.log('convoChatbox resetChat() sendMessage() response', response);
+                    _readResponse(response);
+                }, function (reason) {
+                    $log.log('convoChatbox resetChat() sendMessage() reason', reason);
+                }).finally(function () {
+                    $log.log('convoChatbox resetChat() sendMessage() finally');
+                    sending = false;
                 });
             }
 
