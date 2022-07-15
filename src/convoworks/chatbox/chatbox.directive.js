@@ -19,7 +19,8 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
             toggleDebug : '=?',
             intent: '=?',
             exception : '=?',
-            variables : '=?'
+            variables : '=?',
+            onChatReset: '&?'
         },
         link: function( $scope, $elem, $attrs)
         {
@@ -52,7 +53,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
 
                 UserPreferencesService.registerData( 'delegateNlp-' + $scope.serviceId, newVal);
                 $log.log('convoChatbox $watch toggleDebug new value', newVal);
-                $scope.delegateNlp = newVal;
+                // $scope.delegateNlp = newVal;
                 $scope.resetChat();
             });
 
@@ -60,7 +61,7 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
 
                 UserPreferencesService.registerData( 'toggleDebug', newVal);
                 $log.log('convoChatbox $watch toggleDebug new value', newVal);
-                $scope.toggleDebug = newVal;
+                // $scope.toggleDebug = newVal;
             });
 
             _init();
@@ -104,6 +105,11 @@ export default function convoChatbox( $log, $q, $timeout, ConvoworksApi, ConvoCh
 
                 _cancelMsgs();
                 sending             =   true;
+
+                if ($scope.onChatReset) {
+                    $log.log('convoChatbox resetChat() invoking on chat reset');
+                    $scope.onChatReset();
+                }
 
                 _getApi().sendMessage( $scope.serviceId, $scope.deviceId, '', true, $scope.variant, $scope.delegateNlp).then( function( response) {
                     $log.log( 'convoChatbox resetChat() sendMessage() response', response);

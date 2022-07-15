@@ -1,9 +1,8 @@
 /* @ngInject */
-export default function TestViewController($log, $scope, $stateParams, ConvoworksApi, UserPreferencesService) {
+export default function TestViewController($log, $scope, $stateParams, ConvoworksApi, UserPreferencesService, StringService) {
     $log.log('TestViewController initialized');
 
-    let random_slug = Math.floor(Math.random() * 100000);
-    let device_id = 'admin-chat-' + random_slug;
+    let device_id = `admin-chat-${StringService.generateUUIDV4()}`;
 
     $scope.serviceId = $stateParams.service_id;
 
@@ -15,12 +14,25 @@ export default function TestViewController($log, $scope, $stateParams, Convowork
         }
     ];
 
+    $scope.$watch('delegateNlp', (newVal, oldVal) => {
+        $log.log('TestViewController delegateNlp changed to', newVal, 'from', oldVal);
+
+        if (newVal && newVal !== oldVal) {
+            $scope.regenerateDeviceId();
+        }
+    });
+
     $scope.getDelegateOptions = function () {
-        return $scope.delegateOptions
+        return $scope.delegateOptions;
     }
 
     $scope.initDelegateOptions = function () {
         _initDelegationNlp();
+    }
+
+    $scope.regenerateDeviceId = () => {
+        $log.log('TestViewController regenerating device ID');
+        device_id = `admin-chat-${StringService.generateUUIDV4()}`;
     }
 
     $scope.getDeviceId = function() {

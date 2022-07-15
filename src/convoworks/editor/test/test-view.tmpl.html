@@ -14,8 +14,19 @@
             </label>
         </div>
         <div class="chatbox">
-            <convo-chatbox name="'Test'" device-id="getDeviceId()" service-id="serviceId" collapsed="false" mode="'admin'"
-                           toggle-debug="toggleDebug" delegate-nlp="delegateNlp" variables="variables" exception="exception" intent="intent"></convo-chatbox>
+            <convo-chatbox
+                name="'Test'"
+                device-id="getDeviceId()"
+                service-id="serviceId"
+                collapsed="false"
+                mode="'admin'"
+                on-chat-reset="regenerateDeviceId()"
+                toggle-debug="toggleDebug"
+                delegate-nlp="delegateNlp"
+                variables="variables"
+                exception="exception"
+                intent="intent">
+            </convo-chatbox>
         </div>
         <div class="buttons">
             <convo-externaltest device-id="getDeviceId()" service-id="serviceId"></convo-externaltest>
