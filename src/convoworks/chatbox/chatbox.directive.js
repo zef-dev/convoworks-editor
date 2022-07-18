@@ -37,10 +37,9 @@ export default function convoChatbox($log, $timeout, AlertService, ConvoworksApi
 
             _init();
 
-            $scope.$watch(() => {
-                return $scope.deviceId;
-            }, (newVal, oldVal) => {
+            $scope.$watch('deviceId', (newVal, oldVal) => {
                 $log.log('convoChatbox deviceId changed from', oldVal, 'to', newVal);
+                
                 if (newVal === oldVal) {
                     return;
                 }
