@@ -1,9 +1,8 @@
 /* @ngInject */
-export default function TestViewController($log, $scope, $stateParams, ConvoworksApi, UserPreferencesService) {
+export default function TestViewController($log, $scope, $q, $stateParams, ConvoworksApi, UserPreferencesService, StringService) {
     $log.log('TestViewController initialized');
 
-    let random_slug = Math.floor(Math.random() * 100000);
-    let device_id = 'admin-chat-' + random_slug;
+    let device_id = `admin-chat-${StringService.generateUUIDV4()}`;
 
     $scope.serviceId = $stateParams.service_id;
 
@@ -15,16 +14,60 @@ export default function TestViewController($log, $scope, $stateParams, Convowork
         }
     ];
 
+    _init();
+
+    $scope.onNlpDelegateUpdated = () => {
+        $log.log('TestViewController NLP delegate changed', $scope.delegateNlp);
+
+        UserPreferencesService.registerData(`delegateNlp_${$scope.serviceId}`, $scope.delegateNlp);
+
+        $scope.regenerateDeviceId();
+    }
+
+    $scope.$watch('toggleDebug', function (newVal) {
+        UserPreferencesService.registerData(`toggleDebug_${$scope.serviceId}`, newVal);
+    });
+
     $scope.getDelegateOptions = function () {
-        return $scope.delegateOptions
+        return $scope.delegateOptions;
     }
 
     $scope.initDelegateOptions = function () {
         _initDelegationNlp();
     }
 
-    $scope.getDeviceId = function() {
+    $scope.regenerateDeviceId = () => {
+        $log.log('TestViewController regenerating device ID');
+        device_id = `admin-chat-${StringService.generateUUIDV4()}`;
+    }
+
+    $scope.getDeviceId = function () {
         return device_id;
+    }
+
+    function _init() {
+        const all = [
+            UserPreferencesService.getData(`delegateNlp_${$scope.serviceId}`),
+            UserPreferencesService.getData(`toggleDebug_${$scope.serviceId}`)
+        ];
+
+        $q.all(all).then(([delegateNlp, toggleDebug]) => {
+            $log.log('TestViewController _init() all', delegateNlp, toggleDebug);
+            let defaultDelegateNlp = $scope.delegateNlp;
+
+            if (delegateNlp) {
+                defaultDelegateNlp = delegateNlp;
+            }
+
+            $log.log('TestViewController defaultDelegateNlp', delegateNlp);
+            $scope.delegateNlp = defaultDelegateNlp;
+
+            $scope.toggleDebug = toggleDebug || false;
+        }, (reason) => {
+            $log.error(reason);
+        }).finally(() => {
+            $log.log('TestViewController _init() finally');
+        })
     }
 
     function _initDelegationNlp() {
@@ -52,7 +95,7 @@ export default function TestViewController($log, $scope, $stateParams, Convowork
                 })
             }
 
-            const selectedDelegate = UserPreferencesService.get('delegateNlp-' + $scope.serviceId, undefined, true);
+            const selectedDelegate = UserPreferencesService.get(`delegateNlp_${$scope.serviceId}`, undefined, true);
 
             if (selectedDelegate === undefined && $scope.delegateOptions.length === 1) {
                 $scope.delegateNlp = $scope.delegateOptions[0].value;
