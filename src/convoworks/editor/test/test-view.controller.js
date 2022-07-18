@@ -14,8 +14,6 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
         }
     ];
 
-    _init();
-
     $scope.onNlpDelegateUpdated = () => {
         $log.log('TestViewController NLP delegate changed', $scope.delegateNlp);
 
@@ -45,29 +43,27 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
         return device_id;
     }
 
-    function _init() {
-        const all = [
-            UserPreferencesService.getData(`delegateNlp_${$scope.serviceId}`),
-            UserPreferencesService.getData(`toggleDebug_${$scope.serviceId}`)
-        ];
+    function _initializeOptions() {
+        let initial_delegate = null;
 
-        $q.all(all).then(([delegateNlp, toggleDebug]) => {
-            $log.log('TestViewController _init() all', delegateNlp, toggleDebug);
-            let defaultDelegateNlp = $scope.delegateNlp;
-
-            if (delegateNlp) {
-                defaultDelegateNlp = delegateNlp;
+        if (UserPreferencesService.isSet(`delegateNlp_${$scope.serviceId}`))
+        {
+            initial_delegate = UserPreferencesService.get(`delegateNlp_${$scope.serviceId}`, null);
+        }
+        else
+        {
+            $log.log('TestViewController no previously set NLP delegate, checking options', $scope.delegateOptions);
+            if ($scope.delegateOptions.length > 1)
+            {
+                initial_delegate = $scope.delegateOptions.find(d => d.value !== null).value;
+                $log.log('TestViewController delegateNlp set to', initial_delegate);
             }
+        }
 
-            $log.log('TestViewController defaultDelegateNlp', delegateNlp);
-            $scope.delegateNlp = defaultDelegateNlp;
+        $scope.delegateNlp = initial_delegate;
 
-            $scope.toggleDebug = toggleDebug || false;
-        }, (reason) => {
-            $log.error(reason);
-        }).finally(() => {
-            $log.log('TestViewController _init() finally');
-        })
+        $scope.toggleDebug = UserPreferencesService.get(`toggleDebug_${$scope.serviceId}`, false);
+        $log.log('TestViewController _init() finished');
     }
 
     function _initDelegationNlp() {
@@ -94,15 +90,10 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
                     value: 'dialogflow'
                 })
             }
-
-            const selectedDelegate = UserPreferencesService.get(`delegateNlp_${$scope.serviceId}`, undefined, true);
-
-            if (selectedDelegate === undefined && $scope.delegateOptions.length === 1) {
-                $scope.delegateNlp = $scope.delegateOptions[0].value;
-            }
-
-        }).catch(function (reason) {
-            throw new Error(reason.data.message)
+        }, (reason) => {
+            AlertService.addDanger(reason.data.message);
+        }).finally(() => {
+            _initializeOptions();
         });
     }
 }
