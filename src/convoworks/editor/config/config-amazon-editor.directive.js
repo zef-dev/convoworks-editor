@@ -367,8 +367,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                         }, function ( response) {
                             $log.debug('configAmazonEditor create() response', response);
                             is_error    =   true;
-                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`)
-                            NotificationsService.addDanger('Amazon config creation failed', `${response.data.message || ''} ${response.data.message || '' }`);
+                            AlertService.addDanger(`Can't create config for Amazon. ${response.data.message || ''}. ${response.data.details || '' }`)
+                            NotificationsService.addDanger('Amazon config creation failed', `${response.data.message || ''}. ${response.data.details || '' }`);
                         });
                     } else {
                         if (!$scope.hasChangedToAutoMode() && $scope.config.mode === 'auto') {
@@ -383,8 +383,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                                     }, function ( response) {
                                         $log.debug('configAmazonEditor update() response', response);
                                         is_error    =   true;
-                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`);
-                                        NotificationsService.addDanger('Amazon config update failed', `${response.data.message || ''} ${response.data.message || '' }`);
+                                        AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''}. ${response.data.details || '' }`);
+                                        NotificationsService.addDanger('Amazon config update failed', `${response.data.message || ''}. ${response.data.details || '' }`);
                                     });
                                 } else {
                                     is_error = true;
@@ -406,8 +406,8 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                             }, function ( response) {
                                 $log.debug('configAmazonEditor update() response', response);
                                 is_error    =   true;
-                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''} ${response.data.message || '' }`);
-                                NotificationsService.addDanger('Can\'t update Amazon config', `${response.data.message || ''} ${response.data.message || '' }`);
+                                AlertService.addDanger(`Can't update config for Amazon. ${response.data.message || ''}. ${response.data.details || '' }`);
+                                NotificationsService.addDanger('Can\'t update Amazon config', `${response.data.message || ''}. ${response.data.details || '' }`);
                             });
                         }
 
