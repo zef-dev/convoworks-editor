@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.23.4 - 2022-07-18
+* Fix error message details (again)
+* Fix test view chatbox sending messages twice
+
 ## 0.23.3 - 2022-07-14
 _Hotfix_
 * Fix notifications error details
