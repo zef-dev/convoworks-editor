@@ -95,7 +95,7 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
                 })
             }
 
-            const selectedDelegate = UserPreferencesService.get('delegateNlp-' + $scope.serviceId, undefined, true);
+            const selectedDelegate = UserPreferencesService.get(`delegateNlp_${$scope.serviceId}`, undefined, true);
 
             if (selectedDelegate === undefined && $scope.delegateOptions.length === 1) {
                 $scope.delegateNlp = $scope.delegateOptions[0].value;
