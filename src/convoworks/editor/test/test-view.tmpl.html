@@ -8,6 +8,7 @@
                     class="convo-form-input"
                     name="delegateNlp"
                     id="delegateNlp"
+                    ng-change="onNlpDelegateUpdated()"
                     ng-model="delegateNlp">
                     <option ng-repeat="nlp in getDelegateOptions()" value="{{nlp.value}}">{{nlp.label}}</option>
                 </select>

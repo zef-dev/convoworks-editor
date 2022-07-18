@@ -2,7 +2,6 @@
 export default function TestViewController($log, $scope, $q, $stateParams, ConvoworksApi, UserPreferencesService, StringService) {
     $log.log('TestViewController initialized');
 
-    let first_call = true;
     let device_id = `admin-chat-${StringService.generateUUIDV4()}`;
 
     $scope.serviceId = $stateParams.service_id;
@@ -17,20 +16,13 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
 
     _init();
 
-    $scope.$watch('delegateNlp', (newVal, oldVal) => {
-        $log.log('TestViewController delegateNlp changed to', newVal, 'from', oldVal);
+    $scope.onNlpDelegateUpdated = () => {
+        $log.log('TestViewController NLP delegate changed', $scope.delegateNlp);
 
-        if (newVal === oldVal || newVal === undefined) {
-            return;
-        }
+        UserPreferencesService.registerData(`delegateNlp_${$scope.serviceId}`, $scope.delegateNlp);
 
-        if (!first_call) {
-            $scope.regenerateDeviceId();
-        }
-
-        first_call = false;
-        UserPreferencesService.registerData(`delegateNlp_${$scope.serviceId}`, newVal);
-    });
+        $scope.regenerateDeviceId();
+    }
 
     $scope.$watch('toggleDebug', function (newVal) {
         UserPreferencesService.registerData(`toggleDebug_${$scope.serviceId}`, newVal);
