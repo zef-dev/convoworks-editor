@@ -139,16 +139,15 @@ export default function WorkflowEditorController($log, $scope, $rootScope, $stat
 
         const step = clipboard[mode].step;
         const container = step.properties.block_id ? 'blocks' : 'fragments';
+        const id_type = container === 'blocks' ? 'block_id' : 'fragment_id';
 
         if (!_isUnique(service[container], step)) {
+            const existing_count = service[container].filter(s => s.properties[id_type].includes(step.properties[id_type])).length;
+            const new_id = `${step.properties[id_type]}_${existing_count}`;
+
             step.properties.name = `${step.properties.name} (Copy)`;
             step.properties._component_id = StringService.generateUUIDV4();
-
-            if (container === 'blocks') {
-                step.properties.block_id = StringService.generateUUIDV4();
-            } else {
-                step.properties.fragment_id = StringService.generateUUIDV4();
-            }
+            step.properties[id_type] = new_id;
         }
 
         service[container].push(step);
