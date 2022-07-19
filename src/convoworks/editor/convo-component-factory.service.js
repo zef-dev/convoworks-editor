@@ -1,5 +1,5 @@
 /* @ngInject */
-export default function ConvoComponentFactoryService( $log, $q, ConvoworksApi) {
+export default function ConvoComponentFactoryService( $log, $q, ConvoworksApi, StringService) {
 
     this.generateUniqueId           =   generateUniqueId;
     this.createComponent            =   createComponent;
@@ -11,28 +11,7 @@ export default function ConvoComponentFactoryService( $log, $q, ConvoworksApi) {
 
 
     function generateUniqueId() {
-        var result = '';
-        result += makeid( 8);
-        result += '-';
-        result += makeid( 4);
-        result += '-';
-        result += makeid( 4);
-        result += '-';
-        result += makeid( 4);
-        result += '-';
-        result += makeid( 12);
-
-        return result.toLowerCase();
-    }
-
-    function makeid( length) {
-           var result           = '';
-           var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-           var charactersLength = characters.length;
-           for ( var i = 0; i < length; i++ ) {
-              result += characters.charAt(Math.floor(Math.random() * charactersLength));
-           }
-           return result;
+        return StringService.generateUUIDV4();
     }
 
     function copyComponent( service, componentToCopy)
