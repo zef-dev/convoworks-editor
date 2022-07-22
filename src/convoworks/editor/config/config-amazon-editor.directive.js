@@ -685,6 +685,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::profile:given_name:read');
                 }
 
+                if (permissionValue === 'alexa::authenticate:2:mandatory' && $scope.config.permissions.includes('alexa::authenticate:2:optional')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::authenticate:2:optional');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::authenticate:2:optional');
+                } else if (permissionValue === 'alexa::authenticate:2:optional' && $scope.config.permissions.includes('alexa::authenticate:2:mandatory')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::authenticate:2:mandatory');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::authenticate:2:mandatory');
+                }
+
                 $scope.getPermissions();
             }
 
