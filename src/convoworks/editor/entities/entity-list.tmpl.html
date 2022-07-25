@@ -10,7 +10,7 @@
         <section class="intents-entities-list">
             <div class="grid-item" ng-repeat="entity in entities track by $index">
                 <a class="grid-item-main" 
-                    ui-sref="convoworks-editor-service.entity-details( { index: $index} )">
+                    ui-sref="convoworks-editor-service.entity-details( { name: entity.name} )">
                     {{ entity.name }} ({{ getEntitiesCount(entity) }})
                 </a>
                 <div class="grid-item-buttons">

@@ -11,7 +11,19 @@ export default function intentList( $log, $window, $state)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'intentList link');
 
-            $scope.intents   =   propertiesContext.getSelectedService().intents;
+            $scope.intents = propertiesContext.getSelectedService().intents.filter(i => !i.parent_intent);
+
+            const parent_child_map = propertiesContext.getSelectedService().intents.reduce((map, intent) => {
+                if (intent.parent_intent) {
+                    if (map[intent.parent_intent]) {
+                        map[intent.parent_intent].push(intent);
+                    } else {
+                        map[intent.parent_intent] = [intent];
+                    }
+                }
+
+                return map;
+            }, {});
 
             $scope.deleteIntent = function($event, index) {
                 $event.preventDefault();
@@ -34,6 +46,11 @@ export default function intentList( $log, $window, $state)
                 }
 
                 return `${intent.utterances.length} utterances`;
+            }
+
+            $scope.getChildIntents = (intent) =>
+            {
+                return parent_child_map[intent.name] || [];
             }
         }
     }

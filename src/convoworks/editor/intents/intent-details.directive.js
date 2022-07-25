@@ -13,12 +13,10 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             $log.debug( 'intentDetails link');
 
             let submitting = false;
-            var selected = -1;
-            var original = null; //              =   angular.copy( $scope.intent);
-//            $scope.current_intent     =   angular.copy( original);
+            var selected = $stateParams.name;
+            var original = null; 
 
-            selected               =   parseInt( $stateParams.index);
-            $scope.current_intent  =   propertiesContext.getSelectedService().intents[selected];
+            $scope.current_intent = propertiesContext.getSelectedService().intents.find(i => i.name === selected);
 
             if ($scope.current_intent === undefined || $scope.current_intent === null) {
                 $log.warn(`intentDetails selected intent [${selected}] does not exist.`);

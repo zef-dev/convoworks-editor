@@ -65,7 +65,7 @@ export default function ($stateProvider, $urlRouterProvider) {
               }
             }
         }).state('convoworks-editor-service.intent-details', {
-            url:'/intents-entities/intent/:index/details',
+            url:'/intents-entities/intent/:name/details',
             views: {
                 'serviceTabView': {
                 template: '<intent-details></intent-details>',
@@ -79,15 +79,11 @@ export default function ($stateProvider, $urlRouterProvider) {
               }
             }
         }).state('convoworks-editor-service.entity-details', {
-            url:'/intents-entities/entity/:index/details',
+            url:'/intents-entities/entity/:name/details',
             views: {
                 'serviceTabView': {
-                template: '<entity-details entity="getSelection().service.entities[index]"></entity-details>',
-                controller : ($scope, $stateParams) => {
-                    'ngInject';
-                    $scope.index    =   $stateParams.index;
+                    template: '<entity-details></entity-details>'
                 }
-              }
             }
         }).state('convoworks-editor-service.configuration', {
             url:'/configuration',
