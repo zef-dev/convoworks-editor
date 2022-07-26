@@ -28,6 +28,13 @@ export default function intentList( $log, $window, $state)
                 }, {});
             }, true);
 
+            $scope.addChildIntent = ($event, intent) => {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $state.go('convoworks-editor-service.child-intent-new', { parent: intent.name });
+            }
+
             $scope.deleteIntent = function($event, intent) {
                 $event.preventDefault();
                 $event.stopPropagation();
