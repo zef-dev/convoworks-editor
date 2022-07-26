@@ -8,7 +8,7 @@
     </h3>
     <div class="convo-details">
         <section class="intents-entities-list">
-            <section ng-repeat="intent in intents track by $index">
+            <div class="intent-container" ng-repeat="intent in intents track by $index">
                 <div class="grid-item">
                     <a class="grid-item-main" 
                         ui-sref="convoworks-editor-service.intent-details( { name: intent.name} )">
@@ -41,7 +41,7 @@
                         </button>
                     </div>
                 </div>
-            </section>
+            </div>
         </section>
     </div>
 </div>

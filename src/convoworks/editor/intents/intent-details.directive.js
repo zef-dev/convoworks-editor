@@ -33,7 +33,7 @@ export default function intentDetails( $log, $window, $state, $stateParams)
 
             $scope.submitting = () => submitting;
 
-            $scope.onUpdate         =   function( intent) {
+            $scope.onUpdate = function( intent) {
                 $log.debug( 'intentDetails onUpdate intent', intent);
                 $scope.$applyAsync( function () {
                     $scope.current_intent     =   angular.copy( intent);
@@ -42,7 +42,7 @@ export default function intentDetails( $log, $window, $state, $stateParams)
 
             $scope.submitIntent = function() {
                 submitting = true;
-                propertiesContext.updateConvoIntent( $scope.current_intent, selected);
+                propertiesContext.updateConvoIntent(original, $scope.current_intent);
                 submitting = false;
                 $window.history.back();
             }

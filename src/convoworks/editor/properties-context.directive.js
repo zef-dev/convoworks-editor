@@ -209,31 +209,31 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
             }
 
             function addConvoEntity( entity) {
-                var index   =   selection.service.entities.length;
-                selection.service.entities.push( entity);
-                return index;
+                selection.service.entities.push(entity);
+                return entity.name;
             }
 
-            function removeConvoEntity( index) {
+            function removeConvoEntity(entity) {
+                const index = selection.service.entities.findIndex(e => e.name === entity.name)
                 selection.service.entities.splice( index, 1);
             }
 
-            function updateConvoEntity( entity, index) {
-                selection.service.entities[index] = entity;
+            function updateConvoEntity(entity) {
+                selection.service.entities = selection.service.entities.filter(e => e.name !== entity.name);
             }
 
-            function addConvoIntent( intent) {
-                var index   =   selection.service.intents.length;
-                selection.service.intents.push( intent);
-                return index;
+            function addConvoIntent(intent) {
+                selection.service.intents.push(intent);
+                return intent.name;
             }
 
-            function updateConvoIntent( intent, index) {
+            function updateConvoIntent(original, intent) {
+                const index = selection.service.intents.findIndex(i => i.name === original.name);
                 selection.service.intents[index] = intent;
             }
             
-            function removeConvoIntent( index) {
-                selection.service.intents.splice( index, 1);
+            function removeConvoIntent(intent) {
+                selection.service.intents = selection.service.intents.filter(i => i.name !== intent.name);
             }            
 
             function getConvoIntents()
