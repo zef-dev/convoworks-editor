@@ -15,10 +15,15 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
         require: '^propertiesContext',
         template: template,
         link: function( $scope, $element, $attributes, propertiesContext) {
-            $log.debug( 'intentNew link $stateParams.name', $stateParams.name);
+            $log.debug( 'intentNew link $stateParams.name', $stateParams.name, '$stateParams.parent', $stateParams.parent);
 
             let submitting = false;
             var original = angular.copy( defaultNewIntent);
+            
+            if ($stateParams.parent) {
+                original.parent_intent = $stateParams.parent;
+            }
+
             var current = angular.copy( original);
 
             function _render()
