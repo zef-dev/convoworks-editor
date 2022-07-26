@@ -232,8 +232,18 @@ export default function propertiesContext( $log, $rootScope, $q, ConvoworksApi, 
                 selection.service.intents[index] = intent;
             }
             
-            function removeConvoIntent(intent) {
-                selection.service.intents = selection.service.intents.filter(i => i.name !== intent.name);
+            function removeConvoIntent(target) {
+                selection.service.intents = selection.service.intents.filter((intent) => {
+                    if (intent.name === target.name) {
+                        return false;
+                    }
+
+                    if (intent.parent_intent && intent.parent_intent === target.name) {
+                        return false;
+                    }
+
+                    return true;
+                });
             }            
 
             function getConvoIntents()
