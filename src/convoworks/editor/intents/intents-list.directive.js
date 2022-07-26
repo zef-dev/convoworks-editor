@@ -11,27 +11,29 @@ export default function intentList( $log, $window, $state)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'intentList link');
 
-            $scope.intents = propertiesContext.getSelectedService().intents.filter(i => !i.parent_intent);
+            let parent_child_map = {};
 
-            const parent_child_map = propertiesContext.getSelectedService().intents.reduce((map, intent) => {
-                if (intent.parent_intent) {
-                    if (map[intent.parent_intent]) {
-                        map[intent.parent_intent].push(intent);
-                    } else {
-                        map[intent.parent_intent] = [intent];
+            $scope.$watch(() => propertiesContext.getSelectedService().intents, (newVal, oldVal) => {
+                $scope.intents = newVal.filter(i => !i.parent_intent);
+                parent_child_map = newVal.reduce((map, intent) => {
+                    if (intent.parent_intent) {
+                        if (map[intent.parent_intent]) {
+                            map[intent.parent_intent].push(intent);
+                        } else {
+                            map[intent.parent_intent] = [intent];
+                        }
                     }
-                }
+    
+                    return map;
+                }, {});
+            }, true);
 
-                return map;
-            }, {});
-
-            $scope.deleteIntent = function($event, index) {
+            $scope.deleteIntent = function($event, intent) {
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                var intentName = $scope.intents[index].name;
-                if ( $window.confirm( "Are you sure you want to delete " + intentName + "?")) {
-                    propertiesContext.removeConvoIntent( index);
+                if ($window.confirm(`Are you sure you want to delete ${intent.name}?`)) {
+                    propertiesContext.removeConvoIntent(intent);
                 }
             }
 

@@ -10,16 +10,16 @@ export default function entityList($log, $window)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'entityList link');
 
-            $scope.entities =   propertiesContext.getSelectedService().entities;
+            $scope.$watch(() => propertiesContext.getSelectedService().entities, (newVal, oldVal) => {
+                $scope.entities = newVal;
+            }, true);
 
-            $scope.deleteEntity = function($event, index) {
+            $scope.deleteEntity = function($event, entity) {
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                var entityName = $scope.entities[index].name;
-
-                if ( $window.confirm("Are you sure you want to delete " + entityName + "?")) {
-                    propertiesContext.removeConvoEntity( index);
+                if ($window.confirm(`Are you sure you want to delete ${entity.name}?`)) {
+                    propertiesContext.removeConvoEntity(entity);
                 }
             }
 

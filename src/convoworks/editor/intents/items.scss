@@ -15,7 +15,7 @@
             vertical-align: bottom;
             height: 40px;
 
-            &:hover {
+            &:hover, &.child-intent:hover {
                 border-color: rgba(47, 116, 234, 0.5);
 
                 > .grid-item-buttons button {
@@ -25,12 +25,12 @@
 
             .grid-item-main {
                 display: inline-block;
-                width: 95%;
+                width: 83%;
                 overflow: hidden;
             }
 
             > .grid-item-buttons {
-                width: 20px;
+                width: 73px;
                 float: right;
 
                 button {
@@ -73,6 +73,10 @@
                     display: inline-block;
                     width: 95%;
                     overflow: hidden;
+                }
+
+                > .grid-item-buttons {
+                    width: 20px;
                 }
             }
         }

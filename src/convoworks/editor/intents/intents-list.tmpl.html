@@ -10,31 +10,46 @@
         <section class="intents-entities-list">
             <div class="intent-container" ng-repeat="intent in intents track by $index">
                 <div class="grid-item">
-                    <a class="grid-item-main" 
+                    <a class="grid-item-main"
                         ui-sref="convoworks-editor-service.intent-details( { name: intent.name} )">
                         {{ intent.name }} ({{ getUtteranceCount(intent) }})
                     </a>
                     <div class="grid-item-buttons">
-                        <button type="button" ng-click="deleteIntent($event, $index)">
+                        <button type="button" ng-click="addChildIntent($event, intent)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                class="bi bi-plus" viewBox="0 0 16 16">
+                                <g fill="none" fill-rule="evenodd" stroke="#1A1A1A" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </g>
+                            </svg>
+                        </button>
+                        <button type="button" ng-click="deleteIntent($event, intent)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                <g fill="none" fill-rule="evenodd" stroke="#1A1A1A" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M2.4 6.5v7c0 1.105.835 2 1.867 2h7.466c1.032 0 1.867-.895 1.867-2v-7M1.467 3.5h13.066M6.133 3.5v-3h3.734v3M8 7.5v5M10.8 7.5v5M5.2 7.5v5">
+                                <g fill="none" fill-rule="evenodd" stroke="#1A1A1A" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M2.4 6.5v7c0 1.105.835 2 1.867 2h7.466c1.032 0 1.867-.895 1.867-2v-7M1.467 3.5h13.066M6.133 3.5v-3h3.734v3M8 7.5v5M10.8 7.5v5M5.2 7.5v5">
                                     </path>
                                 </g>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="grid-item child-intent" ng-class="{ 'first-child': $index === 0 }" ng-repeat="childIntent in getChildIntents(intent) track by $index">
-                    <a class="grid-item-main" 
+                <div class="grid-item child-intent" ng-class="{ 'first-child': $index === 0 }"
+                    ng-repeat="childIntent in getChildIntents(intent) track by $index">
+                    <a class="grid-item-main"
                         ui-sref="convoworks-editor-service.intent-details( { name: childIntent.name} )">
                         {{ childIntent.name }} ({{ getUtteranceCount(childIntent) }})
                     </a>
                     <div class="grid-item-buttons">
-                        <button type="button" ng-click="deleteIntent($event, $index)">
+                        <button type="button" ng-click="deleteIntent($event, intent)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                <g fill="none" fill-rule="evenodd" stroke="#1A1A1A" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M2.4 6.5v7c0 1.105.835 2 1.867 2h7.466c1.032 0 1.867-.895 1.867-2v-7M1.467 3.5h13.066M6.133 3.5v-3h3.734v3M8 7.5v5M10.8 7.5v5M5.2 7.5v5">
+                                <g fill="none" fill-rule="evenodd" stroke="#1A1A1A" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M2.4 6.5v7c0 1.105.835 2 1.867 2h7.466c1.032 0 1.867-.895 1.867-2v-7M1.467 3.5h13.066M6.133 3.5v-3h3.734v3M8 7.5v5M10.8 7.5v5M5.2 7.5v5">
                                     </path>
                                 </g>
                             </svg>
