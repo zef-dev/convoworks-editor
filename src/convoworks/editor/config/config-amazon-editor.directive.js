@@ -80,10 +80,11 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     domains: "",
                 },
                 skill_preview_in_store: {
-                    one_sentence_description: _invocationToName($scope.service.name),
-                    detailed_description: _invocationToName($scope.service.name),
+                    public_name: _invocationToName($scope.meta.name),
+                    one_sentence_description: _invocationToName($scope.meta.name),
+                    detailed_description: _invocationToName($scope.meta.name),
                     whats_new: '',
-                    example_phrases: "Alexa, open " + $scope.service.name,
+                    example_phrases: "Alexa, open " + $scope.meta.name,
                     small_skill_icon: '',
                     large_skill_icon: '',
                     category: "ALARMS_AND_CLOCKS",
@@ -505,6 +506,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     if (res.manifest.publishingInformation) {
                         if (res.manifest.publishingInformation.locales) {
                             if (res.manifest.publishingInformation.locales[$scope.default_locale] ) {
+                                $scope.config.skill_preview_in_store.public_name = res.manifest.publishingInformation.locales[$scope.default_locale].name;
                                 $scope.config.skill_preview_in_store.one_sentence_description = res.manifest.publishingInformation.locales[$scope.default_locale].summary;
                                 $scope.config.skill_preview_in_store.detailed_description = res.manifest.publishingInformation.locales[$scope.default_locale].description;
                                 $scope.config.skill_preview_in_store.whats_new = res.manifest.publishingInformation.locales[$scope.default_locale].updatesDescription ?? '';

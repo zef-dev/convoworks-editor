@@ -258,6 +258,17 @@
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
                                         <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                                            <label for="skill_preview_in_store_public_name" class="convo-form-label">Public Name * <i class="fa fa-question-circle" uib-tooltip="The name of the skill that will be displayed to customers in the Alexa app. It can be different from your invocation name and must be between 2-50 characters."></i></label>
+                                            <input ng-required="true" type="text" ng-pattern='/^[a-zA-Z0-9\s]*$/' ng-minlength="2" ng-maxlength="50" class="convo-form-input" id="skill_preview_in_store_public_name" name="skill_preview_in_store_public_name" placeholder="" ng-model="config.skill_preview_in_store.public_name">
+                                            <span class="help" ng-class="{'error': config.skill_preview_in_store.public_name.length > 50}">
+                                                {{(config.skill_preview_in_store.public_name && config.skill_preview_in_store.public_name.length) ? config.skill_preview_in_store.public_name.length : 0}}/50 characters</span>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.minlength" class="text-danger">Public Name should contain at least 2 characters</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.maxlength" class="text-danger">Public Name shouldn't contain more then 50 characters.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$error.pattern" class="text-danger">Only letters, numbers and spaces are allowed.</b>
+                                            <b ng-show="amazonPlatformConfigForm.skill_preview_in_store_public_name.$invalid && !amazonPlatformConfigForm.skill_preview_in_store_public_name.$pristine" class="text-danger">Public Name is required.</b>
+                                        </div>
+
+                                        <div class="convo-form-group" ng-if="config.mode === 'auto'">
                                             <label for="skill_preview_in_store_one_sentence_description" class="convo-form-label">One Sentence Description * <i class="fa fa-question-circle" uib-tooltip="A quick at-a-glance sentence that describes the skill or what customers can do with it. This will display in the Alexa app and may be spoken aloud by Alexa."></i></label>
                                             <input ng-required="true" ng-minlength="1" ng-maxlength="160" type="text" class="convo-form-input" id="skill_preview_in_store_one_sentence_description" name="skill_preview_in_store_one_sentence_description" placeholder="" ng-model="config.skill_preview_in_store.one_sentence_description">
                                             <span class="help" ng-class="{'error': config.skill_preview_in_store.one_sentence_description.length > 160}">
