@@ -58,18 +58,11 @@ export default function ($stateProvider, $urlRouterProvider) {
                 },
             }
         }).state('convoworks-editor-service.intent-new', {
-            url:'/intents-entities/intent/new',
+            url:'/intents-entities/intent/new?parent',
             views: {
                 'serviceTabView': {
                 template: '<intent-new></intent-new>',
               }
-            }
-        }).state('convoworks-editor-service.child-intent-new', {
-            url:'/intents-entities/intent/new?parent',
-            views: {
-                'serviceTabView': {
-                    template: '<intent-new></intent-new>',
-                }
             }
         }).state('convoworks-editor-service.intent-details', {
             url:'/intents-entities/intent/:name/details',

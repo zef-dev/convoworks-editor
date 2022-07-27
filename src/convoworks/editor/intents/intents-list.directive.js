@@ -32,7 +32,7 @@ export default function intentList( $log, $window, $state)
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                $state.go('convoworks-editor-service.child-intent-new', { parent: intent.name });
+                $state.go('convoworks-editor-service.intent-new', { parent: intent.name });
             }
 
             $scope.deleteIntent = function($event, intent) {
