@@ -33,6 +33,12 @@ export default function intentDetails( $log, $window, $state, $stateParams)
 
             $scope.submitting = () => submitting;
 
+            $scope.hasChildren = () => propertiesContext.getSelectedService().intents.some(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
+            
+            $scope.getChildIntentNames = () => propertiesContext.getSelectedService().intents
+                .filter(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
+                .map(intent => intent.name);
+
             $scope.onUpdate = function( intent) {
                 $log.debug( 'intentDetails onUpdate intent', intent);
                 $scope.$applyAsync( function () {
