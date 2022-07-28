@@ -7,7 +7,7 @@ const defaultNewIntent  =   {
 };
 
 /* @ngInject */
-export default function intentNew( $log, $window, $stateParams, localStorageService)
+export default function intentNew( $log, $window, $stateParams, $transitions, localStorageService)
 {
     return {
         restrict: 'E',
@@ -25,6 +25,22 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
             }
 
             var current = angular.copy( original);
+
+            const $onTransitionClear = $transitions.onSuccess({}, () => {
+                const qi = localStorageService.get('quick_intent');
+                if (!qi || !qi.intent) {
+                    $log.log('intentNew onTransitionClear() removing quick intent')
+                    localStorageService.set('quick_intent', null);
+                }
+
+                const qci = localStorageService.get('quick_child_intent');
+                if (!qci || !qci.intent) {
+                    $log.log('intentNew onTransitionClear() removing quick child intent')
+                    localStorageService.set('quick_child_intent', null);
+                }
+            });
+
+            $scope.$on('$destroy', () => { $onTransitionClear(); });
 
             function _render()
             {
@@ -47,15 +63,20 @@ export default function intentNew( $log, $window, $stateParams, localStorageServ
 
             $scope.submitIntent = function() {
                 submitting = true;
-                var index   =   propertiesContext.addConvoIntent( current);
+                propertiesContext.addConvoIntent(current);
 
                 let quick_intent = localStorageService.get('quick_intent');
-
                 if (quick_intent && quick_intent.component_id) {
                     quick_intent.intent = current.name;
-                    quick_intent.intent_index = index;
     
                     localStorageService.set('quick_intent', quick_intent);
+                }
+
+                let quick_child_intent = localStorageService.get('quick_child_intent');
+                if (quick_child_intent && quick_child_intent.component_id) {
+                    quick_child_intent.intent = current.name;
+
+                    localStorageService.set('quick_child_intent', quick_child_intent);
                 }
                 
                 submitting = false;

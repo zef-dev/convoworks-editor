@@ -1,7 +1,7 @@
 import template from './intent-delegate-editor.tmpl.html';
 
 /* @ngInject */
-export default function intentDelegateEditor($log) {
+export default function intentDelegateEditor($log, $state, localStorageService) {
     return {
         restrict: 'E',
         scope: {
@@ -18,13 +18,44 @@ export default function intentDelegateEditor($log) {
             let target_intent = null;
             _setUpChildIntents($scope.container.properties.intent);
 
+            const quick_child_intent = localStorageService.get('quick_child_intent');
+
+            $log.log('intentDelegateEditor quick_child_intent', quick_child_intent);
+
+            if (quick_child_intent && quick_child_intent.component_id === $scope.component.properties._component_id) {
+                $scope.component.properties[$scope.key] = quick_child_intent.intent;
+
+                localStorageService.set('quick_child_intent', null);
+            }
+
+            $scope.quickAddChildIntent = function() {
+                if (!target_intent) {
+                    $log.warn('intentDelegateEditor quickAddChildIntent no target intent');
+                    return;
+                }
+
+                $log.log('intentDelegateEditor quickAddChildIntent()');
+
+                let quick_child_intent = localStorageService.get('quick_child_intent');
+
+                if (!quick_child_intent) {
+                    localStorageService.set('quick_child_intent', {
+                        component_id: $scope.component.properties._component_id
+                    });
+
+                    $log.log('intentDelegateEditor quick child intent set to', localStorageService.get('quick_child_intent'));
+                }
+
+                $state.go('convoworks-editor-service.intent-new', { parent: target_intent.name });
+            }            
+
             $scope.$watch(() => $scope.container.properties.intent, (newVal, oldVal) => {
                 if (newVal === oldVal) {
                     return;
                 }
 
                 _setUpChildIntents(newVal);
-            }, true)
+            }, true);
 
             function _setUpChildIntents(parentContainerIntent)
             {

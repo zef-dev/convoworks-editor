@@ -1,5 +1,11 @@
 <div class="convo-form-group">
-    <label class="convo-form-label">{{ definition.component_properties[key].name }}</label>
+    <label class="convo-form-label">
+        {{ definition.component_properties[key].name }}
+        &nbsp;
+		<button class="btn btn-sm btn-primary" ng-click="quickAddChildIntent()">
+			<i class="fa fa-plus"></i> Add new delegate intent
+		</button>
+    </label>
     <select class="convo-form-input" required ng-model="component.properties[key]">
         <option
             ng-repeat="name in childIntents track by name"
