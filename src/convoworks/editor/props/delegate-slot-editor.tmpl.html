@@ -1,0 +1,13 @@
+<div class="convo-form-group">
+    <label class="convo-form-label">
+        {{ definition.component_properties[key].name }}
+    </label>
+    <select class="convo-form-input" required ng-model="component.properties[key]">
+        <option
+            ng-repeat="slot in intentSlots track by $index"
+            value="{{ slot }}">
+            {{ slot }}
+        </option>
+    </select>
+    <small class="form-text text-muted">{{ definition.component_properties[key].description }}</small>
+</div>
