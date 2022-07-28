@@ -74,8 +74,8 @@ export default function intentList($log, $window, $state, StringService)
                         type: "custom",
                         utterances: [
                             {
-                                "raw": slot.text,
-                                "model": [
+                                raw: slot.text,
+                                model: [
                                     {
                                         text: slot.text,
                                         type: slot.type,
