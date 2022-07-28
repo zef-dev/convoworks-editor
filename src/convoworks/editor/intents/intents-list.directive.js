@@ -46,7 +46,7 @@ export default function intentList($log, $window, $state, StringService)
                 if (!intent || !intent.utterances) {
                     return [];
                 }
-
+                
                 $log.log('delegateSlotEditor getting slots out of intent', intent);
                 
                 const service = propertiesContext.getSelectedService();
