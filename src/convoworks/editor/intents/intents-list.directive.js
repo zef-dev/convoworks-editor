@@ -47,8 +47,6 @@ export default function intentList($log, $window, $state, StringService)
                     return [];
                 }
                 
-                $log.log('delegateSlotEditor getting slots out of intent', intent);
-                
                 const service = propertiesContext.getSelectedService();
                 
                 const slots = intent
@@ -63,9 +61,16 @@ export default function intentList($log, $window, $state, StringService)
                 {
                     const slot = slots[i];
 
+                    const name = StringService.capitalizeFirst(`${slot.name}DelegateIntent`);
+
+                    if (service.intents.some(intent => intent.name === name)) {
+                        $log.warn(`intentsList generateSlotDelegates intent with name ${name} already exists.`);
+                        continue;
+                    }
+
                     let new_intent = {
                         parent_intent: intent.name,
-                        name: StringService.capitalizeFirst(`${slot.name}DelegateIntent`),
+                        name,
                         type: "custom",
                         utterances: [
                             {
