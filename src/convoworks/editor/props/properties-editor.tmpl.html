@@ -88,6 +88,10 @@
 
                         </div>
 
+                        <intent-delegate-editor ng-switch-when="intent_delegate" key="key" service="service"
+                            definition="definition" component="component" container="getComponentContainer()">
+                        </intent-delegate-editor>
+
                         <div class="convo-form-group" ng-switch-when="text"
                             ng-if="!!definition.component_properties[key].editor_properties.multiple">
 

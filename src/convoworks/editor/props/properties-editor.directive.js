@@ -117,6 +117,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 return $scope.component.properties.role || null;
             }
 
+            $scope.getComponentContainer = () => {
+                return propertiesContext.getSelection().containerController.getComponentContainer();
+            }
+
             $scope.getComponentName =   function() {
 
 //                if ( $scope.component.properties.name) {
