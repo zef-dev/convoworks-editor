@@ -1,7 +1,7 @@
 import template from './intents-list.tmpl.html';
 
 /* @ngInject */
-export default function intentList( $log, $window, $state)
+export default function intentList($log, $window, $state, StringService)
 {
     return {
         restrict: 'E',
@@ -33,6 +33,56 @@ export default function intentList( $log, $window, $state)
                 $event.stopPropagation();
 
                 $state.go('convoworks-editor-service.intent-new', { parent: intent.name });
+            }
+
+            $scope.hasSlots = (intent) => {
+                return intent.utterances.some(utterance => utterance.model.some(part => part.slot_value));
+            }
+
+            $scope.generateSlotDelegates = ($event, intent) => {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                if (!intent || !intent.utterances) {
+                    return [];
+                }
+
+                $log.log('delegateSlotEditor getting slots out of intent', intent);
+                
+                const service = propertiesContext.getSelectedService();
+                
+                const slots = intent
+                    .utterances
+                    .map(
+                        utterance => utterance.model.map(
+                            model => { return { name: model.slot_value, text: model.text, type: model.type } }))
+                    .flat()
+                    .filter((value, index, self) => value.type && self.findIndex(v => v.name === value.name) === index)
+
+                for (let i = 0; i < slots.length; ++i)
+                {
+                    const slot = slots[i];
+
+                    let new_intent = {
+                        parent_intent: intent.name,
+                        name: StringService.capitalizeFirst(`${slot.name}DelegateIntent`),
+                        type: "custom",
+                        utterances: [
+                            {
+                                "raw": slot.text,
+                                "model": [
+                                    {
+                                        text: slot.text,
+                                        type: slot.type,
+                                        slot_value: slot.name
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+
+                    service.intents.push(new_intent);
+                }
             }
 
             $scope.deleteIntent = function($event, intent) {
