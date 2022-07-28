@@ -13,8 +13,7 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                 var propertiesContext               =   $ctrls[0];
                 var convoworksComponentsContainer   =   $ctrls[1];
                 var $draggable;
-                var service                 =   propertiesContext.getSelectedService();
-//              $log.log( 'selectableComponent link() $scope.component', $scope.component);
+
                 var defaultTitle            =   'Unknown'
                 $scope.over                 =   false;
                 $scope.ready                =   false;
@@ -402,7 +401,13 @@ export default function selectableComponent( $log, UserPreferencesService, $time
                             if ( $scope.isSelected()) {
                                 propertiesContext.setSelectedComponent( null);
                             } else {
-                                propertiesContext.setSelectedComponent( $scope.component, { deleteSelectedComponent: convoworksComponentsContainer.removeComponent });
+                                propertiesContext.setSelectedComponent(
+                                    $scope.component,
+                                    {
+                                        deleteSelectedComponent: convoworksComponentsContainer.removeComponent,
+                                        getComponentContainer: () => convoworksComponentsContainer.getComponentContainer()
+                                    }
+                                );
                             }
                         });
 
