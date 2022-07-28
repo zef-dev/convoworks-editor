@@ -12,8 +12,10 @@ export default function entityDetails( $log, $state, $stateParams)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'entityDetails link');
 
-            var selected            =   -1;
+            var selected            =   $stateParams.name;
             var original            =   null; //              =   angular.copy( $scope.intent);
+
+            
 
             $scope.onUpdate         =   function( entity) {
                 $log.debug( 'entityDetails onUpdate entity', entity);
@@ -31,8 +33,12 @@ export default function entityDetails( $log, $state, $stateParams)
                 return !angular.equals( original, $scope.current_entity);
             }
 
-            selected               =   parseInt( $stateParams.index);
-            $scope.current_entity  =   propertiesContext.getSelectedService().entities[selected];
+            $scope.current_entity = propertiesContext.getSelectedService().entities.find(e => e.name === selected);
+
+            if ($scope.current_entity === undefined || $scope.current_entity === null) {
+                $log.warn(`entityDetails selected entity [${selected}] does not exist.`);
+                $state.go('^.intents-entities');
+            }
 
             if ( !original) {
                 original     =   angular.copy( $scope.current_entity);

@@ -21,6 +21,7 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
 
                 this.getPropertyDefinition      =   getPropertyDefinition;
                 this.getContainer               =   getContainer;
+                this.getComponentContainer      =   getComponentContainer;
                 this.isMultiple                 =   isMultiple;
                 this.indexOf                    =   indexOf;
                 this.addComponent               =   addComponent;
@@ -82,6 +83,11 @@ export default function convoworksComponentsContainer($log, $rootScope, $timeout
                 function getPropertyDefinition()
                 {
                     return $scope.propertyDefinition;
+                }
+
+                function getComponentContainer()
+                {
+                    return $scope.component;
                 }
 
                 function getContainer()

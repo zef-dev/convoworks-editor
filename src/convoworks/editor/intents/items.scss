@@ -1,6 +1,11 @@
 .convoworks {
     .intents-entities-list {
+        .intent-container {
+            overflow: auto;
+        }
+
         .grid-item {
+            position: relative;
             margin-bottom: 10px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -9,31 +14,72 @@
             padding: 7px 11px;
             vertical-align: bottom;
             height: 40px;
-        }
-        .grid-item:hover {
-            border-color: rgba(47, 116, 234, 0.5);
-        }
-        
-        .grid-item > .grid-item-main {
-            display: inline-block;
-            width: 95%;
-            overflow: hidden;
-        }
-        
-        .grid-item > .grid-item-buttons {
-            width: 20px;
-            float: right;
-        }
-        .grid-item > .grid-item-buttons button {
-            opacity: 0.1;
-            transition: 0.22s;
-            background: none;
-            border: none;
-            outline: none;
-            box-shadow: none;
-        }
-        .grid-item:hover > .grid-item-buttons button {
-            opacity: .9;
+
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            &:hover, &.child-intent:hover {
+                border-color: rgba(47, 116, 234, 0.5);
+
+                > .grid-item-buttons button {
+                    opacity: .9;
+                }
+            }
+
+            .grid-item-main {
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            > .grid-item-buttons {
+                flex-basis: 7%;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-end;
+
+                button {
+                    opacity: 0.1;
+                    transition: 0.22s;
+                    background: none;
+                    border: none;
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+
+            &.child-intent {
+                width: 95.5%;
+                float: right;
+
+                &.first-child:before {
+                    height: 32px;
+                    top: -12px;
+                }
+
+                &:before {
+                    pointer-events: none;
+                    position: absolute;
+                    display: inline;
+                    
+                    content: " ";
+                    width: 2.8%;
+                    height: 53px;
+
+                    top: -33px;
+                    left: -2.7%;
+
+                    border-bottom: 1px dotted gray;
+                    border-left: 1px dotted gray;
+
+                    border-bottom-left-radius: 4px;
+                }
+
+                .grid-item-main {
+                    display: inline-block;
+                    overflow: hidden;
+                }
+            }
         }
     }
 }

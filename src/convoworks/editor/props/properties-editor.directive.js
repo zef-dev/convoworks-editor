@@ -117,6 +117,10 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                 return $scope.component.properties.role || null;
             }
 
+            $scope.getComponentContainer = () => {
+                return propertiesContext.getSelection().containerController.getComponentContainer();
+            }
+
             $scope.getComponentName =   function() {
 
 //                if ( $scope.component.properties.name) {
@@ -432,8 +436,8 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                         case 'other':
                         case 'string':
                             return value
-                                .map( function( val) { return val.split( ',').map( function( piece) { return ("" + piece).trim(); }); })
-                                .reduce( function( a, b) { return a.concat( b); }, []);
+                                .map(val => val.split(',').map(piece => piece.toString().trim()))
+                                .reduce((a, b) => a.concat(b), []);
                         default:
                             throw new TypeError( 'Unsupported type [' + prevType + ']');
                     }

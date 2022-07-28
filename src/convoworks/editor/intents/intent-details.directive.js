@@ -13,12 +13,10 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             $log.debug( 'intentDetails link');
 
             let submitting = false;
-            var selected = -1;
-            var original = null; //              =   angular.copy( $scope.intent);
-//            $scope.current_intent     =   angular.copy( original);
+            var selected = $stateParams.name;
+            var original = null; 
 
-            selected               =   parseInt( $stateParams.index);
-            $scope.current_intent  =   propertiesContext.getSelectedService().intents[selected];
+            $scope.current_intent = propertiesContext.getSelectedService().intents.find(i => i.name === selected);
 
             if ($scope.current_intent === undefined || $scope.current_intent === null) {
                 $log.warn(`intentDetails selected intent [${selected}] does not exist.`);
@@ -35,7 +33,13 @@ export default function intentDetails( $log, $window, $state, $stateParams)
 
             $scope.submitting = () => submitting;
 
-            $scope.onUpdate         =   function( intent) {
+            $scope.hasChildren = () => propertiesContext.getSelectedService().intents.some(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
+            
+            $scope.getChildIntentNames = () => propertiesContext.getSelectedService().intents
+                .filter(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
+                .map(intent => intent.name);
+
+            $scope.onUpdate = function( intent) {
                 $log.debug( 'intentDetails onUpdate intent', intent);
                 $scope.$applyAsync( function () {
                     $scope.current_intent     =   angular.copy( intent);
@@ -44,7 +48,7 @@ export default function intentDetails( $log, $window, $state, $stateParams)
 
             $scope.submitIntent = function() {
                 submitting = true;
-                propertiesContext.updateConvoIntent( $scope.current_intent, selected);
+                propertiesContext.updateConvoIntent(original, $scope.current_intent);
                 submitting = false;
                 $window.history.back();
             }

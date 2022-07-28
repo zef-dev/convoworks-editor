@@ -55,9 +55,7 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
             }
 
             $scope.navigateToIntent = function(intent) {
-                const index = $scope.service.intents.findIndex(i => i.name === intent);
-
-                $state.go('convoworks-editor-service.intent-details', { index });
+                $state.go('convoworks-editor-service.intent-details', { name: intent.name });
             }
 
             // PRIVATE

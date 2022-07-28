@@ -15,7 +15,7 @@ export default function convoIntentEditor($log, $state, localStorageService) {
         link: function ( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'convoIntentEditor link');
             $scope.error        =   false;
-            $scope.intents      =   propertiesContext.getConvoIntents();
+            $scope.intents      =   propertiesContext.getConvoIntents().filter(intent => !intent.parent_intent);
 
             $log.debug( 'convoIntentEditor $scope.intents', $scope.intents, $scope.service);
 
