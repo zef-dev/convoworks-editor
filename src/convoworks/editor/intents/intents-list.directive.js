@@ -36,7 +36,7 @@ export default function intentList($log, $window, $state, StringService)
             }
 
             $scope.hasSlots = (intent) => {
-                return intent.utterances.some(utterance => utterance.model.some(part => part.slot_value));
+                return intent.utterances && intent.utterances.some(utterance => utterance.model.some(part => part.slot_value));
             }
 
             $scope.generateSlotDelegates = ($event, intent) => {
