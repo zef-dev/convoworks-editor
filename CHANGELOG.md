@@ -4,6 +4,12 @@
 
 ## [Releases]
 
+## 0.24.0 - 2022-07-29
+* Add support for child intents
+  * Child intents cannot be picked to trigger processors
+  * Child intents are utilized for Alexa dialogue delegation
+* Added `StringService::capitalizeFirst`
+
 ## 0.23.4 - 2022-07-18
 * Fix error message details (again)
 * Fix test view chatbox sending messages twice
