@@ -61,7 +61,7 @@ export default function intentList($log, $window, $state, StringService)
                 {
                     const slot = slots[i];
 
-                    const name = StringService.capitalizeFirst(`${slot.name}DelegateIntent`);
+                    const name = intent.name + StringService.capitalizeFirst(`${slot.name}DelegateIntent`);
 
                     if (service.intents.some(intent => intent.name === name)) {
                         $log.warn(`intentsList generateSlotDelegates intent with name ${name} already exists.`);
