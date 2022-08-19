@@ -25,7 +25,7 @@ export default function entityDetails( $log, $state, $stateParams)
             }
 
             $scope.submitEntity = function() {
-                propertiesContext.updateConvoEntity( $scope.current_entity, parseInt( $stateParams.index));
+                propertiesContext.updateConvoEntity(original, $scope.current_entity);
                 $state.go('^.intents-entities');
             }
 
