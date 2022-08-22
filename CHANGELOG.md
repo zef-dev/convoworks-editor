@@ -4,6 +4,11 @@
 
 ## [Releases]
 
+## 0.24.1 - 2022-08-22
+* Fix entity deletion when updating
+* Child intents may have duplicate utterances that appear in outside intents
+   * Utterances _within_ child intent must still be unique
+
 ## 0.24.0 - 2022-07-29
 * Add support for child intents
   * Child intents cannot be picked to trigger processors
