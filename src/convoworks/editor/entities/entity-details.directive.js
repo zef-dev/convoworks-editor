@@ -12,15 +12,15 @@ export default function entityDetails( $log, $state, $stateParams)
         link: function( $scope, $element, $attributes, propertiesContext) {
             $log.debug( 'entityDetails link');
 
-            var selected            =   $stateParams.name;
-            var original            =   null; //              =   angular.copy( $scope.intent);
+            let is_valid = true;
+            let selected = $stateParams.name;
+            let original = null;
 
-            
-
-            $scope.onUpdate         =   function( entity) {
-                $log.debug( 'entityDetails onUpdate entity', entity);
-                $scope.$applyAsync( function () {
-                    $scope.current_entity     =   angular.copy( entity);
+            $scope.onUpdate = (entity, valid) => {
+                $log.debug('entityDetails onUpdate entity', entity, valid);
+                $scope.$applyAsync(function () {
+                    is_valid = valid;
+                    $scope.current_entity = angular.copy(entity);
                 });
             }
 
@@ -32,6 +32,8 @@ export default function entityDetails( $log, $state, $stateParams)
             $scope.isEntityChanged = function() {
                 return !angular.equals( original, $scope.current_entity);
             }
+
+            $scope.valid = () => is_valid;
 
             $scope.current_entity = propertiesContext.getSelectedService().entities.find(e => e.name === selected);
 

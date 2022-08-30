@@ -9,7 +9,7 @@
 
             <div class="group">
                 <button type="submit" title="Save changes"
-                        ng-disabled="!isEntityChanged()"
+                        ng-disabled="!isEntityChanged() || !valid()"
                         class="btn btn-md btn-primary">
                     Save
                 </button>

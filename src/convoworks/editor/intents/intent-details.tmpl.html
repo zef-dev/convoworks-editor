@@ -18,7 +18,7 @@
                 system-entities="system_entities" on-update="onUpdate"></intent-editor>
 
             <div class="group">
-                <button type="submit" title="Save changes" ng-disabled="!isIntentChanged() || submitting()"
+                <button type="submit" title="Save changes" ng-disabled="!isIntentChanged() || submitting() || !valid()"
                     class="btn btn-md btn-primary">
                     Save
                 </button>

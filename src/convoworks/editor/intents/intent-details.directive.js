@@ -13,6 +13,7 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             $log.debug( 'intentDetails link');
 
             let submitting = false;
+            let is_valid = true;
             var selected = $stateParams.name;
             var original = null; 
 
@@ -32,6 +33,7 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             $scope.system_entities  =   propertiesContext.getSystemEntities();
 
             $scope.submitting = () => submitting;
+            $scope.valid = () => is_valid;
 
             $scope.hasChildren = () => propertiesContext.getSelectedService().intents.some(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
             
@@ -39,10 +41,11 @@ export default function intentDetails( $log, $window, $state, $stateParams)
                 .filter(intent => intent.parent_intent && intent.parent_intent === $scope.current_intent.name)
                 .map(intent => intent.name);
 
-            $scope.onUpdate = function( intent) {
-                $log.debug( 'intentDetails onUpdate intent', intent);
+            $scope.onUpdate = function(intent, valid) {
+                $log.debug( 'intentDetails onUpdate intent', intent, valid);
                 $scope.$applyAsync( function () {
                     $scope.current_intent     =   angular.copy( intent);
+                    is_valid = valid;
                 });
             }
 
