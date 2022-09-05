@@ -4,10 +4,13 @@
 			<i class="fa fa-plus"></i> Add new
 		</button>
 	</label>
-	<select class="convo-form-input" ng-model="component.properties[key]">
+	<!-- <select class="convo-form-input" ng-model="component.properties[key]">
 		<option ng-repeat="intent in intents track by intent.name" value="{{ intent.name }}">
 			{{ intent.name }}
 		</option>
-	</select>
+	</select> -->
+	<input type="text" ng-model="component.properties[key]"
+		uib-typeahead="intent.name for intent in intents | filter:$viewValue | limitTo:intents.length" class="convo-form-input"
+		typeahead-show-hint="true" typeahead-min-length="0">
 	<small class="form-text text-muted">{{propertyDefinition.description}}</small>
 </div>

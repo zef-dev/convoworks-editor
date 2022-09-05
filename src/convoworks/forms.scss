@@ -109,6 +109,13 @@
             display: inline;
         }
 
+        // fix for typeahead inserting a classless parent div element
+        & > div {
+            width: 100%;
+            display: block;
+            position: static;
+        }
+
         label.convo-form-label {
             min-height: 18px;
             color: rgba(0,0,0,0.63);
