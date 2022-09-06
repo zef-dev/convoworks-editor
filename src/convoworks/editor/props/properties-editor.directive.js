@@ -55,6 +55,11 @@ export default function propertiesEditor($log, $document, $transitions, $rootSco
                     return;
                 }
 
+                if ($(event.target).closest("ul[id*='typeahead']")) {
+                    $log.log('propertiesEditor typeahead item clicked, will not close');
+                    return;
+                }
+
                 const dx = event.offsetX - last_mouse_x;
                 const dy = event.offsetY - last_mouse_y;
 
