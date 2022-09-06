@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.24.2 - 2022-09-06
+* The intent selector is now a typeahead instead of a simple dropdown
+* Saving is disabled for intents and entities if they are invalid
+
 ## 0.24.1 - 2022-08-22
 * Fix entity deletion when updating
 * Child intents may have duplicate utterances that appear in outside intents
