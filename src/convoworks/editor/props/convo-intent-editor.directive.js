@@ -19,6 +19,23 @@ export default function convoIntentEditor($log, $state, localStorageService) {
 
             $log.debug( 'convoIntentEditor $scope.intents', $scope.intents, $scope.service);
 
+            // const intent_input = $element.find("#main-intent-input");
+            // const typeahead = $element.find(".convo-form-input:not([id])");
+            
+            // $log.log('convoIntentEditor found intent input', typeahead);
+            
+            // intent_input.on('focus', () => {
+            //     const currentval = $scope.component[$scope.key];
+
+            //     $log.log('convoIntentEditor focused intent input, current model value', currentval);
+                
+            //     if (currentval === null || currentval === undefined || currentval === "")
+            //     {
+            //         intent_input.trigger(jQuery.Event('keypress', { keycode: 67 }));
+            //         typeahead.trigger('focus').trigger(jQuery.Event('keypress', { keycode: 67 }));
+            //     }
+            // });
+
             const quick_intent = localStorageService.get('quick_intent');
 
             $log.log('convoIntentEditor quick_intent', quick_intent);
