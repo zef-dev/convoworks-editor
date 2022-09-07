@@ -4,6 +4,10 @@
 
 ## [Releases]
 
+## 0.24.3 - 2022-09-07
+_Hotfix_
+* Temporarily revert back to using dropdown for intents
+
 ## 0.24.2 - 2022-09-06
 * The intent selector is now a typeahead instead of a simple dropdown
 * Saving is disabled for intents and entities if they are invalid
