@@ -685,6 +685,16 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::profile:given_name:read');
                 }
 
+                if (permissionValue === 'alexa:devices:all:address:country_and_postal_code:read' && $scope.config.permissions.includes('alexa::devices:all:address:full:read')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::devices:all:address:full:read');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa::devices:all:address:full:read');
+                } else if (permissionValue === 'alexa::devices:all:address:full:read' && $scope.config.permissions.includes('alexa:devices:all:address:country_and_postal_code:read')) {
+                    const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa:devices:all:address:country_and_postal_code:read');
+                    $scope.permissions[targetIndex].checked = false;
+                    $scope.config.permissions = _arrayRemove($scope.config.permissions, 'alexa:devices:all:address:country_and_postal_code:read');
+                }
+
                 if (permissionValue === 'alexa::authenticate:2:mandatory' && $scope.config.permissions.includes('alexa::authenticate:2:optional')) {
                     const targetIndex = $scope.permissions.findIndex((element) => element.value === 'alexa::authenticate:2:optional');
                     $scope.permissions[targetIndex].checked = false;
