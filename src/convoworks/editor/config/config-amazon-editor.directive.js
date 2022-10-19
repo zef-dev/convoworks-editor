@@ -101,7 +101,7 @@ export default function configAmazonEditor($log, $q, $rootScope, $window, Convow
                     testing_instructions: "N/A",
                 },
                 availability: {
-                    automatic_distribution: true,
+                    automatic_distribution: $scope.supported_locales.length > 1,
                 },
                 time_created: 0,
                 time_updated: 0

@@ -467,7 +467,7 @@
                                             <label class="convo-form-label" for="config-auto-display">Opt in to automated locale distribution </label>
                                             <div class="checkbox">
                                                 <label for="availability_automatic_distribution">
-                                                    <input type="checkbox" ng-model="config.availability.automatic_distribution" id="availability_automatic_distribution"/>
+                                                    <input ng-disabled="supported_locales.length <= 1" type="checkbox" ng-model="config.availability.automatic_distribution" id="availability_automatic_distribution"/>
                                                     When you submit your skill, Amazon will assess its eligibility for distribution to all locales of a given language. If eligible, your skill will be made live in the Alexa Skills Store associated with each additional locale. Once a skill is live for a particular locale, the skill can only be removed by suppressing the entire skill. Please remember to update your privacy policy and terms of use to be applicable globally. To learn more, read the technical documentation <a href="https://developer.amazon.com/en-US/docs/alexa/devconsole/launch-your-skill.html#opt-in-to-automated-locale-distribution" target="_blank">here</a>
                                                 </label>
                                             </div>
