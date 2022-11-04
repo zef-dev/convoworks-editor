@@ -45,6 +45,13 @@
                                     Propagate to Amazon
                                 </a>
                             </li>
+                            <li role="menuitem" ng-if="isPlatformPropagateAllowed('dialogflow_es')">
+                                <a ng-click="propagatePlatformChanges('dialogflow_es')"
+                                   ng-class="{'dropdown-item': !isPlatformPropagateAvailable('dialogflow_es'), 'dropdown-item bold': isPlatformPropagateAvailable('dialogflow_es')}"
+                                   title="Add session start block" href="javascript:void(0);">
+                                    Propagate to Dialogflow ES
+                                </a>
+                            </li>
                             <li role="menuitem" ng-if="isPlatformPropagateAllowed('dialogflow')">
                                 <a ng-click="propagatePlatformChanges('dialogflow')"
                                     ng-class="{'dropdown-item': !isPlatformPropagateAvailable('dialogflow'), 'dropdown-item bold': isPlatformPropagateAvailable('dialogflow')}"

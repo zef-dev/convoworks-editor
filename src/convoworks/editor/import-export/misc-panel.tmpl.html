@@ -76,6 +76,12 @@
                 </button>
             </div>
             <div class="convo-form-group">
+                <button type="button" ng-disabled="!hasPlatformRelease('dialogflow_es')" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('dialogflow_es')">
+                    <i class="fa fa-download-alt"></i>&nbsp;Dialogflow Essentials export download
+                </button>
+                <i ng-show="!hasPlatformRelease('dialogflow_es')" class="fa fa-question-circle" uib-tooltip="Can't download export for Dialogflow ES at the moment. Please create an configuration for the Dialogflow ES Platform."></i>
+            </div>
+            <div class="convo-form-group">
                 <button type="button" ng-disabled="!hasPlatformRelease('dialogflow')" class="btn btn-primary btn-md inverted border-radius-8" ng-click="downloadPlatform('dialogflow')">
                     <i class="fa fa-download-alt"></i>&nbsp;Dialogflow export download
                 </button>

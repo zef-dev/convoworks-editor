@@ -84,6 +84,13 @@ export default function TestViewController($log, $scope, $q, $stateParams, Convo
                 })
             }
 
+            if (config.dialogflow_es && config.dialogflow_es.mode === "auto") {
+                $scope.delegateOptions.push({
+                    label: 'Dialogflow ES',
+                    value: 'dialogflow_es'
+                })
+            }
+
             if (config.dialogflow && config.dialogflow.mode === "auto") {
                 $scope.delegateOptions.push({
                     label: 'Dialogflow',

@@ -314,6 +314,13 @@ export default function ConvoworksEditorController($log, $scope, $rootScope, $st
                 })
             );
             promises.push(
+                ConvoworksApi.getPropagateInfo( $scope.serviceId, 'dialogflow_es').then(function (data) {
+                    platform_info['dialogflow_es'] = data;
+                }).catch(function (reason) {
+                    NotificationsService.addDanger('Dialogflow Essentials propagation error', _extractErrorDetails(reason));
+                })
+            );
+            promises.push(
                 ConvoworksApi.getPropagateInfo( $scope.serviceId, 'dialogflow').then(function (data) {
                     platform_info['dialogflow'] = data;
                 }).catch(function (reason) {

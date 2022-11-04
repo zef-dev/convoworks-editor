@@ -1,0 +1,108 @@
+<div class="wide-panel">
+    <div class="card-pane">
+        <fieldset>
+            <legend>
+                <a ui-sref="convoworks-editor-service.configuration" class="back">
+                    <i class="fa fa-arrow-left"></i>
+                </a>&nbsp;Dialogflow Essentials
+            </legend>
+
+            <form name="dialogflowEsPlatformConfigForm" class="form-horizontal" ng-submit="updateConfig(dialogflowEsPlatformConfigForm.$valid)">
+                <!-- DUMMY INPUT -->
+                <input type="text" ng-valid="true" style="display: none; pointer-events: none" tabindex="-1">
+
+                <div class="convo-form-group" ng-if="config.serviceAccount">
+                    <a href="{{getConfigUrl()}}" target="_blank"> Dialogflow - Edit Agent</a>
+                </div>
+
+                <div class="convo-form-group">
+                    <label class="convo-form-label inline">Mode: </label>
+
+                    <div class="radio-group">
+                        <input type="radio" ng-model="config.mode" id="config-mode-auto" value="auto">
+                        <label class="convo-form-label inline" for="config-mode-auto">Auto</label>
+                    </div>
+
+                    <div class="radio-group">
+                        <input type="radio" ng-model="config.mode" id="config-mode-manual" value="manual">
+                        <label class="convo-form-label inline" for="config-mode-manual">Manual</label>
+                    </div>
+                    <small class="form-text text-muted" ng-if="config.mode === 'auto'">
+                    Automatically propagates changes to Dialogflow</small>
+                    <small class="form-text text-muted" ng-if="config.mode === 'manual'">Intents are manually defined on Dialogflow.</small>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'manual'">
+                    <label for="dialogflow-config-project-id" class="convo-form-label">Project ID</label>
+                    <input type="text" class="convo-form-input" id="dialogflow-config-project-id" placeholder="" ng-model="config.projectId" ng-focus="$event.target.select()">
+                    <small class="form-text text-muted">Required for accessing Actions on Google Directory Information</small>
+                    <small class="form-text text-muted">Required to display the "Test on Amazon" button in Test tab</small>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label for="serviceAccount" class="convo-form-label">Service Account JSON</label>
+                    <input type="file" accept=".json" class="convo-form-input" id="serviceAccount" name="serviceAccount"
+                           ngf-drop="onFileUpload($file)" ng-model="config.serviceAccount"
+                           ngf-select="onFileUpload($file)" ngf-multiple="false">
+
+                    <button ng-if="config.serviceAccount" ng-click="toggleShowServiceAccount()" class="btn btn-outline-primary" type="button"> {{showServiceAccount === true ? 'Hide contents of Service Account JSON' : 'Show contents of Service Account JSON'}}</button>
+                    <div ng-if="config.serviceAccount && showServiceAccount">
+                        <span>Saved Service Account JSON:</span>
+                        <textarea ng-disabled="true" ng-value="config.serviceAccount" class="form-control" id="service_account_json" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label class="convo-form-label" for="config-default-timezone">Default Agent Timezone</label>
+                    <select ng-model="config.default_timezone" class="convo-form-input" id="config-default-timezone">
+                        <option ng-repeat="(index, timezone)  in timezones track by index"
+                                value="{{ timezone.value }}"> {{ timezone.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label for="name" class="convo-form-label">Agent Name</label>
+                    <input ng-required="true" ng-change="validateAgentName()" type="text" class="convo-form-input" id="name"  name="name" placeholder="" ng-model="config.name">
+                    <b ng-show="dialogflowEsPlatformConfigForm.name.$error.required && !dialogflowEsPlatformConfigForm.name.$pristine" class="text-danger">Agent Name is required.</b>
+                    <b ng-show="dialogflowEsPlatformConfigForm.name.$invalid && !dialogflowEsPlatformConfigForm.name.$pristine" class="text-danger">No whitespaces are allowed for Agent Name.</b>
+                </div>
+                <div class="convo-form-group" ng-if="config.mode === 'auto'">
+                    <label for="description" class="convo-form-label">Agent Description</label>
+                    <textarea
+                        ng-required="true"
+                        cols="80"
+                        rows="2"
+                        class="convo-form-input"
+                        id="description"
+                        name="description"
+                        placeholder=""
+                        ng-model="config.description"></textarea>
+                    <b ng-show="dialogflowEsPlatformConfigForm.description.$invalid && !dialogflowEsPlatformConfigForm.description.$pristine" class="text-danger">Agent Description is required.</b>
+                </div>
+
+                <div class="convo-form-group" ng-if="!isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Save changes" ng-disabled="!isConfigChanged() || dialogflowEsPlatformConfigForm.$invalid || dialogflowEsPlatformConfigForm.serviceAccount.$invalid || dialogflowEsPlatformConfigForm.name.$invalid || loading" class="btn btn-primary btn-sm submit">
+                            Save Configuration
+                        </button>
+                        <a type="button" ng-click="revertConfig()" title="Revert changes" ng-disabled="!isConfigChanged() || loading" class="cancel">
+                            Revert
+                        </a>
+                    </div>
+                </div>
+
+                <div class="convo-form-group" ng-if="isNew()">
+                    <div class="button-group">
+                        <button type="submit" title="Create Dialogflow configuration" class="btn btn-primary btn-sm submit" ng-disabled="dialogflowEsPlatformConfigForm.$invalid || dialogflowEsPlatformConfigForm.serviceAccount.$invalid || dialogflowEsPlatformConfigForm.name.$invalid || loading">
+                            Create
+                        </button>
+                        <a ui-sref="convoworks-editor-service.configuration" title="Revert changes" class="cancel">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>

@@ -13,6 +13,15 @@
             <a ui-sref="convoworks-editor-service.configuration-amazon" class="btn btn-lg btn-primary configure">Configure</a>
         </div>
         <div class="config-square card-pane">
+            <div class="logo dialogflow_es"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">Dialogflow Essentials</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled('dialogflow_es'), 'inactive': !configEnabled('dialogflow_es')}"></div>
+            </div>
+            <a ui-sref="convoworks-editor-service.configuration-dialogflow_es" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
+        <div class="config-square card-pane">
             <div class="logo dialogflow"></div>
             <br>
             <div class="name-indicator">
