@@ -1,5 +1,6 @@
 /.phpunit.result.cache
 /node_modules/
+/.yalc/
 /package-lock.json
 *.DS_Store
 .env
