@@ -1,7 +1,7 @@
 import template from './intent-details.tmpl.html';
 
 /* @ngInject */
-export default function intentDetails( $log, $window, $state, $stateParams)
+export default function intentDetails( $log, $window, $state, $stateParams, ConvoworksApi)
 {
     return {
         restrict: 'E',
@@ -16,7 +16,8 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             let is_valid = true;
             var selected = $stateParams.name;
             var original = null; 
-
+            var service_meta = null;
+            
             $scope.current_intent = propertiesContext.getSelectedService().intents.find(i => i.name === selected);
 
             if ($scope.current_intent === undefined || $scope.current_intent === null) {
@@ -27,6 +28,11 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             if ( !original) {
                 original     =   angular.copy( $scope.current_intent);
             }
+            
+            var service_id = propertiesContext.getSelectedService().service_id;
+            ConvoworksApi.getServiceMeta( service_id).then(function (meta) {
+                service_meta = meta;
+            });
 
             $scope.entities         =   propertiesContext.getSelectedService().entities;
             $scope.intents          =   propertiesContext.getConvoIntents();
@@ -51,7 +57,10 @@ export default function intentDetails( $log, $window, $state, $stateParams)
             
             function isAlexaEnabled()
             {
-                return true;
+                if ( service_meta['release_mapping'] && ('amazon' in service_meta['release_mapping'])) {
+                    return true;
+                }
+                return false;
             }
 
             $scope.validator = function( str) {
