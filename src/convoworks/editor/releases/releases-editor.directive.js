@@ -27,9 +27,13 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
             var SUBMIT_OPTIONS  =   {};
 
             $scope.copyReleaseUrl = function (release) {
-                _copyToClipboard(CONVO_PUBLIC_API_BASE_URL + '/service-run/' + release['platform_id'] + '/'
-                    + release['alias'] + '/' + release['service_id']);
-
+                if ( 'url' in release) {
+                    var url = release['url'];
+                } else {
+                    var url = CONVO_PUBLIC_API_BASE_URL + '/service-run/' + release['platform_id'] + '/'
+                    + release['alias'] + '/' + release['service_id'];
+                }
+                _copyToClipboard( url);
                 AlertService.addInfo('Copied release URL to clipboard.');
             }
 
