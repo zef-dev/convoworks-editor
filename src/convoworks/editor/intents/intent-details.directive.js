@@ -16,7 +16,7 @@ export default function intentDetails( $log, $window, $state, $stateParams, Conv
             let is_valid = true;
             var selected = $stateParams.name;
             var original = null; 
-            var service_meta = null;
+            var service_meta = {};
             
             $scope.current_intent = propertiesContext.getSelectedService().intents.find(i => i.name === selected);
 
@@ -57,7 +57,7 @@ export default function intentDetails( $log, $window, $state, $stateParams, Conv
             
             function isAlexaEnabled()
             {
-                if ( service_meta['release_mapping'] && ('amazon' in service_meta['release_mapping'])) {
+                if ( ('release_mapping' in service_meta) && ('amazon' in service_meta['release_mapping'])) {
                     return true;
                 }
                 return false;
