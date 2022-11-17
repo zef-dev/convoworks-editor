@@ -48,9 +48,24 @@ export default function intentDetails( $log, $window, $state, $stateParams)
                     is_valid = valid;
                 });
             }
+            
+            function isAlexaEnabled()
+            {
+                return true;
+            }
 
             $scope.validator = function( str) {
                 $log.debug( 'intentDetails validator str', str);
+                
+                if ( isAlexaEnabled()) {
+                    let reg = /^[a-zA-Z][a-zA-Z/\s/./_/'/-]*$/;
+                    let valid = reg.test( str.trim());
+                    if ( valid) {
+                        return true;    
+                    }
+                    return "Warning: Utterance can't contain special characters when working with Amazon Alexa";
+                }
+                
                 return true;
             }
 
