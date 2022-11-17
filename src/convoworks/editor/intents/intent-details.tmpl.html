@@ -15,7 +15,7 @@
 
         <form ng-submit="submitIntent()">
             <intent-editor intent="current_intent" intents="intents" entities="entities"
-                system-entities="system_entities" on-update="onUpdate"></intent-editor>
+                system-entities="system_entities" on-update="onUpdate" validator="validator"></intent-editor>
 
             <div class="group">
                 <button type="submit" title="Save changes" ng-disabled="!isIntentChanged() || submitting() || !valid()"

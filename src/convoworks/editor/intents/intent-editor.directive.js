@@ -16,6 +16,7 @@ export default function intentEditor( $log)
             entities : '=',
             systemEntities : '=',
             onUpdate : '=',
+            validator : '=',
         },
         template: '<div></div>',
         link: function( $scope, $element, $attributes) {
@@ -34,7 +35,8 @@ export default function intentEditor( $log)
             function _render( intent)
             {
                 $log.debug( 'intentEditor _render()', intent);
-                ReactDOM.render( <IntentEditor intent={intent} intents={$scope.intents} entities={$scope.entities} systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate}/>, $element[0]);
+                ReactDOM.render( <IntentEditor intent={intent} intents={$scope.intents} entities={$scope.entities} 
+                    systemEntities={$scope.systemEntities} onUpdate={$scope.onUpdate} validator={$scope.validator}/>, $element[0]);
             }
 
             $scope.$watch( 'intent', function ( intent) {

@@ -49,6 +49,11 @@ export default function intentDetails( $log, $window, $state, $stateParams)
                 });
             }
 
+            $scope.validator = function( str) {
+                $log.debug( 'intentDetails validator str', str);
+                return true;
+            }
+
             $scope.submitIntent = function() {
                 submitting = true;
                 propertiesContext.updateConvoIntent(original, $scope.current_intent);
