@@ -62,7 +62,7 @@
             <br>
             <div class="name-indicator">
                 <span class="platform-name">{{platform.name}}</span>
-                <div class="toggled-indicator" ng-class="{'active': configEnabled( platform.platform_id), 'inactive': !configEnabled( platform.platform_id)}"></div>
+                <a href="{{platform.config_url}}" class="toggled-indicator" ng-class="{'active': configEnabled( platform.platform_id), 'inactive': !configEnabled( platform.platform_id)}"></a>
             </div>
             <a href="{{platform.config_url}}" class="btn btn-lg btn-primary configure">Configure</a>
         </div>
