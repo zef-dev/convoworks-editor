@@ -32,6 +32,7 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 } else {
                     var url = CONVO_PUBLIC_API_BASE_URL + '/service-run/' + release['platform_id'] + '/'
                     + release['alias'] + '/' + release['service_id'];
+                    $log.log( 'releasesEditor copyReleaseUrl - building url', type, 'row', row);
                 }
                 _copyToClipboard( url);
                 AlertService.addInfo('Copied release URL to clipboard.');
