@@ -72,6 +72,12 @@
     }
 
     .config-square {
+        div.toggled-indicator {
+            &:hover {
+                cursor: default;
+            }
+        }
+    
         .name-indicator {
             display: flex;
             flex-flow: row nowrap;
