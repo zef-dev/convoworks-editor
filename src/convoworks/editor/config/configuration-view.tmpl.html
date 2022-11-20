@@ -57,5 +57,14 @@
             </div>
             <a ui-sref="convoworks-editor-service.configuration-convo-chat" class="btn btn-lg btn-primary configure">Configure</a>
         </div>
+        <div ng-repeat="platform in platforms track by $index" class="config-square card-pane">
+            <div class="logo"></div>
+            <br>
+            <div class="name-indicator">
+                <span class="platform-name">{{platform.name}}</span>
+                <div class="toggled-indicator" ng-class="{'active': configEnabled( platform.platform_id), 'inactive': !configEnabled( platform.platform_id)}"></div>
+            </div>
+            <a href="{{platform.config_url}}" class="btn btn-lg btn-primary configure">Configure</a>
+        </div>
     </div>
 </div>
