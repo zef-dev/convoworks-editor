@@ -10,7 +10,8 @@
                 <span class="platform-name">Amazon Alexa</span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('amazon'), 'inactive': !configEnabled('amazon')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-amazon" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-amazon" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('amazon') ? 'Configure' : 'Enable'}}</a>
         </div>
         <div class="config-square card-pane">
             <div class="logo dialogflow_es"></div>
@@ -19,7 +20,8 @@
                 <span class="platform-name">Dialogflow Essentials</span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('dialogflow_es'), 'inactive': !configEnabled('dialogflow_es')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-dialogflow_es" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-dialogflow_es" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('dialogflow_es') ? 'Configure' : 'Enable'}}</a>
         </div>
         <div class="config-square card-pane">
             <div class="logo dialogflow"></div>
@@ -28,7 +30,8 @@
                 <span class="platform-name">Dialogflow <i class="fa fa-exclamation-circle text-danger" uib-tooltip="This platform is unstable. Some features may behave unexpectedly and not every aspect may be configurable."></i></span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('dialogflow'), 'inactive': !configEnabled('dialogflow')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-dialogflow" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-dialogflow" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('dialogflow') ? 'Configure' : 'Enable'}}</a>
         </div>
         <div class="config-square card-pane">
             <div class="logo facebook_messenger"></div>
@@ -37,7 +40,8 @@
                 <span class="platform-name">Facebook Messenger <i class="fa fa-exclamation-circle text-danger" uib-tooltip="This platform is unstable. Some features may behave unexpectedly and not every aspect may be configurable."></i></span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('facebook_messenger'), 'inactive': !configEnabled('facebook_messenger')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-messenger" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-messenger" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('facebook_messenger') ? 'Configure' : 'Enable'}}</a>
         </div>
         <div class="config-square card-pane">
             <div class="logo viber"></div>
@@ -46,7 +50,8 @@
                 <span class="platform-name">Viber <i class="fa fa-exclamation-circle text-danger" uib-tooltip="This platform is unstable. Some features may behave unexpectedly and not every aspect may be configurable."></i></span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('viber'), 'inactive': !configEnabled('viber')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-viber" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-viber" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('viber') ? 'Configure' : 'Enable'}}</a>
         </div>
         <div class="config-square card-pane">
             <div class="logo convo_chat"></div>
@@ -55,8 +60,10 @@
                 <span class="platform-name">Convo Chat <i class="fa fa-exclamation-circle text-danger" uib-tooltip="This platform is unstable. Some features may behave unexpectedly and not every aspect may be configurable."></i></span>
                 <div class="toggled-indicator" ng-class="{'active': configEnabled('convo_chat'), 'inactive': !configEnabled('convo_chat')}"></div>
             </div>
-            <a ui-sref="convoworks-editor-service.configuration-convo-chat" class="btn btn-lg btn-primary configure">Configure</a>
+            <a ui-sref="convoworks-editor-service.configuration-convo-chat" class="btn btn-lg btn-primary configure">
+                {{ configEnabled('convo_chat') ? 'Configure' : 'Enable'}}</a>
         </div>
+        
         <div ng-repeat="platform in platforms track by $index" class="config-square card-pane">
             <div class="logo"></div>
             <br>
@@ -64,7 +71,8 @@
                 <span class="platform-name">{{platform.name}}</span>
                 <a href="{{platform.config_url}}" class="toggled-indicator" ng-class="{'active': configEnabled( platform.platform_id), 'inactive': !configEnabled( platform.platform_id)}"></a>
             </div>
-            <a href="{{platform.config_url}}" class="btn btn-lg btn-primary configure">Configure</a>
+            <a href="{{platform.config_url}}" class="btn btn-lg btn-primary configure">
+                {{ configEnabled( platform.platform_id) ? 'Configure' : 'Enable'}}</a>
         </div>
     </div>
 </div>
