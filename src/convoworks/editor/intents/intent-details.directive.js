@@ -62,6 +62,22 @@ export default function intentDetails( $log, $window, $state, $stateParams, Conv
                 }
                 return false;
             }
+            
+            function isAlexaOnly()
+            {
+                if ( !isAlexaEnabled()) {
+                    return false;
+                }
+                
+                if ( 'release_mapping' in service_meta) {
+                    for ( var platform_id in service_meta['release_mapping']) {
+                        if ( platform_id !== 'amazon') {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
 
             $scope.validator = function( str) {
                 $log.debug( 'intentDetails validator str', str);
@@ -71,17 +87,19 @@ export default function intentDetails( $log, $window, $state, $stateParams, Conv
                     let valid = reg.test( str.trim());
                     if ( valid) {
                         return {
-                            valid : true
+                            valid : true,
+                            message : ''
                         };  
                     }
                     return {
-                        valid : false,
-                        message : "Warning: Utterance can't contain special characters when working with Amazon Alexa"
+                        valid : !isAlexaOnly(),
+                        message : "Utterance can't contain special characters when working with Amazon Alexa"
                     };  
                 }
                 
                 return {
-                    valid : true
+                    valid : true,
+                    message : ''
                 };  
             }
 
