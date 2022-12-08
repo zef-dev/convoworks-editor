@@ -38,6 +38,9 @@ export default function previewPanel($log, $sce, $state, $window, ConvoworksApi,
 
             $scope.parseText = function(text)
             {
+                if ( !text) {
+                    return '';
+                }
                 return text.map(t => {
                     let text = t.text || t;
 
