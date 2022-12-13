@@ -15,6 +15,7 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
             $log.log( 'releasesEditor link');
 
             $scope.releases = [];
+            $scope.platform_config = null;
 
             let open = {
                 production: true,
@@ -26,11 +27,23 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
             var IMPORT_WORKFLOW_OPTIONS =   {};
             var SUBMIT_OPTIONS  =   {};
 
+            const SHADOW_PLATFORMS = ['dialogflow_es'];
+
             $scope.copyReleaseUrl = function (release) {
                 _copyToClipboard(CONVO_PUBLIC_API_BASE_URL + '/service-run/' + release['platform_id'] + '/'
                     + release['alias'] + '/' + release['service_id']);
 
                 AlertService.addInfo('Copied release URL to clipboard.');
+            }
+
+            $scope.getPlatformReleaseDetails = function (platformReleaseData) {
+                switch (platformReleaseData.delegation_nlp_id) {
+                    case 'dialogflow_es':
+                        return 'Agent version number [' + platformReleaseData.delegation_nlp_data.agent_version.versionNumber + '] is loaded into [' + platformReleaseData.delegation_nlp_data.agent_environment.name + ']';
+                    default:
+                        return '';
+                        break;
+                }
             }
 
             $scope.getPromoteOptions    =   function ( release) {
@@ -51,7 +64,8 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                         $scope.service.service_id,
                         row['release_id'],
                         type,
-                        stage).then( function () {
+                        stage,
+                        row).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
                             AlertService.addSuccess('Release successfully promoted.');
@@ -73,7 +87,8 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 ConvoworksApi.tagAsSimpleVersion(
                     $scope.service.service_id,
                     row['version_id'],
-                    tag
+                    tag,
+                    row
                 ).then(function() {
                     _load();
                     $rootScope.$broadcast('ServiceReleasesUpdated');
@@ -94,7 +109,8 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                         $scope.service.service_id,
                         row['platform_id'],
                         type,
-                        stage).then( function () {
+                        stage,
+                        row).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
                             AlertService.addSuccess('Release created successfully.');
@@ -114,7 +130,7 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 ConvoworksApi.importWorkflowIntoRelease(
                         $scope.service.service_id,
                         releaseId,
-                        row['version_id']).then( function () {
+                        row['version_id'], row).then( function () {
                             _load();
                             $rootScope.$broadcast('ServiceReleasesUpdated');
                             AlertService.addSuccess('Workflow successfully imported into release [' + releaseId + ']');
@@ -128,10 +144,12 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
             {
                 ConvoworksApi.importWorkflowIntoDevelop(
                     $scope.service.service_id,
-                    row['version_id']
+                    row['version_id'],
+                    row
                 ).then(function () {
                     _load();
                     $rootScope.$broadcast('ServiceReleaseDevelopImport');
+                    AlertService.addSuccess('Workflow with version id [' + row['version_id'] + '] was successfully imported to develop.');
                 }, function (reason) {
                     $log.log('releaseEditor importToDevelop rejected', reason);
                     AlertService.addDanger('Couldn\'t import release into develop.');
@@ -162,6 +180,10 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                 ConvoworksApi.getServiceReleases( $scope.service.service_id).then( function ( releases) {
                     $log.log( 'releasesEditor releases loaded');
                     $scope.releases =   releases;
+
+                    ConvoworksApi.loadPlatformConfig($scope.service.service_id).then(function (data) {
+                        $scope.platform_config = data;
+                    })
                     _initOptions();
                 }, function ( reason) {
                     $log.log( 'releasesEditor getServiceReleases reason', reason);
@@ -400,6 +422,23 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
                             release_id : release_id
                         });
                     }
+
+                    var release_id  =   get_release( 'viber', 'production', 'review');
+                    if ( release_id) {
+                        options.push( {
+                            title : 'Import to review',
+                            version_id : release['version_id'],
+                            release_id : release_id
+                        });
+                    }
+                    var release_id  =   get_release( 'viber', 'test', 'alpha');
+                    if ( release_id && release['type'] !== 'test') {
+                        options.push( {
+                            title : 'Import to alpha',
+                            version_id : release['version_id'],
+                            release_id : release_id
+                        });
+                    }
                 }
                 return options;
             };
@@ -424,24 +463,38 @@ export default function releasesEditor( $log, $q, $rootScope, $window, Convowork
             // GRID DATA
             $scope.getProduction    =   function () {
                 var releases = $scope.releases.filter( function( release) {
-                    return release.type === 'production';
+                    return release.type === 'production' && !SHADOW_PLATFORMS.includes(release.platform_id);
                 });
                 return releases;
             };
 
             $scope.getTest          =   function () {
                 var releases = $scope.releases.filter( function( release) {
-                  return release.type   === 'test';
+                  return release.type === 'test' && !SHADOW_PLATFORMS.includes(release.platform_id);
                 });
                 return releases;
             };
 
             $scope.getDevelopment   =   function () {
                 var releases = $scope.releases.filter( function( release) {
-                  return release.type   === 'develop';
+                  return release.type === 'develop' && !SHADOW_PLATFORMS.includes(release.platform_id);
                 });
                 return releases;
             };
+
+            $scope.getDelegateNlpForDevelop = function (platformId) {
+                let delegateNlpForDevelop = 'N/A';
+
+                if ($scope.platform_config) {
+                    if ($scope.platform_config[platformId].delegateNlp) {
+                        delegateNlpForDevelop = $scope.platform_config[platformId].delegateNlp;
+                    }
+
+                    $log.log( 'releasesEditor getDelegateNlpForDevelop', $scope.platform_config[platformId], delegateNlpForDevelop);
+                }
+
+                return delegateNlpForDevelop;
+            }
         }
     }
 };
