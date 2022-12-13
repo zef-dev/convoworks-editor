@@ -37,7 +37,8 @@ export default function versionsEditor( $log, $rootScope, ConvoworksApi, CONVO_A
             {
                 ConvoworksApi.importWorkflowIntoDevelop(
                     $scope.service.service_id,
-                    row['version_id']
+                    row['version_id'],
+                    row
                 ).then(function () {
                     _load();
                     $rootScope.$broadcast('ServiceReleaseDevelopImport');

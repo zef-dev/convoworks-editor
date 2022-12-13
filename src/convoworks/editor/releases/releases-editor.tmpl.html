@@ -16,6 +16,7 @@
                     <th>#</th>
                     <th>Stage</th>
                     <th>Platform</th>
+                    <th>Delegate NLP</th>
                     <th>Alias</th>
                     <th>Version</th>
                     <th>Updated</th>
@@ -28,8 +29,9 @@
                     <td>{{row.release_id}}</td>
                     <td ng-class="{ 'warning' : row.stage === 'review'}">{{row.stage}}</td>
                     <td>{{row.platform_id}}</td>
+                    <td>{{row.platform_release_data && row.platform_release_data.delegation_nlp_id ? row.platform_release_data.delegation_nlp_id : 'N/A'}}</td>
                     <td>{{row.alias}}</td>
-                    <td>{{row.version_id}}</td>
+                    <td>{{row.version_id}} <a ng-if="row.platform_release_data && row.platform_release_data.delegation_nlp_id" href="javascript:void(0);" uib-tooltip="{{getPlatformReleaseDetails(row.platform_release_data)}}"><i class="fa fa-info-circle"></i></a></td>
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
@@ -73,6 +75,7 @@
                     <th>#</th>
                     <th>Stage</th>
                     <th>Platform</th>
+                    <th>Delegate NLP</th>
                     <th>Alias</th>
                     <th>Version</th>
                     <th>Updated</th>
@@ -85,8 +88,9 @@
                     <td>{{row.release_id}}</td>
                     <td>{{row.stage}}</td>
                     <td>{{row.platform_id}}</td>
+                    <td>{{row.platform_release_data && row.platform_release_data.delegation_nlp_id ? row.platform_release_data.delegation_nlp_id : 'N/A'}}</td>
                     <td>{{row.alias}}</td>
-                    <td>{{row.version_id}}</td>
+                    <td>{{row.version_id}} <a ng-if="row.platform_release_data && row.platform_release_data.delegation_nlp_id" href="javascript:void(0);" uib-tooltip="{{getPlatformReleaseDetails(row.platform_release_data)}}"><i class="fa fa-info-circle"></i></a></td>
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>
                         <button type="button" class="btn btn-xs btn-muted bordered border-radius-8" ng-click="copyReleaseUrl(row)">
@@ -131,6 +135,7 @@
                 <thead>
                 <tr>
                     <th>Platform</th>
+                    <th>Delegate NLP</th>
                     <th>Alias</th>
                     <th>Updated</th>
                     <th>Link</th>
@@ -140,6 +145,7 @@
                 <tbody>
                 <tr ng-repeat="row in getDevelopment()">
                     <td>{{row.platform_id}}</td>
+                    <td>{{getDelegateNlpForDevelop(row.platform_id)}}</td>
                     <td>{{row.alias}}</td>
                     <td>{{ row.time_updated | admDate : 'yyyy-MM-dd h:mm a'}}</td>
                     <td>

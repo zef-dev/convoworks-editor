@@ -524,7 +524,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             });
         }
 
-        function createRelease( serviceId, platformId, type, stage) {
+        function createRelease( serviceId, platformId, type, stage, developmentReleaseData = {}) {
 
             if ( !serviceId) {
                 throw new Error( 'Missing service id');
@@ -535,7 +535,8 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             var data    =   {
                     platform_id : platformId,
                     type : type,
-                    stage : stage
+                    stage : stage,
+                    development_release_data: developmentReleaseData
             };
 
             return $http
@@ -546,7 +547,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             });
         }
 
-        function promoteRelease( serviceId, releaseId, type, stage) {
+        function promoteRelease( serviceId, releaseId, type, stage, currentReleaseData = {}) {
 
             if ( !serviceId) {
                 throw new Error( 'Missing service id');
@@ -557,7 +558,8 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             var data    =   {
                     release_id : releaseId,
                     type : type,
-                    stage : stage
+                    stage : stage,
+                    current_release_data: currentReleaseData
             };
 
             return $http
@@ -568,7 +570,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             });
         }
 
-        function tagAsSimpleVersion( serviceId, versionId, versionTag)
+        function tagAsSimpleVersion( serviceId, versionId, versionTag, developmentReleaseData = {})
         {
             if ( !serviceId) {
                 throw new Error( 'Missing service id');
@@ -580,7 +582,8 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                 .post(
                     CONVO_ADMIN_API_BASE_URL + '/service-versions/' + serviceId + '/' + versionId,
                     {
-                        'version_tag': versionTag
+                        'version_tag': versionTag,
+                        'development_release_data': developmentReleaseData
                     }
                 ).then(function (res) {
                     $log.log('ConvoworksApi tagAsSimpleVersion res', res);
@@ -588,7 +591,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
                 });
         }
 
-        function importWorkflowIntoRelease( serviceId, releaseId, versionId)
+        function importWorkflowIntoRelease( serviceId, releaseId, versionId, currentReleaseData = {})
         {
             if ( !serviceId) {
                 throw new Error( 'Missing service id');
@@ -597,14 +600,14 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             $log.log( 'ConvoworksApi importWorkflowIntoRelease() serviceId', serviceId);
 
             return $http
-            .post( CONVO_ADMIN_API_BASE_URL + '/service-releases/' + serviceId + '/' + releaseId + '/import-workflow/' + versionId)
+            .post( CONVO_ADMIN_API_BASE_URL + '/service-releases/' + serviceId + '/' + releaseId + '/import-workflow/' + versionId, currentReleaseData)
             .then(function (res) {
                 $log.log('ConvoworksApi importWorkflowIntoRelease() res', res);
                 return res.data;
             });
         }
 
-        function importWorkflowIntoDevelop( serviceId, versionId)
+        function importWorkflowIntoDevelop( serviceId, versionId, currentReleaseData = {})
         {
             if ( !serviceId) {
                 throw new Error( 'Missing service id');
@@ -613,7 +616,7 @@ export default function ConvoworksApi( $log, $http, $q, CONVO_ADMIN_API_BASE_URL
             $log.log( 'ConvoworksApi importWorkflowIntoDevelop() serviceId', serviceId);
 
             return $http
-                .post( CONVO_ADMIN_API_BASE_URL + '/service-releases/' + serviceId + '/import-develop/' + versionId)
+                .post( CONVO_ADMIN_API_BASE_URL + '/service-releases/' + serviceId + '/import-develop/' + versionId, currentReleaseData)
                 .then(function (res) {
                     $log.log('ConvoworksApi importWorkflowIntoRelease() res', res);
                     return res.data;

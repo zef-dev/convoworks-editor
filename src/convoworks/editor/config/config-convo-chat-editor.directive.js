@@ -122,7 +122,13 @@ export default function configConvoChatEditor($log, $q, $rootScope, ConvoworksAp
                         $scope.intentNlps.push({
                             label: 'Dialogflow',
                             value: 'dialogflow'
-                        })
+                        });
+                    }
+                    if (config.dialogflow_es && config.dialogflow_es.mode === "auto") {
+                        $scope.intentNlps.push({
+                            label: 'Dialogflow ES',
+                            value: 'dialogflow_es'
+                        });
                     }
                 }).catch(function (reason) {
                     throw new Error(reason.data.message)
