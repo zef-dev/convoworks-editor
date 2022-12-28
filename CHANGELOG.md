@@ -2,13 +2,12 @@
 
 ## [Current development]
 
-## 0.25.0
+## [Releases]
+
+## 0.25.0 - 2022-12-28
 * Use intent model editor 1.7
 * Support for external platforms
 * Support for Dialogflow ES
-
-
-## [Releases]
 
 ## 0.24.3 - 2022-09-07
 _Hotfix_
