@@ -101,7 +101,7 @@
             height: 38px;
             width: 252px;
             border-radius: 8px;
-            background-color: #2F74EA;
+            background-color: lightgray;
             color: #FFFFFF;
             font-size: 14px;
             font-weight: 500;
@@ -110,6 +110,10 @@
             text-align: center;
 
             margin-top: 65px;
+        }
+        
+        a.configure:hover {
+            background-color: #2F74EA;
         }
     }
 
