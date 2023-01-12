@@ -53,7 +53,7 @@ export default function configurationView($log, ConvoworksApi)
 //                    {
 //                        name: 'Twilio',
 //                        'description' :  'Twilio voice platform',
-//                        'icon_url' :  '',
+//                        'icon_url' :  'https://tole.ngrok.io/wordpress/wp-content/plugins/convoworks-twilio/assets/twilio-logo.png',
 //                        'config_url' :  'https://tole.ngrok.io/wordpress/wp-admin/admin.php?page=convoworks-twilio-settings&service_id={serviceId}',
 //                    }
 //                ];

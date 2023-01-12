@@ -65,7 +65,7 @@
         </div>
         
         <div ng-repeat="platform in platforms track by $index" class="config-square card-pane">
-            <div class="logo"></div>
+            <div class="logo" style="background-image: url({{platform.icon_url}});"></div>
             <br>
             <div class="name-indicator">
                 <span class="platform-name">{{platform.name}}</span>
