@@ -18,6 +18,13 @@ export default function configurationView($log, ConvoworksApi)
                 return Object.keys($scope.config).includes(config);
             }
             
+            $scope.getPlatformConfigUrl    =   function( platform) {
+                // platform.config_url
+                var url = platform.config_url;
+                url = url.replace( '{serviceId}', $scope.service.service_id);
+                return url;
+            }
+            
             
 
             function _init()
@@ -41,7 +48,17 @@ export default function configurationView($log, ConvoworksApi)
                         }
                     }
                 }
-                $log.log('configurationView got platforms', $scope.platforms);
+
+//                $scope.platforms = [
+//                    {
+//                        name: 'Twilio',
+//                        'description' :  'Twilio voice platform',
+//                        'icon_url' :  '',
+//                        'config_url' :  'https://tole.ngrok.io/wordpress/wp-admin/admin.php?page=convoworks-twilio-settings&service_id={serviceId}',
+//                    }
+//                ];
+                
+                $log.log('configurationView got external platforms', $scope.platforms);
             }
         }
     }
