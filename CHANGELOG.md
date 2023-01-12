@@ -2,6 +2,12 @@
 
 ## [Current development]
 
+* Add service_id to a external configuration url
+* Display external platform icon
+* Set platform buttons grey if not enabled
+* Fix shrinked privacy urls on Amazon configuration
+* Fix services view layout when having multile platforms
+
 ## [Releases]
 
 ## 0.25.0 - 2022-12-28
