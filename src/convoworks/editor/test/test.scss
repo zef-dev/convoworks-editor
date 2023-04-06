@@ -13,7 +13,6 @@
     
         flex-basis: 750px;
         flex-shrink: 0;
-        max-height: 469px;
     }
     
     .test .chat .chatbox {
@@ -35,6 +34,7 @@
     
         margin-bottom: 20px;
         align-items: center;
+        width: 100%;
     }
     
     .test .debug .toggle h3 {
@@ -50,6 +50,7 @@
     
     .test .debug .panel-debug {
         max-height: calc(100vh - 300px);
+        max-width: 700px;
         overflow-y: auto;
     }
 }

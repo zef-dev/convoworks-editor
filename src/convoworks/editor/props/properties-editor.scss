@@ -182,6 +182,10 @@
         color: white;
     }
     
+    .properties-editor .convo-form-group textarea.large {
+        height:350px;
+    }
+    
     .variables-editor-inline {
         display: flex;
         flex-flow: column nowrap;

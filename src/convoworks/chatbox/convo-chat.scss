@@ -42,6 +42,7 @@
         text-align: left;
         border: 1px solid #ececec;
         color: black !important;
+        white-space: break-spaces;
     }
     
     .chat li .chat-body.user-message
@@ -51,6 +52,7 @@
         border: 1px solid #5595dd;
         background-color: #5595dd;
         color: white !important;
+        white-space: break-spaces;
     }
     
     
@@ -83,7 +85,7 @@
     .card-body
     {
         overflow-y: scroll;
-        height: 200px;
+        height: 400px;
     }
     
     .card-footer {
